@@ -4,8 +4,9 @@ using System;
 
 namespace DeveloperPath.Domain.Entities
 {
-    public class TodoItem : AuditableEntity
-    {
+  //TODO: this class id from the template. Remove it
+  public class TodoItem : AuditableEntityTemplate
+  {
         public int Id { get; set; }
 
         public int ListId { get; set; }

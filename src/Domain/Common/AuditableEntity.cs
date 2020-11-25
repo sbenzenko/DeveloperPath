@@ -2,14 +2,31 @@
 
 namespace DeveloperPath.Domain.Common
 {
-    public abstract class AuditableEntity
-    {
-        public string CreatedBy { get; set; }
+  /// <summary>
+  /// Abstract class to add tracking to entities
+  /// </summary>
+  public abstract record AuditableEntity
+  {
+    /// <summary>
+    /// Author of the entity
+    /// TODO: change to identity User
+    /// </summary>
+    public string CreatedBy { get; init; }
 
-        public DateTime Created { get; set; }
+    /// <summary>
+    /// Datetime entity created
+    /// </summary>
+    public DateTime Created { get; init; }
 
-        public string LastModifiedBy { get; set; }
+    /// <summary>
+    /// Author who chnaged the entity
+    /// TODO: change to identity User
+    /// </summary>
+    public string LastModifiedBy { get; init; }
 
-        public DateTime? LastModified { get; set; }
-    }
+    /// <summary>
+    /// Datetime entity last changed
+    /// </summary>
+    public DateTime? LastModified { get; init; }
+  }
 }

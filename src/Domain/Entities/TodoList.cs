@@ -3,8 +3,9 @@ using System.Collections.Generic;
 
 namespace DeveloperPath.Domain.Entities
 {
-    public class TodoList : AuditableEntity
-    {
+  //TODO: this class id from the template. Remove it
+  public class TodoList : AuditableEntityTemplate
+  {
         public TodoList()
         {
             Items = new List<TodoItem>();
