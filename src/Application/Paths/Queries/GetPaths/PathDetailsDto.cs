@@ -1,12 +1,13 @@
 ﻿using System.Collections.Generic;
-using DeveloperPath.Domain.Common;
+using DeveloperPath.Application.Common.Mappings;
+using DeveloperPath.Domain.Entities;
 
-namespace DeveloperPath.Domain.Entities
+namespace DeveloperPath.Application.Paths.Queries.GetPaths
 {
   /// <summary>
-  /// Represents developer path entity
+  /// Detailed information about the path
   /// </summary>
-  public record Path : AuditableEntity
+  public class PathDetailsDto : IMapFrom<Path>
   {
     /// <summary>
     /// Path ID
@@ -16,17 +17,17 @@ namespace DeveloperPath.Domain.Entities
     /// <summary>
     /// Path name
     /// </summary>
-    public string Title { get; set; }
+    public string Title { get; init; }
 
     /// <summary>
     /// Path short summary
     /// </summary>
-    public string Description { get; set; }
+    public string Description { get; init; }
 
     /// <summary>
     /// Modules that path consists of
     /// </summary>
-    public IList<Module> Modules { get; init; }
+    public IList<ModuleDto> Modules { get; init; }
 
     /// <summary>
     /// List of tags related to path.

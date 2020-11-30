@@ -14,12 +14,12 @@ namespace DeveloperPath.Domain.Entities
     /// <summary>
     /// Source Title
     /// </summary>
-    public string Title { get; init; }
+    public string Title { get; set; }
 
     /// <summary>
     /// Souce URL
     /// </summary>
-    public string Url { get; init; }
+    public string Url { get; set; }
 
     /// <summary>
     /// Theme that the source is for
@@ -29,26 +29,26 @@ namespace DeveloperPath.Domain.Entities
     /// <summary>
     /// Position of source in theme (0-based).
     /// </summary>
-    public int Order { get; init; }
+    public int Order { get; set; }
 
     /// <summary>
     /// Type of source (book, video, blog, etc.)
     /// </summary>
-    public SourceType Type { get; init; }
+    public SourceType Type { get; set; }
 
     /// <summary>
     /// Whether the resource is available free or paid
     /// </summary>
-    public AvailabilityLevel Availability { get; init; }
+    public AvailabilityLevel Availability { get; set; }
     
     /// <summary>
     /// Whether inforation if up-to-date
     /// </summary>
-    public RelevanceLevel Relevance { get; init; }
+    public RelevanceLevel Relevance { get; set; }
 
     /// <summary>
     /// List of tags related to theme
     /// </summary>
-    public IEnumerable<string> Tags { get; init; }
+    public ICollection<string> Tags { get; set; }
   }
 }

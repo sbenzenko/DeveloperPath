@@ -14,12 +14,12 @@ namespace DeveloperPath.Domain.Entities
     /// <summary>
     /// Theme Title
     /// </summary>
-    public string Title { get; init; }
+    public string Title { get; set; }
 
     /// <summary>
     /// Theme short summary
     /// </summary>
-    public string Description { get; init; }
+    public string Description { get; set; }
 
     /// <summary>
     /// Module that theme is in
@@ -27,44 +27,44 @@ namespace DeveloperPath.Domain.Entities
     public Module Module { get; init; }
 
     /// <summary>
-    /// Unit that theme is in (can be null)
+    /// Section that theme is in (can be null)
     /// </summary>
-    public ModuleUnit? Unit { get; init; }
+    public Section? Section { get; init; }
 
     /// <summary>
     /// Complexity level
     /// </summary>
-    public ComplexityLevel Complexity { get; init; }
+    public ComplexityLevel Complexity { get; set; }
 
     /// <summary>
     /// Necessity level
     /// </summary>
-    public NecessityLevel Necessity { get; init; }
+    public NecessityLevel Necessity { get; set; }
 
     /// <summary>
     /// Position of theme in module (0-based). 
     /// Multiple themes can have same order number (meaning they can be studied simultaneously)
     /// </summary>
-    public int Order { get; init; }
+    public int Order { get; set; }
 
     /// <summary>
     /// Sources fo this theme
     /// </summary>
-    public IEnumerable<Source> Sources { get; init; }
+    public IList<Source> Sources { get; init; }
 
     /// <summary>
     /// Themes required to know before studying this theme
     /// </summary>
-    public IEnumerable<Theme> Prerequisites { get; init; }
+    public ICollection<Theme> Prerequisites { get; init; }
 
     /// <summary>
     /// Related themes ("See also" section)
     /// </summary>
-    public IEnumerable<Theme> Related { get; init; }
+    public ICollection<Theme> Related { get; init; }
 
     /// <summary>
     /// List of tags related to theme
     /// </summary>
-    public IEnumerable<string> Tags { get; init; }
+    public ICollection<string> Tags { get; set; }
   }
 }

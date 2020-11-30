@@ -48,6 +48,25 @@ namespace DeveloperPath.WebUI
       services.Configure<ApiBehaviorOptions>(options =>
       {
         options.SuppressModelStateInvalidFilter = true;
+
+        // in case of Model validation error return HTTP 422 instead of 401
+        options.InvalidModelStateResponseFactory = actionContext =>
+        {
+          var actionExecutingContext =
+              actionContext as Microsoft.AspNetCore.Mvc.Filters.ActionExecutingContext;
+
+          // if there are modelstate errors & all keys were correctly
+          // found/parsed we're dealing with validation errors
+          if (actionContext.ModelState.ErrorCount > 0
+              && actionExecutingContext?.ActionArguments.Count == actionContext.ActionDescriptor.Parameters.Count)
+          {
+            return new UnprocessableEntityObjectResult(actionContext.ModelState);
+          }
+
+          // if one of the keys wasn't correctly found / couldn't be parsed
+          // we're dealing with null/unparsable input
+          return new BadRequestObjectResult(actionContext.ModelState);
+        };
       });
 
       // In production, the Angular files will be served from this directory
@@ -58,7 +77,19 @@ namespace DeveloperPath.WebUI
 
       services.AddOpenApiDocument(configure =>
       {
-        configure.Title = "DeveloperPath API";
+        configure.PostProcess = (document) =>
+        {
+          document.Info.Version = "v1";
+          document.Info.Title = "Developer Path API";
+          document.Info.Description = "Developer Path project Open API";
+          document.Info.Contact = new OpenApiContact
+          {
+            Name = "Sergey Benzenko",
+            Email = "sbenzenko@gmail.com",
+            Url = "https://t.me/NetDeveloperDiary"
+          };
+        };
+
         configure.AddSecurity("JWT", Enumerable.Empty<string>(), new OpenApiSecurityScheme
         {
           Type = OpenApiSecuritySchemeType.ApiKey,
@@ -115,10 +146,10 @@ namespace DeveloperPath.WebUI
 
       app.UseSpa(spa =>
       {
-              // To learn more about options for serving an Angular SPA from ASP.NET Core,
-              // see https://go.microsoft.com/fwlink/?linkid=864501
+        // To learn more about options for serving an Angular SPA from ASP.NET Core,
+        // see https://go.microsoft.com/fwlink/?linkid=864501
 
-              spa.Options.SourcePath = "ClientApp";
+        spa.Options.SourcePath = "ClientApp";
 
         if (env.IsDevelopment())
         {
