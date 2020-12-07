@@ -51,7 +51,7 @@ https://github.com/MoienTajik/AspNetCore-Developer-Roadmap/blob/master/ReadMe.md
 
 2. На страницах тем добавить:
     - секцию Q&A (Вопросы и Ответы), где желающие могли бы задавать вопросы по теме,
-    - топ вопросов по теме со Stackoverflow (см. API https://api.stackexchange.com/docs/questions).
+    - топ вопросов по теме со Stackoverflow (см. API https://api.stackexchange.com/docs/questions).  ( https://github.com/LightVolk/QuestionServiceWebApi ) - готова альфа-версия.
 
 3. На первом этапе планируется реализовать только путь разработчика ASP.NET. В дальнейшем планируется добавить пути по другим технологиям как в экосистеме .NET, так и в других.
 
