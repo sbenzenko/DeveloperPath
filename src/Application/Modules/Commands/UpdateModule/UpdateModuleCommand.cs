@@ -6,13 +6,13 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace DeveloperPath.Application.Paths.Commands.UpdatePath
+namespace DeveloperPath.Application.Modules.Commands.UpdateModule
 {
 
   /// <summary>
   /// Represents developer path entity
   /// </summary>
-  public partial record UpdatePathCommand : IRequest
+  public partial record UpdateModuleCommand : IRequest
   {
     /// <summary>
     /// Id of the path to update
@@ -35,22 +35,22 @@ namespace DeveloperPath.Application.Paths.Commands.UpdatePath
     public IList<string> Tags { get; init; }
   }
 
-  public class UpdatePathCommandHandler : IRequestHandler<UpdatePathCommand>
+  public class UpdateModuleCommandHandler : IRequestHandler<UpdateModuleCommand>
   {
     private readonly IApplicationDbContext _context;
 
-    public UpdatePathCommandHandler(IApplicationDbContext context)
+    public UpdateModuleCommandHandler(IApplicationDbContext context)
     {
       _context = context;
     }
 
-    public async Task<Unit> Handle(UpdatePathCommand request, CancellationToken cancellationToken)
+    public async Task<Unit> Handle(UpdateModuleCommand request, CancellationToken cancellationToken)
     {
-      var entity = await _context.Paths.FindAsync(new object[] { request.Id }, cancellationToken);
+      var entity = await _context.Modules.FindAsync(request.Id, cancellationToken);
 
       if (entity == null)
       {
-        throw new NotFoundException(nameof(Path), request.Id);
+        throw new NotFoundException(nameof(Module), request.Id);
       }
 
       // TODO: is there a way to use init-only fields?

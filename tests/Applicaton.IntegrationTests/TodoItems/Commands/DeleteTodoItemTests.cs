@@ -6,11 +6,12 @@ using DeveloperPath.Domain.Entities;
 using FluentAssertions;
 using System.Threading.Tasks;
 using NUnit.Framework;
+using System;
 
 namespace DeveloperPath.Application.IntegrationTests.TodoItems.Commands
 {
     using static Testing;
-
+    [Obsolete("Left from project template. Remove")]
     public class DeleteTodoItemTests : TestBase
     {
         [Test]

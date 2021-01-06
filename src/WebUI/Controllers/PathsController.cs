@@ -28,7 +28,7 @@ namespace DeveloperPath.WebUI.Controllers
     /// <param name="id">An id of the path</param>
     /// <returns>Detailed information of the path with modules included</returns>
     [HttpGet("{id}")]
-    public async Task<PathDetailsDto> Get(int id)
+    public async Task<PathViewModel> Get(int id)
     {
       return await Mediator.Send(new GetPathQuery { Id = id });
     }

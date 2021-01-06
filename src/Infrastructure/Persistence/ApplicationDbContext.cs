@@ -43,6 +43,22 @@ namespace DeveloperPath.Infrastructure.Persistence
 
     public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
     {
+      foreach (var entry in ChangeTracker.Entries<AuditableEntity>())
+      {
+        switch (entry.State)
+        {
+          case EntityState.Added:
+            entry.Entity.CreatedBy = _currentUserService.UserId;
+            entry.Entity.Created = _dateTime.Now;
+            break;
+          case EntityState.Modified:
+            entry.Entity.LastModifiedBy = _currentUserService.UserId;
+            entry.Entity.LastModified = _dateTime.Now;
+            break;
+        }
+      }
+
+      // TODO: this is from the template. Remove it
       foreach (var entry in ChangeTracker.Entries<AuditableEntityTemplate>())
       {
         switch (entry.State)

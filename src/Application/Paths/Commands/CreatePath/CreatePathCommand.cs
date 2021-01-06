@@ -7,26 +7,10 @@ using System.Threading.Tasks;
 
 namespace DeveloperPath.Application.Paths.Commands.CreatePath
 {
-
-  /// <summary>
-  /// Represents developer path entity
-  /// </summary>
   public record CreatePathCommand : IRequest<int>
   {
-    /// <summary>
-    /// Path name
-    /// </summary>
     public string Title { get; init; }
-    /// <summary>
-    /// Path short summary
-    /// </summary>
     public string Description { get; init; }
-    /// <summary>
-    /// List of tags related to path.
-    /// Use generalized tags, e.g.:
-    ///  - Path ASP.NET - Tags: #Development #Web
-    ///  - Path Unity - Tags: #Development #Games
-    /// </summary>
     public IList<string> Tags { get; init; }
   }
 

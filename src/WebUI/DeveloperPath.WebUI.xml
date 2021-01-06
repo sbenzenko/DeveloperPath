@@ -4,6 +4,35 @@
         <name>DeveloperPath.WebUI</name>
     </assembly>
     <members>
+        <member name="M:DeveloperPath.WebUI.Controllers.ModulesController.Get(System.Int32)">
+            <summary>
+            Get module information by its Id
+            </summary>
+            <param name="id">An id of the module</param>
+            <returns>Detailed information of the module with themes included</returns>
+        </member>
+        <member name="M:DeveloperPath.WebUI.Controllers.ModulesController.Create(DeveloperPath.Application.Modules.Commands.CreateModule.CreateModuleCommand)">
+            <summary>
+            Create a module
+            </summary>
+            <param name="command">Module object</param>
+            <returns>An Id of created module</returns>
+        </member>
+        <member name="M:DeveloperPath.WebUI.Controllers.ModulesController.Update(System.Int32,DeveloperPath.Application.Modules.Commands.UpdateModule.UpdateModuleCommand)">
+            <summary>
+            Update the module with given Id
+            </summary>
+            <param name="id">An id of the module</param>
+            <param name="command">Updated module object</param>
+            <returns></returns>
+        </member>
+        <member name="M:DeveloperPath.WebUI.Controllers.ModulesController.Delete(System.Int32)">
+            <summary>
+            Delete the module with given Id
+            </summary>
+            <param name="id">An id of the module</param>
+            <returns></returns>
+        </member>
         <member name="M:DeveloperPath.WebUI.Controllers.PathsController.Get">
             <summary>
             Get all available paths

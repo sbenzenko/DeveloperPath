@@ -13,7 +13,7 @@ namespace DeveloperPath.Domain.Entities
     /// <summary>
     /// Section ID
     /// </summary>
-    public int Id { get; init; }
+    //public int Id { get; init; }
 
     /// <summary>
     /// Theme Title

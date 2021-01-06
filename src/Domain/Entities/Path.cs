@@ -11,7 +11,7 @@ namespace DeveloperPath.Domain.Entities
     /// <summary>
     /// Path ID
     /// </summary>
-    public int Id { get; init; }
+    //public int Id { get; init; }
 
     /// <summary>
     /// Path name

@@ -7,7 +7,7 @@ namespace DeveloperPath.Application.Paths.Queries.GetPaths
   /// <summary>
   /// Detailed information about the path
   /// </summary>
-  public class PathDetailsDto : IMapFrom<Path>
+  public class PathViewModel : IMapFrom<Path>
   {
     /// <summary>
     /// Path ID

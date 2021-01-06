@@ -1,18 +1,19 @@
 ﻿using System.Collections.Generic;
-using DeveloperPath.Domain.Common;
+using DeveloperPath.Application.Common.Mappings;
+using DeveloperPath.Domain.Entities;
 using DeveloperPath.Domain.Enums;
 
-namespace DeveloperPath.Domain.Entities
+namespace DeveloperPath.Application.Modules.Queries.GetModules
 {
   /// <summary>
-  /// Represents module (skill) of the path, e.g. Programming language, Databases, CI/CD. etc.
+  /// Detailed information about the module
   /// </summary>
-  public record Module : AuditableEntity
+  public class ModuleViewModel : IMapFrom<Module>
   {
     /// <summary>
     /// Module ID
     /// </summary>
-    //public int Id { get; init; }
+    public int Id { get; init; }
 
     /// <summary>
     /// Module Title
@@ -27,27 +28,27 @@ namespace DeveloperPath.Domain.Entities
     /// <summary>
     /// Paths module attached to
     /// </summary>
-    public ICollection<Path> Paths { get; init; }
+    public ICollection<PathDto> Paths { get; init; }
 
     /// <summary>
     /// Necessity level
     /// </summary>
-    public NecessityLevel Necessity { get; init; }
+    public NecessityLevel Necessity { get; set; }
 
     /// <summary>
     /// Sections that module consists of (may be empty)
     /// </summary>
-    public ICollection<Section> Sections { get; init; }
+    public ICollection<SectionDto> Sections { get; init; }
 
     /// <summary>
     /// Themes that module consists of
     /// </summary>
-    public ICollection<Theme> Themes { get; init; }
+    public ICollection<ThemeDto> Themes { get; init; }
 
     /// <summary>
     /// Modules required to know before studying this module
     /// </summary>
-    public ICollection<Module> Prerequisites { get; init; }
+    public ICollection<ModuleDto> Prerequisites { get; init; }
 
     /// <summary>
     /// List of tags related to module
