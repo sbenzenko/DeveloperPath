@@ -30,7 +30,7 @@ namespace DeveloperPath.Application.IntegrationTests.TodoLists.Commands
     [Test]
     public async Task ShouldRequireUniqueTitle()
     {
-      var pathId = await SendAsync(new CreatePathCommand
+      var path = await SendAsync(new CreatePathCommand
       {
         Title = "New Path",
         Description = "New Path Description"
@@ -44,7 +44,7 @@ namespace DeveloperPath.Application.IntegrationTests.TodoLists.Commands
 
       var command = new UpdatePathCommand
       {
-        Id = pathId,
+        Id = path.Id,
         Title = "Other New Path",
         Description = "New Path Description"
       };
@@ -60,7 +60,7 @@ namespace DeveloperPath.Application.IntegrationTests.TodoLists.Commands
     {
       var userId = await RunAsDefaultUserAsync();
 
-      var pathId = await SendAsync(new CreatePathCommand
+      var path = await SendAsync(new CreatePathCommand
       {
         Title = "New Path",
         Description = "New Path Description"
@@ -68,20 +68,20 @@ namespace DeveloperPath.Application.IntegrationTests.TodoLists.Commands
 
       var command = new UpdatePathCommand
       {
-        Id = pathId,
+        Id = path.Id,
         Title = "Updated Path Title",
         Description = "New Path Description"
       };
 
       await SendAsync(command);
 
-      var path = await FindAsync<Path>(pathId);
+      var updatedPath = await FindAsync<Path>(path.Id);
 
-      path.Title.Should().Be(command.Title);
-      path.LastModifiedBy.Should().NotBeNull();
-      path.LastModifiedBy.Should().Be(userId);
-      path.LastModified.Should().NotBeNull();
-      path.LastModified.Should().BeCloseTo(DateTime.Now, 1000);
+      updatedPath.Title.Should().Be(command.Title);
+      updatedPath.LastModifiedBy.Should().NotBeNull();
+      updatedPath.LastModifiedBy.Should().Be(userId);
+      updatedPath.LastModified.Should().NotBeNull();
+      updatedPath.LastModified.Should().BeCloseTo(DateTime.Now, 1000);
     }
   }
 }

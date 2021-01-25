@@ -1,8 +1,9 @@
-﻿using DeveloperPath.Application.Common.Mappings;
+﻿using System.Collections.Generic;
+using DeveloperPath.Application.Common.Mappings;
 using DeveloperPath.Domain.Entities;
 using DeveloperPath.Domain.Enums;
 
-namespace DeveloperPath.Application.Paths.Queries.GetPaths
+namespace DeveloperPath.Application.Common.Models
 {
   public class ModuleDto : IMapFrom<Module>
   {
@@ -25,5 +26,10 @@ namespace DeveloperPath.Application.Paths.Queries.GetPaths
     /// Necessity level
     /// </summary>
     public NecessityLevel Necessity { get; init; }
+
+    /// <summary>
+    /// List of tags related to module
+    /// </summary>
+    public ICollection<string> Tags { get; set; }
   }
 }

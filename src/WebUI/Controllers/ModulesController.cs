@@ -1,4 +1,5 @@
-﻿using DeveloperPath.Application.Modules.Commands.CreateModule;
+﻿using DeveloperPath.Application.Common.Models;
+using DeveloperPath.Application.Modules.Commands.CreateModule;
 using DeveloperPath.Application.Modules.Commands.DeleteModule;
 using DeveloperPath.Application.Modules.Commands.UpdateModule;
 using DeveloperPath.Application.Modules.Queries.GetModules;
@@ -18,9 +19,11 @@ namespace DeveloperPath.WebUI.Controllers
     /// <param name="id">An id of the module</param>
     /// <returns>Detailed information of the module with themes included</returns>
     [HttpGet("{id}")]
-    public async Task<ModuleViewModel> Get(int id)
+    public async Task<IActionResult> Get(int id)
     {
-      return await Mediator.Send(new GetModuleQuery { Id = id });
+      ModuleViewModel model = await Mediator.Send(new GetModuleQuery { Id = id });
+
+      return Ok(model);
     }
 
     /// <summary>
@@ -31,7 +34,9 @@ namespace DeveloperPath.WebUI.Controllers
     [HttpPost]
     public async Task<ActionResult<int>> Create(CreateModuleCommand command)
     {
-      return await Mediator.Send(command);
+      ModuleDto model = await Mediator.Send(command);
+
+      return Created("", model); //TODO: provide URI
     }
 
     /// <summary>
@@ -41,16 +46,14 @@ namespace DeveloperPath.WebUI.Controllers
     /// <param name="command">Updated module object</param>
     /// <returns></returns>
     [HttpPut("{id}")]
-    public async Task<ActionResult> Update(int id, UpdateModuleCommand command)
+    public async Task<ActionResult<ModuleDto>> Update(int id, UpdateModuleCommand command)
     {
       if (id != command.Id)
       {
         return BadRequest();
       }
 
-      await Mediator.Send(command);
-
-      return NoContent();
+      return Ok(await Mediator.Send(command));
     }
 
     /// <summary>

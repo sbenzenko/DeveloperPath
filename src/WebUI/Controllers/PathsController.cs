@@ -2,6 +2,7 @@
 using DeveloperPath.Application.Paths.Commands.DeletePath;
 using DeveloperPath.Application.Paths.Commands.UpdatePath;
 using DeveloperPath.Application.Paths.Queries.GetPaths;
+using DeveloperPath.Application.Common.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
@@ -17,9 +18,11 @@ namespace DeveloperPath.WebUI.Controllers
     /// </summary>
     /// <returns>A collection of paths with summary information</returns>
     [HttpGet]
-    public async Task<IEnumerable<PathDto>> Get()
+    public async Task<IActionResult> Get()
     {
-      return await Mediator.Send(new GetPathListQuery());
+      IEnumerable<PathDto> model = await Mediator.Send(new GetPathListQuery());
+
+      return Ok(model);
     }
 
     /// <summary>
@@ -28,20 +31,24 @@ namespace DeveloperPath.WebUI.Controllers
     /// <param name="id">An id of the path</param>
     /// <returns>Detailed information of the path with modules included</returns>
     [HttpGet("{id}")]
-    public async Task<PathViewModel> Get(int id)
+    public async Task<IActionResult> Get(int id)
     {
-      return await Mediator.Send(new GetPathQuery { Id = id });
+      PathViewModel model = await Mediator.Send(new GetPathQuery { Id = id });
+
+      return Ok(model);
     }
 
     /// <summary>
     /// Create a path
     /// </summary>
     /// <param name="command">Path object</param>
-    /// <returns>An Id of created path</returns>
+    /// <returns>A created path</returns>
     [HttpPost]
-    public async Task<ActionResult<int>> Create(CreatePathCommand command)
+    public async Task<IActionResult> Create(CreatePathCommand command)
     {
-      return await Mediator.Send(command);
+      PathDto model = await Mediator.Send(command);
+
+      return Created("", model); //TODO: provide URI
     }
 
     /// <summary>
@@ -51,16 +58,14 @@ namespace DeveloperPath.WebUI.Controllers
     /// <param name="command">Updated path object</param>
     /// <returns></returns>
     [HttpPut("{id}")]
-    public async Task<ActionResult> Update(int id, UpdatePathCommand command)
+    public async Task<ActionResult<PathDto>> Update(int id, UpdatePathCommand command)
     {
       if (id != command.Id)
       {
         return BadRequest();
       }
 
-      await Mediator.Send(command);
-
-      return NoContent();
+      return Ok(await Mediator.Send(command));
     }
 
     /// <summary>
@@ -69,7 +74,7 @@ namespace DeveloperPath.WebUI.Controllers
     /// <param name="id">An id of the path</param>
     /// <returns></returns>
     [HttpDelete("{id}")]
-    public async Task<ActionResult> Delete(int id)
+    public async Task<IActionResult> Delete(int id)
     {
       await Mediator.Send(new DeletePathCommand { Id = id });
 

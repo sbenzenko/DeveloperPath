@@ -2,7 +2,7 @@
 using DeveloperPath.Application.Common.Mappings;
 using DeveloperPath.Domain.Entities;
 
-namespace DeveloperPath.Application.Paths.Queries.GetPaths
+namespace DeveloperPath.Application.Common.Models
 {
   /// <summary>
   /// Summary information about the path

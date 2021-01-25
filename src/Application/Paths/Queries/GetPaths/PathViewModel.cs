@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using DeveloperPath.Application.Common.Mappings;
+using DeveloperPath.Application.Common.Models;
 using DeveloperPath.Domain.Entities;
 
 namespace DeveloperPath.Application.Paths.Queries.GetPaths

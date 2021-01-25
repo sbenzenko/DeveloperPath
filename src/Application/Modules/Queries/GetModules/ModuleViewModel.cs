@@ -28,7 +28,7 @@ namespace DeveloperPath.Application.Modules.Queries.GetModules
     /// <summary>
     /// Paths module attached to
     /// </summary>
-    public ICollection<PathDto> Paths { get; init; }
+    public ICollection<PathTitle> Paths { get; init; }
 
     /// <summary>
     /// Necessity level
@@ -48,7 +48,7 @@ namespace DeveloperPath.Application.Modules.Queries.GetModules
     /// <summary>
     /// Modules required to know before studying this module
     /// </summary>
-    public ICollection<ModuleDto> Prerequisites { get; init; }
+    public ICollection<ModuleTitle> Prerequisites { get; init; }
 
     /// <summary>
     /// List of tags related to module

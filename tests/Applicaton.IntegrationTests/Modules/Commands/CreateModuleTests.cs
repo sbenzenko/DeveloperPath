@@ -101,9 +101,9 @@ namespace DeveloperPath.Application.IntegrationTests.TodoLists.Commands
         Tags = new List<string> { "Tag1", "Tag2", "Tag3" }
       };
 
-      var id = await SendAsync(command);
+      var createdModule = await SendAsync(command);
 
-      var module = await FindAsync<Module>(id);
+      var module = await FindAsync<Module>(createdModule.Id);
 
       module.Should().NotBeNull();
       module.Title.Should().Be(command.Title);

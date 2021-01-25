@@ -51,7 +51,7 @@
             Create a path
             </summary>
             <param name="command">Path object</param>
-            <returns>An Id of created path</returns>
+            <returns>A created path</returns>
         </member>
         <member name="M:DeveloperPath.WebUI.Controllers.PathsController.Update(System.Int32,DeveloperPath.Application.Paths.Commands.UpdatePath.UpdatePathCommand)">
             <summary>

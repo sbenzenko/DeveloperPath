@@ -1,5 +1,7 @@
-﻿using DeveloperPath.Application.Common.Exceptions;
+﻿using AutoMapper;
+using DeveloperPath.Application.Common.Exceptions;
 using DeveloperPath.Application.Common.Interfaces;
+using DeveloperPath.Application.Common.Models;
 using DeveloperPath.Domain.Entities;
 using DeveloperPath.Domain.Enums;
 using MediatR;
@@ -15,25 +17,27 @@ namespace DeveloperPath.Application.Modules.Commands.CreateModule
   /// <summary>
   /// Represents developer module entity
   /// </summary>
-  public record CreateModuleCommand : IRequest<int>
+  public record CreateModuleCommand : IRequest<ModuleDto>
   {
     public int PathId { get; init; }
     public string Title { get; init; }
     public string Description { get; init; }
-    public IList<string> Tags { get; init; }
     public NecessityLevel Necessity { get; init; }
+    public IList<string> Tags { get; init; }
   }
 
-  public class CreateModuleCommandHandler : IRequestHandler<CreateModuleCommand, int>
+  public class CreateModuleCommandHandler : IRequestHandler<CreateModuleCommand, ModuleDto>
   {
     private readonly IApplicationDbContext _context;
+    private readonly IMapper _mapper;
 
-    public CreateModuleCommandHandler(IApplicationDbContext context)
+    public CreateModuleCommandHandler(IApplicationDbContext context, IMapper mapper)
     {
       _context = context;
+      _mapper = mapper;
     }
 
-    public async Task<int> Handle(CreateModuleCommand request, CancellationToken cancellationToken)
+    public async Task<ModuleDto> Handle(CreateModuleCommand request, CancellationToken cancellationToken)
     {
       var path = await _context.Paths
         .Where(c => c.Id == request.PathId)
@@ -57,7 +61,7 @@ namespace DeveloperPath.Application.Modules.Commands.CreateModule
 
       await _context.SaveChangesAsync(cancellationToken);
 
-      return entity.Id;
+      return _mapper.Map<ModuleDto>(entity);
     }
   }
 }

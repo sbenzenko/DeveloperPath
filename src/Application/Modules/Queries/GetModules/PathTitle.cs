@@ -3,7 +3,10 @@ using DeveloperPath.Domain.Entities;
 
 namespace DeveloperPath.Application.Modules.Queries.GetModules
 {
-  public class ModuleDto : IMapFrom<Module>
+  /// <summary>
+  /// Summary information about the path
+  /// </summary>
+  public class PathTitle : IMapFrom<Path>
   {
     /// <summary>
     /// Path ID

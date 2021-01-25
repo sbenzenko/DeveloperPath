@@ -13,6 +13,8 @@ namespace DeveloperPath.Domain.Entities
     /// </summary>
     //public int Id { get; init; }
 
+    //TODO: add unique moniker (e.g. stripped Title) to use in URL, e.g. api/paths/ASPNET
+
     /// <summary>
     /// Path name
     /// </summary>

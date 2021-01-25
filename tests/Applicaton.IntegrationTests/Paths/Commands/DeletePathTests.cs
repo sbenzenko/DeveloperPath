@@ -24,20 +24,20 @@ namespace DeveloperPath.Application.IntegrationTests.TodoLists.Commands
     [Test]
     public async Task ShouldDeletePath()
     {
-      var pathId = await SendAsync(new CreatePathCommand
+      var path = await SendAsync(new CreatePathCommand
       {
         Title = "New Path",
         Description = "New Path Description"
       });
 
-      var pathAdded = await FindAsync<Path>(pathId);
+      var pathAdded = await FindAsync<Path>(path.Id);
 
       await SendAsync(new DeletePathCommand
       {
-        Id = pathId
+        Id = path.Id
       });
 
-      var pathDeleted = await FindAsync<Path>(pathId);
+      var pathDeleted = await FindAsync<Path>(path.Id);
 
       pathAdded.Should().NotBeNull();
       pathDeleted.Should().BeNull();

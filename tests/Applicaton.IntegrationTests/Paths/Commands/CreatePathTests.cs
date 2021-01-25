@@ -72,9 +72,9 @@ namespace DeveloperPath.Application.IntegrationTests.TodoLists.Commands
         Description = "Some description"
       };
 
-      var id = await SendAsync(command);
+      var createdPath = await SendAsync(command);
 
-      var path = await FindAsync<Path>(id);
+      var path = await FindAsync<Path>(createdPath.Id);
 
       path.Should().NotBeNull();
       path.Title.Should().Be(command.Title);
