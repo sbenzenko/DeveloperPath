@@ -12,11 +12,11 @@ namespace DeveloperPath.Application.Modules.Commands.DeleteModule
     public int Id { get; init; }
   }
 
-  public class DeletePathCommandHandler : IRequestHandler<DeleteModuleCommand>
+  public class DeleteModuleCommandHandler : IRequestHandler<DeleteModuleCommand>
   {
     private readonly IApplicationDbContext _context;
 
-    public DeletePathCommandHandler(IApplicationDbContext context)
+    public DeleteModuleCommandHandler(IApplicationDbContext context)
     {
       _context = context;
     }

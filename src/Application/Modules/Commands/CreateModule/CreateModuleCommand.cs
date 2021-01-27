@@ -13,7 +13,6 @@ using System.Threading.Tasks;
 
 namespace DeveloperPath.Application.Modules.Commands.CreateModule
 {
-
   /// <summary>
   /// Represents developer module entity
   /// </summary>

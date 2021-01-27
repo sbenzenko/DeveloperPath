@@ -2,7 +2,7 @@
 using DeveloperPath.Domain.Entities;
 using DeveloperPath.Domain.Enums;
 
-namespace DeveloperPath.Application.Modules.Queries.GetModules
+namespace DeveloperPath.Application.Common.Models
 {
   public class ThemeDto : IMapFrom<Theme>
   {

@@ -1,15 +1,20 @@
 ﻿using System.Collections.Generic;
-using DeveloperPath.Domain.Common;
+using DeveloperPath.Application.Common.Mappings;
+using DeveloperPath.Application.Common.Models;
+using DeveloperPath.Domain.Entities;
 using DeveloperPath.Domain.Enums;
 
-namespace DeveloperPath.Domain.Entities
+namespace DeveloperPath.Application.Themes.Queries.GetThemes
 {
-  public record Theme : AuditableEntity
+  /// <summary>
+  /// Detailed information about the theme
+  /// </summary>
+  public class ThemeViewModel : IMapFrom<Theme>
   {
     /// <summary>
     /// Theme ID
     /// </summary>
-    //public int Id { get; init; }
+    public int Id { get; init; }
 
     /// <summary>
     /// Theme Title
@@ -22,19 +27,14 @@ namespace DeveloperPath.Domain.Entities
     public string Description { get; set; }
 
     /// <summary>
-    /// Id of module that theme is in
-    /// </summary>
-    public int ModuleId { get; set; }
-
-    /// <summary>
     /// Module that theme is in
     /// </summary>
-    public Module Module { get; init; }
+    public ModuleDto Module { get; init; }
 
     /// <summary>
     /// Section that theme is in (can be null)
     /// </summary>
-    public Section Section { get; set; }
+    public SectionDto Section { get; init; }
 
     /// <summary>
     /// Complexity level
@@ -55,17 +55,17 @@ namespace DeveloperPath.Domain.Entities
     /// <summary>
     /// Sources fo this theme
     /// </summary>
-    public IList<Source> Sources { get; init; }
+    public IList<SourceDto> Sources { get; init; }
 
     /// <summary>
     /// Themes required to know before studying this theme
     /// </summary>
-    public ICollection<Theme> Prerequisites { get; init; }
+    public ICollection<ThemeTitle> Prerequisites { get; init; }
 
     /// <summary>
     /// Related themes ("See also" section)
     /// </summary>
-    public ICollection<Theme> Related { get; init; }
+    public ICollection<ThemeTitle> Related { get; init; }
 
     /// <summary>
     /// List of tags related to theme

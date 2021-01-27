@@ -414,6 +414,235 @@
         }
       }
     },
+    "/api/modules/{moduleId}/themes/{themeId}": {
+      "get": {
+        "tags": [
+          "Themes"
+        ],
+        "summary": "Get theme information by its Id",
+        "operationId": "Themes_Get",
+        "parameters": [
+          {
+            "name": "moduleId",
+            "in": "path",
+            "required": true,
+            "description": "An id of the theme",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          },
+          {
+            "name": "themeId",
+            "in": "path",
+            "required": true,
+            "description": "An id of the theme",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 2
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Detailed information of the theme with sources included",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ThemeViewModel"
+                }
+              }
+            }
+          }
+        }
+      },
+      "head": {
+        "tags": [
+          "Themes"
+        ],
+        "summary": "Get theme information by its Id",
+        "operationId": "Themes_Get2",
+        "parameters": [
+          {
+            "name": "moduleId",
+            "in": "path",
+            "required": true,
+            "description": "An id of the theme",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          },
+          {
+            "name": "themeId",
+            "in": "path",
+            "required": true,
+            "description": "An id of the theme",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 2
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Detailed information of the theme with sources included",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ThemeViewModel"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Themes"
+        ],
+        "summary": "Update the theme with given Id",
+        "operationId": "Themes_Update",
+        "parameters": [
+          {
+            "name": "themeId",
+            "in": "path",
+            "required": true,
+            "description": "An id of the theme",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          },
+          {
+            "name": "moduleId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "x-position": 3
+          }
+        ],
+        "requestBody": {
+          "x-name": "command",
+          "description": "Updated theme object",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateThemeCommand"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 2
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ThemeDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Themes"
+        ],
+        "summary": "Delete the theme with given Id",
+        "operationId": "Themes_Delete",
+        "parameters": [
+          {
+            "name": "themeId",
+            "in": "path",
+            "required": true,
+            "description": "An id of the theme",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          },
+          {
+            "name": "moduleId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "x-position": 2
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/modules/{moduleId}/themes": {
+      "post": {
+        "tags": [
+          "Themes"
+        ],
+        "summary": "Create a theme",
+        "operationId": "Themes_Create",
+        "parameters": [
+          {
+            "name": "moduleId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "x-position": 2
+          }
+        ],
+        "requestBody": {
+          "x-name": "command",
+          "description": "Theme object",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateThemeCommand"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "An Id of created theme",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ThemeDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/TodoItems": {
       "post": {
         "tags": [
@@ -1018,6 +1247,9 @@
             "type": "string",
             "nullable": true
           },
+          "necessity": {
+            "$ref": "#/components/schemas/NecessityLevel"
+          },
           "tags": {
             "type": "array",
             "nullable": true,
@@ -1095,6 +1327,254 @@
             "items": {
               "type": "string"
             }
+          }
+        }
+      },
+      "ThemeViewModel": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "module": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/ModuleDto"
+              }
+            ]
+          },
+          "section": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/SectionDto"
+              }
+            ]
+          },
+          "complexity": {
+            "$ref": "#/components/schemas/ComplexityLevel"
+          },
+          "necessity": {
+            "$ref": "#/components/schemas/NecessityLevel"
+          },
+          "order": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "sources": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/SourceDto"
+            }
+          },
+          "prerequisites": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/ThemeTitle"
+            }
+          },
+          "related": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/ThemeTitle"
+            }
+          },
+          "tags": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "SourceDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
+          "url": {
+            "type": "string",
+            "nullable": true
+          },
+          "theme": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/ThemeDto"
+              }
+            ]
+          },
+          "order": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "type": {
+            "$ref": "#/components/schemas/SourceType"
+          },
+          "availability": {
+            "$ref": "#/components/schemas/AvailabilityLevel"
+          },
+          "relevance": {
+            "$ref": "#/components/schemas/RelevanceLevel"
+          },
+          "tags": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "SourceType": {
+        "type": "integer",
+        "description": "",
+        "x-enumNames": [
+          "None",
+          "Book",
+          "Blog",
+          "Course",
+          "Documentation",
+          "QandA",
+          "Video"
+        ],
+        "enum": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      },
+      "AvailabilityLevel": {
+        "type": "integer",
+        "description": "",
+        "x-enumNames": [
+          "Free",
+          "RequiresRegistration",
+          "Paid"
+        ],
+        "enum": [
+          0,
+          1,
+          2
+        ]
+      },
+      "RelevanceLevel": {
+        "type": "integer",
+        "description": "",
+        "x-enumNames": [
+          "NotApplicable",
+          "Relevant",
+          "MostlyRelevant",
+          "Obsolete"
+        ],
+        "enum": [
+          0,
+          1,
+          2,
+          3
+        ]
+      },
+      "ThemeTitle": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "title": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "CreateThemeCommand": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "moduleId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "sectionId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "complexity": {
+            "$ref": "#/components/schemas/ComplexityLevel"
+          },
+          "necessity": {
+            "$ref": "#/components/schemas/NecessityLevel"
+          },
+          "order": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "UpdateThemeCommand": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "moduleId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "sectionId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "complexity": {
+            "$ref": "#/components/schemas/ComplexityLevel"
+          },
+          "necessity": {
+            "$ref": "#/components/schemas/NecessityLevel"
+          },
+          "order": {
+            "type": "integer",
+            "format": "int32"
           }
         }
       },

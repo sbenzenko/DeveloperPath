@@ -2,7 +2,7 @@
 using DeveloperPath.Domain.Entities;
 using DeveloperPath.Domain.Enums;
 
-namespace DeveloperPath.Application.Modules.Queries.GetModules
+namespace DeveloperPath.Application.Common.Models
 {
   public class SectionDto : IMapFrom<Section>
   {
@@ -12,7 +12,7 @@ namespace DeveloperPath.Application.Modules.Queries.GetModules
     public int Id { get; init; }
 
     /// <summary>
-    /// Theme Title
+    /// Section Title
     /// </summary>
     public string Title { get; set; }
 

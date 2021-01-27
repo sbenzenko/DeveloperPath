@@ -1,17 +1,17 @@
 ﻿using DeveloperPath.Application.Common.Mappings;
 using DeveloperPath.Domain.Entities;
 
-namespace DeveloperPath.Application.Modules.Queries.GetModules
+namespace DeveloperPath.Application.Themes.Queries.GetThemes
 {
-  public class ModuleTitle : IMapFrom<Module>
+  public class ThemeTitle : IMapFrom<Theme>
   {
     /// <summary>
-    /// Module ID
+    /// Theme ID
     /// </summary>
     public int Id { get; init; }
 
     /// <summary>
-    /// Module name
+    /// Theme name
     /// </summary>
     public string Title { get; init; }
   }
