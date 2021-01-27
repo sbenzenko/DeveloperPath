@@ -17,27 +17,33 @@ export const API_BASE_URL = new InjectionToken<string>('API_BASE_URL');
 export interface IModulesClient {
     /**
      * Get module information by its Id
-     * @param id An id of the module
+     * @param moduleId An id of the module
      * @return Detailed information of the module with themes included
      */
-    get(id: number): Observable<FileResponse>;
+    get(moduleId: number): Observable<ModuleViewModel>;
+    /**
+     * Get module information by its Id
+     * @param moduleId An id of the module
+     * @return Detailed information of the module with themes included
+     */
+    get2(moduleId: number): Observable<ModuleViewModel>;
     /**
      * Update the module with given Id
-     * @param id An id of the module
+     * @param moduleId An id of the module
      * @param command Updated module object
      */
-    update(id: number, command: UpdateModuleCommand): Observable<ModuleDto>;
+    update(moduleId: number, command: UpdateModuleCommand): Observable<ModuleDto>;
     /**
      * Delete the module with given Id
-     * @param id An id of the module
+     * @param moduleId An id of the module
      */
-    delete(id: number): Observable<FileResponse>;
+    delete(moduleId: number): Observable<FileResponse>;
     /**
      * Create a module
      * @param command Module object
      * @return An Id of created module
      */
-    create(command: CreateModuleCommand): Observable<number>;
+    create(command: CreateModuleCommand): Observable<ModuleDto>;
 }
 
 @Injectable({
@@ -55,21 +61,21 @@ export class ModulesClient implements IModulesClient {
 
     /**
      * Get module information by its Id
-     * @param id An id of the module
+     * @param moduleId An id of the module
      * @return Detailed information of the module with themes included
      */
-    get(id: number): Observable<FileResponse> {
-        let url_ = this.baseUrl + "/api/Modules/{id}";
-        if (id === undefined || id === null)
-            throw new Error("The parameter 'id' must be defined.");
-        url_ = url_.replace("{id}", encodeURIComponent("" + id));
+    get(moduleId: number): Observable<ModuleViewModel> {
+        let url_ = this.baseUrl + "/api/Modules/{moduleId}";
+        if (moduleId === undefined || moduleId === null)
+            throw new Error("The parameter 'moduleId' must be defined.");
+        url_ = url_.replace("{moduleId}", encodeURIComponent("" + moduleId));
         url_ = url_.replace(/[?&]$/, "");
 
         let options_ : any = {
             observe: "response",
             responseType: "blob",
             headers: new HttpHeaders({
-                "Accept": "application/octet-stream"
+                "Accept": "application/json"
             })
         };
 
@@ -80,43 +86,101 @@ export class ModulesClient implements IModulesClient {
                 try {
                     return this.processGet(<any>response_);
                 } catch (e) {
-                    return <Observable<FileResponse>><any>_observableThrow(e);
+                    return <Observable<ModuleViewModel>><any>_observableThrow(e);
                 }
             } else
-                return <Observable<FileResponse>><any>_observableThrow(response_);
+                return <Observable<ModuleViewModel>><any>_observableThrow(response_);
         }));
     }
 
-    protected processGet(response: HttpResponseBase): Observable<FileResponse> {
+    protected processGet(response: HttpResponseBase): Observable<ModuleViewModel> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
             (<any>response).error instanceof Blob ? (<any>response).error : undefined;
 
         let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200 || status === 206) {
-            const contentDisposition = response.headers ? response.headers.get("content-disposition") : undefined;
-            const fileNameMatch = contentDisposition ? /filename="?([^"]*?)"?(;|$)/g.exec(contentDisposition) : undefined;
-            const fileName = fileNameMatch && fileNameMatch.length > 1 ? fileNameMatch[1] : undefined;
-            return _observableOf({ fileName: fileName, data: <any>responseBlob, status: status, headers: _headers });
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = ModuleViewModel.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
         } else if (status !== 200 && status !== 204) {
             return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             }));
         }
-        return _observableOf<FileResponse>(<any>null);
+        return _observableOf<ModuleViewModel>(<any>null);
+    }
+
+    /**
+     * Get module information by its Id
+     * @param moduleId An id of the module
+     * @return Detailed information of the module with themes included
+     */
+    get2(moduleId: number): Observable<ModuleViewModel> {
+        let url_ = this.baseUrl + "/api/Modules/{moduleId}";
+        if (moduleId === undefined || moduleId === null)
+            throw new Error("The parameter 'moduleId' must be defined.");
+        url_ = url_.replace("{moduleId}", encodeURIComponent("" + moduleId));
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("head", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGet2(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGet2(<any>response_);
+                } catch (e) {
+                    return <Observable<ModuleViewModel>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<ModuleViewModel>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGet2(response: HttpResponseBase): Observable<ModuleViewModel> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = ModuleViewModel.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<ModuleViewModel>(<any>null);
     }
 
     /**
      * Update the module with given Id
-     * @param id An id of the module
+     * @param moduleId An id of the module
      * @param command Updated module object
      */
-    update(id: number, command: UpdateModuleCommand): Observable<ModuleDto> {
-        let url_ = this.baseUrl + "/api/Modules/{id}";
-        if (id === undefined || id === null)
-            throw new Error("The parameter 'id' must be defined.");
-        url_ = url_.replace("{id}", encodeURIComponent("" + id));
+    update(moduleId: number, command: UpdateModuleCommand): Observable<ModuleDto> {
+        let url_ = this.baseUrl + "/api/Modules/{moduleId}";
+        if (moduleId === undefined || moduleId === null)
+            throw new Error("The parameter 'moduleId' must be defined.");
+        url_ = url_.replace("{moduleId}", encodeURIComponent("" + moduleId));
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(command);
@@ -169,13 +233,13 @@ export class ModulesClient implements IModulesClient {
 
     /**
      * Delete the module with given Id
-     * @param id An id of the module
+     * @param moduleId An id of the module
      */
-    delete(id: number): Observable<FileResponse> {
-        let url_ = this.baseUrl + "/api/Modules/{id}";
-        if (id === undefined || id === null)
-            throw new Error("The parameter 'id' must be defined.");
-        url_ = url_.replace("{id}", encodeURIComponent("" + id));
+    delete(moduleId: number): Observable<FileResponse> {
+        let url_ = this.baseUrl + "/api/Modules/{moduleId}";
+        if (moduleId === undefined || moduleId === null)
+            throw new Error("The parameter 'moduleId' must be defined.");
+        url_ = url_.replace("{moduleId}", encodeURIComponent("" + moduleId));
         url_ = url_.replace(/[?&]$/, "");
 
         let options_ : any = {
@@ -225,7 +289,7 @@ export class ModulesClient implements IModulesClient {
      * @param command Module object
      * @return An Id of created module
      */
-    create(command: CreateModuleCommand): Observable<number> {
+    create(command: CreateModuleCommand): Observable<ModuleDto> {
         let url_ = this.baseUrl + "/api/Modules";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -248,14 +312,14 @@ export class ModulesClient implements IModulesClient {
                 try {
                     return this.processCreate(<any>response_);
                 } catch (e) {
-                    return <Observable<number>><any>_observableThrow(e);
+                    return <Observable<ModuleDto>><any>_observableThrow(e);
                 }
             } else
-                return <Observable<number>><any>_observableThrow(response_);
+                return <Observable<ModuleDto>><any>_observableThrow(response_);
         }));
     }
 
-    protected processCreate(response: HttpResponseBase): Observable<number> {
+    protected processCreate(response: HttpResponseBase): Observable<ModuleDto> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -266,7 +330,7 @@ export class ModulesClient implements IModulesClient {
             return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = resultData200 !== undefined ? resultData200 : <any>null;
+            result200 = ModuleDto.fromJS(resultData200);
             return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
@@ -274,7 +338,7 @@ export class ModulesClient implements IModulesClient {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             }));
         }
-        return _observableOf<number>(<any>null);
+        return _observableOf<ModuleDto>(<any>null);
     }
 }
 
@@ -283,19 +347,30 @@ export interface IPathsClient {
      * Get all available paths
      * @return A collection of paths with summary information
      */
-    get(): Observable<FileResponse>;
+    getAll(): Observable<PathDto[]>;
+    /**
+     * Get all available paths
+     * @return A collection of paths with summary information
+     */
+    get(): Observable<PathDto[]>;
     /**
      * Create a path
      * @param command Path object
      * @return A created path
      */
-    create(command: CreatePathCommand): Observable<FileResponse>;
+    create(command: CreatePathCommand): Observable<PathDto>;
     /**
      * Get path information by its Id
-     * @param id An id of the path
+     * @param pathId An id of the path
      * @return A collection of paths with summary information
      */
-    get2(id: number): Observable<FileResponse>;
+    get2(pathId: number): Observable<PathDto>;
+    /**
+     * Get path information by its Id
+     * @param pathId An id of the path
+     * @return A collection of paths with summary information
+     */
+    get3(pathId: number): Observable<PathDto>;
     /**
      * Update the path with given Id
      * @param id An id of the path
@@ -326,7 +401,7 @@ export class PathsClient implements IPathsClient {
      * Get all available paths
      * @return A collection of paths with summary information
      */
-    get(): Observable<FileResponse> {
+    getAll(): Observable<PathDto[]> {
         let url_ = this.baseUrl + "/api/Paths";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -334,42 +409,104 @@ export class PathsClient implements IPathsClient {
             observe: "response",
             responseType: "blob",
             headers: new HttpHeaders({
-                "Accept": "application/octet-stream"
+                "Accept": "application/json"
             })
         };
 
         return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGet(response_);
+            return this.processGetAll(response_);
         })).pipe(_observableCatch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processGet(<any>response_);
+                    return this.processGetAll(<any>response_);
                 } catch (e) {
-                    return <Observable<FileResponse>><any>_observableThrow(e);
+                    return <Observable<PathDto[]>><any>_observableThrow(e);
                 }
             } else
-                return <Observable<FileResponse>><any>_observableThrow(response_);
+                return <Observable<PathDto[]>><any>_observableThrow(response_);
         }));
     }
 
-    protected processGet(response: HttpResponseBase): Observable<FileResponse> {
+    protected processGetAll(response: HttpResponseBase): Observable<PathDto[]> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
             (<any>response).error instanceof Blob ? (<any>response).error : undefined;
 
         let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200 || status === 206) {
-            const contentDisposition = response.headers ? response.headers.get("content-disposition") : undefined;
-            const fileNameMatch = contentDisposition ? /filename="?([^"]*?)"?(;|$)/g.exec(contentDisposition) : undefined;
-            const fileName = fileNameMatch && fileNameMatch.length > 1 ? fileNameMatch[1] : undefined;
-            return _observableOf({ fileName: fileName, data: <any>responseBlob, status: status, headers: _headers });
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(PathDto.fromJS(item));
+            }
+            return _observableOf(result200);
+            }));
         } else if (status !== 200 && status !== 204) {
             return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             }));
         }
-        return _observableOf<FileResponse>(<any>null);
+        return _observableOf<PathDto[]>(<any>null);
+    }
+
+    /**
+     * Get all available paths
+     * @return A collection of paths with summary information
+     */
+    get(): Observable<PathDto[]> {
+        let url_ = this.baseUrl + "/api/Paths";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("head", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGet(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGet(<any>response_);
+                } catch (e) {
+                    return <Observable<PathDto[]>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<PathDto[]>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGet(response: HttpResponseBase): Observable<PathDto[]> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(PathDto.fromJS(item));
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<PathDto[]>(<any>null);
     }
 
     /**
@@ -377,7 +514,7 @@ export class PathsClient implements IPathsClient {
      * @param command Path object
      * @return A created path
      */
-    create(command: CreatePathCommand): Observable<FileResponse> {
+    create(command: CreatePathCommand): Observable<PathDto> {
         let url_ = this.baseUrl + "/api/Paths";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -389,7 +526,7 @@ export class PathsClient implements IPathsClient {
             responseType: "blob",
             headers: new HttpHeaders({
                 "Content-Type": "application/json",
-                "Accept": "application/octet-stream"
+                "Accept": "application/json"
             })
         };
 
@@ -400,50 +537,52 @@ export class PathsClient implements IPathsClient {
                 try {
                     return this.processCreate(<any>response_);
                 } catch (e) {
-                    return <Observable<FileResponse>><any>_observableThrow(e);
+                    return <Observable<PathDto>><any>_observableThrow(e);
                 }
             } else
-                return <Observable<FileResponse>><any>_observableThrow(response_);
+                return <Observable<PathDto>><any>_observableThrow(response_);
         }));
     }
 
-    protected processCreate(response: HttpResponseBase): Observable<FileResponse> {
+    protected processCreate(response: HttpResponseBase): Observable<PathDto> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
             (<any>response).error instanceof Blob ? (<any>response).error : undefined;
 
         let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200 || status === 206) {
-            const contentDisposition = response.headers ? response.headers.get("content-disposition") : undefined;
-            const fileNameMatch = contentDisposition ? /filename="?([^"]*?)"?(;|$)/g.exec(contentDisposition) : undefined;
-            const fileName = fileNameMatch && fileNameMatch.length > 1 ? fileNameMatch[1] : undefined;
-            return _observableOf({ fileName: fileName, data: <any>responseBlob, status: status, headers: _headers });
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = PathDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
         } else if (status !== 200 && status !== 204) {
             return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             }));
         }
-        return _observableOf<FileResponse>(<any>null);
+        return _observableOf<PathDto>(<any>null);
     }
 
     /**
      * Get path information by its Id
-     * @param id An id of the path
+     * @param pathId An id of the path
      * @return A collection of paths with summary information
      */
-    get2(id: number): Observable<FileResponse> {
-        let url_ = this.baseUrl + "/api/Paths/{id}";
-        if (id === undefined || id === null)
-            throw new Error("The parameter 'id' must be defined.");
-        url_ = url_.replace("{id}", encodeURIComponent("" + id));
+    get2(pathId: number): Observable<PathDto> {
+        let url_ = this.baseUrl + "/api/Paths/{pathId}";
+        if (pathId === undefined || pathId === null)
+            throw new Error("The parameter 'pathId' must be defined.");
+        url_ = url_.replace("{pathId}", encodeURIComponent("" + pathId));
         url_ = url_.replace(/[?&]$/, "");
 
         let options_ : any = {
             observe: "response",
             responseType: "blob",
             headers: new HttpHeaders({
-                "Accept": "application/octet-stream"
+                "Accept": "application/json"
             })
         };
 
@@ -454,31 +593,89 @@ export class PathsClient implements IPathsClient {
                 try {
                     return this.processGet2(<any>response_);
                 } catch (e) {
-                    return <Observable<FileResponse>><any>_observableThrow(e);
+                    return <Observable<PathDto>><any>_observableThrow(e);
                 }
             } else
-                return <Observable<FileResponse>><any>_observableThrow(response_);
+                return <Observable<PathDto>><any>_observableThrow(response_);
         }));
     }
 
-    protected processGet2(response: HttpResponseBase): Observable<FileResponse> {
+    protected processGet2(response: HttpResponseBase): Observable<PathDto> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
             (<any>response).error instanceof Blob ? (<any>response).error : undefined;
 
         let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200 || status === 206) {
-            const contentDisposition = response.headers ? response.headers.get("content-disposition") : undefined;
-            const fileNameMatch = contentDisposition ? /filename="?([^"]*?)"?(;|$)/g.exec(contentDisposition) : undefined;
-            const fileName = fileNameMatch && fileNameMatch.length > 1 ? fileNameMatch[1] : undefined;
-            return _observableOf({ fileName: fileName, data: <any>responseBlob, status: status, headers: _headers });
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = PathDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
         } else if (status !== 200 && status !== 204) {
             return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             }));
         }
-        return _observableOf<FileResponse>(<any>null);
+        return _observableOf<PathDto>(<any>null);
+    }
+
+    /**
+     * Get path information by its Id
+     * @param pathId An id of the path
+     * @return A collection of paths with summary information
+     */
+    get3(pathId: number): Observable<PathDto> {
+        let url_ = this.baseUrl + "/api/Paths/{pathId}";
+        if (pathId === undefined || pathId === null)
+            throw new Error("The parameter 'pathId' must be defined.");
+        url_ = url_.replace("{pathId}", encodeURIComponent("" + pathId));
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("head", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGet3(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGet3(<any>response_);
+                } catch (e) {
+                    return <Observable<PathDto>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<PathDto>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGet3(response: HttpResponseBase): Observable<PathDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = PathDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<PathDto>(<any>null);
     }
 
     /**
@@ -1167,14 +1364,18 @@ export class WeatherForecastClient implements IWeatherForecastClient {
     }
 }
 
-export class CreateModuleCommand implements ICreateModuleCommand {
-    pathId?: number;
+export class ModuleViewModel implements IModuleViewModel {
+    id?: number;
     title?: string | undefined;
     description?: string | undefined;
+    paths?: PathTitle[] | undefined;
     necessity?: NecessityLevel;
+    sections?: SectionDto[] | undefined;
+    themes?: ThemeDto[] | undefined;
+    prerequisites?: ModuleTitle[] | undefined;
     tags?: string[] | undefined;
 
-    constructor(data?: ICreateModuleCommand) {
+    constructor(data?: IModuleViewModel) {
         if (data) {
             for (var property in data) {
                 if (data.hasOwnProperty(property))
@@ -1185,10 +1386,30 @@ export class CreateModuleCommand implements ICreateModuleCommand {
 
     init(_data?: any) {
         if (_data) {
-            this.pathId = _data["pathId"];
+            this.id = _data["id"];
             this.title = _data["title"];
             this.description = _data["description"];
+            if (Array.isArray(_data["paths"])) {
+                this.paths = [] as any;
+                for (let item of _data["paths"])
+                    this.paths!.push(PathTitle.fromJS(item));
+            }
             this.necessity = _data["necessity"];
+            if (Array.isArray(_data["sections"])) {
+                this.sections = [] as any;
+                for (let item of _data["sections"])
+                    this.sections!.push(SectionDto.fromJS(item));
+            }
+            if (Array.isArray(_data["themes"])) {
+                this.themes = [] as any;
+                for (let item of _data["themes"])
+                    this.themes!.push(ThemeDto.fromJS(item));
+            }
+            if (Array.isArray(_data["prerequisites"])) {
+                this.prerequisites = [] as any;
+                for (let item of _data["prerequisites"])
+                    this.prerequisites!.push(ModuleTitle.fromJS(item));
+            }
             if (Array.isArray(_data["tags"])) {
                 this.tags = [] as any;
                 for (let item of _data["tags"])
@@ -1197,19 +1418,39 @@ export class CreateModuleCommand implements ICreateModuleCommand {
         }
     }
 
-    static fromJS(data: any): CreateModuleCommand {
+    static fromJS(data: any): ModuleViewModel {
         data = typeof data === 'object' ? data : {};
-        let result = new CreateModuleCommand();
+        let result = new ModuleViewModel();
         result.init(data);
         return result;
     }
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
-        data["pathId"] = this.pathId;
+        data["id"] = this.id;
         data["title"] = this.title;
         data["description"] = this.description;
+        if (Array.isArray(this.paths)) {
+            data["paths"] = [];
+            for (let item of this.paths)
+                data["paths"].push(item.toJSON());
+        }
         data["necessity"] = this.necessity;
+        if (Array.isArray(this.sections)) {
+            data["sections"] = [];
+            for (let item of this.sections)
+                data["sections"].push(item.toJSON());
+        }
+        if (Array.isArray(this.themes)) {
+            data["themes"] = [];
+            for (let item of this.themes)
+                data["themes"].push(item.toJSON());
+        }
+        if (Array.isArray(this.prerequisites)) {
+            data["prerequisites"] = [];
+            for (let item of this.prerequisites)
+                data["prerequisites"].push(item.toJSON());
+        }
         if (Array.isArray(this.tags)) {
             data["tags"] = [];
             for (let item of this.tags)
@@ -1219,12 +1460,56 @@ export class CreateModuleCommand implements ICreateModuleCommand {
     }
 }
 
-export interface ICreateModuleCommand {
-    pathId?: number;
+export interface IModuleViewModel {
+    id?: number;
     title?: string | undefined;
     description?: string | undefined;
+    paths?: PathTitle[] | undefined;
     necessity?: NecessityLevel;
+    sections?: SectionDto[] | undefined;
+    themes?: ThemeDto[] | undefined;
+    prerequisites?: ModuleTitle[] | undefined;
     tags?: string[] | undefined;
+}
+
+export class PathTitle implements IPathTitle {
+    id?: number;
+    title?: string | undefined;
+
+    constructor(data?: IPathTitle) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.title = _data["title"];
+        }
+    }
+
+    static fromJS(data: any): PathTitle {
+        data = typeof data === 'object' ? data : {};
+        let result = new PathTitle();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["title"] = this.title;
+        return data; 
+    }
+}
+
+export interface IPathTitle {
+    id?: number;
+    title?: string | undefined;
 }
 
 export enum NecessityLevel {
@@ -1233,6 +1518,160 @@ export enum NecessityLevel {
     Interesting = 2,
     GoodToKnow = 3,
     MustKnow = 4,
+}
+
+export class SectionDto implements ISectionDto {
+    id?: number;
+    title?: string | undefined;
+    necessity?: NecessityLevel;
+    order?: number;
+
+    constructor(data?: ISectionDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.title = _data["title"];
+            this.necessity = _data["necessity"];
+            this.order = _data["order"];
+        }
+    }
+
+    static fromJS(data: any): SectionDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new SectionDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["title"] = this.title;
+        data["necessity"] = this.necessity;
+        data["order"] = this.order;
+        return data; 
+    }
+}
+
+export interface ISectionDto {
+    id?: number;
+    title?: string | undefined;
+    necessity?: NecessityLevel;
+    order?: number;
+}
+
+export class ThemeDto implements IThemeDto {
+    id?: number;
+    title?: string | undefined;
+    description?: string | undefined;
+    section?: SectionDto | undefined;
+    complexity?: ComplexityLevel;
+    necessity?: NecessityLevel;
+    order?: number;
+
+    constructor(data?: IThemeDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.title = _data["title"];
+            this.description = _data["description"];
+            this.section = _data["section"] ? SectionDto.fromJS(_data["section"]) : <any>undefined;
+            this.complexity = _data["complexity"];
+            this.necessity = _data["necessity"];
+            this.order = _data["order"];
+        }
+    }
+
+    static fromJS(data: any): ThemeDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new ThemeDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["title"] = this.title;
+        data["description"] = this.description;
+        data["section"] = this.section ? this.section.toJSON() : <any>undefined;
+        data["complexity"] = this.complexity;
+        data["necessity"] = this.necessity;
+        data["order"] = this.order;
+        return data; 
+    }
+}
+
+export interface IThemeDto {
+    id?: number;
+    title?: string | undefined;
+    description?: string | undefined;
+    section?: SectionDto | undefined;
+    complexity?: ComplexityLevel;
+    necessity?: NecessityLevel;
+    order?: number;
+}
+
+export enum ComplexityLevel {
+    Beginner = 0,
+    Intermediate = 1,
+    Advanced = 2,
+}
+
+export class ModuleTitle implements IModuleTitle {
+    id?: number;
+    title?: string | undefined;
+
+    constructor(data?: IModuleTitle) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.title = _data["title"];
+        }
+    }
+
+    static fromJS(data: any): ModuleTitle {
+        data = typeof data === 'object' ? data : {};
+        let result = new ModuleTitle();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["title"] = this.title;
+        return data; 
+    }
+}
+
+export interface IModuleTitle {
+    id?: number;
+    title?: string | undefined;
 }
 
 export class ModuleDto implements IModuleDto {
@@ -1295,6 +1734,66 @@ export interface IModuleDto {
     tags?: string[] | undefined;
 }
 
+export class CreateModuleCommand implements ICreateModuleCommand {
+    pathId?: number;
+    title?: string | undefined;
+    description?: string | undefined;
+    necessity?: NecessityLevel;
+    tags?: string[] | undefined;
+
+    constructor(data?: ICreateModuleCommand) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.pathId = _data["pathId"];
+            this.title = _data["title"];
+            this.description = _data["description"];
+            this.necessity = _data["necessity"];
+            if (Array.isArray(_data["tags"])) {
+                this.tags = [] as any;
+                for (let item of _data["tags"])
+                    this.tags!.push(item);
+            }
+        }
+    }
+
+    static fromJS(data: any): CreateModuleCommand {
+        data = typeof data === 'object' ? data : {};
+        let result = new CreateModuleCommand();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["pathId"] = this.pathId;
+        data["title"] = this.title;
+        data["description"] = this.description;
+        data["necessity"] = this.necessity;
+        if (Array.isArray(this.tags)) {
+            data["tags"] = [];
+            for (let item of this.tags)
+                data["tags"].push(item);
+        }
+        return data; 
+    }
+}
+
+export interface ICreateModuleCommand {
+    pathId?: number;
+    title?: string | undefined;
+    description?: string | undefined;
+    necessity?: NecessityLevel;
+    tags?: string[] | undefined;
+}
+
 export class UpdateModuleCommand implements IUpdateModuleCommand {
     id?: number;
     title?: string | undefined;
@@ -1351,58 +1850,6 @@ export interface IUpdateModuleCommand {
     tags?: string[] | undefined;
 }
 
-export class CreatePathCommand implements ICreatePathCommand {
-    title?: string | undefined;
-    description?: string | undefined;
-    tags?: string[] | undefined;
-
-    constructor(data?: ICreatePathCommand) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.title = _data["title"];
-            this.description = _data["description"];
-            if (Array.isArray(_data["tags"])) {
-                this.tags = [] as any;
-                for (let item of _data["tags"])
-                    this.tags!.push(item);
-            }
-        }
-    }
-
-    static fromJS(data: any): CreatePathCommand {
-        data = typeof data === 'object' ? data : {};
-        let result = new CreatePathCommand();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["title"] = this.title;
-        data["description"] = this.description;
-        if (Array.isArray(this.tags)) {
-            data["tags"] = [];
-            for (let item of this.tags)
-                data["tags"].push(item);
-        }
-        return data; 
-    }
-}
-
-export interface ICreatePathCommand {
-    title?: string | undefined;
-    description?: string | undefined;
-    tags?: string[] | undefined;
-}
-
 export class PathDto implements IPathDto {
     id?: number;
     title?: string | undefined;
@@ -1454,6 +1901,58 @@ export class PathDto implements IPathDto {
 
 export interface IPathDto {
     id?: number;
+    title?: string | undefined;
+    description?: string | undefined;
+    tags?: string[] | undefined;
+}
+
+export class CreatePathCommand implements ICreatePathCommand {
+    title?: string | undefined;
+    description?: string | undefined;
+    tags?: string[] | undefined;
+
+    constructor(data?: ICreatePathCommand) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.title = _data["title"];
+            this.description = _data["description"];
+            if (Array.isArray(_data["tags"])) {
+                this.tags = [] as any;
+                for (let item of _data["tags"])
+                    this.tags!.push(item);
+            }
+        }
+    }
+
+    static fromJS(data: any): CreatePathCommand {
+        data = typeof data === 'object' ? data : {};
+        let result = new CreatePathCommand();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["title"] = this.title;
+        data["description"] = this.description;
+        if (Array.isArray(this.tags)) {
+            data["tags"] = [];
+            for (let item of this.tags)
+                data["tags"].push(item);
+        }
+        return data; 
+    }
+}
+
+export interface ICreatePathCommand {
     title?: string | undefined;
     description?: string | undefined;
     tags?: string[] | undefined;

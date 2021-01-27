@@ -18,7 +18,8 @@ namespace DeveloperPath.WebUI.Controllers
     /// </summary>
     /// <returns>A collection of paths with summary information</returns>
     [HttpGet]
-    public async Task<IActionResult> Get()
+    [HttpHead]
+    public async Task<ActionResult<IEnumerable<PathDto>>> Get()
     {
       IEnumerable<PathDto> model = await Mediator.Send(new GetPathListQuery());
 
@@ -28,12 +29,13 @@ namespace DeveloperPath.WebUI.Controllers
     /// <summary>
     /// Get path information by its Id
     /// </summary>
-    /// <param name="id">An id of the path</param>
+    /// <param name="pathId">An id of the path</param>
     /// <returns>Detailed information of the path with modules included</returns>
-    [HttpGet("{id}")]
-    public async Task<IActionResult> Get(int id)
+    [HttpGet("{pathId}")]
+    [HttpHead("{pathId}")]
+    public async Task<ActionResult<PathDto>> Get(int pathId)
     {
-      PathViewModel model = await Mediator.Send(new GetPathQuery { Id = id });
+      PathViewModel model = await Mediator.Send(new GetPathQuery { Id = pathId });
 
       return Ok(model);
     }
@@ -44,7 +46,7 @@ namespace DeveloperPath.WebUI.Controllers
     /// <param name="command">Path object</param>
     /// <returns>A created path</returns>
     [HttpPost]
-    public async Task<IActionResult> Create(CreatePathCommand command)
+    public async Task<ActionResult<PathDto>> Create(CreatePathCommand command)
     {
       PathDto model = await Mediator.Send(command);
 

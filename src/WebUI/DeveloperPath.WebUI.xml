@@ -8,7 +8,7 @@
             <summary>
             Get module information by its Id
             </summary>
-            <param name="id">An id of the module</param>
+            <param name="moduleId">An id of the module</param>
             <returns>Detailed information of the module with themes included</returns>
         </member>
         <member name="M:DeveloperPath.WebUI.Controllers.ModulesController.Create(DeveloperPath.Application.Modules.Commands.CreateModule.CreateModuleCommand)">
@@ -22,7 +22,7 @@
             <summary>
             Update the module with given Id
             </summary>
-            <param name="id">An id of the module</param>
+            <param name="moduleId">An id of the module</param>
             <param name="command">Updated module object</param>
             <returns></returns>
         </member>
@@ -30,7 +30,7 @@
             <summary>
             Delete the module with given Id
             </summary>
-            <param name="id">An id of the module</param>
+            <param name="moduleId">An id of the module</param>
             <returns></returns>
         </member>
         <member name="M:DeveloperPath.WebUI.Controllers.PathsController.Get">
@@ -43,7 +43,7 @@
             <summary>
             Get path information by its Id
             </summary>
-            <param name="id">An id of the path</param>
+            <param name="pathId">An id of the path</param>
             <returns>Detailed information of the path with modules included</returns>
         </member>
         <member name="M:DeveloperPath.WebUI.Controllers.PathsController.Create(DeveloperPath.Application.Paths.Commands.CreatePath.CreatePathCommand)">

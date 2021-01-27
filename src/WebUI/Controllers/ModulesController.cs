@@ -5,7 +5,6 @@ using DeveloperPath.Application.Modules.Commands.UpdateModule;
 using DeveloperPath.Application.Modules.Queries.GetModules;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace DeveloperPath.WebUI.Controllers
@@ -16,12 +15,13 @@ namespace DeveloperPath.WebUI.Controllers
     /// <summary>
     /// Get module information by its Id
     /// </summary>
-    /// <param name="id">An id of the module</param>
+    /// <param name="moduleId">An id of the module</param>
     /// <returns>Detailed information of the module with themes included</returns>
-    [HttpGet("{id}")]
-    public async Task<IActionResult> Get(int id)
+    [HttpGet("{moduleId}")]
+    [HttpHead("{moduleId}")]
+    public async Task<ActionResult<ModuleViewModel>> Get(int moduleId)
     {
-      ModuleViewModel model = await Mediator.Send(new GetModuleQuery { Id = id });
+      ModuleViewModel model = await Mediator.Send(new GetModuleQuery { Id = moduleId });
 
       return Ok(model);
     }
@@ -32,7 +32,7 @@ namespace DeveloperPath.WebUI.Controllers
     /// <param name="command">Module object</param>
     /// <returns>An Id of created module</returns>
     [HttpPost]
-    public async Task<ActionResult<int>> Create(CreateModuleCommand command)
+    public async Task<ActionResult<ModuleDto>> Create(CreateModuleCommand command)
     {
       ModuleDto model = await Mediator.Send(command);
 
@@ -42,13 +42,13 @@ namespace DeveloperPath.WebUI.Controllers
     /// <summary>
     /// Update the module with given Id
     /// </summary>
-    /// <param name="id">An id of the module</param>
+    /// <param name="moduleId">An id of the module</param>
     /// <param name="command">Updated module object</param>
     /// <returns></returns>
-    [HttpPut("{id}")]
-    public async Task<ActionResult<ModuleDto>> Update(int id, UpdateModuleCommand command)
+    [HttpPut("{moduleId}")]
+    public async Task<ActionResult<ModuleDto>> Update(int moduleId, UpdateModuleCommand command)
     {
-      if (id != command.Id)
+      if (moduleId != command.Id)
       {
         return BadRequest();
       }
@@ -59,12 +59,12 @@ namespace DeveloperPath.WebUI.Controllers
     /// <summary>
     /// Delete the module with given Id
     /// </summary>
-    /// <param name="id">An id of the module</param>
+    /// <param name="moduleId">An id of the module</param>
     /// <returns></returns>
-    [HttpDelete("{id}")]
-    public async Task<ActionResult> Delete(int id)
+    [HttpDelete("{moduleId}")]
+    public async Task<ActionResult> Delete(int moduleId)
     {
-      await Mediator.Send(new DeleteModuleCommand { Id = id });
+      await Mediator.Send(new DeleteModuleCommand { Id = moduleId });
 
       return NoContent();
     }
