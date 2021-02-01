@@ -21,7 +21,7 @@ namespace DeveloperPath.Application.Themes.Commands.CreateTheme
       RuleFor(v => v.Title)
         .NotEmpty().WithMessage("Title is required.")
         .MaximumLength(200).WithMessage("Title must not exceed 200 characters.")
-        .MustAsync(BeUniqueTitle).WithMessage("The specified module already exists in this path.");
+        .MustAsync(BeUniqueTitle).WithMessage("The specified theme already exists in this module.");
 
       RuleFor(v => v.Description)
         .NotEmpty().WithMessage("Description is required.")

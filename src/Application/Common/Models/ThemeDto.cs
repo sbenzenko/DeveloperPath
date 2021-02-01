@@ -22,6 +22,11 @@ namespace DeveloperPath.Application.Common.Models
     public string Description { get; set; }
 
     /// <summary>
+    /// Id of module that theme is in
+    /// </summary>
+    public int ModuleId { get; set; }
+
+    /// <summary>
     /// Section that theme is in (can be null)
     /// </summary>
     public SectionDto Section { get; init; }

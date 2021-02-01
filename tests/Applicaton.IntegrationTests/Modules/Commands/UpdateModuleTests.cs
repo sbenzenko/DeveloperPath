@@ -1,4 +1,6 @@
 ﻿using DeveloperPath.Application.Common.Exceptions;
+using DeveloperPath.Application.Modules.Commands.CreateModule;
+using DeveloperPath.Application.Modules.Commands.UpdateModule;
 using DeveloperPath.Application.Paths.Commands.CreatePath;
 using DeveloperPath.Application.Paths.Commands.UpdatePath;
 using DeveloperPath.Application.TodoLists.Commands.CreateTodoList;
@@ -15,75 +17,183 @@ namespace DeveloperPath.Application.IntegrationTests.TodoLists.Commands
 
   public class UpdateModuleTests : TestBase
   {
-    //[Test]
-    //public void ShouldRequireValidPathId()
-    //{
-    //  var command = new UpdatePathCommand
-    //  {
-    //    Id = 99,
-    //    Title = "New Title",
-    //    Description = "New Description"
-    //  };
+    [Test]
+    public void ShouldRequireValidModuleId()
+    {
+      var command = new UpdateModuleCommand
+      {
+        Id = 99,
+        Title = "New Title",
+        Description = "New Description",
+        Necessity = 0
+      };
 
-    //  FluentActions.Invoking(() =>
-    //      SendAsync(command)).Should().Throw<NotFoundException>();
-    //}
+      FluentActions.Invoking(() =>
+          SendAsync(command)).Should().Throw<NotFoundException>();
+    }
 
-    //[Test]
-    //public async Task ShouldRequireUniqueTitle()
-    //{
-    //  var pathId = await SendAsync(new CreatePathCommand
-    //  {
-    //    Title = "New Path",
-    //    Description = "New Path Description"
-    //  });
+    [Test]
+    public async Task ShouldRequireModuleTitle()
+    {
+      var path = await SendAsync(new CreatePathCommand
+      {
+        Title = "New Path",
+        Description = "New Path Description"
+      });
 
-    //  await SendAsync(new CreatePathCommand
-    //  {
-    //    Title = "Other New Path",
-    //    Description = "New Other Path Description"
-    //  });
+      var module = await SendAsync(new CreateModuleCommand
+      {
+        PathId = path.Id,
+        Title = "New Module",
+        Description = "New Module Description"
+      });
 
-    //  var command = new UpdatePathCommand
-    //  {
-    //    Id = pathId,
-    //    Title = "Other New Path",
-    //    Description = "New Path Description"
-    //  };
+      var command = new UpdateModuleCommand
+      {
+        Id = module.Id,
+        Title = "",
+        Description = "New Description",
+        Necessity = 0
+      };
 
-    //  FluentActions.Invoking(() =>
-    //      SendAsync(command))
-    //          .Should().Throw<ValidationException>().Where(ex => ex.Errors.ContainsKey("Title"))
-    //          .And.Errors["Title"].Should().Contain("The specified title already exists.");
-    //}
+      FluentActions.Invoking(() =>
+          SendAsync(command))
+              .Should().Throw<ValidationException>().Where(ex => ex.Errors.ContainsKey("Title"))
+              .And.Errors["Title"].Should().Contain("Title is required.");
+    }
 
-    //[Test]
-    //public async Task ShouldUpdatePath()
-    //{
-    //  var userId = await RunAsDefaultUserAsync();
+    [Test]
+    public async Task ShouldRequireModuleDescription()
+    {
+      var path = await SendAsync(new CreatePathCommand
+      {
+        Title = "New Path",
+        Description = "New Path Description"
+      });
 
-    //  var pathId = await SendAsync(new CreatePathCommand
-    //  {
-    //    Title = "New Path",
-    //    Description = "New Path Description"
-    //  });
+      var module = await SendAsync(new CreateModuleCommand
+      {
+        PathId = path.Id,
+        Title = "New Module",
+        Description = "New Module Description"
+      });
 
-    //  var command = new UpdatePathCommand
-    //  {
-    //    Id = pathId,
-    //    Title = "Updated Path Title",
-    //    Description = "New Path Description"
-    //  };
+      var command = new UpdateModuleCommand
+      {
+        Id = module.Id,
+        Title = "Updated Module",
+        Description = "",
+        Necessity = 0
+      };
 
-    //  await SendAsync(command);
+      FluentActions.Invoking(() =>
+          SendAsync(command))
+              .Should().Throw<ValidationException>().Where(ex => ex.Errors.ContainsKey("Description"))
+              .And.Errors["Description"].Should().Contain("Description is required.");
+    }
 
-    //  var path = await FindAsync<Path>(pathId);
+    [Test]
+    public async Task ShouldDisallowLongModuleTitle()
+    {
+      var path = await SendAsync(new CreatePathCommand
+      {
+        Title = "New Path",
+        Description = "New Path Description"
+      });
 
-    //  path.Title.Should().Be(command.Title);
-    //  path.LastModifiedBy.Should().NotBeNull();
-    //  path.LastModifiedBy.Should().Be(userId);
-    //  path.LastModified.Should().NotBeNull();
-    //  path.LastModified.Should().BeCloseTo(DateTime.Now, 1000);
-    //}
+      var module = await SendAsync(new CreateModuleCommand
+      {
+        PathId = path.Id,
+        Title = "New Module",
+        Description = "New Module Description"
+      });
+
+      var command = new UpdateModuleCommand
+      {
+        Id = module.Id,
+        Title = "This module title is too long and exceeds one hundred characters allowed for module titles by UpdateModuleCommandValidator",
+        Description = "New Description",
+        Necessity = 0
+      };
+
+      FluentActions.Invoking(() =>
+          SendAsync(command))
+              .Should().Throw<ValidationException>().Where(ex => ex.Errors.ContainsKey("Title"))
+              .And.Errors["Title"].Should().Contain("Title must not exceed 100 characters.");
+    }
+
+    [Test]
+    public async Task ShouldRequireUniqueTitle()
+    {
+      var pathId = await AddWithIdAsync(new Path
+      {
+        Title = "New Path",
+        Description = "New Path Description"
+      });
+
+      var module = await SendAsync(new CreateModuleCommand
+      {
+        PathId = pathId,
+        Title = "New Module",
+        Description = "New Module Description"
+      });
+
+      await SendAsync(new CreateModuleCommand
+      {
+        PathId = pathId,
+        Title = "Other New Module",
+        Description = "New Other Path Description"
+      });
+
+      var command = new UpdateModuleCommand
+      {
+        Id = module.Id,
+        Title = "Other New Module",
+        Description = "New Module Description"
+      };
+
+      FluentActions.Invoking(() =>
+          SendAsync(command))
+              .Should().Throw<ValidationException>().Where(ex => ex.Errors.ContainsKey("Title"))
+              .And.Errors["Title"].Should().Contain("Module with this title already exists in one of associated paths.");
+    }
+
+    [Test]
+    public async Task ShouldUpdateModule()
+    {
+      var userId = await RunAsDefaultUserAsync();
+
+      var pathId = await AddWithIdAsync(new Path
+      {
+        Title = "New Path",
+        Description = "New Path Description"
+      });
+
+      var module = await SendAsync(new CreateModuleCommand
+      {
+        PathId = pathId,
+        Title = "New Module",
+        Description = "New Module Description"
+      });
+
+      var command = new UpdateModuleCommand
+      {
+        Id = module.Id,
+        Title = "Updated title",
+        Description = "Updated Description",
+        Necessity = 0
+      };
+
+      await SendAsync(command);
+
+      var updatedModule = await FindAsync<Module>(module.Id);
+
+      updatedModule.Title.Should().Be(command.Title);
+      updatedModule.Description.Should().Be(command.Description);
+      updatedModule.LastModifiedBy.Should().NotBeNull();
+      updatedModule.LastModifiedBy.Should().Be(userId);
+      updatedModule.LastModified.Should().NotBeNull();
+      updatedModule.LastModified.Should().BeCloseTo(DateTime.Now, 1000);
+    }
   }
 }

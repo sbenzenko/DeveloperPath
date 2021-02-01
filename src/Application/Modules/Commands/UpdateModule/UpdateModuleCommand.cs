@@ -32,7 +32,7 @@ namespace DeveloperPath.Application.Modules.Commands.UpdateModule
 
     public async Task<Unit> Handle(UpdateModuleCommand request, CancellationToken cancellationToken)
     {
-      var entity = await _context.Modules.FindAsync(request.Id, cancellationToken);
+      var entity = await _context.Modules.FindAsync(new object[] { request.Id }, cancellationToken);
 
       if (entity == null)
       {

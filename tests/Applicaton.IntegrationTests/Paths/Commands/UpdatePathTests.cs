@@ -27,6 +27,51 @@ namespace DeveloperPath.Application.IntegrationTests.TodoLists.Commands
           SendAsync(command)).Should().Throw<NotFoundException>();
     }
 
+
+    [Test]
+    public async Task ShouldRequireTitle()
+    {
+      var path = await SendAsync(new CreatePathCommand
+      {
+        Title = "New Path",
+        Description = "New Path Description"
+      });
+
+      var command = new UpdatePathCommand
+      {
+        Id = path.Id,
+        Title = "",
+        Description = "New Path Description"
+      };
+
+      FluentActions.Invoking(() =>
+          SendAsync(command)).Should().Throw<ValidationException>()
+            .Where(ex => ex.Errors.ContainsKey("Title"))
+            .And.Errors["Title"].Should().Contain("Title is required.");
+    }
+
+    [Test]
+    public async Task ShouldDisallowLongTitle()
+    {
+      var path = await SendAsync(new CreatePathCommand
+      {
+        Title = "New Path",
+        Description = "New Path Description"
+      });
+
+      var command = new UpdatePathCommand
+      {
+        Id = path.Id,
+        Title = "This path title is too long and exceeds one hundred characters allowed for path titles by UpdatePathCommandValidator",
+        Description = "Learn how to design modern web applications using ASP.NET"
+      };
+
+      FluentActions.Invoking(() =>
+          SendAsync(command)).Should().Throw<ValidationException>()
+            .Where(ex => ex.Errors.ContainsKey("Title"))
+            .And.Errors["Title"].Should().Contain("Title must not exceed 100 characters.");
+    }
+
     [Test]
     public async Task ShouldRequireUniqueTitle()
     {

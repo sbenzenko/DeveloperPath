@@ -31,7 +31,7 @@ namespace DeveloperPath.WebUI.Controllers
     /// </summary>
     /// <param name="pathId">An id of the path</param>
     /// <returns>Detailed information of the path with modules included</returns>
-    [HttpGet("{pathId}")]
+    [HttpGet("{pathId}", Name = "GetPath")]
     [HttpHead("{pathId}")]
     public async Task<ActionResult<PathDto>> Get(int pathId)
     {
@@ -50,7 +50,7 @@ namespace DeveloperPath.WebUI.Controllers
     {
       PathDto model = await Mediator.Send(command);
 
-      return Created("", model); //TODO: provide URI
+      return CreatedAtRoute("GetPath", new { pathId = model.Id }, model);
     }
 
     /// <summary>

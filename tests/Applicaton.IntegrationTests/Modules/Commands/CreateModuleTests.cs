@@ -38,6 +38,53 @@ namespace DeveloperPath.Application.IntegrationTests.TodoLists.Commands
     }
 
     [Test]
+    public void ShouldReturnNotFoundForNonExistingPath()
+    {
+      var command = new CreateModuleCommand
+      {
+        PathId = 999,
+        Title = "New Title",
+        Description = "New Description",
+        Necessity = 0
+      };
+
+      FluentActions.Invoking(() =>
+          SendAsync(command)).Should().Throw<NotFoundException>();
+    }
+
+    [Test]
+    public void ShouldRequireTitle()
+    {
+      var command = new CreateModuleCommand
+      {
+        PathId = 1,
+        Title = "",
+        Description = "Module Decription"
+      };
+
+      FluentActions.Invoking(() =>
+          SendAsync(command)).Should().Throw<ValidationException>()
+            .Where(ex => ex.Errors.ContainsKey("Title"))
+            .And.Errors["Title"].Should().Contain("Title is required.");
+    }
+
+    [Test]
+    public void ShouldDisallowLongTitle()
+    {
+      var command = new CreateModuleCommand
+      {
+        PathId = 1,
+        Title = "This module title is too long and exceeds one hundred characters allowed for module titles by CreateModuleCommandValidator",
+        Description = "Learn how to design modern web applications using ASP.NET"
+      };
+
+      FluentActions.Invoking(() =>
+          SendAsync(command)).Should().Throw<ValidationException>()
+            .Where(ex => ex.Errors.ContainsKey("Title"))
+            .And.Errors["Title"].Should().Contain("Title must not exceed 100 characters.");
+    }
+
+    [Test]
     public void ShouldRequireDescription()
     {
       var command = new CreateModuleCommand

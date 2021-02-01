@@ -19,7 +19,7 @@ namespace DeveloperPath.WebUI.Controllers
     /// <param name="moduleId">An id of the theme</param>
     /// <param name="themeId">An id of the theme</param>
     /// <returns>Detailed information of the theme with sources included</returns>
-    [HttpGet("{themeId}")]
+    [HttpGet("{themeId}", Name = "GetTheme")]
     [HttpHead("{themeId}")]
     public async Task<ActionResult<ThemeViewModel>> Get(int moduleId, int themeId)
     {
@@ -38,7 +38,7 @@ namespace DeveloperPath.WebUI.Controllers
     {
       ThemeDto model = await Mediator.Send(command);
 
-      return Created("", model); //TODO: provide URI
+      return CreatedAtRoute("GetTheme", new { moduleId = model.ModuleId, themeId = model.Id }, model);
     }
 
     /// <summary>
@@ -61,12 +61,13 @@ namespace DeveloperPath.WebUI.Controllers
     /// <summary>
     /// Delete the theme with given Id
     /// </summary>
+    /// <param name="moduleId">And id of the module the theme is in</param>
     /// <param name="themeId">An id of the theme</param>
     /// <returns></returns>
     [HttpDelete("{themeId}")]
-    public async Task<ActionResult> Delete(int themeId)
+    public async Task<ActionResult> Delete(int moduleId, int themeId)
     {
-      await Mediator.Send(new DeleteThemeCommand { Id = themeId });
+      await Mediator.Send(new DeleteThemeCommand { Id = themeId, ModuleId = moduleId });
 
       return NoContent();
     }

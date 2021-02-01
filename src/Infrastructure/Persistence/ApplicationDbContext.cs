@@ -38,6 +38,7 @@ namespace DeveloperPath.Infrastructure.Persistence
     public DbSet<Domain.Entities.Module> Modules { get; set; }
     public DbSet<Section> Sections { get; set; }
     public DbSet<Theme> Themes { get; set; }
+    public DbSet<Source> Sources { get; set; }
 
     public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
     {

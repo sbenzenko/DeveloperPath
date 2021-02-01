@@ -91,10 +91,11 @@
             <param name="command">Updated theme object</param>
             <returns></returns>
         </member>
-        <member name="M:DeveloperPath.WebUI.Controllers.ThemesController.Delete(System.Int32)">
+        <member name="M:DeveloperPath.WebUI.Controllers.ThemesController.Delete(System.Int32,System.Int32)">
             <summary>
             Delete the theme with given Id
             </summary>
+            <param name="moduleId">And id of the module the theme is in</param>
             <param name="themeId">An id of the theme</param>
             <returns></returns>
         </member>

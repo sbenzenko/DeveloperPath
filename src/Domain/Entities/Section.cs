@@ -23,7 +23,12 @@ namespace DeveloperPath.Domain.Entities
     /// <summary>
     /// Module that section is part of
     /// </summary>
-    public Module Module { get; set; }
+    public int ModuleId { get; set; }
+
+    /// <summary>
+    /// Module that section is part of
+    /// </summary>
+    public Module Module { get; init; }
 
     /// <summary>
     /// Necessity level

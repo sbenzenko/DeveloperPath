@@ -17,7 +17,7 @@ namespace DeveloperPath.WebUI.Controllers
     /// </summary>
     /// <param name="moduleId">An id of the module</param>
     /// <returns>Detailed information of the module with themes included</returns>
-    [HttpGet("{moduleId}")]
+    [HttpGet("{moduleId}", Name = "GetModule")]
     [HttpHead("{moduleId}")]
     public async Task<ActionResult<ModuleViewModel>> Get(int moduleId)
     {
@@ -36,7 +36,7 @@ namespace DeveloperPath.WebUI.Controllers
     {
       ModuleDto model = await Mediator.Send(command);
 
-      return Created("", model); //TODO: provide URI
+      return CreatedAtRoute("GetModule", new { moduleId = model.Id }, model);
     }
 
     /// <summary>

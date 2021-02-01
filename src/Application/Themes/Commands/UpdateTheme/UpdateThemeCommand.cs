@@ -38,7 +38,7 @@ namespace DeveloperPath.Application.Themes.Commands.UpdateTheme
 
     public async Task<Unit> Handle(UpdateThemeCommand request, CancellationToken cancellationToken)
     {
-      var entity = await _context.Themes.FindAsync(request.Id, cancellationToken);
+      var entity = await _context.Themes.FindAsync(new object[] { request.Id }, cancellationToken);
       if (entity == null)
         throw new NotFoundException(nameof(Theme), request.Id);
 

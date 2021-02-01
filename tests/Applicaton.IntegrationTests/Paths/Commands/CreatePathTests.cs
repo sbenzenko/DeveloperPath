@@ -23,6 +23,36 @@ namespace DeveloperPath.Application.IntegrationTests.TodoLists.Commands
     }
 
     [Test]
+    public void ShouldRequireTitle()
+    {
+      var command = new CreatePathCommand
+      {
+        Title = "",
+        Description = "Learn how to design modern web applications using ASP.NET"
+      };
+
+      FluentActions.Invoking(() =>
+          SendAsync(command)).Should().Throw<ValidationException>()
+            .Where(ex => ex.Errors.ContainsKey("Title"))
+            .And.Errors["Title"].Should().Contain("Title is required.");
+    }
+
+    [Test]
+    public void ShouldDisallowLongTitle()
+    {
+      var command = new CreatePathCommand
+      {
+        Title = "This path title is too long and exceeds one hundred characters allowed for path titles by CreatePathCommandValidator",
+        Description = "Learn how to design modern web applications using ASP.NET"
+      };
+
+      FluentActions.Invoking(() =>
+          SendAsync(command)).Should().Throw<ValidationException>()
+            .Where(ex => ex.Errors.ContainsKey("Title"))
+            .And.Errors["Title"].Should().Contain("Title must not exceed 100 characters.");
+    }
+
+    [Test]
     public void ShouldRequireDescription()
     {
       var command = new CreatePathCommand
