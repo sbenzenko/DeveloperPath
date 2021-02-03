@@ -1,7 +1,7 @@
 ﻿using DeveloperPath.Application.Common.Mappings;
 using DeveloperPath.Domain.Entities;
 
-namespace DeveloperPath.Application.Themes.Queries.GetThemes
+namespace DeveloperPath.Application.Themes.Queries.GetTheme
 {
   public class ThemeTitle : IMapFrom<Theme>
   {

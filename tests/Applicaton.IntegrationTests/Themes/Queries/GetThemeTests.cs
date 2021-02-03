@@ -1,12 +1,9 @@
-﻿using DeveloperPath.Application.Modules.Queries.GetModules;
-using DeveloperPath.Application.Paths.Queries.GetPaths;
-using DeveloperPath.Application.Themes.Queries.GetThemes;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using DeveloperPath.Application.Themes.Queries.GetTheme;
 using DeveloperPath.Domain.Entities;
 using FluentAssertions;
 using NUnit.Framework;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace DeveloperPath.Application.IntegrationTests.TodoLists.Queries
 {
@@ -22,12 +19,12 @@ namespace DeveloperPath.Application.IntegrationTests.TodoLists.Queries
         Title = "New Module",
         Description = "New Module Description",
         Necessity = Domain.Enums.NecessityLevel.MustKnow,
-        Themes = new List<Theme> {},
+        Themes = new List<Theme> { },
         Paths = new List<Path> { new Path
           {
             Title = "Some Path",
             Description = "Some Path Description"
-          } 
+          }
         }
       });
 
@@ -42,14 +39,14 @@ namespace DeveloperPath.Application.IntegrationTests.TodoLists.Queries
         Order = 2,
         Sources = new List<Source>
         {
-          new Source { 
-              Title = "Source1", 
-              Type = Domain.Enums.SourceType.Blog, 
+          new Source {
+              Title = "Source1",
+              Type = Domain.Enums.SourceType.Blog,
               Url = "https://www.google.com",
               Availability = Domain.Enums.AvailabilityLevel.Free },
-          new Source { 
-              Title = "Source2", 
-              Type = Domain.Enums.SourceType.Blog, 
+          new Source {
+              Title = "Source2",
+              Type = Domain.Enums.SourceType.Blog,
               Url = "https://www.microsoft.com",
               Availability = Domain.Enums.AvailabilityLevel.RequiresRegistration }
         },

@@ -30,7 +30,7 @@ namespace DeveloperPath.WebUI.Controllers
     /// Create a module
     /// </summary>
     /// <param name="command">Module object</param>
-    /// <returns>An Id of created module</returns>
+    /// <returns>Created module</returns>
     [HttpPost]
     public async Task<ActionResult<ModuleDto>> Create(CreateModuleCommand command)
     {
@@ -44,7 +44,7 @@ namespace DeveloperPath.WebUI.Controllers
     /// </summary>
     /// <param name="moduleId">An id of the module</param>
     /// <param name="command">Updated module object</param>
-    /// <returns></returns>
+    /// <returns>Updated module</returns>
     [HttpPut("{moduleId}")]
     public async Task<ActionResult<ModuleDto>> Update(int moduleId, UpdateModuleCommand command)
     {

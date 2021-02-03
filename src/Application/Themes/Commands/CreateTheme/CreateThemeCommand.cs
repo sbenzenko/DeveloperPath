@@ -40,14 +40,9 @@ namespace DeveloperPath.Application.Themes.Commands.CreateTheme
 
     public async Task<ThemeDto> Handle(CreateThemeCommand request, CancellationToken cancellationToken)
     {
-      var module = await _context.Modules
-        .Where(m => m.Id == request.ModuleId)
-        .FirstOrDefaultAsync(cancellationToken);
-
+      var module = await _context.Modules.FindAsync(new object[] { request.ModuleId }, cancellationToken);
       if (module == null)
-      {
         throw new NotFoundException(nameof(Module), request.ModuleId);
-      }
 
       Section section = null;
       if (request.SectionId > 0)
@@ -68,6 +63,7 @@ namespace DeveloperPath.Application.Themes.Commands.CreateTheme
         Description = request.Description,
         Complexity = request.Complexity,
         Necessity = request.Necessity,
+        ModuleId = request.ModuleId,
         Module = module,
         Section = section,
         Order = request.Order

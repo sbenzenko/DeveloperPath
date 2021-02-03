@@ -1,21 +1,18 @@
-﻿using DeveloperPath.Application.Common.Exceptions;
+﻿using AutoMapper;
+using DeveloperPath.Application.Common.Exceptions;
 using DeveloperPath.Application.Common.Interfaces;
+using DeveloperPath.Application.Common.Models;
 using DeveloperPath.Domain.Entities;
 using DeveloperPath.Domain.Enums;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace DeveloperPath.Application.Themes.Commands.UpdateTheme
 {
-
-  /// <summary>
-  /// Represents developer theme entity
-  /// </summary>
-  public partial record UpdateThemeCommand : IRequest
+  public partial record UpdateThemeCommand : IRequest<ThemeDto>
   {
     public int Id { get; init; }
     public int ModuleId { get; init; }
@@ -27,24 +24,24 @@ namespace DeveloperPath.Application.Themes.Commands.UpdateTheme
     public int Order { get; init; }
   }
 
-  public class UpdateThemeCommandHandler : IRequestHandler<UpdateThemeCommand>
+  public class UpdateThemeCommandHandler : IRequestHandler<UpdateThemeCommand, ThemeDto>
   {
     private readonly IApplicationDbContext _context;
+    private readonly IMapper _mapper;
 
-    public UpdateThemeCommandHandler(IApplicationDbContext context)
+    public UpdateThemeCommandHandler(IApplicationDbContext context, IMapper mapper)
     {
       _context = context;
+      _mapper = mapper;
     }
 
-    public async Task<Unit> Handle(UpdateThemeCommand request, CancellationToken cancellationToken)
+    public async Task<ThemeDto> Handle(UpdateThemeCommand request, CancellationToken cancellationToken)
     {
       var entity = await _context.Themes.FindAsync(new object[] { request.Id }, cancellationToken);
       if (entity == null)
         throw new NotFoundException(nameof(Theme), request.Id);
 
-      var module = await _context.Modules
-        .Where(m => m.Id == request.ModuleId)
-        .FirstOrDefaultAsync(cancellationToken);
+      var module = await _context.Modules.FindAsync(new object[] { request.ModuleId }, cancellationToken);
       if (module == null)
         throw new NotFoundException(nameof(Module), request.ModuleId);
 
@@ -70,7 +67,7 @@ namespace DeveloperPath.Application.Themes.Commands.UpdateTheme
 
       await _context.SaveChangesAsync(cancellationToken);
 
-      return Unit.Value;
+      return _mapper.Map<ThemeDto>(entity);
     }
   }
 }

@@ -29,11 +29,8 @@ namespace DeveloperPath.Application.Themes.Commands.DeleteTheme
       var entity = await _context.Themes
         .Where(t => t.Id == request.Id && t.ModuleId == request.ModuleId)
         .FirstOrDefaultAsync(cancellationToken);
-
       if (entity == null)
-      {
         throw new NotFoundException(nameof(Theme), request.Id);
-      }
 
       _context.Themes.Remove(entity);
 

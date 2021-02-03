@@ -48,6 +48,35 @@ namespace DeveloperPath.Infrastructure.Persistence
 
       if (!context.Paths.Any())
       {
+        // Sources 
+        var primitivesSrc = new Source
+        {
+          Title = "Types and variables",
+          Url = "https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/language-specification/introduction#types-and-variables",
+          Order = 0,
+          Type = Domain.Enums.SourceType.Documentation,
+          Availability = Domain.Enums.AvailabilityLevel.Free,
+          Relevance = Domain.Enums.RelevanceLevel.Relevant
+        };
+        var tagSrc1 = new Source
+        {
+          Title = "Tag Helpers",
+          Url = "https://docs.microsoft.com/en-us/aspnet/core/mvc/views/tag-helpers/intro",
+          Order = 0,
+          Type = Domain.Enums.SourceType.Documentation,
+          Availability = Domain.Enums.AvailabilityLevel.Free,
+          Relevance = Domain.Enums.RelevanceLevel.Relevant
+        };
+        var tagSrc2 = new Source
+        {
+          Title = "Tag-хелперы",
+          Url = "https://metanit.com/sharp/aspnet5/10.1.php",
+          Order = 1,
+          Type = Domain.Enums.SourceType.Course,
+          Availability = Domain.Enums.AvailabilityLevel.Free,
+          Relevance = Domain.Enums.RelevanceLevel.Relevant
+        };
+
         // Sections 
         var basics = new Section
         {
@@ -68,6 +97,7 @@ namespace DeveloperPath.Infrastructure.Persistence
           Complexity = Domain.Enums.ComplexityLevel.Beginner,
           Necessity = Domain.Enums.NecessityLevel.MustKnow,
           Section = basics,
+          Sources = new List<Source> { primitivesSrc },
           Order = 0
         };
         var classes = new Theme
@@ -114,6 +144,7 @@ namespace DeveloperPath.Infrastructure.Persistence
           Complexity = Domain.Enums.ComplexityLevel.Intermediate,
           Necessity = Domain.Enums.NecessityLevel.GoodToKnow,
           Prerequisites = new List<Theme> { razor },
+          Sources = new List<Source> { tagSrc1, tagSrc2 },
           Order = 2
         };
 

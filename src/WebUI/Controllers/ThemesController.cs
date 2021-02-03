@@ -2,7 +2,7 @@
 using DeveloperPath.Application.Themes.Commands.CreateTheme;
 using DeveloperPath.Application.Themes.Commands.DeleteTheme;
 using DeveloperPath.Application.Themes.Commands.UpdateTheme;
-using DeveloperPath.Application.Themes.Queries.GetThemes;
+using DeveloperPath.Application.Themes.Queries.GetTheme;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
@@ -32,7 +32,7 @@ namespace DeveloperPath.WebUI.Controllers
     /// Create a theme
     /// </summary>
     /// <param name="command">Theme object</param>
-    /// <returns>An Id of created theme</returns>
+    /// <returns>Created theme</returns>
     [HttpPost]
     public async Task<ActionResult<ThemeDto>> Create(CreateThemeCommand command)
     {
@@ -46,7 +46,7 @@ namespace DeveloperPath.WebUI.Controllers
     /// </summary>
     /// <param name="themeId">An id of the theme</param>
     /// <param name="command">Updated theme object</param>
-    /// <returns></returns>
+    /// <returns>Upated theme</returns>
     [HttpPut("{themeId}")]
     public async Task<ActionResult<ThemeDto>> Update(int themeId, UpdateThemeCommand command)
     {

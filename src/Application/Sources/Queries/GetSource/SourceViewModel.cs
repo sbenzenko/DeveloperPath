@@ -1,10 +1,15 @@
 ﻿using System.Collections.Generic;
-using DeveloperPath.Domain.Common;
+using DeveloperPath.Application.Common.Mappings;
+using DeveloperPath.Application.Common.Models;
+using DeveloperPath.Domain.Entities;
 using DeveloperPath.Domain.Enums;
 
-namespace DeveloperPath.Domain.Entities
+namespace DeveloperPath.Application.Sources.Queries.GetSource
 {
-  public record Source : AuditableEntity
+  /// <summary>
+  /// Detailed information about the source
+  /// </summary>
+  public class SourceViewModel : IMapFrom<Source>
   {
     /// <summary>
     /// Source ID
@@ -27,14 +32,9 @@ namespace DeveloperPath.Domain.Entities
     public string Url { get; set; }
 
     /// <summary>
-    /// Theme id that the source is for
-    /// </summary>
-    public int ThemeId { get; set; }
-
-    /// <summary>
     /// Theme that the source is for
     /// </summary>
-    public Theme Theme { get; init; }
+    public ThemeDto Theme { get; init; }
 
     /// <summary>
     /// Position of source in theme (0-based).
@@ -50,7 +50,7 @@ namespace DeveloperPath.Domain.Entities
     /// Whether the resource is available free or paid
     /// </summary>
     public AvailabilityLevel Availability { get; set; }
-    
+
     /// <summary>
     /// Whether inforation if up-to-date
     /// </summary>

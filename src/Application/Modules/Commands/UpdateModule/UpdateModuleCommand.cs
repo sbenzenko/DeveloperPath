@@ -1,5 +1,7 @@
-﻿using DeveloperPath.Application.Common.Exceptions;
+﻿using AutoMapper;
+using DeveloperPath.Application.Common.Exceptions;
 using DeveloperPath.Application.Common.Interfaces;
+using DeveloperPath.Application.Common.Models;
 using DeveloperPath.Domain.Entities;
 using DeveloperPath.Domain.Enums;
 using MediatR;
@@ -9,10 +11,7 @@ using System.Threading.Tasks;
 
 namespace DeveloperPath.Application.Modules.Commands.UpdateModule
 {
-  /// <summary>
-  /// Represents developer module entity
-  /// </summary>
-  public partial record UpdateModuleCommand : IRequest
+  public partial record UpdateModuleCommand : IRequest<ModuleDto>
   {
     public int Id { get; init; }
     public string Title { get; init; }
@@ -21,23 +20,22 @@ namespace DeveloperPath.Application.Modules.Commands.UpdateModule
     public IList<string> Tags { get; init; }
   }
 
-  public class UpdateModuleCommandHandler : IRequestHandler<UpdateModuleCommand>
+  public class UpdateModuleCommandHandler : IRequestHandler<UpdateModuleCommand, ModuleDto>
   {
     private readonly IApplicationDbContext _context;
+    private readonly IMapper _mapper;
 
-    public UpdateModuleCommandHandler(IApplicationDbContext context)
+    public UpdateModuleCommandHandler(IApplicationDbContext context, IMapper mapper)
     {
       _context = context;
+      _mapper = mapper;
     }
 
-    public async Task<Unit> Handle(UpdateModuleCommand request, CancellationToken cancellationToken)
+    public async Task<ModuleDto> Handle(UpdateModuleCommand request, CancellationToken cancellationToken)
     {
       var entity = await _context.Modules.FindAsync(new object[] { request.Id }, cancellationToken);
-
       if (entity == null)
-      {
         throw new NotFoundException(nameof(Module), request.Id);
-      }
 
       // TODO: is there a way to use init-only fields?
       entity.Title = request.Title;
@@ -47,7 +45,7 @@ namespace DeveloperPath.Application.Modules.Commands.UpdateModule
 
       await _context.SaveChangesAsync(cancellationToken);
 
-      return Unit.Value;
+      return _mapper.Map<ModuleDto>(entity);
     }
   }
 }

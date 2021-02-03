@@ -20,6 +20,7 @@ namespace DeveloperPath.Application.Common.Interfaces
         DbSet<Module> Modules { get; set; }
         DbSet<Section> Sections { get; set; }
         DbSet<Theme> Themes { get; set; }
+        DbSet<Source> Sources { get; set; }
 
         Task<int> SaveChangesAsync(CancellationToken cancellationToken);
     }

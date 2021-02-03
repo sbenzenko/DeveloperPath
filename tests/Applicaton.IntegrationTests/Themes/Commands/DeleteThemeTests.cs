@@ -1,14 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using DeveloperPath.Application.Common.Exceptions;
-using DeveloperPath.Application.Modules.Commands.CreateModule;
-using DeveloperPath.Application.Modules.Commands.DeleteModule;
 using DeveloperPath.Application.Themes.Commands.DeleteTheme;
 using DeveloperPath.Domain.Entities;
 using FluentAssertions;
 using NUnit.Framework;
 
-namespace DeveloperPath.Application.IntegrationTests.TodoLists.Commands
+namespace DeveloperPath.Application.IntegrationTests.Commands
 {
   using static Testing;
 

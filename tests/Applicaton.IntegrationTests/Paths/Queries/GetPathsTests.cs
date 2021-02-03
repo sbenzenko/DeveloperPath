@@ -6,7 +6,7 @@ using DeveloperPath.Domain.Enums;
 using FluentAssertions;
 using NUnit.Framework;
 
-namespace DeveloperPath.Application.IntegrationTests.TodoLists.Queries
+namespace DeveloperPath.Application.IntegrationTests.Queries
 {
   using static Testing;
 

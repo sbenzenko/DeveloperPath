@@ -4,7 +4,7 @@ using DeveloperPath.Application.Common.Models;
 using DeveloperPath.Domain.Entities;
 using DeveloperPath.Domain.Enums;
 
-namespace DeveloperPath.Application.Themes.Queries.GetThemes
+namespace DeveloperPath.Application.Themes.Queries.GetTheme
 {
   /// <summary>
   /// Detailed information about the theme

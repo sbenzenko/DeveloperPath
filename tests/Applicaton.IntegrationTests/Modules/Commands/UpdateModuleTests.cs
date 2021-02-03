@@ -2,16 +2,13 @@
 using DeveloperPath.Application.Modules.Commands.CreateModule;
 using DeveloperPath.Application.Modules.Commands.UpdateModule;
 using DeveloperPath.Application.Paths.Commands.CreatePath;
-using DeveloperPath.Application.Paths.Commands.UpdatePath;
-using DeveloperPath.Application.TodoLists.Commands.CreateTodoList;
-using DeveloperPath.Application.TodoLists.Commands.UpdateTodoList;
 using DeveloperPath.Domain.Entities;
 using FluentAssertions;
 using NUnit.Framework;
 using System;
 using System.Threading.Tasks;
 
-namespace DeveloperPath.Application.IntegrationTests.TodoLists.Commands
+namespace DeveloperPath.Application.IntegrationTests.Commands
 {
   using static Testing;
 

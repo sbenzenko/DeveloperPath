@@ -17,7 +17,7 @@ namespace DeveloperPath.Infrastructure.Persistence.Migrations
             modelBuilder
                 .UseIdentityColumns()
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("ProductVersion", "5.0.0");
+                .HasAnnotation("ProductVersion", "5.0.2");
 
             modelBuilder.Entity("DeveloperPath.Domain.Entities.Module", b =>
                 {
@@ -140,7 +140,7 @@ namespace DeveloperPath.Infrastructure.Persistence.Migrations
                     b.Property<string>("LastModifiedBy")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("ModuleId")
+                    b.Property<int>("ModuleId")
                         .HasColumnType("int");
 
                     b.Property<int>("Necessity")
@@ -180,6 +180,9 @@ namespace DeveloperPath.Infrastructure.Persistence.Migrations
                     b.Property<string>("CreatedBy")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime?>("LastModified")
                         .HasColumnType("datetime2");
 
@@ -195,7 +198,7 @@ namespace DeveloperPath.Infrastructure.Persistence.Migrations
                     b.Property<string>("Tags")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("ThemeId")
+                    b.Property<int>("ThemeId")
                         .HasColumnType("int");
 
                     b.Property<string>("Title")
@@ -232,7 +235,7 @@ namespace DeveloperPath.Infrastructure.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Tags");
+                    b.ToTable("Tag");
                 });
 
             modelBuilder.Entity("DeveloperPath.Domain.Entities.Theme", b =>
@@ -262,7 +265,7 @@ namespace DeveloperPath.Infrastructure.Persistence.Migrations
                     b.Property<string>("LastModifiedBy")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("ModuleId")
+                    b.Property<int>("ModuleId")
                         .HasColumnType("int");
 
                     b.Property<int>("Necessity")
@@ -279,8 +282,8 @@ namespace DeveloperPath.Infrastructure.Persistence.Migrations
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.HasKey("Id");
 
@@ -717,7 +720,9 @@ namespace DeveloperPath.Infrastructure.Persistence.Migrations
                 {
                     b.HasOne("DeveloperPath.Domain.Entities.Module", "Module")
                         .WithMany("Sections")
-                        .HasForeignKey("ModuleId");
+                        .HasForeignKey("ModuleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Module");
                 });
@@ -726,7 +731,9 @@ namespace DeveloperPath.Infrastructure.Persistence.Migrations
                 {
                     b.HasOne("DeveloperPath.Domain.Entities.Theme", "Theme")
                         .WithMany("Sources")
-                        .HasForeignKey("ThemeId");
+                        .HasForeignKey("ThemeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Theme");
                 });
@@ -735,7 +742,9 @@ namespace DeveloperPath.Infrastructure.Persistence.Migrations
                 {
                     b.HasOne("DeveloperPath.Domain.Entities.Module", "Module")
                         .WithMany("Themes")
-                        .HasForeignKey("ModuleId");
+                        .HasForeignKey("ModuleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("DeveloperPath.Domain.Entities.Section", "Section")
                         .WithMany("Themes")

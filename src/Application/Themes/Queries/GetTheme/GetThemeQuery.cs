@@ -8,7 +8,7 @@ using DeveloperPath.Domain.Entities;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace DeveloperPath.Application.Themes.Queries.GetThemes
+namespace DeveloperPath.Application.Themes.Queries.GetTheme
 {
   public class GetThemeQuery : IRequest<ThemeViewModel>
   {

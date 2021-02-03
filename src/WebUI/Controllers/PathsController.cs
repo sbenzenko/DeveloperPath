@@ -44,7 +44,7 @@ namespace DeveloperPath.WebUI.Controllers
     /// Create a path
     /// </summary>
     /// <param name="command">Path object</param>
-    /// <returns>A created path</returns>
+    /// <returns>Created path</returns>
     [HttpPost]
     public async Task<ActionResult<PathDto>> Create(CreatePathCommand command)
     {
@@ -57,7 +57,7 @@ namespace DeveloperPath.WebUI.Controllers
     /// Update the path with given Id
     /// </summary>
     /// <param name="id">An id of the path</param>
-    /// <param name="command">Updated path object</param>
+    /// <param name="command">Updated path</param>
     /// <returns></returns>
     [HttpPut("{id}")]
     public async Task<ActionResult<PathDto>> Update(int id, UpdatePathCommand command)

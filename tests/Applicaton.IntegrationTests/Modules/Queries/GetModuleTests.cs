@@ -1,13 +1,11 @@
-﻿using DeveloperPath.Application.Modules.Queries.GetModules;
-using DeveloperPath.Application.Paths.Queries.GetPaths;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using DeveloperPath.Application.Modules.Queries.GetModules;
 using DeveloperPath.Domain.Entities;
 using FluentAssertions;
 using NUnit.Framework;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace DeveloperPath.Application.IntegrationTests.TodoLists.Queries
+namespace DeveloperPath.Application.IntegrationTests.Queries
 {
   using static Testing;
 
@@ -34,7 +32,7 @@ namespace DeveloperPath.Application.IntegrationTests.TodoLists.Queries
           {
             Title = "Some Path",
             Description = "Some Path Description"
-          } 
+          }
         }
       });
 
