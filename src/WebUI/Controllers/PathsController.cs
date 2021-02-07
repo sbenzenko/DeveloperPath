@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 namespace DeveloperPath.WebUI.Controllers
 {
   //[Authorize]
+  [Route("api/paths")]
   public class PathsController : ApiController
   {
     /// <summary>
@@ -30,15 +31,30 @@ namespace DeveloperPath.WebUI.Controllers
     /// Get path information by its Id
     /// </summary>
     /// <param name="pathId">An id of the path</param>
-    /// <returns>Detailed information of the path with modules included</returns>
+    /// <returns>Information of the path with modules included</returns>
     [HttpGet("{pathId}", Name = "GetPath")]
     [HttpHead("{pathId}")]
     public async Task<ActionResult<PathDto>> Get(int pathId)
     {
-      PathViewModel model = await Mediator.Send(new GetPathQuery { Id = pathId });
+      PathDto model = await Mediator.Send(new GetPathQuery { Id = pathId });
 
       return Ok(model);
     }
+
+    ///// <summary>
+    ///// Get detailed path information by its Id
+    ///// </summary>
+    ///// <param name="pathId">An id of the path</param>
+    ///// <returns>Detailed information of the path with modules included</returns>
+    //[Route("api/pathdetails")]
+    //[HttpGet("{pathId}", Name = "GetPathDetails")]
+    //[HttpHead("{pathId}")]
+    //public async Task<ActionResult<PathViewModel>> GetDetails(int pathId)
+    //{
+    //  PathViewModel model = await Mediator.Send(new GetPathDetailsQuery { Id = pathId });
+
+    //  return Ok(model);
+    //}
 
     /// <summary>
     /// Create a path
@@ -56,29 +72,29 @@ namespace DeveloperPath.WebUI.Controllers
     /// <summary>
     /// Update the path with given Id
     /// </summary>
-    /// <param name="id">An id of the path</param>
+    /// <param name="pathId">An id of the path</param>
     /// <param name="command">Updated path</param>
     /// <returns></returns>
-    [HttpPut("{id}")]
-    public async Task<ActionResult<PathDto>> Update(int id, UpdatePathCommand command)
+    [HttpPut("{pathId}")]
+    public async Task<ActionResult<PathDto>> Update(int pathId, UpdatePathCommand command)
     {
-      if (id != command.Id)
-      {
+      if (pathId != command.Id)
         return BadRequest();
-      }
 
       return Ok(await Mediator.Send(command));
     }
 
+    // TODO: add PATCH
+
     /// <summary>
     /// Delete the path with given Id
     /// </summary>
-    /// <param name="id">An id of the path</param>
+    /// <param name="pathId">An id of the path</param>
     /// <returns></returns>
-    [HttpDelete("{id}")]
-    public async Task<IActionResult> Delete(int id)
+    [HttpDelete("{pathId}")]
+    public async Task<IActionResult> Delete(int pathId)
     {
-      await Mediator.Send(new DeletePathCommand { Id = id });
+      await Mediator.Send(new DeletePathCommand { Id = pathId });
 
       return NoContent();
     }

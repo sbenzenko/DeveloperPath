@@ -12,6 +12,7 @@ namespace DeveloperPath.Application.Themes.Commands.DeleteTheme
   public record DeleteThemeCommand : IRequest
   {
     public int Id { get; init; }
+    public int PathId { get; init; }
     public int ModuleId { get; init; }
   }
 
@@ -26,6 +27,12 @@ namespace DeveloperPath.Application.Themes.Commands.DeleteTheme
 
     public async Task<Unit> Handle(DeleteThemeCommand request, CancellationToken cancellationToken)
     {
+      var path = await _context.Paths
+        .Where(c => c.Id == request.PathId)
+        .FirstOrDefaultAsync(cancellationToken);
+      if (path == null)
+        throw new NotFoundException(nameof(Path), request.PathId);
+
       var entity = await _context.Themes
         .Where(t => t.Id == request.Id && t.ModuleId == request.ModuleId)
         .FirstOrDefaultAsync(cancellationToken);

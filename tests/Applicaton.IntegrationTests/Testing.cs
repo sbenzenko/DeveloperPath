@@ -121,7 +121,7 @@ public class Testing
     return await context.FindAsync<TEntity>(id);
   }
 
-  public static async Task AddAsync<TEntity>(TEntity entity)
+  public static async Task<TEntity> AddAsync<TEntity>(TEntity entity)
       where TEntity : class
   {
     using var scope = _scopeFactory.CreateScope();
@@ -131,20 +131,7 @@ public class Testing
     context.Add(entity);
 
     await context.SaveChangesAsync();
-  }
-
-  public static async Task<int> AddWithIdAsync<TEntity>(TEntity entity)
-      where TEntity : AuditableEntity
-  {
-    using var scope = _scopeFactory.CreateScope();
-
-    var context = scope.ServiceProvider.GetService<ApplicationDbContext>();
-
-    context.Add(entity);
-
-    await context.SaveChangesAsync();
-
-    return entity.Id;
+    return entity;
   }
 
   [OneTimeTearDown]

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using DeveloperPath.Application.Common.Exceptions;
+using DeveloperPath.Application.Modules.Commands.CreateModule;
 using DeveloperPath.Application.Themes.Commands.UpdateTheme;
 using DeveloperPath.Domain.Entities;
 using FluentAssertions;
@@ -48,7 +49,7 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
     [Test]
     public async Task ShouldRequireThemeTitle()
     {
-      var moduleId = await AddWithIdAsync(new Module
+      var module = await AddAsync(new Module
       {
         Title = "New Module",
         Description = "New Module Description",
@@ -60,18 +61,18 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
         }
       });
 
-      var themeId = await AddWithIdAsync(new Theme
+      var theme = await AddAsync(new Theme
       {
         Title = "New Theme",
         Description = "New Theme Description",
         Tags = new List<string> { "Tag1", "Tag2", "Tag3" },
-        ModuleId = moduleId
+        ModuleId = module.Id
       });
 
       var command = new UpdateThemeCommand
       {
-        Id = themeId,
-        ModuleId = moduleId,
+        Id = theme.Id,
+        ModuleId = module.Id,
         Title = "",
         Description = "New Description",
         Necessity = 0
@@ -86,7 +87,7 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
     [Test]
     public async Task ShouldRequireModuleDescription()
     {
-      var moduleId = await AddWithIdAsync(new Module
+      var module = await AddAsync(new Module
       {
         Title = "New Module",
         Description = "New Module Description",
@@ -98,18 +99,18 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
         }
       });
 
-      var themeId = await AddWithIdAsync(new Theme
+      var theme = await AddAsync(new Theme
       {
         Title = "New Theme",
         Description = "New Theme Description",
         Tags = new List<string> { "Tag1", "Tag2", "Tag3" },
-        ModuleId = moduleId
+        ModuleId = module.Id
       });
 
       var command = new UpdateThemeCommand
       {
-        Id = themeId,
-        ModuleId = moduleId,
+        Id = theme.Id,
+        ModuleId = module.Id,
         Title = "New Theme",
         Description = "",
         Necessity = 0
@@ -124,7 +125,7 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
     [Test]
     public async Task ShouldDisallowLongModuleTitle()
     {
-      var moduleId = await AddWithIdAsync(new Module
+      var module = await AddAsync(new Module
       {
         Title = "New Module",
         Description = "New Module Description",
@@ -136,17 +137,17 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
         }
       });
 
-      var themeId = await AddWithIdAsync(new Theme
+      var theme = await AddAsync(new Theme
       {
         Title = "New Theme",
         Description = "New Theme Description",
         Tags = new List<string> { "Tag1", "Tag2", "Tag3" },
-        ModuleId = moduleId
+        ModuleId = module.Id
       });
 
       var command = new UpdateThemeCommand
       {
-        Id = moduleId,
+        Id = theme.Id,
         Title = "This theme title is too long and exceeds two hundred characters allowed for theme titles by CreateThemeCommandValidator. And this theme title in incredibly long and ugly. I imagine no one would create a title this long but just in case",
         Description = "New Description",
         Necessity = 0
@@ -161,7 +162,7 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
     [Test]
     public async Task ShouldRequireUniqueTitle()
     {
-      var moduleId = await AddWithIdAsync(new Module
+      var module = await AddAsync(new Module
       {
         Title = "New Module",
         Description = "New Module Description",
@@ -178,20 +179,20 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
         Title = "New Theme",
         Description = "New Theme Description",
         Tags = new List<string> { "Tag1", "Tag2", "Tag3" },
-        ModuleId = moduleId
+        ModuleId = module.Id
       });
 
-      var themeId = await AddWithIdAsync(new Theme
+      var theme = await AddAsync(new Theme
       {
         Title = "New Other Theme",
         Description = "New Other Theme Description",
-        ModuleId = moduleId
+        ModuleId = module.Id
       });
 
       var command = new UpdateThemeCommand
       {
-        Id = themeId,
-        ModuleId = moduleId,
+        Id = theme.Id,
+        ModuleId = module.Id,
         Title = "New Theme",
         Description = "Updated Description"
       };
@@ -207,29 +208,31 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
     {
       var userId = await RunAsDefaultUserAsync();
 
-      var moduleId = await AddWithIdAsync(new Module
+      var path = await AddAsync(new Path
       {
-        Title = "New Module",
-        Description = "New Module Description",
-        Paths = new List<Path> { new Path
-          {
-            Title = "Some Path",
-            Description = "Some Path Description"
-          }
-        }
+        Title = "Some Path",
+        Description = "Some Path Description"
       });
 
-      var themeId = await AddWithIdAsync(new Theme
+      var module = await SendAsync(new CreateModuleCommand
+      {
+        PathId = path.Id,
+        Title = "Module Title",
+        Description = "Module Decription"
+      });
+
+      var theme = await AddAsync(new Theme
       {
         Title = "New Theme",
         Description = "New Theme Description",
-        ModuleId = moduleId
+        ModuleId = module.Id
       });
 
       var command = new UpdateThemeCommand
       {
-        Id = themeId,
-        ModuleId = moduleId,
+        PathId = path.Id,
+        ModuleId = module.Id,
+        Id = theme.Id,
         Title = "Updated title",
         Description = "Updated Description",
         Necessity = 0
@@ -237,7 +240,7 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
 
       await SendAsync(command);
 
-      var updatedTheme = await FindAsync<Theme>(themeId);
+      var updatedTheme = await FindAsync<Theme>(theme.Id);
 
       updatedTheme.Title.Should().Be(command.Title);
       updatedTheme.Description.Should().Be(command.Description);

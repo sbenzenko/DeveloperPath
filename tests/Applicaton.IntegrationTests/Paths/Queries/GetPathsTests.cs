@@ -28,12 +28,30 @@ namespace DeveloperPath.Application.IntegrationTests.Queries
     }
 
     [Test]
-    public async Task ShouldReturnPathWithModules()
+    public async Task ShouldReturnPath()
     {
-      var pathId = await AddWithIdAsync(new Path
+      var path = await AddAsync(new Path
       {
         Title = "Some Path",
         Description = "Some Path Description",
+        Tags = new List<string> { "Tag1", "Tag2", "Tag3" }
+      });
+
+      var query = new GetPathQuery() { Id = path.Id };
+
+      var result = await SendAsync(query);
+
+      result.Title.Should().NotBeEmpty();
+      result.Tags.Should().HaveCount(3);
+    }
+
+    [Test]
+    public async Task ShouldReturnPathWithModules()
+    {
+      var path = await AddAsync(new Path
+      {
+        Title = "Some Other Path",
+        Description = "Some Other Path Description",
         Modules = new List<Module>
           {
             new Module { Title = "Module1", Description = "Module 1 Description", Necessity = NecessityLevel.Other },
@@ -45,7 +63,7 @@ namespace DeveloperPath.Application.IntegrationTests.Queries
         Tags = new List<string> { "Tag1", "Tag2", "Tag3" }
       });
 
-      var query = new GetPathQuery() { Id = pathId };
+      var query = new GetPathDetailsQuery() { Id = path.Id };
 
       var result = await SendAsync(query);
 

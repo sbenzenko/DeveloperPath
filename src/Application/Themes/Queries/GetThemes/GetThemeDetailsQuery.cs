@@ -8,26 +8,26 @@ using DeveloperPath.Domain.Entities;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace DeveloperPath.Application.Themes.Queries.GetTheme
+namespace DeveloperPath.Application.Themes.Queries.GetThemes
 {
-  public class GetThemeQuery : IRequest<ThemeViewModel>
+  public class GetThemeDetailsQuery : IRequest<ThemeViewModel>
   {
     public int Id { get; set; }
     public int ModuleId { get; set; }
   }
 
-  public class GetThemeQueryHandler : IRequestHandler<GetThemeQuery, ThemeViewModel>
+  public class GetThemeDetailsQueryHandler : IRequestHandler<GetThemeDetailsQuery, ThemeViewModel>
   {
     private readonly IApplicationDbContext _context;
     private readonly IMapper _mapper;
 
-    public GetThemeQueryHandler(IApplicationDbContext context, IMapper mapper)
+    public GetThemeDetailsQueryHandler(IApplicationDbContext context, IMapper mapper)
     {
       _context = context;
       _mapper = mapper;
     }
 
-    public async Task<ThemeViewModel> Handle(GetThemeQuery request, CancellationToken cancellationToken)
+    public async Task<ThemeViewModel> Handle(GetThemeDetailsQuery request, CancellationToken cancellationToken)
     {
       var result = await _context.Themes
         .Include(t => t.Prerequisites)

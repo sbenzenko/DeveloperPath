@@ -1,4 +1,5 @@
-﻿using DeveloperPath.Application.Common.Mappings;
+﻿using System.Collections.Generic;
+using DeveloperPath.Application.Common.Mappings;
 using DeveloperPath.Domain.Entities;
 using DeveloperPath.Domain.Enums;
 
@@ -46,5 +47,10 @@ namespace DeveloperPath.Application.Common.Models
     /// Multiple themes can have same order number (meaning they can be studied simultaneously)
     /// </summary>
     public int Order { get; set; }
+
+    /// <summary>
+    /// List of tags related to theme
+    /// </summary>
+    public ICollection<string> Tags { get; set; }
   }
 }

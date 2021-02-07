@@ -16,35 +16,52 @@ export const API_BASE_URL = new InjectionToken<string>('API_BASE_URL');
 
 export interface IModulesClient {
     /**
-     * Get module information by its Id
-     * @param moduleId An id of the module
-     * @return Detailed information of the module with themes included
+     * Get all available modules
+     * @param pathId An id of the path
+     * @return A collection of modules with summary information
      */
-    get(moduleId: number): Observable<ModuleViewModel>;
+    getAll(pathId: number): Observable<ModuleDto[]>;
+    /**
+     * Get all available modules
+     * @param pathId An id of the path
+     * @return A collection of modules with summary information
+     */
+    get(pathId: number): Observable<ModuleDto[]>;
+    /**
+     * Create a module
+     * @param pathId An id of the path
+     * @param command Module object
+     * @return Created module
+     */
+    create(pathId: number, command: CreateModuleCommand): Observable<ModuleDto>;
     /**
      * Get module information by its Id
+     * @param pathId An id of the path
      * @param moduleId An id of the module
-     * @return Detailed information of the module with themes included
+     * @return Information about the module
      */
-    get2(moduleId: number): Observable<ModuleViewModel>;
+    get2(pathId: number, moduleId: number): Observable<ModuleDto>;
+    /**
+     * Get module information by its Id
+     * @param pathId An id of the path
+     * @param moduleId An id of the module
+     * @return Information about the module
+     */
+    get3(pathId: number, moduleId: number): Observable<ModuleDto>;
     /**
      * Update the module with given Id
+     * @param pathId An id of the path
      * @param moduleId An id of the module
      * @param command Updated module object
      * @return Updated module
      */
-    update(moduleId: number, command: UpdateModuleCommand): Observable<ModuleDto>;
+    update(pathId: number, moduleId: number, command: UpdateModuleCommand): Observable<ModuleDto>;
     /**
-     * Delete the module with given Id
+     * Delete the module with given Id from path with given Id
+     * @param pathId An id of the path
      * @param moduleId An id of the module
      */
-    delete(moduleId: number): Observable<FileResponse>;
-    /**
-     * Create a module
-     * @param command Module object
-     * @return Created module
-     */
-    create(command: CreateModuleCommand): Observable<ModuleDto>;
+    delete(pathId: number, moduleId: number): Observable<FileResponse>;
 }
 
 @Injectable({
@@ -61,12 +78,197 @@ export class ModulesClient implements IModulesClient {
     }
 
     /**
-     * Get module information by its Id
-     * @param moduleId An id of the module
-     * @return Detailed information of the module with themes included
+     * Get all available modules
+     * @param pathId An id of the path
+     * @return A collection of modules with summary information
      */
-    get(moduleId: number): Observable<ModuleViewModel> {
-        let url_ = this.baseUrl + "/api/Modules/{moduleId}";
+    getAll(pathId: number): Observable<ModuleDto[]> {
+        let url_ = this.baseUrl + "/api/paths/{pathId}/modules";
+        if (pathId === undefined || pathId === null)
+            throw new Error("The parameter 'pathId' must be defined.");
+        url_ = url_.replace("{pathId}", encodeURIComponent("" + pathId));
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetAll(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetAll(<any>response_);
+                } catch (e) {
+                    return <Observable<ModuleDto[]>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<ModuleDto[]>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetAll(response: HttpResponseBase): Observable<ModuleDto[]> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(ModuleDto.fromJS(item));
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<ModuleDto[]>(<any>null);
+    }
+
+    /**
+     * Get all available modules
+     * @param pathId An id of the path
+     * @return A collection of modules with summary information
+     */
+    get(pathId: number): Observable<ModuleDto[]> {
+        let url_ = this.baseUrl + "/api/paths/{pathId}/modules";
+        if (pathId === undefined || pathId === null)
+            throw new Error("The parameter 'pathId' must be defined.");
+        url_ = url_.replace("{pathId}", encodeURIComponent("" + pathId));
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("head", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGet(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGet(<any>response_);
+                } catch (e) {
+                    return <Observable<ModuleDto[]>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<ModuleDto[]>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGet(response: HttpResponseBase): Observable<ModuleDto[]> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(ModuleDto.fromJS(item));
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<ModuleDto[]>(<any>null);
+    }
+
+    /**
+     * Create a module
+     * @param pathId An id of the path
+     * @param command Module object
+     * @return Created module
+     */
+    create(pathId: number, command: CreateModuleCommand): Observable<ModuleDto> {
+        let url_ = this.baseUrl + "/api/paths/{pathId}/modules";
+        if (pathId === undefined || pathId === null)
+            throw new Error("The parameter 'pathId' must be defined.");
+        url_ = url_.replace("{pathId}", encodeURIComponent("" + pathId));
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(command);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processCreate(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processCreate(<any>response_);
+                } catch (e) {
+                    return <Observable<ModuleDto>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<ModuleDto>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processCreate(response: HttpResponseBase): Observable<ModuleDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = ModuleDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<ModuleDto>(<any>null);
+    }
+
+    /**
+     * Get module information by its Id
+     * @param pathId An id of the path
+     * @param moduleId An id of the module
+     * @return Information about the module
+     */
+    get2(pathId: number, moduleId: number): Observable<ModuleDto> {
+        let url_ = this.baseUrl + "/api/paths/{pathId}/modules/{moduleId}";
+        if (pathId === undefined || pathId === null)
+            throw new Error("The parameter 'pathId' must be defined.");
+        url_ = url_.replace("{pathId}", encodeURIComponent("" + pathId));
         if (moduleId === undefined || moduleId === null)
             throw new Error("The parameter 'moduleId' must be defined.");
         url_ = url_.replace("{moduleId}", encodeURIComponent("" + moduleId));
@@ -81,20 +283,20 @@ export class ModulesClient implements IModulesClient {
         };
 
         return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGet(response_);
+            return this.processGet2(response_);
         })).pipe(_observableCatch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processGet(<any>response_);
+                    return this.processGet2(<any>response_);
                 } catch (e) {
-                    return <Observable<ModuleViewModel>><any>_observableThrow(e);
+                    return <Observable<ModuleDto>><any>_observableThrow(e);
                 }
             } else
-                return <Observable<ModuleViewModel>><any>_observableThrow(response_);
+                return <Observable<ModuleDto>><any>_observableThrow(response_);
         }));
     }
 
-    protected processGet(response: HttpResponseBase): Observable<ModuleViewModel> {
+    protected processGet2(response: HttpResponseBase): Observable<ModuleDto> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -105,7 +307,7 @@ export class ModulesClient implements IModulesClient {
             return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = ModuleViewModel.fromJS(resultData200);
+            result200 = ModuleDto.fromJS(resultData200);
             return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
@@ -113,16 +315,20 @@ export class ModulesClient implements IModulesClient {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             }));
         }
-        return _observableOf<ModuleViewModel>(<any>null);
+        return _observableOf<ModuleDto>(<any>null);
     }
 
     /**
      * Get module information by its Id
+     * @param pathId An id of the path
      * @param moduleId An id of the module
-     * @return Detailed information of the module with themes included
+     * @return Information about the module
      */
-    get2(moduleId: number): Observable<ModuleViewModel> {
-        let url_ = this.baseUrl + "/api/Modules/{moduleId}";
+    get3(pathId: number, moduleId: number): Observable<ModuleDto> {
+        let url_ = this.baseUrl + "/api/paths/{pathId}/modules/{moduleId}";
+        if (pathId === undefined || pathId === null)
+            throw new Error("The parameter 'pathId' must be defined.");
+        url_ = url_.replace("{pathId}", encodeURIComponent("" + pathId));
         if (moduleId === undefined || moduleId === null)
             throw new Error("The parameter 'moduleId' must be defined.");
         url_ = url_.replace("{moduleId}", encodeURIComponent("" + moduleId));
@@ -137,20 +343,20 @@ export class ModulesClient implements IModulesClient {
         };
 
         return this.http.request("head", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGet2(response_);
+            return this.processGet3(response_);
         })).pipe(_observableCatch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processGet2(<any>response_);
+                    return this.processGet3(<any>response_);
                 } catch (e) {
-                    return <Observable<ModuleViewModel>><any>_observableThrow(e);
+                    return <Observable<ModuleDto>><any>_observableThrow(e);
                 }
             } else
-                return <Observable<ModuleViewModel>><any>_observableThrow(response_);
+                return <Observable<ModuleDto>><any>_observableThrow(response_);
         }));
     }
 
-    protected processGet2(response: HttpResponseBase): Observable<ModuleViewModel> {
+    protected processGet3(response: HttpResponseBase): Observable<ModuleDto> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -161,7 +367,7 @@ export class ModulesClient implements IModulesClient {
             return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = ModuleViewModel.fromJS(resultData200);
+            result200 = ModuleDto.fromJS(resultData200);
             return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
@@ -169,17 +375,21 @@ export class ModulesClient implements IModulesClient {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             }));
         }
-        return _observableOf<ModuleViewModel>(<any>null);
+        return _observableOf<ModuleDto>(<any>null);
     }
 
     /**
      * Update the module with given Id
+     * @param pathId An id of the path
      * @param moduleId An id of the module
      * @param command Updated module object
      * @return Updated module
      */
-    update(moduleId: number, command: UpdateModuleCommand): Observable<ModuleDto> {
-        let url_ = this.baseUrl + "/api/Modules/{moduleId}";
+    update(pathId: number, moduleId: number, command: UpdateModuleCommand): Observable<ModuleDto> {
+        let url_ = this.baseUrl + "/api/paths/{pathId}/modules/{moduleId}";
+        if (pathId === undefined || pathId === null)
+            throw new Error("The parameter 'pathId' must be defined.");
+        url_ = url_.replace("{pathId}", encodeURIComponent("" + pathId));
         if (moduleId === undefined || moduleId === null)
             throw new Error("The parameter 'moduleId' must be defined.");
         url_ = url_.replace("{moduleId}", encodeURIComponent("" + moduleId));
@@ -234,11 +444,15 @@ export class ModulesClient implements IModulesClient {
     }
 
     /**
-     * Delete the module with given Id
+     * Delete the module with given Id from path with given Id
+     * @param pathId An id of the path
      * @param moduleId An id of the module
      */
-    delete(moduleId: number): Observable<FileResponse> {
-        let url_ = this.baseUrl + "/api/Modules/{moduleId}";
+    delete(pathId: number, moduleId: number): Observable<FileResponse> {
+        let url_ = this.baseUrl + "/api/paths/{pathId}/modules/{moduleId}";
+        if (pathId === undefined || pathId === null)
+            throw new Error("The parameter 'pathId' must be defined.");
+        url_ = url_.replace("{pathId}", encodeURIComponent("" + pathId));
         if (moduleId === undefined || moduleId === null)
             throw new Error("The parameter 'moduleId' must be defined.");
         url_ = url_.replace("{moduleId}", encodeURIComponent("" + moduleId));
@@ -285,63 +499,6 @@ export class ModulesClient implements IModulesClient {
         }
         return _observableOf<FileResponse>(<any>null);
     }
-
-    /**
-     * Create a module
-     * @param command Module object
-     * @return Created module
-     */
-    create(command: CreateModuleCommand): Observable<ModuleDto> {
-        let url_ = this.baseUrl + "/api/Modules";
-        url_ = url_.replace(/[?&]$/, "");
-
-        const content_ = JSON.stringify(command);
-
-        let options_ : any = {
-            body: content_,
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Content-Type": "application/json",
-                "Accept": "application/json"
-            })
-        };
-
-        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processCreate(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processCreate(<any>response_);
-                } catch (e) {
-                    return <Observable<ModuleDto>><any>_observableThrow(e);
-                }
-            } else
-                return <Observable<ModuleDto>><any>_observableThrow(response_);
-        }));
-    }
-
-    protected processCreate(response: HttpResponseBase): Observable<ModuleDto> {
-        const status = response.status;
-        const responseBlob =
-            response instanceof HttpResponse ? response.body :
-            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = ModuleDto.fromJS(resultData200);
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf<ModuleDto>(<any>null);
-    }
 }
 
 export interface IPathsClient {
@@ -364,26 +521,26 @@ export interface IPathsClient {
     /**
      * Get path information by its Id
      * @param pathId An id of the path
-     * @return Detailed information of the path with modules included
+     * @return Information of the path with modules included
      */
     get2(pathId: number): Observable<PathDto>;
     /**
      * Get path information by its Id
      * @param pathId An id of the path
-     * @return Detailed information of the path with modules included
+     * @return Information of the path with modules included
      */
     get3(pathId: number): Observable<PathDto>;
     /**
      * Update the path with given Id
-     * @param id An id of the path
+     * @param pathId An id of the path
      * @param command Updated path
      */
-    update(id: number, command: UpdatePathCommand): Observable<PathDto>;
+    update(pathId: number, command: UpdatePathCommand): Observable<PathDto>;
     /**
      * Delete the path with given Id
-     * @param id An id of the path
+     * @param pathId An id of the path
      */
-    delete(id: number): Observable<FileResponse>;
+    delete(pathId: number): Observable<FileResponse>;
 }
 
 @Injectable({
@@ -404,7 +561,7 @@ export class PathsClient implements IPathsClient {
      * @return A collection of paths with summary information
      */
     getAll(): Observable<PathDto[]> {
-        let url_ = this.baseUrl + "/api/Paths";
+        let url_ = this.baseUrl + "/api/paths";
         url_ = url_.replace(/[?&]$/, "");
 
         let options_ : any = {
@@ -460,7 +617,7 @@ export class PathsClient implements IPathsClient {
      * @return A collection of paths with summary information
      */
     get(): Observable<PathDto[]> {
-        let url_ = this.baseUrl + "/api/Paths";
+        let url_ = this.baseUrl + "/api/paths";
         url_ = url_.replace(/[?&]$/, "");
 
         let options_ : any = {
@@ -517,7 +674,7 @@ export class PathsClient implements IPathsClient {
      * @return Created path
      */
     create(command: CreatePathCommand): Observable<PathDto> {
-        let url_ = this.baseUrl + "/api/Paths";
+        let url_ = this.baseUrl + "/api/paths";
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(command);
@@ -571,10 +728,10 @@ export class PathsClient implements IPathsClient {
     /**
      * Get path information by its Id
      * @param pathId An id of the path
-     * @return Detailed information of the path with modules included
+     * @return Information of the path with modules included
      */
     get2(pathId: number): Observable<PathDto> {
-        let url_ = this.baseUrl + "/api/Paths/{pathId}";
+        let url_ = this.baseUrl + "/api/paths/{pathId}";
         if (pathId === undefined || pathId === null)
             throw new Error("The parameter 'pathId' must be defined.");
         url_ = url_.replace("{pathId}", encodeURIComponent("" + pathId));
@@ -627,10 +784,10 @@ export class PathsClient implements IPathsClient {
     /**
      * Get path information by its Id
      * @param pathId An id of the path
-     * @return Detailed information of the path with modules included
+     * @return Information of the path with modules included
      */
     get3(pathId: number): Observable<PathDto> {
-        let url_ = this.baseUrl + "/api/Paths/{pathId}";
+        let url_ = this.baseUrl + "/api/paths/{pathId}";
         if (pathId === undefined || pathId === null)
             throw new Error("The parameter 'pathId' must be defined.");
         url_ = url_.replace("{pathId}", encodeURIComponent("" + pathId));
@@ -682,14 +839,14 @@ export class PathsClient implements IPathsClient {
 
     /**
      * Update the path with given Id
-     * @param id An id of the path
+     * @param pathId An id of the path
      * @param command Updated path
      */
-    update(id: number, command: UpdatePathCommand): Observable<PathDto> {
-        let url_ = this.baseUrl + "/api/Paths/{id}";
-        if (id === undefined || id === null)
-            throw new Error("The parameter 'id' must be defined.");
-        url_ = url_.replace("{id}", encodeURIComponent("" + id));
+    update(pathId: number, command: UpdatePathCommand): Observable<PathDto> {
+        let url_ = this.baseUrl + "/api/paths/{pathId}";
+        if (pathId === undefined || pathId === null)
+            throw new Error("The parameter 'pathId' must be defined.");
+        url_ = url_.replace("{pathId}", encodeURIComponent("" + pathId));
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(command);
@@ -742,13 +899,13 @@ export class PathsClient implements IPathsClient {
 
     /**
      * Delete the path with given Id
-     * @param id An id of the path
+     * @param pathId An id of the path
      */
-    delete(id: number): Observable<FileResponse> {
-        let url_ = this.baseUrl + "/api/Paths/{id}";
-        if (id === undefined || id === null)
-            throw new Error("The parameter 'id' must be defined.");
-        url_ = url_.replace("{id}", encodeURIComponent("" + id));
+    delete(pathId: number): Observable<FileResponse> {
+        let url_ = this.baseUrl + "/api/paths/{pathId}";
+        if (pathId === undefined || pathId === null)
+            throw new Error("The parameter 'pathId' must be defined.");
+        url_ = url_.replace("{pathId}", encodeURIComponent("" + pathId));
         url_ = url_.replace(/[?&]$/, "");
 
         let options_ : any = {
@@ -1168,38 +1325,59 @@ export class SourcesClient implements ISourcesClient {
 
 export interface IThemesClient {
     /**
-     * Get theme information by its Id
-     * @param moduleId An id of the theme
-     * @param themeId An id of the theme
-     * @return Detailed information of the theme with sources included
+     * Get all available themes
+     * @param pathId An id of the path
+     * @param moduleId An id of the module
+     * @return A collection of themes with summary information
      */
-    get(moduleId: number, themeId: number): Observable<ThemeViewModel>;
+    getAll(pathId: number, moduleId: number): Observable<ThemeDto[]>;
+    /**
+     * Get all available themes
+     * @param pathId An id of the path
+     * @param moduleId An id of the module
+     * @return A collection of themes with summary information
+     */
+    get(pathId: number, moduleId: number): Observable<ThemeDto[]>;
+    /**
+     * Create a theme
+     * @param pathId An id of the path
+     * @param moduleId An id of the module
+     * @param command Theme object
+     * @return Created theme
+     */
+    create(pathId: number, moduleId: number, command: CreateThemeCommand): Observable<ThemeDto>;
     /**
      * Get theme information by its Id
-     * @param moduleId An id of the theme
+     * @param pathId An id of the path
+     * @param moduleId An id of the module
      * @param themeId An id of the theme
-     * @return Detailed information of the theme with sources included
+     * @return Information about the theme
      */
-    get2(moduleId: number, themeId: number): Observable<ThemeViewModel>;
+    get2(pathId: number, moduleId: number, themeId: number): Observable<ThemeDto>;
+    /**
+     * Get theme information by its Id
+     * @param pathId An id of the path
+     * @param moduleId An id of the module
+     * @param themeId An id of the theme
+     * @return Information about the theme
+     */
+    get3(pathId: number, moduleId: number, themeId: number): Observable<ThemeDto>;
     /**
      * Update the theme with given Id
+     * @param pathId An id of the path
+     * @param moduleId An id of the module
      * @param themeId An id of the theme
      * @param command Updated theme object
      * @return Upated theme
      */
-    update(themeId: number, moduleId: string, command: UpdateThemeCommand): Observable<ThemeDto>;
+    update(pathId: number, moduleId: number, themeId: number, command: UpdateThemeCommand): Observable<ThemeDto>;
     /**
      * Delete the theme with given Id
+     * @param pathId An id of the path
      * @param moduleId And id of the module the theme is in
      * @param themeId An id of the theme
      */
-    delete(moduleId: number, themeId: number): Observable<FileResponse>;
-    /**
-     * Create a theme
-     * @param command Theme object
-     * @return Created theme
-     */
-    create(moduleId: string, command: CreateThemeCommand): Observable<ThemeDto>;
+    delete(pathId: number, moduleId: number, themeId: number): Observable<FileResponse>;
 }
 
 @Injectable({
@@ -1216,13 +1394,210 @@ export class ThemesClient implements IThemesClient {
     }
 
     /**
-     * Get theme information by its Id
-     * @param moduleId An id of the theme
-     * @param themeId An id of the theme
-     * @return Detailed information of the theme with sources included
+     * Get all available themes
+     * @param pathId An id of the path
+     * @param moduleId An id of the module
+     * @return A collection of themes with summary information
      */
-    get(moduleId: number, themeId: number): Observable<ThemeViewModel> {
-        let url_ = this.baseUrl + "/api/modules/{moduleId}/themes/{themeId}";
+    getAll(pathId: number, moduleId: number): Observable<ThemeDto[]> {
+        let url_ = this.baseUrl + "/api/paths/{pathId}/modules/{moduleId}/themes";
+        if (pathId === undefined || pathId === null)
+            throw new Error("The parameter 'pathId' must be defined.");
+        url_ = url_.replace("{pathId}", encodeURIComponent("" + pathId));
+        if (moduleId === undefined || moduleId === null)
+            throw new Error("The parameter 'moduleId' must be defined.");
+        url_ = url_.replace("{moduleId}", encodeURIComponent("" + moduleId));
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetAll(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetAll(<any>response_);
+                } catch (e) {
+                    return <Observable<ThemeDto[]>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<ThemeDto[]>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetAll(response: HttpResponseBase): Observable<ThemeDto[]> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(ThemeDto.fromJS(item));
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<ThemeDto[]>(<any>null);
+    }
+
+    /**
+     * Get all available themes
+     * @param pathId An id of the path
+     * @param moduleId An id of the module
+     * @return A collection of themes with summary information
+     */
+    get(pathId: number, moduleId: number): Observable<ThemeDto[]> {
+        let url_ = this.baseUrl + "/api/paths/{pathId}/modules/{moduleId}/themes";
+        if (pathId === undefined || pathId === null)
+            throw new Error("The parameter 'pathId' must be defined.");
+        url_ = url_.replace("{pathId}", encodeURIComponent("" + pathId));
+        if (moduleId === undefined || moduleId === null)
+            throw new Error("The parameter 'moduleId' must be defined.");
+        url_ = url_.replace("{moduleId}", encodeURIComponent("" + moduleId));
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("head", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGet(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGet(<any>response_);
+                } catch (e) {
+                    return <Observable<ThemeDto[]>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<ThemeDto[]>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGet(response: HttpResponseBase): Observable<ThemeDto[]> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(ThemeDto.fromJS(item));
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<ThemeDto[]>(<any>null);
+    }
+
+    /**
+     * Create a theme
+     * @param pathId An id of the path
+     * @param moduleId An id of the module
+     * @param command Theme object
+     * @return Created theme
+     */
+    create(pathId: number, moduleId: number, command: CreateThemeCommand): Observable<ThemeDto> {
+        let url_ = this.baseUrl + "/api/paths/{pathId}/modules/{moduleId}/themes";
+        if (pathId === undefined || pathId === null)
+            throw new Error("The parameter 'pathId' must be defined.");
+        url_ = url_.replace("{pathId}", encodeURIComponent("" + pathId));
+        if (moduleId === undefined || moduleId === null)
+            throw new Error("The parameter 'moduleId' must be defined.");
+        url_ = url_.replace("{moduleId}", encodeURIComponent("" + moduleId));
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(command);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processCreate(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processCreate(<any>response_);
+                } catch (e) {
+                    return <Observable<ThemeDto>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<ThemeDto>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processCreate(response: HttpResponseBase): Observable<ThemeDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = ThemeDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<ThemeDto>(<any>null);
+    }
+
+    /**
+     * Get theme information by its Id
+     * @param pathId An id of the path
+     * @param moduleId An id of the module
+     * @param themeId An id of the theme
+     * @return Information about the theme
+     */
+    get2(pathId: number, moduleId: number, themeId: number): Observable<ThemeDto> {
+        let url_ = this.baseUrl + "/api/paths/{pathId}/modules/{moduleId}/themes/{themeId}";
+        if (pathId === undefined || pathId === null)
+            throw new Error("The parameter 'pathId' must be defined.");
+        url_ = url_.replace("{pathId}", encodeURIComponent("" + pathId));
         if (moduleId === undefined || moduleId === null)
             throw new Error("The parameter 'moduleId' must be defined.");
         url_ = url_.replace("{moduleId}", encodeURIComponent("" + moduleId));
@@ -1240,20 +1615,20 @@ export class ThemesClient implements IThemesClient {
         };
 
         return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGet(response_);
+            return this.processGet2(response_);
         })).pipe(_observableCatch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processGet(<any>response_);
+                    return this.processGet2(<any>response_);
                 } catch (e) {
-                    return <Observable<ThemeViewModel>><any>_observableThrow(e);
+                    return <Observable<ThemeDto>><any>_observableThrow(e);
                 }
             } else
-                return <Observable<ThemeViewModel>><any>_observableThrow(response_);
+                return <Observable<ThemeDto>><any>_observableThrow(response_);
         }));
     }
 
-    protected processGet(response: HttpResponseBase): Observable<ThemeViewModel> {
+    protected processGet2(response: HttpResponseBase): Observable<ThemeDto> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -1264,7 +1639,7 @@ export class ThemesClient implements IThemesClient {
             return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = ThemeViewModel.fromJS(resultData200);
+            result200 = ThemeDto.fromJS(resultData200);
             return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
@@ -1272,17 +1647,21 @@ export class ThemesClient implements IThemesClient {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             }));
         }
-        return _observableOf<ThemeViewModel>(<any>null);
+        return _observableOf<ThemeDto>(<any>null);
     }
 
     /**
      * Get theme information by its Id
-     * @param moduleId An id of the theme
+     * @param pathId An id of the path
+     * @param moduleId An id of the module
      * @param themeId An id of the theme
-     * @return Detailed information of the theme with sources included
+     * @return Information about the theme
      */
-    get2(moduleId: number, themeId: number): Observable<ThemeViewModel> {
-        let url_ = this.baseUrl + "/api/modules/{moduleId}/themes/{themeId}";
+    get3(pathId: number, moduleId: number, themeId: number): Observable<ThemeDto> {
+        let url_ = this.baseUrl + "/api/paths/{pathId}/modules/{moduleId}/themes/{themeId}";
+        if (pathId === undefined || pathId === null)
+            throw new Error("The parameter 'pathId' must be defined.");
+        url_ = url_.replace("{pathId}", encodeURIComponent("" + pathId));
         if (moduleId === undefined || moduleId === null)
             throw new Error("The parameter 'moduleId' must be defined.");
         url_ = url_.replace("{moduleId}", encodeURIComponent("" + moduleId));
@@ -1300,20 +1679,20 @@ export class ThemesClient implements IThemesClient {
         };
 
         return this.http.request("head", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGet2(response_);
+            return this.processGet3(response_);
         })).pipe(_observableCatch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processGet2(<any>response_);
+                    return this.processGet3(<any>response_);
                 } catch (e) {
-                    return <Observable<ThemeViewModel>><any>_observableThrow(e);
+                    return <Observable<ThemeDto>><any>_observableThrow(e);
                 }
             } else
-                return <Observable<ThemeViewModel>><any>_observableThrow(response_);
+                return <Observable<ThemeDto>><any>_observableThrow(response_);
         }));
     }
 
-    protected processGet2(response: HttpResponseBase): Observable<ThemeViewModel> {
+    protected processGet3(response: HttpResponseBase): Observable<ThemeDto> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -1324,7 +1703,7 @@ export class ThemesClient implements IThemesClient {
             return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = ThemeViewModel.fromJS(resultData200);
+            result200 = ThemeDto.fromJS(resultData200);
             return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
@@ -1332,23 +1711,28 @@ export class ThemesClient implements IThemesClient {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
             }));
         }
-        return _observableOf<ThemeViewModel>(<any>null);
+        return _observableOf<ThemeDto>(<any>null);
     }
 
     /**
      * Update the theme with given Id
+     * @param pathId An id of the path
+     * @param moduleId An id of the module
      * @param themeId An id of the theme
      * @param command Updated theme object
      * @return Upated theme
      */
-    update(themeId: number, moduleId: string, command: UpdateThemeCommand): Observable<ThemeDto> {
-        let url_ = this.baseUrl + "/api/modules/{moduleId}/themes/{themeId}";
-        if (themeId === undefined || themeId === null)
-            throw new Error("The parameter 'themeId' must be defined.");
-        url_ = url_.replace("{themeId}", encodeURIComponent("" + themeId));
+    update(pathId: number, moduleId: number, themeId: number, command: UpdateThemeCommand): Observable<ThemeDto> {
+        let url_ = this.baseUrl + "/api/paths/{pathId}/modules/{moduleId}/themes/{themeId}";
+        if (pathId === undefined || pathId === null)
+            throw new Error("The parameter 'pathId' must be defined.");
+        url_ = url_.replace("{pathId}", encodeURIComponent("" + pathId));
         if (moduleId === undefined || moduleId === null)
             throw new Error("The parameter 'moduleId' must be defined.");
         url_ = url_.replace("{moduleId}", encodeURIComponent("" + moduleId));
+        if (themeId === undefined || themeId === null)
+            throw new Error("The parameter 'themeId' must be defined.");
+        url_ = url_.replace("{themeId}", encodeURIComponent("" + themeId));
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(command);
@@ -1401,11 +1785,15 @@ export class ThemesClient implements IThemesClient {
 
     /**
      * Delete the theme with given Id
+     * @param pathId An id of the path
      * @param moduleId And id of the module the theme is in
      * @param themeId An id of the theme
      */
-    delete(moduleId: number, themeId: number): Observable<FileResponse> {
-        let url_ = this.baseUrl + "/api/modules/{moduleId}/themes/{themeId}";
+    delete(pathId: number, moduleId: number, themeId: number): Observable<FileResponse> {
+        let url_ = this.baseUrl + "/api/paths/{pathId}/modules/{moduleId}/themes/{themeId}";
+        if (pathId === undefined || pathId === null)
+            throw new Error("The parameter 'pathId' must be defined.");
+        url_ = url_.replace("{pathId}", encodeURIComponent("" + pathId));
         if (moduleId === undefined || moduleId === null)
             throw new Error("The parameter 'moduleId' must be defined.");
         url_ = url_.replace("{moduleId}", encodeURIComponent("" + moduleId));
@@ -1454,66 +1842,6 @@ export class ThemesClient implements IThemesClient {
             }));
         }
         return _observableOf<FileResponse>(<any>null);
-    }
-
-    /**
-     * Create a theme
-     * @param command Theme object
-     * @return Created theme
-     */
-    create(moduleId: string, command: CreateThemeCommand): Observable<ThemeDto> {
-        let url_ = this.baseUrl + "/api/modules/{moduleId}/themes";
-        if (moduleId === undefined || moduleId === null)
-            throw new Error("The parameter 'moduleId' must be defined.");
-        url_ = url_.replace("{moduleId}", encodeURIComponent("" + moduleId));
-        url_ = url_.replace(/[?&]$/, "");
-
-        const content_ = JSON.stringify(command);
-
-        let options_ : any = {
-            body: content_,
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Content-Type": "application/json",
-                "Accept": "application/json"
-            })
-        };
-
-        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processCreate(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processCreate(<any>response_);
-                } catch (e) {
-                    return <Observable<ThemeDto>><any>_observableThrow(e);
-                }
-            } else
-                return <Observable<ThemeDto>><any>_observableThrow(response_);
-        }));
-    }
-
-    protected processCreate(response: HttpResponseBase): Observable<ThemeDto> {
-        const status = response.status;
-        const responseBlob =
-            response instanceof HttpResponse ? response.body :
-            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = ThemeDto.fromJS(resultData200);
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf<ThemeDto>(<any>null);
     }
 }
 
@@ -2089,18 +2417,16 @@ export class WeatherForecastClient implements IWeatherForecastClient {
     }
 }
 
-export class ModuleViewModel implements IModuleViewModel {
+export class ModuleDto implements IModuleDto {
     id?: number;
     title?: string | undefined;
     description?: string | undefined;
     paths?: PathTitle[] | undefined;
     necessity?: NecessityLevel;
-    sections?: SectionDto[] | undefined;
-    themes?: ThemeDto[] | undefined;
     prerequisites?: ModuleTitle[] | undefined;
     tags?: string[] | undefined;
 
-    constructor(data?: IModuleViewModel) {
+    constructor(data?: IModuleDto) {
         if (data) {
             for (var property in data) {
                 if (data.hasOwnProperty(property))
@@ -2120,16 +2446,6 @@ export class ModuleViewModel implements IModuleViewModel {
                     this.paths!.push(PathTitle.fromJS(item));
             }
             this.necessity = _data["necessity"];
-            if (Array.isArray(_data["sections"])) {
-                this.sections = [] as any;
-                for (let item of _data["sections"])
-                    this.sections!.push(SectionDto.fromJS(item));
-            }
-            if (Array.isArray(_data["themes"])) {
-                this.themes = [] as any;
-                for (let item of _data["themes"])
-                    this.themes!.push(ThemeDto.fromJS(item));
-            }
             if (Array.isArray(_data["prerequisites"])) {
                 this.prerequisites = [] as any;
                 for (let item of _data["prerequisites"])
@@ -2143,9 +2459,9 @@ export class ModuleViewModel implements IModuleViewModel {
         }
     }
 
-    static fromJS(data: any): ModuleViewModel {
+    static fromJS(data: any): ModuleDto {
         data = typeof data === 'object' ? data : {};
-        let result = new ModuleViewModel();
+        let result = new ModuleDto();
         result.init(data);
         return result;
     }
@@ -2161,16 +2477,6 @@ export class ModuleViewModel implements IModuleViewModel {
                 data["paths"].push(item.toJSON());
         }
         data["necessity"] = this.necessity;
-        if (Array.isArray(this.sections)) {
-            data["sections"] = [];
-            for (let item of this.sections)
-                data["sections"].push(item.toJSON());
-        }
-        if (Array.isArray(this.themes)) {
-            data["themes"] = [];
-            for (let item of this.themes)
-                data["themes"].push(item.toJSON());
-        }
         if (Array.isArray(this.prerequisites)) {
             data["prerequisites"] = [];
             for (let item of this.prerequisites)
@@ -2185,14 +2491,12 @@ export class ModuleViewModel implements IModuleViewModel {
     }
 }
 
-export interface IModuleViewModel {
+export interface IModuleDto {
     id?: number;
     title?: string | undefined;
     description?: string | undefined;
     paths?: PathTitle[] | undefined;
     necessity?: NecessityLevel;
-    sections?: SectionDto[] | undefined;
-    themes?: ThemeDto[] | undefined;
     prerequisites?: ModuleTitle[] | undefined;
     tags?: string[] | undefined;
 }
@@ -2245,124 +2549,6 @@ export enum NecessityLevel {
     MustKnow = 4,
 }
 
-export class SectionDto implements ISectionDto {
-    id?: number;
-    title?: string | undefined;
-    necessity?: NecessityLevel;
-    order?: number;
-
-    constructor(data?: ISectionDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.id = _data["id"];
-            this.title = _data["title"];
-            this.necessity = _data["necessity"];
-            this.order = _data["order"];
-        }
-    }
-
-    static fromJS(data: any): SectionDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new SectionDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["id"] = this.id;
-        data["title"] = this.title;
-        data["necessity"] = this.necessity;
-        data["order"] = this.order;
-        return data; 
-    }
-}
-
-export interface ISectionDto {
-    id?: number;
-    title?: string | undefined;
-    necessity?: NecessityLevel;
-    order?: number;
-}
-
-export class ThemeDto implements IThemeDto {
-    id?: number;
-    title?: string | undefined;
-    description?: string | undefined;
-    moduleId?: number;
-    section?: SectionDto | undefined;
-    complexity?: ComplexityLevel;
-    necessity?: NecessityLevel;
-    order?: number;
-
-    constructor(data?: IThemeDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.id = _data["id"];
-            this.title = _data["title"];
-            this.description = _data["description"];
-            this.moduleId = _data["moduleId"];
-            this.section = _data["section"] ? SectionDto.fromJS(_data["section"]) : <any>undefined;
-            this.complexity = _data["complexity"];
-            this.necessity = _data["necessity"];
-            this.order = _data["order"];
-        }
-    }
-
-    static fromJS(data: any): ThemeDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new ThemeDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["id"] = this.id;
-        data["title"] = this.title;
-        data["description"] = this.description;
-        data["moduleId"] = this.moduleId;
-        data["section"] = this.section ? this.section.toJSON() : <any>undefined;
-        data["complexity"] = this.complexity;
-        data["necessity"] = this.necessity;
-        data["order"] = this.order;
-        return data; 
-    }
-}
-
-export interface IThemeDto {
-    id?: number;
-    title?: string | undefined;
-    description?: string | undefined;
-    moduleId?: number;
-    section?: SectionDto | undefined;
-    complexity?: ComplexityLevel;
-    necessity?: NecessityLevel;
-    order?: number;
-}
-
-export enum ComplexityLevel {
-    Beginner = 0,
-    Intermediate = 1,
-    Advanced = 2,
-}
-
 export class ModuleTitle implements IModuleTitle {
     id?: number;
     title?: string | undefined;
@@ -2403,71 +2589,12 @@ export interface IModuleTitle {
     title?: string | undefined;
 }
 
-export class ModuleDto implements IModuleDto {
-    id?: number;
-    title?: string | undefined;
-    description?: string | undefined;
-    necessity?: NecessityLevel;
-    tags?: string[] | undefined;
-
-    constructor(data?: IModuleDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.id = _data["id"];
-            this.title = _data["title"];
-            this.description = _data["description"];
-            this.necessity = _data["necessity"];
-            if (Array.isArray(_data["tags"])) {
-                this.tags = [] as any;
-                for (let item of _data["tags"])
-                    this.tags!.push(item);
-            }
-        }
-    }
-
-    static fromJS(data: any): ModuleDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new ModuleDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["id"] = this.id;
-        data["title"] = this.title;
-        data["description"] = this.description;
-        data["necessity"] = this.necessity;
-        if (Array.isArray(this.tags)) {
-            data["tags"] = [];
-            for (let item of this.tags)
-                data["tags"].push(item);
-        }
-        return data; 
-    }
-}
-
-export interface IModuleDto {
-    id?: number;
-    title?: string | undefined;
-    description?: string | undefined;
-    necessity?: NecessityLevel;
-    tags?: string[] | undefined;
-}
-
 export class CreateModuleCommand implements ICreateModuleCommand {
     pathId?: number;
     title?: string | undefined;
     description?: string | undefined;
     necessity?: NecessityLevel;
+    order?: number;
     tags?: string[] | undefined;
 
     constructor(data?: ICreateModuleCommand) {
@@ -2485,6 +2612,7 @@ export class CreateModuleCommand implements ICreateModuleCommand {
             this.title = _data["title"];
             this.description = _data["description"];
             this.necessity = _data["necessity"];
+            this.order = _data["order"];
             if (Array.isArray(_data["tags"])) {
                 this.tags = [] as any;
                 for (let item of _data["tags"])
@@ -2506,6 +2634,7 @@ export class CreateModuleCommand implements ICreateModuleCommand {
         data["title"] = this.title;
         data["description"] = this.description;
         data["necessity"] = this.necessity;
+        data["order"] = this.order;
         if (Array.isArray(this.tags)) {
             data["tags"] = [];
             for (let item of this.tags)
@@ -2520,6 +2649,7 @@ export interface ICreateModuleCommand {
     title?: string | undefined;
     description?: string | undefined;
     necessity?: NecessityLevel;
+    order?: number;
     tags?: string[] | undefined;
 }
 
@@ -2528,6 +2658,7 @@ export class UpdateModuleCommand implements IUpdateModuleCommand {
     title?: string | undefined;
     description?: string | undefined;
     necessity?: NecessityLevel;
+    order?: number;
     tags?: string[] | undefined;
 
     constructor(data?: IUpdateModuleCommand) {
@@ -2545,6 +2676,7 @@ export class UpdateModuleCommand implements IUpdateModuleCommand {
             this.title = _data["title"];
             this.description = _data["description"];
             this.necessity = _data["necessity"];
+            this.order = _data["order"];
             if (Array.isArray(_data["tags"])) {
                 this.tags = [] as any;
                 for (let item of _data["tags"])
@@ -2566,6 +2698,7 @@ export class UpdateModuleCommand implements IUpdateModuleCommand {
         data["title"] = this.title;
         data["description"] = this.description;
         data["necessity"] = this.necessity;
+        data["order"] = this.order;
         if (Array.isArray(this.tags)) {
             data["tags"] = [];
             for (let item of this.tags)
@@ -2580,6 +2713,7 @@ export interface IUpdateModuleCommand {
     title?: string | undefined;
     description?: string | undefined;
     necessity?: NecessityLevel;
+    order?: number;
     tags?: string[] | undefined;
 }
 
@@ -2821,6 +2955,136 @@ export interface ISourceViewModel {
     availability?: AvailabilityLevel;
     relevance?: RelevanceLevel;
     tags?: string[] | undefined;
+}
+
+export class ThemeDto implements IThemeDto {
+    id?: number;
+    title?: string | undefined;
+    description?: string | undefined;
+    moduleId?: number;
+    section?: SectionDto | undefined;
+    complexity?: ComplexityLevel;
+    necessity?: NecessityLevel;
+    order?: number;
+    tags?: string[] | undefined;
+
+    constructor(data?: IThemeDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.title = _data["title"];
+            this.description = _data["description"];
+            this.moduleId = _data["moduleId"];
+            this.section = _data["section"] ? SectionDto.fromJS(_data["section"]) : <any>undefined;
+            this.complexity = _data["complexity"];
+            this.necessity = _data["necessity"];
+            this.order = _data["order"];
+            if (Array.isArray(_data["tags"])) {
+                this.tags = [] as any;
+                for (let item of _data["tags"])
+                    this.tags!.push(item);
+            }
+        }
+    }
+
+    static fromJS(data: any): ThemeDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new ThemeDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["title"] = this.title;
+        data["description"] = this.description;
+        data["moduleId"] = this.moduleId;
+        data["section"] = this.section ? this.section.toJSON() : <any>undefined;
+        data["complexity"] = this.complexity;
+        data["necessity"] = this.necessity;
+        data["order"] = this.order;
+        if (Array.isArray(this.tags)) {
+            data["tags"] = [];
+            for (let item of this.tags)
+                data["tags"].push(item);
+        }
+        return data; 
+    }
+}
+
+export interface IThemeDto {
+    id?: number;
+    title?: string | undefined;
+    description?: string | undefined;
+    moduleId?: number;
+    section?: SectionDto | undefined;
+    complexity?: ComplexityLevel;
+    necessity?: NecessityLevel;
+    order?: number;
+    tags?: string[] | undefined;
+}
+
+export class SectionDto implements ISectionDto {
+    id?: number;
+    title?: string | undefined;
+    necessity?: NecessityLevel;
+    order?: number;
+
+    constructor(data?: ISectionDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.title = _data["title"];
+            this.necessity = _data["necessity"];
+            this.order = _data["order"];
+        }
+    }
+
+    static fromJS(data: any): SectionDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new SectionDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["title"] = this.title;
+        data["necessity"] = this.necessity;
+        data["order"] = this.order;
+        return data; 
+    }
+}
+
+export interface ISectionDto {
+    id?: number;
+    title?: string | undefined;
+    necessity?: NecessityLevel;
+    order?: number;
+}
+
+export enum ComplexityLevel {
+    Beginner = 0,
+    Intermediate = 1,
+    Advanced = 2,
 }
 
 export enum SourceType {
@@ -3070,159 +3334,8 @@ export interface IUpdateSourceCommand {
     relevance?: RelevanceLevel;
 }
 
-export class ThemeViewModel implements IThemeViewModel {
-    id?: number;
-    title?: string | undefined;
-    description?: string | undefined;
-    module?: ModuleDto | undefined;
-    section?: SectionDto | undefined;
-    complexity?: ComplexityLevel;
-    necessity?: NecessityLevel;
-    order?: number;
-    sources?: SourceDto[] | undefined;
-    prerequisites?: ThemeTitle[] | undefined;
-    related?: ThemeTitle[] | undefined;
-    tags?: string[] | undefined;
-
-    constructor(data?: IThemeViewModel) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.id = _data["id"];
-            this.title = _data["title"];
-            this.description = _data["description"];
-            this.module = _data["module"] ? ModuleDto.fromJS(_data["module"]) : <any>undefined;
-            this.section = _data["section"] ? SectionDto.fromJS(_data["section"]) : <any>undefined;
-            this.complexity = _data["complexity"];
-            this.necessity = _data["necessity"];
-            this.order = _data["order"];
-            if (Array.isArray(_data["sources"])) {
-                this.sources = [] as any;
-                for (let item of _data["sources"])
-                    this.sources!.push(SourceDto.fromJS(item));
-            }
-            if (Array.isArray(_data["prerequisites"])) {
-                this.prerequisites = [] as any;
-                for (let item of _data["prerequisites"])
-                    this.prerequisites!.push(ThemeTitle.fromJS(item));
-            }
-            if (Array.isArray(_data["related"])) {
-                this.related = [] as any;
-                for (let item of _data["related"])
-                    this.related!.push(ThemeTitle.fromJS(item));
-            }
-            if (Array.isArray(_data["tags"])) {
-                this.tags = [] as any;
-                for (let item of _data["tags"])
-                    this.tags!.push(item);
-            }
-        }
-    }
-
-    static fromJS(data: any): ThemeViewModel {
-        data = typeof data === 'object' ? data : {};
-        let result = new ThemeViewModel();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["id"] = this.id;
-        data["title"] = this.title;
-        data["description"] = this.description;
-        data["module"] = this.module ? this.module.toJSON() : <any>undefined;
-        data["section"] = this.section ? this.section.toJSON() : <any>undefined;
-        data["complexity"] = this.complexity;
-        data["necessity"] = this.necessity;
-        data["order"] = this.order;
-        if (Array.isArray(this.sources)) {
-            data["sources"] = [];
-            for (let item of this.sources)
-                data["sources"].push(item.toJSON());
-        }
-        if (Array.isArray(this.prerequisites)) {
-            data["prerequisites"] = [];
-            for (let item of this.prerequisites)
-                data["prerequisites"].push(item.toJSON());
-        }
-        if (Array.isArray(this.related)) {
-            data["related"] = [];
-            for (let item of this.related)
-                data["related"].push(item.toJSON());
-        }
-        if (Array.isArray(this.tags)) {
-            data["tags"] = [];
-            for (let item of this.tags)
-                data["tags"].push(item);
-        }
-        return data; 
-    }
-}
-
-export interface IThemeViewModel {
-    id?: number;
-    title?: string | undefined;
-    description?: string | undefined;
-    module?: ModuleDto | undefined;
-    section?: SectionDto | undefined;
-    complexity?: ComplexityLevel;
-    necessity?: NecessityLevel;
-    order?: number;
-    sources?: SourceDto[] | undefined;
-    prerequisites?: ThemeTitle[] | undefined;
-    related?: ThemeTitle[] | undefined;
-    tags?: string[] | undefined;
-}
-
-export class ThemeTitle implements IThemeTitle {
-    id?: number;
-    title?: string | undefined;
-
-    constructor(data?: IThemeTitle) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.id = _data["id"];
-            this.title = _data["title"];
-        }
-    }
-
-    static fromJS(data: any): ThemeTitle {
-        data = typeof data === 'object' ? data : {};
-        let result = new ThemeTitle();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["id"] = this.id;
-        data["title"] = this.title;
-        return data; 
-    }
-}
-
-export interface IThemeTitle {
-    id?: number;
-    title?: string | undefined;
-}
-
 export class CreateThemeCommand implements ICreateThemeCommand {
+    pathId?: number;
     moduleId?: number;
     title?: string | undefined;
     description?: string | undefined;
@@ -3242,6 +3355,7 @@ export class CreateThemeCommand implements ICreateThemeCommand {
 
     init(_data?: any) {
         if (_data) {
+            this.pathId = _data["pathId"];
             this.moduleId = _data["moduleId"];
             this.title = _data["title"];
             this.description = _data["description"];
@@ -3261,6 +3375,7 @@ export class CreateThemeCommand implements ICreateThemeCommand {
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
+        data["pathId"] = this.pathId;
         data["moduleId"] = this.moduleId;
         data["title"] = this.title;
         data["description"] = this.description;
@@ -3273,6 +3388,7 @@ export class CreateThemeCommand implements ICreateThemeCommand {
 }
 
 export interface ICreateThemeCommand {
+    pathId?: number;
     moduleId?: number;
     title?: string | undefined;
     description?: string | undefined;
@@ -3284,6 +3400,7 @@ export interface ICreateThemeCommand {
 
 export class UpdateThemeCommand implements IUpdateThemeCommand {
     id?: number;
+    pathId?: number;
     moduleId?: number;
     title?: string | undefined;
     description?: string | undefined;
@@ -3304,6 +3421,7 @@ export class UpdateThemeCommand implements IUpdateThemeCommand {
     init(_data?: any) {
         if (_data) {
             this.id = _data["id"];
+            this.pathId = _data["pathId"];
             this.moduleId = _data["moduleId"];
             this.title = _data["title"];
             this.description = _data["description"];
@@ -3324,6 +3442,7 @@ export class UpdateThemeCommand implements IUpdateThemeCommand {
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["id"] = this.id;
+        data["pathId"] = this.pathId;
         data["moduleId"] = this.moduleId;
         data["title"] = this.title;
         data["description"] = this.description;
@@ -3337,6 +3456,7 @@ export class UpdateThemeCommand implements IUpdateThemeCommand {
 
 export interface IUpdateThemeCommand {
     id?: number;
+    pathId?: number;
     moduleId?: number;
     title?: string | undefined;
     description?: string | undefined;

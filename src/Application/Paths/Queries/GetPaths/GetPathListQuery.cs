@@ -29,9 +29,9 @@ namespace DeveloperPath.Application.Paths.Queries.GetPaths
     public async Task<IEnumerable<PathDto>> Handle(GetPathListQuery request, CancellationToken cancellationToken)
     {
       return await _context.Paths
-              .ProjectTo<PathDto>(_mapper.ConfigurationProvider)
-              .OrderBy(t => t.Title)
-              .ToListAsync(cancellationToken);
+        .OrderBy(t => t.Title)
+        .ProjectTo<PathDto>(_mapper.ConfigurationProvider)
+        .ToListAsync(cancellationToken);
     }
   }
 }

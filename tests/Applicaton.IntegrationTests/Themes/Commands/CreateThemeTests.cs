@@ -16,7 +16,7 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
     [Test]
     public void ShouldRequireMinimumFields()
     {
-      var command = new CreateModuleCommand();
+      var command = new CreateThemeCommand();
 
       FluentActions.Invoking(() =>
           SendAsync(command)).Should().Throw<ValidationException>();
@@ -27,6 +27,7 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
     {
       var command = new CreateThemeCommand
       {
+        PathId = 1,
         Title = "Theme Title",
         Description = "Theme Decription"
       };
@@ -101,7 +102,7 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
     [Test]
     public async Task ShouldRequireUniqueTitle()
     {
-      var pathId = await AddWithIdAsync(new Path
+      var path = await AddAsync(new Path
       {
         Title = "Some Path",
         Description = "Some Path Description"
@@ -109,13 +110,14 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
 
       var module = await SendAsync(new CreateModuleCommand
       {
-        PathId = pathId,
+        PathId = path.Id,
         Title = "Module Title",
         Description = "Module Decription"
       });
 
       await SendAsync(new CreateThemeCommand
       {
+        PathId = path.Id,
         ModuleId = module.Id,
         Title = "Theme Title",
         Description = "Theme Decription"
@@ -139,7 +141,7 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
     {
       var userId = await RunAsDefaultUserAsync();
 
-      var pathId = await AddWithIdAsync(new Path
+      var path = await AddAsync(new Path
       {
         Title = "Some Path",
         Description = "Some Path Description"
@@ -147,13 +149,14 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
 
       var module = await SendAsync(new CreateModuleCommand
       {
-        PathId = pathId,
+        PathId = path.Id,
         Title = "Module Title",
         Description = "Module Decription"
       });
 
       var command = new CreateThemeCommand
       {
+        PathId = path.Id,
         ModuleId = module.Id,
         Title = "New Theme",
         Description = "New Theme Description",
@@ -175,12 +178,11 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
     }
 
     [Test]
-    //[Ignore("Add when adding sections is implemented")]
     public async Task ShouldCreateThemeWithExistingSection()
     {
       var userId = await RunAsDefaultUserAsync();
 
-      var pathId = await AddWithIdAsync(new Path
+      var path = await AddAsync(new Path
         {
           Title = "Some Path",
           Description = "Some Path Description"
@@ -188,12 +190,12 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
 
       var module = await SendAsync(new CreateModuleCommand
         {
-          PathId = pathId,
+          PathId = path.Id,
           Title = "Module Title",
           Description = "Module Decription"
         });
 
-      var sectId = await AddWithIdAsync( new Section
+      var sect = await AddAsync( new Section
         {
             ModuleId = module.Id,
             Title = "First Section"
@@ -201,13 +203,14 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
 
       var command = new CreateThemeCommand
       {
+        PathId = path.Id,
         ModuleId = module.Id,
         Title = "New Theme",
         Description = "New Theme Description",
         Necessity = Domain.Enums.NecessityLevel.Other,
         Complexity = Domain.Enums.ComplexityLevel.Beginner,
         Order = 1,
-        SectionId = sectId
+        SectionId = sect.Id
       };
 
       var createdTheme = await SendAsync(command);
@@ -228,7 +231,7 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
     {
       var userId = await RunAsDefaultUserAsync();
 
-      var pathId = await AddWithIdAsync(new Path
+      var path = await AddAsync(new Path
       {
         Title = "Some Path",
         Description = "Some Path Description"
@@ -236,7 +239,7 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
 
       var module = await SendAsync(new CreateModuleCommand
       {
-        PathId = pathId,
+        PathId = path.Id,
         Title = "Module Title",
         Description = "Module Decription"
       });

@@ -12,19 +12,19 @@
     "version": "v1"
   },
   "paths": {
-    "/api/Modules/{moduleId}": {
+    "/api/paths/{pathId}/modules": {
       "get": {
         "tags": [
           "Modules"
         ],
-        "summary": "Get module information by its Id",
-        "operationId": "Modules_Get",
+        "summary": "Get all available modules",
+        "operationId": "Modules_GetAll",
         "parameters": [
           {
-            "name": "moduleId",
+            "name": "pathId",
             "in": "path",
             "required": true,
-            "description": "An id of the module",
+            "description": "An id of the path",
             "schema": {
               "type": "integer",
               "format": "int32"
@@ -34,11 +34,139 @@
         ],
         "responses": {
           "200": {
-            "description": "Detailed information of the module with themes included",
+            "description": "A collection of modules with summary information",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ModuleViewModel"
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ModuleDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "head": {
+        "tags": [
+          "Modules"
+        ],
+        "summary": "Get all available modules",
+        "operationId": "Modules_Get",
+        "parameters": [
+          {
+            "name": "pathId",
+            "in": "path",
+            "required": true,
+            "description": "An id of the path",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A collection of modules with summary information",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ModuleDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Modules"
+        ],
+        "summary": "Create a module",
+        "operationId": "Modules_Create",
+        "parameters": [
+          {
+            "name": "pathId",
+            "in": "path",
+            "required": true,
+            "description": "An id of the path",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          }
+        ],
+        "requestBody": {
+          "x-name": "command",
+          "description": "Module object",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateModuleCommand"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 2
+        },
+        "responses": {
+          "200": {
+            "description": "Created module",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ModuleDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/paths/{pathId}/modules/{moduleId}": {
+      "get": {
+        "tags": [
+          "Modules"
+        ],
+        "summary": "Get module information by its Id",
+        "operationId": "Modules_Get2",
+        "parameters": [
+          {
+            "name": "pathId",
+            "in": "path",
+            "required": true,
+            "description": "An id of the path",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          },
+          {
+            "name": "moduleId",
+            "in": "path",
+            "required": true,
+            "description": "An id of the module",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 2
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Information about the module",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ModuleDto"
                 }
               }
             }
@@ -50,8 +178,19 @@
           "Modules"
         ],
         "summary": "Get module information by its Id",
-        "operationId": "Modules_Get2",
+        "operationId": "Modules_Get3",
         "parameters": [
+          {
+            "name": "pathId",
+            "in": "path",
+            "required": true,
+            "description": "An id of the path",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          },
           {
             "name": "moduleId",
             "in": "path",
@@ -61,16 +200,16 @@
               "type": "integer",
               "format": "int32"
             },
-            "x-position": 1
+            "x-position": 2
           }
         ],
         "responses": {
           "200": {
-            "description": "Detailed information of the module with themes included",
+            "description": "Information about the module",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ModuleViewModel"
+                  "$ref": "#/components/schemas/ModuleDto"
                 }
               }
             }
@@ -85,6 +224,17 @@
         "operationId": "Modules_Update",
         "parameters": [
           {
+            "name": "pathId",
+            "in": "path",
+            "required": true,
+            "description": "An id of the path",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          },
+          {
             "name": "moduleId",
             "in": "path",
             "required": true,
@@ -93,7 +243,7 @@
               "type": "integer",
               "format": "int32"
             },
-            "x-position": 1
+            "x-position": 2
           }
         ],
         "requestBody": {
@@ -107,7 +257,7 @@
             }
           },
           "required": true,
-          "x-position": 2
+          "x-position": 3
         },
         "responses": {
           "200": {
@@ -126,9 +276,20 @@
         "tags": [
           "Modules"
         ],
-        "summary": "Delete the module with given Id",
+        "summary": "Delete the module with given Id from path with given Id",
         "operationId": "Modules_Delete",
         "parameters": [
+          {
+            "name": "pathId",
+            "in": "path",
+            "required": true,
+            "description": "An id of the path",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          },
           {
             "name": "moduleId",
             "in": "path",
@@ -138,7 +299,7 @@
               "type": "integer",
               "format": "int32"
             },
-            "x-position": 1
+            "x-position": 2
           }
         ],
         "responses": {
@@ -156,41 +317,7 @@
         }
       }
     },
-    "/api/Modules": {
-      "post": {
-        "tags": [
-          "Modules"
-        ],
-        "summary": "Create a module",
-        "operationId": "Modules_Create",
-        "requestBody": {
-          "x-name": "command",
-          "description": "Module object",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/CreateModuleCommand"
-              }
-            }
-          },
-          "required": true,
-          "x-position": 1
-        },
-        "responses": {
-          "200": {
-            "description": "Created module",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ModuleDto"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/Paths": {
+    "/api/paths": {
       "get": {
         "tags": [
           "Paths"
@@ -268,7 +395,7 @@
         }
       }
     },
-    "/api/Paths/{pathId}": {
+    "/api/paths/{pathId}": {
       "get": {
         "tags": [
           "Paths"
@@ -290,7 +417,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Detailed information of the path with modules included",
+            "description": "Information of the path with modules included",
             "content": {
               "application/json": {
                 "schema": {
@@ -322,7 +449,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Detailed information of the path with modules included",
+            "description": "Information of the path with modules included",
             "content": {
               "application/json": {
                 "schema": {
@@ -332,9 +459,7 @@
             }
           }
         }
-      }
-    },
-    "/api/Paths/{id}": {
+      },
       "put": {
         "tags": [
           "Paths"
@@ -343,7 +468,7 @@
         "operationId": "Paths_Update",
         "parameters": [
           {
-            "name": "id",
+            "name": "pathId",
             "in": "path",
             "required": true,
             "description": "An id of the path",
@@ -388,7 +513,7 @@
         "operationId": "Paths_Delete",
         "parameters": [
           {
-            "name": "id",
+            "name": "pathId",
             "in": "path",
             "required": true,
             "description": "An id of the path",
@@ -696,24 +821,185 @@
         }
       }
     },
-    "/api/modules/{moduleId}/themes/{themeId}": {
+    "/api/paths/{pathId}/modules/{moduleId}/themes": {
       "get": {
         "tags": [
           "Themes"
         ],
-        "summary": "Get theme information by its Id",
-        "operationId": "Themes_Get",
+        "summary": "Get all available themes",
+        "operationId": "Themes_GetAll",
         "parameters": [
           {
-            "name": "moduleId",
+            "name": "pathId",
             "in": "path",
             "required": true,
-            "description": "An id of the theme",
+            "description": "An id of the path",
             "schema": {
               "type": "integer",
               "format": "int32"
             },
             "x-position": 1
+          },
+          {
+            "name": "moduleId",
+            "in": "path",
+            "required": true,
+            "description": "An id of the module",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 2
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A collection of themes with summary information",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ThemeDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "head": {
+        "tags": [
+          "Themes"
+        ],
+        "summary": "Get all available themes",
+        "operationId": "Themes_Get",
+        "parameters": [
+          {
+            "name": "pathId",
+            "in": "path",
+            "required": true,
+            "description": "An id of the path",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          },
+          {
+            "name": "moduleId",
+            "in": "path",
+            "required": true,
+            "description": "An id of the module",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 2
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A collection of themes with summary information",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ThemeDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Themes"
+        ],
+        "summary": "Create a theme",
+        "operationId": "Themes_Create",
+        "parameters": [
+          {
+            "name": "pathId",
+            "in": "path",
+            "required": true,
+            "description": "An id of the path",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          },
+          {
+            "name": "moduleId",
+            "in": "path",
+            "required": true,
+            "description": "An id of the module",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 2
+          }
+        ],
+        "requestBody": {
+          "x-name": "command",
+          "description": "Theme object",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateThemeCommand"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 3
+        },
+        "responses": {
+          "200": {
+            "description": "Created theme",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ThemeDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/paths/{pathId}/modules/{moduleId}/themes/{themeId}": {
+      "get": {
+        "tags": [
+          "Themes"
+        ],
+        "summary": "Get theme information by its Id",
+        "operationId": "Themes_Get2",
+        "parameters": [
+          {
+            "name": "pathId",
+            "in": "path",
+            "required": true,
+            "description": "An id of the path",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          },
+          {
+            "name": "moduleId",
+            "in": "path",
+            "required": true,
+            "description": "An id of the module",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 2
           },
           {
             "name": "themeId",
@@ -724,16 +1010,16 @@
               "type": "integer",
               "format": "int32"
             },
-            "x-position": 2
+            "x-position": 3
           }
         ],
         "responses": {
           "200": {
-            "description": "Detailed information of the theme with sources included",
+            "description": "Information about the theme",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ThemeViewModel"
+                  "$ref": "#/components/schemas/ThemeDto"
                 }
               }
             }
@@ -745,18 +1031,29 @@
           "Themes"
         ],
         "summary": "Get theme information by its Id",
-        "operationId": "Themes_Get2",
+        "operationId": "Themes_Get3",
         "parameters": [
           {
-            "name": "moduleId",
+            "name": "pathId",
             "in": "path",
             "required": true,
-            "description": "An id of the theme",
+            "description": "An id of the path",
             "schema": {
               "type": "integer",
               "format": "int32"
             },
             "x-position": 1
+          },
+          {
+            "name": "moduleId",
+            "in": "path",
+            "required": true,
+            "description": "An id of the module",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 2
           },
           {
             "name": "themeId",
@@ -767,16 +1064,16 @@
               "type": "integer",
               "format": "int32"
             },
-            "x-position": 2
+            "x-position": 3
           }
         ],
         "responses": {
           "200": {
-            "description": "Detailed information of the theme with sources included",
+            "description": "Information about the theme",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ThemeViewModel"
+                  "$ref": "#/components/schemas/ThemeDto"
                 }
               }
             }
@@ -791,10 +1088,10 @@
         "operationId": "Themes_Update",
         "parameters": [
           {
-            "name": "themeId",
+            "name": "pathId",
             "in": "path",
             "required": true,
-            "description": "An id of the theme",
+            "description": "An id of the path",
             "schema": {
               "type": "integer",
               "format": "int32"
@@ -805,8 +1102,21 @@
             "name": "moduleId",
             "in": "path",
             "required": true,
+            "description": "An id of the module",
             "schema": {
-              "type": "string"
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 2
+          },
+          {
+            "name": "themeId",
+            "in": "path",
+            "required": true,
+            "description": "An id of the theme",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
             },
             "x-position": 3
           }
@@ -822,7 +1132,7 @@
             }
           },
           "required": true,
-          "x-position": 2
+          "x-position": 4
         },
         "responses": {
           "200": {
@@ -845,6 +1155,17 @@
         "operationId": "Themes_Delete",
         "parameters": [
           {
+            "name": "pathId",
+            "in": "path",
+            "required": true,
+            "description": "An id of the path",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          },
+          {
             "name": "moduleId",
             "in": "path",
             "required": true,
@@ -853,7 +1174,7 @@
               "type": "integer",
               "format": "int32"
             },
-            "x-position": 1
+            "x-position": 2
           },
           {
             "name": "themeId",
@@ -864,7 +1185,7 @@
               "type": "integer",
               "format": "int32"
             },
-            "x-position": 2
+            "x-position": 3
           }
         ],
         "responses": {
@@ -875,51 +1196,6 @@
                 "schema": {
                   "type": "string",
                   "format": "binary"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/modules/{moduleId}/themes": {
-      "post": {
-        "tags": [
-          "Themes"
-        ],
-        "summary": "Create a theme",
-        "operationId": "Themes_Create",
-        "parameters": [
-          {
-            "name": "moduleId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "x-position": 2
-          }
-        ],
-        "requestBody": {
-          "x-name": "command",
-          "description": "Theme object",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/CreateThemeCommand"
-              }
-            }
-          },
-          "required": true,
-          "x-position": 1
-        },
-        "responses": {
-          "200": {
-            "description": "Created theme",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ThemeDto"
                 }
               }
             }
@@ -1309,7 +1585,7 @@
   },
   "components": {
     "schemas": {
-      "ModuleViewModel": {
+      "ModuleDto": {
         "type": "object",
         "additionalProperties": false,
         "properties": {
@@ -1334,20 +1610,6 @@
           },
           "necessity": {
             "$ref": "#/components/schemas/NecessityLevel"
-          },
-          "sections": {
-            "type": "array",
-            "nullable": true,
-            "items": {
-              "$ref": "#/components/schemas/SectionDto"
-            }
-          },
-          "themes": {
-            "type": "array",
-            "nullable": true,
-            "items": {
-              "$ref": "#/components/schemas/ThemeDto"
-            }
           },
           "prerequisites": {
             "type": "array",
@@ -1397,81 +1659,6 @@
           4
         ]
       },
-      "SectionDto": {
-        "type": "object",
-        "additionalProperties": false,
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "title": {
-            "type": "string",
-            "nullable": true
-          },
-          "necessity": {
-            "$ref": "#/components/schemas/NecessityLevel"
-          },
-          "order": {
-            "type": "integer",
-            "format": "int32"
-          }
-        }
-      },
-      "ThemeDto": {
-        "type": "object",
-        "additionalProperties": false,
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "title": {
-            "type": "string",
-            "nullable": true
-          },
-          "description": {
-            "type": "string",
-            "nullable": true
-          },
-          "moduleId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "section": {
-            "nullable": true,
-            "oneOf": [
-              {
-                "$ref": "#/components/schemas/SectionDto"
-              }
-            ]
-          },
-          "complexity": {
-            "$ref": "#/components/schemas/ComplexityLevel"
-          },
-          "necessity": {
-            "$ref": "#/components/schemas/NecessityLevel"
-          },
-          "order": {
-            "type": "integer",
-            "format": "int32"
-          }
-        }
-      },
-      "ComplexityLevel": {
-        "type": "integer",
-        "description": "",
-        "x-enumNames": [
-          "Beginner",
-          "Intermediate",
-          "Advanced"
-        ],
-        "enum": [
-          0,
-          1,
-          2
-        ]
-      },
       "ModuleTitle": {
         "type": "object",
         "additionalProperties": false,
@@ -1483,34 +1670,6 @@
           "title": {
             "type": "string",
             "nullable": true
-          }
-        }
-      },
-      "ModuleDto": {
-        "type": "object",
-        "additionalProperties": false,
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "title": {
-            "type": "string",
-            "nullable": true
-          },
-          "description": {
-            "type": "string",
-            "nullable": true
-          },
-          "necessity": {
-            "$ref": "#/components/schemas/NecessityLevel"
-          },
-          "tags": {
-            "type": "array",
-            "nullable": true,
-            "items": {
-              "type": "string"
-            }
           }
         }
       },
@@ -1532,6 +1691,10 @@
           },
           "necessity": {
             "$ref": "#/components/schemas/NecessityLevel"
+          },
+          "order": {
+            "type": "integer",
+            "format": "int32"
           },
           "tags": {
             "type": "array",
@@ -1560,6 +1723,10 @@
           },
           "necessity": {
             "$ref": "#/components/schemas/NecessityLevel"
+          },
+          "order": {
+            "type": "integer",
+            "format": "int32"
           },
           "tags": {
             "type": "array",
@@ -1686,6 +1853,88 @@
             }
           }
         }
+      },
+      "ThemeDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "moduleId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "section": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/SectionDto"
+              }
+            ]
+          },
+          "complexity": {
+            "$ref": "#/components/schemas/ComplexityLevel"
+          },
+          "necessity": {
+            "$ref": "#/components/schemas/NecessityLevel"
+          },
+          "order": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "tags": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "SectionDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
+          "necessity": {
+            "$ref": "#/components/schemas/NecessityLevel"
+          },
+          "order": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "ComplexityLevel": {
+        "type": "integer",
+        "description": "",
+        "x-enumNames": [
+          "Beginner",
+          "Intermediate",
+          "Advanced"
+        ],
+        "enum": [
+          0,
+          1,
+          2
+        ]
       },
       "SourceType": {
         "type": "integer",
@@ -1875,96 +2124,14 @@
           }
         }
       },
-      "ThemeViewModel": {
-        "type": "object",
-        "additionalProperties": false,
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "title": {
-            "type": "string",
-            "nullable": true
-          },
-          "description": {
-            "type": "string",
-            "nullable": true
-          },
-          "module": {
-            "nullable": true,
-            "oneOf": [
-              {
-                "$ref": "#/components/schemas/ModuleDto"
-              }
-            ]
-          },
-          "section": {
-            "nullable": true,
-            "oneOf": [
-              {
-                "$ref": "#/components/schemas/SectionDto"
-              }
-            ]
-          },
-          "complexity": {
-            "$ref": "#/components/schemas/ComplexityLevel"
-          },
-          "necessity": {
-            "$ref": "#/components/schemas/NecessityLevel"
-          },
-          "order": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "sources": {
-            "type": "array",
-            "nullable": true,
-            "items": {
-              "$ref": "#/components/schemas/SourceDto"
-            }
-          },
-          "prerequisites": {
-            "type": "array",
-            "nullable": true,
-            "items": {
-              "$ref": "#/components/schemas/ThemeTitle"
-            }
-          },
-          "related": {
-            "type": "array",
-            "nullable": true,
-            "items": {
-              "$ref": "#/components/schemas/ThemeTitle"
-            }
-          },
-          "tags": {
-            "type": "array",
-            "nullable": true,
-            "items": {
-              "type": "string"
-            }
-          }
-        }
-      },
-      "ThemeTitle": {
-        "type": "object",
-        "additionalProperties": false,
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "title": {
-            "type": "string",
-            "nullable": true
-          }
-        }
-      },
       "CreateThemeCommand": {
         "type": "object",
         "additionalProperties": false,
         "properties": {
+          "pathId": {
+            "type": "integer",
+            "format": "int32"
+          },
           "moduleId": {
             "type": "integer",
             "format": "int32"
@@ -1998,6 +2165,10 @@
         "additionalProperties": false,
         "properties": {
           "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "pathId": {
             "type": "integer",
             "format": "int32"
           },

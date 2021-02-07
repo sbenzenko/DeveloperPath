@@ -13,10 +13,12 @@ namespace DeveloperPath.Application.Modules.Commands.UpdateModule
 {
   public partial record UpdateModuleCommand : IRequest<ModuleDto>
   {
+    // TODO: add Prerequisites, provide Order
     public int Id { get; init; }
     public string Title { get; init; }
     public string Description { get; init; }
     public NecessityLevel Necessity { get; init; }
+    public int Order { get; init; }
     public IList<string> Tags { get; init; }
   }
 

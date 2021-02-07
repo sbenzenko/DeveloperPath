@@ -23,9 +23,19 @@ namespace DeveloperPath.Application.Common.Models
     public string Description { get; init; }
 
     /// <summary>
+    /// Paths module attached to
+    /// </summary>
+    public ICollection<PathTitle> Paths { get; init; }
+
+    /// <summary>
     /// Necessity level
     /// </summary>
     public NecessityLevel Necessity { get; init; }
+
+    /// <summary>
+    /// Modules required to know before studying this module
+    /// </summary>
+    public ICollection<ModuleTitle> Prerequisites { get; init; }
 
     /// <summary>
     /// List of tags related to module

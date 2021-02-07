@@ -18,10 +18,12 @@ namespace DeveloperPath.Application.Modules.Commands.CreateModule
   /// </summary>
   public record CreateModuleCommand : IRequest<ModuleDto>
   {
+    // TODO: add Prerequisites, provide Order
     public int PathId { get; init; }
     public string Title { get; init; }
     public string Description { get; init; }
     public NecessityLevel Necessity { get; init; }
+    public int Order { get; init; }
     public IList<string> Tags { get; init; }
   }
 
@@ -43,9 +45,7 @@ namespace DeveloperPath.Application.Modules.Commands.CreateModule
         .FirstOrDefaultAsync(cancellationToken);
 
       if (path == null)
-      {
         throw new NotFoundException(nameof(Path), request.PathId);
-      }
 
       var entity = new Module
       {

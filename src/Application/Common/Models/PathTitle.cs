@@ -1,17 +1,20 @@
 ﻿using DeveloperPath.Application.Common.Mappings;
 using DeveloperPath.Domain.Entities;
 
-namespace DeveloperPath.Application.Modules.Queries.GetModules
+namespace DeveloperPath.Application.Common.Models
 {
-  public class ModuleTitle : IMapFrom<Module>
+  /// <summary>
+  /// Summary information about the path
+  /// </summary>
+  public class PathTitle : IMapFrom<Path>
   {
     /// <summary>
-    /// Module ID
+    /// Path ID
     /// </summary>
     public int Id { get; init; }
 
     /// <summary>
-    /// Module name
+    /// Path name
     /// </summary>
     public string Title { get; init; }
   }

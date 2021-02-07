@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using DeveloperPath.Application.Common.Exceptions;
+using DeveloperPath.Application.Modules.Commands.CreateModule;
 using DeveloperPath.Application.Themes.Commands.DeleteTheme;
 using DeveloperPath.Domain.Entities;
 using FluentAssertions;
@@ -24,36 +25,37 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
     [Test]
     public async Task ShouldDeleteTheme()
     {
-      var moduleId = await AddWithIdAsync(new Module
+      var path = await AddAsync(new Path
       {
-        Title = "New Module",
-        Description = "New Module Description",
-        Tags = new List<string> { "Tag1", "Tag2", "Tag3" },
-        Paths = new List<Path> { new Path
-          {
-            Title = "Some Path",
-            Description = "Some Path Description"
-          }
-        }
+        Title = "Some Path",
+        Description = "Some Path Description"
       });
 
-      var themeId = await AddWithIdAsync(new Theme
+      var module = await SendAsync(new CreateModuleCommand
+      {
+        PathId = path.Id,
+        Title = "Module Title",
+        Description = "Module Decription"
+      });
+
+      var theme = await AddAsync(new Theme
       {
         Title = "New Theme",
         Description = "New Theme Description",
         Tags = new List<string> { "Tag1", "Tag2", "Tag3" },
-        ModuleId = moduleId
+        ModuleId = module.Id
       });
 
-      var themeAdded = await FindAsync<Theme>(themeId);
+      var themeAdded = await FindAsync<Theme>(theme.Id);
 
       await SendAsync(new DeleteThemeCommand
       {
-        Id = themeId,
-        ModuleId = moduleId
+        PathId = path.Id,
+        ModuleId = module.Id,
+        Id = theme.Id
       });
 
-      var themeDeleted = await FindAsync<Theme>(themeId);
+      var themeDeleted = await FindAsync<Theme>(theme.Id);
 
       themeAdded.Should().NotBeNull();
       themeDeleted.Should().BeNull();

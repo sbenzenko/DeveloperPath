@@ -18,6 +18,7 @@ namespace DeveloperPath.Application.Themes.Commands.CreateTheme
   /// </summary>
   public record CreateThemeCommand : IRequest<ThemeDto>
   {
+    public int PathId { get; init; }
     public int ModuleId { get; init; }
     public string Title { get; init; }
     public string Description { get; init; }
@@ -40,6 +41,12 @@ namespace DeveloperPath.Application.Themes.Commands.CreateTheme
 
     public async Task<ThemeDto> Handle(CreateThemeCommand request, CancellationToken cancellationToken)
     {
+      var path = await _context.Paths
+        .Where(c => c.Id == request.PathId)
+        .FirstOrDefaultAsync(cancellationToken);
+      if (path == null)
+        throw new NotFoundException(nameof(Path), request.PathId);
+
       var module = await _context.Modules.FindAsync(new object[] { request.ModuleId }, cancellationToken);
       if (module == null)
         throw new NotFoundException(nameof(Module), request.ModuleId);
@@ -52,9 +59,7 @@ namespace DeveloperPath.Application.Themes.Commands.CreateTheme
           .FirstOrDefaultAsync(cancellationToken);
 
         if (section == null)
-        {
           throw new NotFoundException(nameof(Section), request.SectionId);
-        }
       }
 
       var entity = new Theme

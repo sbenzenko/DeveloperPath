@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using DeveloperPath.Application.Common.Exceptions;
-using DeveloperPath.Application.Modules.Commands.CreateModule;
 using DeveloperPath.Application.Modules.Commands.DeleteModule;
+using DeveloperPath.Application.Modules.Queries.GetModules;
 using DeveloperPath.Domain.Entities;
 using FluentAssertions;
 using NUnit.Framework;
@@ -14,38 +15,88 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
   public class DeleteModuleTests : TestBase
   {
     [Test]
-    public void ShouldRequireValidModuleId()
+    public void ShouldRequireValidPathId()
     {
-      var command = new DeleteModuleCommand { Id = 99 };
+      var command = new DeleteModuleCommand { PathId = 99, Id = 1 };
 
       FluentActions.Invoking(() =>
           SendAsync(command)).Should().Throw<NotFoundException>();
     }
 
     [Test]
-    public async Task ShouldDeleteModule()
+    public void ShouldRequireValidModuleId()
     {
-      var moduleId = await AddWithIdAsync(new Module
+      var command = new DeleteModuleCommand { PathId = 1, Id = 99 };
+
+      FluentActions.Invoking(() =>
+          SendAsync(command)).Should().Throw<NotFoundException>();
+    }
+
+    [Test]
+    public async Task ShouldRemoveModuleFromPath()
+    {
+      var module = await AddAsync(new Module
       {
         Title = "New Module",
         Description = "New Module Description",
         Tags = new List<string> { "Tag1", "Tag2", "Tag3" },
         Paths = new List<Path> { new Path
           {
-            Title = "Some Path",
+            Title = "Some Path1",
             Description = "Some Path Description"
-          }
+          }, 
+          new Path
+          {
+            Title = "Some Path2",
+            Description = "Some Path Description"
+          } 
         }
       });
 
-      var moduleAdded = await FindAsync<Module>(moduleId);
+      var pathId = module.Paths.FirstOrDefault().Id;
+      var query = new GetModuleQuery() { PathId = pathId, Id = module.Id };
+      var moduleAdded = await SendAsync(query);
 
       await SendAsync(new DeleteModuleCommand
       {
-        Id = moduleId
+        PathId = module.Paths.FirstOrDefault().Id,
+        Id = module.Id
       });
 
-      var moduleDeleted = await FindAsync<Module>(moduleId);
+      pathId = module.Paths.FirstOrDefault().Id;
+      query = new GetModuleQuery() { PathId = pathId, Id = module.Id };
+      var moduleRemovedFromPath1 = await SendAsync(query);
+
+      moduleAdded.Should().NotBeNull();
+      moduleAdded.Paths.Should().HaveCount(2);
+      moduleRemovedFromPath1.Should().NotBeNull();
+      moduleRemovedFromPath1.Paths.Should().HaveCount(1);
+    }
+
+    [Test]
+    public async Task ShouldDeleteModule()
+    {
+      var module = await AddAsync(new Module
+      {
+        Title = "New Module",
+        Description = "New Module Description",
+        Tags = new List<string> { "Tag1", "Tag2", "Tag3" },
+        Paths = new List<Path> { new Path
+        {
+          Title = "Some Path1",
+          Description = "Some Path Description"
+        }}
+      });
+
+      var moduleAdded = await FindAsync<Module>(module.Id);
+
+      await SendAsync(new DeleteModuleCommand
+      {
+        PathId = module.Paths.FirstOrDefault().Id,
+        Id = module.Id
+      });
+
+      var moduleDeleted = await FindAsync<Module>(module.Id);
 
       moduleAdded.Should().NotBeNull();
       moduleDeleted.Should().BeNull();

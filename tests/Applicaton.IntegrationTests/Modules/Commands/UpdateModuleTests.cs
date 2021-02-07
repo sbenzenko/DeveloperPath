@@ -122,7 +122,7 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
     [Test]
     public async Task ShouldRequireUniqueTitle()
     {
-      var pathId = await AddWithIdAsync(new Path
+      var path = await AddAsync(new Path
       {
         Title = "New Path",
         Description = "New Path Description"
@@ -130,14 +130,14 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
 
       var module = await SendAsync(new CreateModuleCommand
       {
-        PathId = pathId,
+        PathId = path.Id,
         Title = "New Module",
         Description = "New Module Description"
       });
 
       await SendAsync(new CreateModuleCommand
       {
-        PathId = pathId,
+        PathId = path.Id,
         Title = "Other New Module",
         Description = "New Other Path Description"
       });
@@ -160,7 +160,7 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
     {
       var userId = await RunAsDefaultUserAsync();
 
-      var pathId = await AddWithIdAsync(new Path
+      var path = await AddAsync(new Path
       {
         Title = "New Path",
         Description = "New Path Description"
@@ -168,7 +168,7 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
 
       var module = await SendAsync(new CreateModuleCommand
       {
-        PathId = pathId,
+        PathId = path.Id,
         Title = "New Module",
         Description = "New Module Description"
       });

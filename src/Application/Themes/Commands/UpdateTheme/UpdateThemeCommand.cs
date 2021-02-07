@@ -15,6 +15,7 @@ namespace DeveloperPath.Application.Themes.Commands.UpdateTheme
   public partial record UpdateThemeCommand : IRequest<ThemeDto>
   {
     public int Id { get; init; }
+    public int PathId { get; init; }
     public int ModuleId { get; init; }
     public string Title { get; init; }
     public string Description { get; init; }
@@ -37,13 +38,19 @@ namespace DeveloperPath.Application.Themes.Commands.UpdateTheme
 
     public async Task<ThemeDto> Handle(UpdateThemeCommand request, CancellationToken cancellationToken)
     {
-      var entity = await _context.Themes.FindAsync(new object[] { request.Id }, cancellationToken);
-      if (entity == null)
-        throw new NotFoundException(nameof(Theme), request.Id);
+      var path = await _context.Paths
+        .Where(c => c.Id == request.PathId)
+        .FirstOrDefaultAsync(cancellationToken);
+      if (path == null)
+        throw new NotFoundException(nameof(Path), request.PathId);
 
       var module = await _context.Modules.FindAsync(new object[] { request.ModuleId }, cancellationToken);
       if (module == null)
         throw new NotFoundException(nameof(Module), request.ModuleId);
+
+      var entity = await _context.Themes.FindAsync(new object[] { request.Id }, cancellationToken);
+      if (entity == null)
+        throw new NotFoundException(nameof(Theme), request.Id);
 
       Section section = null;
       if (request.SectionId > 0)
@@ -51,7 +58,6 @@ namespace DeveloperPath.Application.Themes.Commands.UpdateTheme
         section = await _context.Sections
           .Where(s => s.Id == request.SectionId)
           .FirstOrDefaultAsync(cancellationToken);
-
         if (section == null)
           throw new NotFoundException(nameof(Section), request.SectionId);
       }
