@@ -1,14 +1,13 @@
-﻿using DeveloperPath.Application.Common.Models;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using DeveloperPath.Application.Common.Models;
 using DeveloperPath.Application.Themes.Commands.CreateTheme;
 using DeveloperPath.Application.Themes.Commands.DeleteTheme;
 using DeveloperPath.Application.Themes.Commands.UpdateTheme;
 using DeveloperPath.Application.Themes.Queries.GetThemes;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
-namespace DeveloperPath.WebUI.Controllers
+namespace DeveloperPath.WebApi.Controllers
 {
   //[Authorize]
   [Route("api/paths/{pathId}/modules/{moduleId}/themes")]

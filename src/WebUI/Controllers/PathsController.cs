@@ -1,14 +1,13 @@
-﻿using DeveloperPath.Application.Paths.Commands.CreatePath;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using DeveloperPath.Application.Common.Models;
+using DeveloperPath.Application.Paths.Commands.CreatePath;
 using DeveloperPath.Application.Paths.Commands.DeletePath;
 using DeveloperPath.Application.Paths.Commands.UpdatePath;
 using DeveloperPath.Application.Paths.Queries.GetPaths;
-using DeveloperPath.Application.Common.Models;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
-namespace DeveloperPath.WebUI.Controllers
+namespace DeveloperPath.WebApi.Controllers
 {
   //[Authorize]
   [Route("api/paths")]

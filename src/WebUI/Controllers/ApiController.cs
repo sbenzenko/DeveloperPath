@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace DeveloperPath.WebUI.Controllers
+namespace DeveloperPath.WebApi.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]

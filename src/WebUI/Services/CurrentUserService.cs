@@ -1,8 +1,8 @@
-﻿using DeveloperPath.Application.Common.Interfaces;
+﻿using System.Security.Claims;
+using DeveloperPath.Application.Common.Interfaces;
 using Microsoft.AspNetCore.Http;
-using System.Security.Claims;
 
-namespace DeveloperPath.WebUI.Services
+namespace DeveloperPath.WebApi.Services
 {
     public class CurrentUserService : ICurrentUserService
     {
