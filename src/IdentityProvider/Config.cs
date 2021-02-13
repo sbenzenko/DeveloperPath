@@ -4,23 +4,25 @@
 
 using IdentityServer4.Models;
 using System.Collections.Generic;
+using IdentityServer4;
 
 namespace IdentityProvider
 {
     public static class Config
     {
-        public static IEnumerable<IdentityResource> IdentityResources =>
-                   new IdentityResource[]
-                   {
-                new IdentityResources.OpenId(),
-                new IdentityResources.Profile(),
-                   };
-
         public static IEnumerable<ApiScope> ApiScopes =>
             new ApiScope[]
             {
                 new ApiScope("scope1"),
                 new ApiScope("scope2"),
+            };
+
+        public static IEnumerable<IdentityResource> IdentityResources =>
+            new IdentityResource[]
+            {
+                new IdentityResources.OpenId(),
+                new IdentityResources.Profile(),
+                new IdentityResources.Email()
             };
 
         public static IEnumerable<Client> Clients =>
@@ -33,7 +35,12 @@ namespace IdentityProvider
                     RequirePkce = true,
                     RequireClientSecret = false,
                     AllowedCorsOrigins = { "https://localhost:8001" },
-                    AllowedScopes = { "openid", "profile" },
+                    AllowedScopes =
+                    {
+                        IdentityServerConstants.StandardScopes.OpenId,
+                        IdentityServerConstants.StandardScopes.Profile,
+                        IdentityServerConstants.StandardScopes.Email
+                    },
                     RedirectUris = { "https://localhost:8001/authentication/login-callback" },
                     PostLogoutRedirectUris = { "https://localhost:8001/" },
                     Enabled = true
