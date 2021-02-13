@@ -8,6 +8,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Threading.Tasks;
+using DeveloperPath.WebApi;
 
 namespace DeveloperPath.WebUI
 {

@@ -2,20 +2,17 @@ using DeveloperPath.Application;
 using DeveloperPath.Application.Common.Interfaces;
 using DeveloperPath.Infrastructure;
 using DeveloperPath.Infrastructure.Persistence;
-using DeveloperPath.WebUI.Filters;
-using DeveloperPath.WebUI.Services;
+using DeveloperPath.WebApi.Filters;
+using DeveloperPath.WebApi.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using NSwag;
-using NSwag.Generation.Processors.Security;
-using System.Linq;
 
-namespace DeveloperPath.WebUI
+namespace DeveloperPath.WebApi
 {
   public class Startup
   {
@@ -69,11 +66,6 @@ namespace DeveloperPath.WebUI
         };
       });
 
-      // In production, the Angular files will be served from this directory
-      services.AddSpaStaticFiles(configuration =>
-      {
-        configuration.RootPath = "ClientApp/dist";
-      });
 
       services.AddOpenApiDocument(configure =>
       {
@@ -90,15 +82,15 @@ namespace DeveloperPath.WebUI
           };
         };
 
-        configure.AddSecurity("JWT", Enumerable.Empty<string>(), new OpenApiSecurityScheme
-        {
-          Type = OpenApiSecuritySchemeType.ApiKey,
-          Name = "Authorization",
-          In = OpenApiSecurityApiKeyLocation.Header,
-          Description = "Type into the textbox: Bearer {your JWT token}."
-        });
+        //configure.AddSecurity("JWT", Enumerable.Empty<string>(), new OpenApiSecurityScheme
+        //{
+        //  Type = OpenApiSecuritySchemeType.ApiKey,
+        //  Name = "Authorization",
+        //  In = OpenApiSecurityApiKeyLocation.Header,
+        //  Description = "Type into the textbox: Bearer {your JWT token}."
+        //});
 
-        configure.OperationProcessors.Add(new AspNetCoreOperationSecurityScopeProcessor("JWT"));
+        //configure.OperationProcessors.Add(new AspNetCoreOperationSecurityScopeProcessor("JWT"));
       });
     }
 
@@ -117,13 +109,15 @@ namespace DeveloperPath.WebUI
         app.UseHsts();
       }
 
-      app.UseHealthChecks("/health");
+      //app.UseHealthChecks("/health");
+      
       app.UseHttpsRedirection();
-      app.UseStaticFiles();
-      if (!env.IsDevelopment())
-      {
-        app.UseSpaStaticFiles();
-      }
+      
+      //app.UseStaticFiles();
+      //if (!env.IsDevelopment())
+      //{
+      //  app.UseSpaStaticFiles();
+      //}
 
       app.UseSwaggerUi3(settings =>
       {
@@ -134,28 +128,29 @@ namespace DeveloperPath.WebUI
       app.UseRouting();
 
       app.UseAuthentication();
-      app.UseIdentityServer();
+      //app.UseIdentityServer();
       app.UseAuthorization();
       app.UseEndpoints(endpoints =>
       {
-        endpoints.MapControllerRoute(
-                  name: "default",
-                  pattern: "{controller}/{action=Index}/{id?}");
-        endpoints.MapRazorPages();
+        //endpoints.MapControllerRoute(
+        //          name: "default",
+        //          pattern: "{controller}/{action=Index}/{id?}");
+        endpoints.MapControllers();
       });
 
-      app.UseSpa(spa =>
-      {
-        // To learn more about options for serving an Angular SPA from ASP.NET Core,
-        // see https://go.microsoft.com/fwlink/?linkid=864501
+      //app.UseSpa(spa =>
+      //{
+      //  // To learn more about options for serving an Angular SPA from ASP.NET Core,
+      //  // see https://go.microsoft.com/fwlink/?linkid=864501
 
-        spa.Options.SourcePath = "ClientApp";
+      //  spa.Options.SourcePath = "ClientApp";
 
-        if (env.IsDevelopment())
-        {
-          spa.UseAngularCliServer(npmScript: "start");
-        }
-      });
+      //  if (env.IsDevelopment())
+      //  {
+      //    spa.UseAngularCliServer(npmScript: "start");
+      //  }
+      //});
+
     }
   }
 }

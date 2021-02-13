@@ -4,6 +4,86 @@
         <name>DeveloperPath.WebApi</name>
     </assembly>
     <members>
+        <member name="M:DeveloperPath.WebApi.Controllers.PathsController.Get">
+            <summary>
+            Get all available paths
+            </summary>
+            <returns>A collection of paths with summary information</returns>
+        </member>
+        <member name="M:DeveloperPath.WebApi.Controllers.PathsController.Get(System.Int32)">
+            <summary>
+            Get path information by its Id
+            </summary>
+            <param name="pathId">An id of the path</param>
+            <returns>Information of the path with modules included</returns>
+        </member>
+        <member name="M:DeveloperPath.WebApi.Controllers.PathsController.Create(DeveloperPath.Application.Paths.Commands.CreatePath.CreatePathCommand)">
+            <summary>
+            Create a path
+            </summary>
+            <param name="command">Path object</param>
+            <returns>Created path</returns>
+        </member>
+        <member name="M:DeveloperPath.WebApi.Controllers.PathsController.Update(System.Int32,DeveloperPath.Application.Paths.Commands.UpdatePath.UpdatePathCommand)">
+            <summary>
+            Update the path with given Id
+            </summary>
+            <param name="pathId">An id of the path</param>
+            <param name="command">Updated path</param>
+            <returns></returns>
+        </member>
+        <member name="M:DeveloperPath.WebApi.Controllers.PathsController.Delete(System.Int32)">
+            <summary>
+            Delete the path with given Id
+            </summary>
+            <param name="pathId">An id of the path</param>
+            <returns></returns>
+        </member>
+        <member name="M:DeveloperPath.WebApi.Controllers.ThemesController.Get(System.Int32,System.Int32)">
+            <summary>
+            Get all available themes
+            </summary>
+            <param name="pathId">An id of the path</param>
+            <param name="moduleId">An id of the module</param>
+            <returns>A collection of themes with summary information</returns>
+        </member>
+        <member name="M:DeveloperPath.WebApi.Controllers.ThemesController.Get(System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Get theme information by its Id
+            </summary>
+            <param name="pathId">An id of the path</param>
+            <param name="moduleId">An id of the module</param>
+            <param name="themeId">An id of the theme</param>
+            <returns>Information about the theme</returns>
+        </member>
+        <member name="M:DeveloperPath.WebApi.Controllers.ThemesController.Create(System.Int32,System.Int32,DeveloperPath.Application.Themes.Commands.CreateTheme.CreateThemeCommand)">
+            <summary>
+            Create a theme
+            </summary>
+            <param name="pathId">An id of the path</param>
+            <param name="moduleId">An id of the module</param>
+            <param name="command">Theme object</param>
+            <returns>Created theme</returns>
+        </member>
+        <member name="M:DeveloperPath.WebApi.Controllers.ThemesController.Update(System.Int32,System.Int32,System.Int32,DeveloperPath.Application.Themes.Commands.UpdateTheme.UpdateThemeCommand)">
+            <summary>
+            Update the theme with given Id
+            </summary>
+            <param name="pathId">An id of the path</param>
+            <param name="moduleId">An id of the module</param>
+            <param name="themeId">An id of the theme</param>
+            <param name="command">Updated theme object</param>
+            <returns>Upated theme</returns>
+        </member>
+        <member name="M:DeveloperPath.WebApi.Controllers.ThemesController.Delete(System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Delete the theme with given Id
+            </summary>
+            <param name="pathId">An id of the path</param>
+            <param name="moduleId">And id of the module the theme is in</param>
+            <param name="themeId">An id of the theme</param>
+            <returns></returns>
+        </member>
         <member name="M:DeveloperPath.WebUI.Controllers.ModulesController.Get(System.Int32)">
             <summary>
             Get all available modules
@@ -44,41 +124,6 @@
             <param name="moduleId">An id of the module</param>
             <returns></returns>
         </member>
-        <member name="M:DeveloperPath.WebUI.Controllers.PathsController.Get">
-            <summary>
-            Get all available paths
-            </summary>
-            <returns>A collection of paths with summary information</returns>
-        </member>
-        <member name="M:DeveloperPath.WebUI.Controllers.PathsController.Get(System.Int32)">
-            <summary>
-            Get path information by its Id
-            </summary>
-            <param name="pathId">An id of the path</param>
-            <returns>Information of the path with modules included</returns>
-        </member>
-        <member name="M:DeveloperPath.WebUI.Controllers.PathsController.Create(DeveloperPath.Application.Paths.Commands.CreatePath.CreatePathCommand)">
-            <summary>
-            Create a path
-            </summary>
-            <param name="command">Path object</param>
-            <returns>Created path</returns>
-        </member>
-        <member name="M:DeveloperPath.WebUI.Controllers.PathsController.Update(System.Int32,DeveloperPath.Application.Paths.Commands.UpdatePath.UpdatePathCommand)">
-            <summary>
-            Update the path with given Id
-            </summary>
-            <param name="pathId">An id of the path</param>
-            <param name="command">Updated path</param>
-            <returns></returns>
-        </member>
-        <member name="M:DeveloperPath.WebUI.Controllers.PathsController.Delete(System.Int32)">
-            <summary>
-            Delete the path with given Id
-            </summary>
-            <param name="pathId">An id of the path</param>
-            <returns></returns>
-        </member>
         <member name="M:DeveloperPath.WebUI.Controllers.SourcesController.Get(System.Int32,System.Int32,System.Int32)">
             <summary>
             Get source information by its Id
@@ -110,51 +155,6 @@
             <param name="moduleId">And id of the module</param>
             <param name="themeId">And id of the theme</param>
             <param name="sourceId">An id of the source</param>
-            <returns></returns>
-        </member>
-        <member name="M:DeveloperPath.WebUI.Controllers.ThemesController.Get(System.Int32,System.Int32)">
-            <summary>
-            Get all available themes
-            </summary>
-            <param name="pathId">An id of the path</param>
-            <param name="moduleId">An id of the module</param>
-            <returns>A collection of themes with summary information</returns>
-        </member>
-        <member name="M:DeveloperPath.WebUI.Controllers.ThemesController.Get(System.Int32,System.Int32,System.Int32)">
-            <summary>
-            Get theme information by its Id
-            </summary>
-            <param name="pathId">An id of the path</param>
-            <param name="moduleId">An id of the module</param>
-            <param name="themeId">An id of the theme</param>
-            <returns>Information about the theme</returns>
-        </member>
-        <member name="M:DeveloperPath.WebUI.Controllers.ThemesController.Create(System.Int32,System.Int32,DeveloperPath.Application.Themes.Commands.CreateTheme.CreateThemeCommand)">
-            <summary>
-            Create a theme
-            </summary>
-            <param name="pathId">An id of the path</param>
-            <param name="moduleId">An id of the module</param>
-            <param name="command">Theme object</param>
-            <returns>Created theme</returns>
-        </member>
-        <member name="M:DeveloperPath.WebUI.Controllers.ThemesController.Update(System.Int32,System.Int32,System.Int32,DeveloperPath.Application.Themes.Commands.UpdateTheme.UpdateThemeCommand)">
-            <summary>
-            Update the theme with given Id
-            </summary>
-            <param name="pathId">An id of the path</param>
-            <param name="moduleId">An id of the module</param>
-            <param name="themeId">An id of the theme</param>
-            <param name="command">Updated theme object</param>
-            <returns>Upated theme</returns>
-        </member>
-        <member name="M:DeveloperPath.WebUI.Controllers.ThemesController.Delete(System.Int32,System.Int32,System.Int32)">
-            <summary>
-            Delete the theme with given Id
-            </summary>
-            <param name="pathId">An id of the path</param>
-            <param name="moduleId">And id of the module the theme is in</param>
-            <param name="themeId">An id of the theme</param>
             <returns></returns>
         </member>
     </members>
