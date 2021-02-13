@@ -4,18 +4,14 @@ using DeveloperPath.Application.Common.Models;
 using DeveloperPath.Domain.Entities;
 using DeveloperPath.Domain.Enums;
 
-namespace DeveloperPath.Application.Sources.Queries.GetSource
+namespace DeveloperPath.Application.Sources.Queries.GetSources
 {
   /// <summary>
   /// Detailed information about the source
   /// </summary>
+  // TODO: Add comments, rating, etc.
   public class SourceViewModel : IMapFrom<Source>
   {
-    /// <summary>
-    /// Source ID
-    /// </summary>
-    //public int Id { get; init; }
-
     /// <summary>
     /// Source Title
     /// </summary>
@@ -30,6 +26,11 @@ namespace DeveloperPath.Application.Sources.Queries.GetSource
     /// Souce URL
     /// </summary>
     public string Url { get; set; }
+
+    /// <summary>
+    /// Theme id that the source is for
+    /// </summary>
+    public int ThemeId { get; set; }
 
     /// <summary>
     /// Theme that the source is for

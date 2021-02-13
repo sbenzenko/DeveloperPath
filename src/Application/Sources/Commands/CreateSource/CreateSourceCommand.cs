@@ -5,6 +5,8 @@ using DeveloperPath.Application.Common.Models;
 using DeveloperPath.Domain.Entities;
 using DeveloperPath.Domain.Enums;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -12,6 +14,7 @@ namespace DeveloperPath.Application.Sources.Commands.CreateSource
 {
   public record CreateSourceCommand : IRequest<SourceDto>
   {
+    public int PathId { get; init; }
     public int ModuleId { get; init; }
     public int ThemeId { get; init; }
     public string Title { get; init; }
@@ -36,13 +39,16 @@ namespace DeveloperPath.Application.Sources.Commands.CreateSource
 
     public async Task<SourceDto> Handle(CreateSourceCommand request, CancellationToken cancellationToken)
     {
-      var theme = await _context.Themes.FindAsync(new object[] { request.ThemeId }, cancellationToken);
+      //TODO: check if requested module is in requested path (???)
+      var path = await _context.Paths.FindAsync(new object[] { request.PathId }, cancellationToken);
+      if (path == null)
+        throw new NotFoundException(nameof(Path), request.PathId);
+
+      var theme = await _context.Themes
+        .Where(t => t.Id == request.ThemeId && t.ModuleId == request.ModuleId)
+        .FirstOrDefaultAsync(cancellationToken);
       if (theme == null)
         throw new NotFoundException(nameof(Theme), request.ThemeId);
-
-      var module = await _context.Modules.FindAsync(new object[] { request.ModuleId }, cancellationToken);
-      if (module == null)
-        throw new NotFoundException(nameof(Module), request.ModuleId);
 
       var entity = new Source
       {

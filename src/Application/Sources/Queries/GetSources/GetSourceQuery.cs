@@ -4,20 +4,22 @@ using System.Threading.Tasks;
 using AutoMapper;
 using DeveloperPath.Application.Common.Exceptions;
 using DeveloperPath.Application.Common.Interfaces;
+using DeveloperPath.Application.Common.Models;
 using DeveloperPath.Domain.Entities;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace DeveloperPath.Application.Sources.Queries.GetSource
+namespace DeveloperPath.Application.Sources.Queries.GetSources
 {
-  public class GetSourceQuery : IRequest<SourceViewModel>
+  public class GetSourceQuery : IRequest<SourceDto>
   {
     public int Id { get; set; }
+    public int PathId { get; set; }
     public int ModuleId { get; set; }
     public int ThemeId { get; set; }
   }
 
-  public class GetSourceQueryHandler : IRequestHandler<GetSourceQuery, SourceViewModel>
+  public class GetSourceQueryHandler : IRequestHandler<GetSourceQuery, SourceDto>
   {
     private readonly IApplicationDbContext _context;
     private readonly IMapper _mapper;
@@ -28,13 +30,16 @@ namespace DeveloperPath.Application.Sources.Queries.GetSource
       _mapper = mapper;
     }
 
-    public async Task<SourceViewModel> Handle(GetSourceQuery request, CancellationToken cancellationToken)
+    public async Task<SourceDto> Handle(GetSourceQuery request, CancellationToken cancellationToken)
     {
-      var module = await _context.Modules.FindAsync(new object[] { request.ModuleId }, cancellationToken);
-      if (module == null)
-        throw new NotFoundException(nameof(Module), request.ModuleId);
+      //TODO: check if requested module is in requested path (???)
+      var path = await _context.Paths.FindAsync(new object[] { request.PathId }, cancellationToken);
+      if (path == null)
+        throw new NotFoundException(nameof(Path), request.PathId);
 
-      var theme = await _context.Themes.FindAsync(new object[] { request.ThemeId }, cancellationToken);
+      var theme = await _context.Themes
+        .Where(t => t.Id == request.ThemeId && t.ModuleId == request.ModuleId)
+        .FirstOrDefaultAsync(cancellationToken);
       if (theme == null)
         throw new NotFoundException(nameof(Theme), request.ThemeId);
 
@@ -44,12 +49,10 @@ namespace DeveloperPath.Application.Sources.Queries.GetSource
         .FirstOrDefaultAsync(cancellationToken);
 
       if (result == null)
-      {
         throw new NotFoundException(nameof(Source), request.Id);
-      }
 
       //TODO: is there another way to map single item?
-      return _mapper.Map<SourceViewModel>(result);
+      return _mapper.Map<SourceDto>(result);
     }
   }
 }

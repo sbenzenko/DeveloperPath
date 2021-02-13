@@ -48,7 +48,7 @@ namespace DeveloperPath.WebUI.Controllers
     }
 
     ///// <summary>
-    ///// Get theme information by its Id
+    ///// Get detailed theme information by its Id
     ///// </summary>
     ///// <param name="pathId">An id of the path</param>
     ///// <param name="moduleId">An id of the theme</param>
@@ -73,7 +73,8 @@ namespace DeveloperPath.WebUI.Controllers
     /// <param name="command">Theme object</param>
     /// <returns>Created theme</returns>
     [HttpPost]
-    public async Task<ActionResult<ThemeDto>> Create(int pathId, int moduleId, CreateThemeCommand command)
+    public async Task<ActionResult<ThemeDto>> Create(int pathId, int moduleId,
+      [FromBody] CreateThemeCommand command)
     {
       if (pathId != command.PathId || moduleId != command.ModuleId)
         return BadRequest();
@@ -93,7 +94,8 @@ namespace DeveloperPath.WebUI.Controllers
     /// <param name="command">Updated theme object</param>
     /// <returns>Upated theme</returns>
     [HttpPut("{themeId}")]
-    public async Task<ActionResult<ThemeDto>> Update(int pathId, int moduleId, int themeId, UpdateThemeCommand command)
+    public async Task<ActionResult<ThemeDto>> Update(int pathId, int moduleId, int themeId,
+      [FromBody] UpdateThemeCommand command)
     {
       if (pathId != command.PathId || moduleId != command.ModuleId || themeId != command.Id)
         return BadRequest();

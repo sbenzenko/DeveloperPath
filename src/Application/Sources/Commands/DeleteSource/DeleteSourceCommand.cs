@@ -12,6 +12,7 @@ namespace DeveloperPath.Application.Sources.Commands.DeleteSource
   public record DeleteSourceCommand : IRequest
   {
     public int Id { get; init; }
+    public int PathId { get; init; }
     public int ModuleId { get; init; }
     public int ThemeId { get; init; }
   }
@@ -27,9 +28,16 @@ namespace DeveloperPath.Application.Sources.Commands.DeleteSource
 
     public async Task<Unit> Handle(DeleteSourceCommand request, CancellationToken cancellationToken)
     {
-      var module = await _context.Modules.FindAsync(new object[] { request.ModuleId }, cancellationToken);
-      if (module == null)
-        throw new NotFoundException(nameof(Module), request.ModuleId);
+      //TODO: check if requested module is in requested path (???)
+      var path = await _context.Paths.FindAsync(new object[] { request.PathId }, cancellationToken);
+      if (path == null)
+        throw new NotFoundException(nameof(Path), request.PathId);
+
+      var theme = await _context.Themes
+        .Where(t => t.Id == request.ThemeId && t.ModuleId == request.ModuleId)
+        .FirstOrDefaultAsync(cancellationToken);
+      if (theme == null)
+        throw new NotFoundException(nameof(Theme), request.ThemeId);
 
       var entity = await _context.Sources
         .Where(t => t.Id == request.Id && t.ThemeId == request.ThemeId)

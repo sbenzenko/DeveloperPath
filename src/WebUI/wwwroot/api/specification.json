@@ -539,24 +539,149 @@
         }
       }
     },
-    "/api/modules/{moduleId}/themes/{themeId}/sources/{sourceId}": {
+    "/api/paths/{pathId}/modules/{moduleId}/themes/{themeId}/sources": {
       "get": {
         "tags": [
           "Sources"
         ],
-        "summary": "Get source information by its Id",
-        "operationId": "Sources_Get",
+        "summary": "Get all available sources",
+        "operationId": "Sources_GetAll",
         "parameters": [
           {
-            "name": "moduleId",
+            "name": "pathId",
             "in": "path",
             "required": true,
-            "description": "An id of the theme",
+            "description": "An id of the path",
             "schema": {
               "type": "integer",
               "format": "int32"
             },
             "x-position": 1
+          },
+          {
+            "name": "moduleId",
+            "in": "path",
+            "required": true,
+            "description": "An id of the module",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 2
+          },
+          {
+            "name": "themeId",
+            "in": "path",
+            "required": true,
+            "description": "An id of the module",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 3
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A collection of sources with summary information",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SourceDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "head": {
+        "tags": [
+          "Sources"
+        ],
+        "summary": "Get all available sources",
+        "operationId": "Sources_Get",
+        "parameters": [
+          {
+            "name": "pathId",
+            "in": "path",
+            "required": true,
+            "description": "An id of the path",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          },
+          {
+            "name": "moduleId",
+            "in": "path",
+            "required": true,
+            "description": "An id of the module",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 2
+          },
+          {
+            "name": "themeId",
+            "in": "path",
+            "required": true,
+            "description": "An id of the module",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 3
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A collection of sources with summary information",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SourceDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Sources"
+        ],
+        "summary": "Create a source",
+        "operationId": "Sources_Create",
+        "parameters": [
+          {
+            "name": "pathId",
+            "in": "path",
+            "required": true,
+            "description": "An id of the path",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          },
+          {
+            "name": "moduleId",
+            "in": "path",
+            "required": true,
+            "description": "An id of the module",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 2
           },
           {
             "name": "themeId",
@@ -567,7 +692,76 @@
               "type": "integer",
               "format": "int32"
             },
+            "x-position": 3
+          }
+        ],
+        "requestBody": {
+          "x-name": "command",
+          "description": "Command object",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateSourceCommand"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 4
+        },
+        "responses": {
+          "200": {
+            "description": "Created source",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SourceDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/paths/{pathId}/modules/{moduleId}/themes/{themeId}/sources/{sourceId}": {
+      "get": {
+        "tags": [
+          "Sources"
+        ],
+        "summary": "Get source information by its Id",
+        "operationId": "Sources_Get2",
+        "parameters": [
+          {
+            "name": "pathId",
+            "in": "path",
+            "required": true,
+            "description": "An id of the path",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          },
+          {
+            "name": "moduleId",
+            "in": "path",
+            "required": true,
+            "description": "An id of the module",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
             "x-position": 2
+          },
+          {
+            "name": "themeId",
+            "in": "path",
+            "required": true,
+            "description": "An id of the module",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 3
           },
           {
             "name": "sourceId",
@@ -578,7 +772,7 @@
               "type": "integer",
               "format": "int32"
             },
-            "x-position": 3
+            "x-position": 4
           }
         ],
         "responses": {
@@ -587,7 +781,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/SourceViewModel"
+                  "$ref": "#/components/schemas/SourceDto"
                 }
               }
             }
@@ -599,13 +793,13 @@
           "Sources"
         ],
         "summary": "Get source information by its Id",
-        "operationId": "Sources_Get2",
+        "operationId": "Sources_Get3",
         "parameters": [
           {
-            "name": "moduleId",
+            "name": "pathId",
             "in": "path",
             "required": true,
-            "description": "An id of the theme",
+            "description": "An id of the path",
             "schema": {
               "type": "integer",
               "format": "int32"
@@ -613,15 +807,26 @@
             "x-position": 1
           },
           {
-            "name": "themeId",
+            "name": "moduleId",
             "in": "path",
             "required": true,
-            "description": "An id of the theme",
+            "description": "An id of the module",
             "schema": {
               "type": "integer",
               "format": "int32"
             },
             "x-position": 2
+          },
+          {
+            "name": "themeId",
+            "in": "path",
+            "required": true,
+            "description": "An id of the module",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 3
           },
           {
             "name": "sourceId",
@@ -632,7 +837,7 @@
               "type": "integer",
               "format": "int32"
             },
-            "x-position": 3
+            "x-position": 4
           }
         ],
         "responses": {
@@ -641,7 +846,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/SourceViewModel"
+                  "$ref": "#/components/schemas/SourceDto"
                 }
               }
             }
@@ -656,10 +861,10 @@
         "operationId": "Sources_Update",
         "parameters": [
           {
-            "name": "sourceId",
+            "name": "pathId",
             "in": "path",
             "required": true,
-            "description": "An id of the source",
+            "description": "An id of the path",
             "schema": {
               "type": "integer",
               "format": "int32"
@@ -670,17 +875,32 @@
             "name": "moduleId",
             "in": "path",
             "required": true,
+            "description": "An id of the module",
             "schema": {
-              "type": "string"
+              "type": "integer",
+              "format": "int32"
             },
-            "x-position": 3
+            "x-position": 2
           },
           {
             "name": "themeId",
             "in": "path",
             "required": true,
+            "description": "An id of the theme",
             "schema": {
-              "type": "string"
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 3
+          },
+          {
+            "name": "sourceId",
+            "in": "path",
+            "required": true,
+            "description": "An id of the source",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
             },
             "x-position": 4
           }
@@ -696,7 +916,7 @@
             }
           },
           "required": true,
-          "x-position": 2
+          "x-position": 5
         },
         "responses": {
           "200": {
@@ -719,6 +939,17 @@
         "operationId": "Sources_Delete",
         "parameters": [
           {
+            "name": "pathId",
+            "in": "path",
+            "required": true,
+            "description": "An id of the path",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          },
+          {
             "name": "moduleId",
             "in": "path",
             "required": true,
@@ -727,7 +958,7 @@
               "type": "integer",
               "format": "int32"
             },
-            "x-position": 1
+            "x-position": 2
           },
           {
             "name": "themeId",
@@ -738,7 +969,7 @@
               "type": "integer",
               "format": "int32"
             },
-            "x-position": 2
+            "x-position": 3
           },
           {
             "name": "sourceId",
@@ -749,7 +980,7 @@
               "type": "integer",
               "format": "int32"
             },
-            "x-position": 3
+            "x-position": 4
           }
         ],
         "responses": {
@@ -760,60 +991,6 @@
                 "schema": {
                   "type": "string",
                   "format": "binary"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/modules/{moduleId}/themes/{themeId}/sources": {
-      "post": {
-        "tags": [
-          "Sources"
-        ],
-        "summary": "Create a source",
-        "operationId": "Sources_Create",
-        "parameters": [
-          {
-            "name": "moduleId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "x-position": 2
-          },
-          {
-            "name": "themeId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "x-position": 3
-          }
-        ],
-        "requestBody": {
-          "x-name": "command",
-          "description": "Command object",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/CreateSourceCommand"
-              }
-            }
-          },
-          "required": true,
-          "x-position": 1
-        },
-        "responses": {
-          "200": {
-            "description": "Created source",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/SourceDto"
                 }
               }
             }
@@ -1808,10 +1985,14 @@
           }
         }
       },
-      "SourceViewModel": {
+      "SourceDto": {
         "type": "object",
         "additionalProperties": false,
         "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
           "title": {
             "type": "string",
             "nullable": true
@@ -1823,6 +2004,10 @@
           "url": {
             "type": "string",
             "nullable": true
+          },
+          "themeId": {
+            "type": "integer",
+            "format": "int32"
           },
           "theme": {
             "nullable": true,
@@ -1988,64 +2173,14 @@
           3
         ]
       },
-      "SourceDto": {
-        "type": "object",
-        "additionalProperties": false,
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "title": {
-            "type": "string",
-            "nullable": true
-          },
-          "description": {
-            "type": "string",
-            "nullable": true
-          },
-          "url": {
-            "type": "string",
-            "nullable": true
-          },
-          "themeId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "theme": {
-            "nullable": true,
-            "oneOf": [
-              {
-                "$ref": "#/components/schemas/ThemeDto"
-              }
-            ]
-          },
-          "order": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "type": {
-            "$ref": "#/components/schemas/SourceType"
-          },
-          "availability": {
-            "$ref": "#/components/schemas/AvailabilityLevel"
-          },
-          "relevance": {
-            "$ref": "#/components/schemas/RelevanceLevel"
-          },
-          "tags": {
-            "type": "array",
-            "nullable": true,
-            "items": {
-              "type": "string"
-            }
-          }
-        }
-      },
       "CreateSourceCommand": {
         "type": "object",
         "additionalProperties": false,
         "properties": {
+          "pathId": {
+            "type": "integer",
+            "format": "int32"
+          },
           "moduleId": {
             "type": "integer",
             "format": "int32"
@@ -2086,6 +2221,10 @@
         "additionalProperties": false,
         "properties": {
           "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "pathId": {
             "type": "integer",
             "format": "int32"
           },
