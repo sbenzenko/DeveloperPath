@@ -27,9 +27,8 @@ namespace DeveloperPath.Application.Themes.Commands.DeleteTheme
 
     public async Task<Unit> Handle(DeleteThemeCommand request, CancellationToken cancellationToken)
     {
-      var path = await _context.Paths
-        .Where(c => c.Id == request.PathId)
-        .FirstOrDefaultAsync(cancellationToken);
+      //TODO: check if requested module is in requested path (???)
+      var path = await _context.Paths.FindAsync(new object[] { request.PathId }, cancellationToken);
       if (path == null)
         throw new NotFoundException(nameof(Path), request.PathId);
 

@@ -70,18 +70,16 @@ namespace DeveloperPath.Application.IntegrationTests.Queries
     [Test]
     public async Task ShouldReturnTheme()
     {
-      var module = await AddAsync(new Module
+      var path = await AddAsync(
+        new Path { Title = "Some Path", Description = "Some Path Description" });
+
+      var module = await SendAsync(new CreateModuleCommand
       {
-        Title = "New Module",
+        PathId = path.Id,
+        Title = "New Module Module",
         Description = "New Module Description",
         Necessity = Domain.Enums.NecessityLevel.MustKnow,
-        Themes = new List<Theme> { },
-        Paths = new List<Path> { new Path
-          {
-            Title = "Some Path",
-            Description = "Some Path Description"
-          }
-        }
+        Tags = new List<string> { "Tag1", "Tag2", "Tag3" }
       });
 
       var theme = await AddAsync(new Theme
@@ -100,7 +98,7 @@ namespace DeveloperPath.Application.IntegrationTests.Queries
         }
       });
 
-      var query = new GetThemeQuery() { Id = theme.Id, ModuleId = module.Id };
+      var query = new GetThemeQuery() { PathId = path.Id, ModuleId = module.Id, Id = theme.Id};
 
       var createdTheme = await SendAsync(query);
 
