@@ -10,18 +10,26 @@ namespace IdentityProvider
 {
     public static class Config
     {
-        public static IEnumerable<ApiScope> ApiScopes =>
+        public static IEnumerable<ApiResource> Apis =>
+            new ApiResource[]
+            {
+                new ApiResource("pathapi", "The Developer Path API")
+                {
+                    Scopes = { "pathapi" }
+                }
+            };
+
+        public static IEnumerable<ApiScope> Scopes => 
             new ApiScope[]
             {
-                new ApiScope("scope1"),
-                new ApiScope("scope2"),
+                new ApiScope("pathapi")
             };
 
         public static IEnumerable<IdentityResource> IdentityResources =>
             new IdentityResource[]
             {
                 new IdentityResources.OpenId(),
-                new IdentityResources.Profile(),
+                new ProfileWithRoleIdentityResource(),
                 new IdentityResources.Email()
             };
 
@@ -39,7 +47,8 @@ namespace IdentityProvider
                     {
                         IdentityServerConstants.StandardScopes.OpenId,
                         IdentityServerConstants.StandardScopes.Profile,
-                        IdentityServerConstants.StandardScopes.Email
+                        //IdentityServerConstants.StandardScopes.Email,
+                        "pathapi"
                     },
                     RedirectUris = { "https://localhost:8001/authentication/login-callback" },
                     PostLogoutRedirectUris = { "https://localhost:8001/" },
