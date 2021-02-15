@@ -2,7 +2,7 @@
 using DeveloperPath.Domain.Common;
 using DeveloperPath.Infrastructure.Identity;
 using DeveloperPath.Infrastructure.Persistence;
-using DeveloperPath.WebUI;
+using DeveloperPath.WebApi;
 using MediatR;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -15,7 +15,6 @@ using Respawn;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using DeveloperPath.WebApi;
 
 [SetUpFixture]
 public class Testing
@@ -41,7 +40,7 @@ public class Testing
 
     services.AddSingleton(Mock.Of<IWebHostEnvironment>(w =>
         w.EnvironmentName == "Development" &&
-        w.ApplicationName == "DeveloperPath.WebUI"));
+        w.ApplicationName == "DeveloperPath.WebApi"));
 
     services.AddLogging();
 

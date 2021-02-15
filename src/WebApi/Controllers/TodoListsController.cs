@@ -6,9 +6,8 @@ using DeveloperPath.Application.TodoLists.Queries.GetTodos;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
-using DeveloperPath.WebApi.Controllers;
 
-namespace DeveloperPath.WebUI.Controllers
+namespace DeveloperPath.WebApi.Controllers
 {
     [Authorize]
     public class TodoListsController : ApiController

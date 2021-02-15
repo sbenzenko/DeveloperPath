@@ -10,7 +10,7 @@ using System;
 using System.Threading.Tasks;
 using DeveloperPath.WebApi;
 
-namespace DeveloperPath.WebUI
+namespace DeveloperPath.WebApi
 {
     public class Program
     {

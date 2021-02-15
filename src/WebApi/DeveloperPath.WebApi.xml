@@ -4,6 +4,46 @@
         <name>DeveloperPath.WebApi</name>
     </assembly>
     <members>
+        <member name="M:DeveloperPath.WebApi.Controllers.ModulesController.Get(System.Int32)">
+            <summary>
+            Get all available modules
+            </summary>
+            <param name="pathId">An id of the path</param>
+            <returns>A collection of modules with summary information</returns>
+        </member>
+        <member name="M:DeveloperPath.WebApi.Controllers.ModulesController.Get(System.Int32,System.Int32)">
+            <summary>
+            Get module information by its Id
+            </summary>
+            <param name="pathId">An id of the path</param>
+            <param name="moduleId">An id of the module</param>
+            <returns>Information about the module</returns>
+        </member>
+        <member name="M:DeveloperPath.WebApi.Controllers.ModulesController.Create(System.Int32,DeveloperPath.Application.Modules.Commands.CreateModule.CreateModuleCommand)">
+            <summary>
+            Create a module
+            </summary>
+            <param name="pathId">An id of the path</param>
+            <param name="command">Module object</param>
+            <returns>Created module</returns>
+        </member>
+        <member name="M:DeveloperPath.WebApi.Controllers.ModulesController.Update(System.Int32,System.Int32,DeveloperPath.Application.Modules.Commands.UpdateModule.UpdateModuleCommand)">
+            <summary>
+            Update the module with given Id
+            </summary>
+            <param name="pathId">An id of the path</param>
+            <param name="moduleId">An id of the module</param>
+            <param name="command">Updated module object</param>
+            <returns>Updated module</returns>
+        </member>
+        <member name="M:DeveloperPath.WebApi.Controllers.ModulesController.Delete(System.Int32,System.Int32)">
+            <summary>
+            Delete the module with given Id from path with given Id
+            </summary>
+            <param name="pathId">An id of the path</param>
+            <param name="moduleId">An id of the module</param>
+            <returns></returns>
+        </member>
         <member name="M:DeveloperPath.WebApi.Controllers.PathsController.Get">
             <summary>
             Get all available paths
@@ -37,6 +77,56 @@
             Delete the path with given Id
             </summary>
             <param name="pathId">An id of the path</param>
+            <returns></returns>
+        </member>
+        <member name="M:DeveloperPath.WebApi.Controllers.SourcesController.Get(System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Get all available sources
+            </summary>
+            <param name="pathId">An id of the path</param>
+            <param name="moduleId">An id of the module</param>
+            <param name="themeId">An id of the module</param>
+            <returns>A collection of sources with summary information</returns>
+        </member>
+        <member name="M:DeveloperPath.WebApi.Controllers.SourcesController.Get(System.Int32,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Get source information by its Id
+            </summary>
+            <param name="pathId">An id of the path</param>
+            <param name="moduleId">An id of the theme</param>
+            <param name="themeId">An id of the theme</param>
+            <param name="sourceId">An id of the source</param>
+            <returns>Detailed information of the source with sources included</returns>
+        </member>
+        <member name="M:DeveloperPath.WebApi.Controllers.SourcesController.Create(System.Int32,System.Int32,System.Int32,DeveloperPath.Application.Sources.Commands.CreateSource.CreateSourceCommand)">
+            <summary>
+            Create a source
+            </summary>
+            <param name="pathId">An id of the path</param>
+            <param name="moduleId">An id of the module</param>
+            <param name="themeId">An id of the theme</param>
+            <param name="command">Command object</param>
+            <returns>Created source</returns>
+        </member>
+        <member name="M:DeveloperPath.WebApi.Controllers.SourcesController.Update(System.Int32,System.Int32,System.Int32,System.Int32,DeveloperPath.Application.Sources.Commands.UpdateSource.UpdateSourceCommand)">
+            <summary>
+            Update the source with given Id
+            </summary>
+            <param name="pathId">An id of the path</param>
+            <param name="moduleId">An id of the module</param>
+            <param name="themeId">An id of the theme</param>
+            <param name="sourceId">An id of the source</param>
+            <param name="command">Updated source object</param>
+            <returns>Updated spurce</returns>
+        </member>
+        <member name="M:DeveloperPath.WebApi.Controllers.SourcesController.Delete(System.Int32,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Delete the source with given Id
+            </summary>
+            <param name="pathId">An id of the path</param>
+            <param name="moduleId">And id of the module</param>
+            <param name="themeId">And id of the theme</param>
+            <param name="sourceId">An id of the source</param>
             <returns></returns>
         </member>
         <member name="M:DeveloperPath.WebApi.Controllers.ThemesController.Get(System.Int32,System.Int32)">
@@ -82,96 +172,6 @@
             <param name="pathId">An id of the path</param>
             <param name="moduleId">And id of the module the theme is in</param>
             <param name="themeId">An id of the theme</param>
-            <returns></returns>
-        </member>
-        <member name="M:DeveloperPath.WebUI.Controllers.ModulesController.Get(System.Int32)">
-            <summary>
-            Get all available modules
-            </summary>
-            <param name="pathId">An id of the path</param>
-            <returns>A collection of modules with summary information</returns>
-        </member>
-        <member name="M:DeveloperPath.WebUI.Controllers.ModulesController.Get(System.Int32,System.Int32)">
-            <summary>
-            Get module information by its Id
-            </summary>
-            <param name="pathId">An id of the path</param>
-            <param name="moduleId">An id of the module</param>
-            <returns>Information about the module</returns>
-        </member>
-        <member name="M:DeveloperPath.WebUI.Controllers.ModulesController.Create(System.Int32,DeveloperPath.Application.Modules.Commands.CreateModule.CreateModuleCommand)">
-            <summary>
-            Create a module
-            </summary>
-            <param name="pathId">An id of the path</param>
-            <param name="command">Module object</param>
-            <returns>Created module</returns>
-        </member>
-        <member name="M:DeveloperPath.WebUI.Controllers.ModulesController.Update(System.Int32,System.Int32,DeveloperPath.Application.Modules.Commands.UpdateModule.UpdateModuleCommand)">
-            <summary>
-            Update the module with given Id
-            </summary>
-            <param name="pathId">An id of the path</param>
-            <param name="moduleId">An id of the module</param>
-            <param name="command">Updated module object</param>
-            <returns>Updated module</returns>
-        </member>
-        <member name="M:DeveloperPath.WebUI.Controllers.ModulesController.Delete(System.Int32,System.Int32)">
-            <summary>
-            Delete the module with given Id from path with given Id
-            </summary>
-            <param name="pathId">An id of the path</param>
-            <param name="moduleId">An id of the module</param>
-            <returns></returns>
-        </member>
-        <member name="M:DeveloperPath.WebUI.Controllers.SourcesController.Get(System.Int32,System.Int32,System.Int32)">
-            <summary>
-            Get all available sources
-            </summary>
-            <param name="pathId">An id of the path</param>
-            <param name="moduleId">An id of the module</param>
-            <param name="themeId">An id of the module</param>
-            <returns>A collection of sources with summary information</returns>
-        </member>
-        <member name="M:DeveloperPath.WebUI.Controllers.SourcesController.Get(System.Int32,System.Int32,System.Int32,System.Int32)">
-            <summary>
-            Get source information by its Id
-            </summary>
-            <param name="pathId">An id of the path</param>
-            <param name="moduleId">An id of the theme</param>
-            <param name="themeId">An id of the theme</param>
-            <param name="sourceId">An id of the source</param>
-            <returns>Detailed information of the source with sources included</returns>
-        </member>
-        <member name="M:DeveloperPath.WebUI.Controllers.SourcesController.Create(System.Int32,System.Int32,System.Int32,DeveloperPath.Application.Sources.Commands.CreateSource.CreateSourceCommand)">
-            <summary>
-            Create a source
-            </summary>
-            <param name="pathId">An id of the path</param>
-            <param name="moduleId">An id of the module</param>
-            <param name="themeId">An id of the theme</param>
-            <param name="command">Command object</param>
-            <returns>Created source</returns>
-        </member>
-        <member name="M:DeveloperPath.WebUI.Controllers.SourcesController.Update(System.Int32,System.Int32,System.Int32,System.Int32,DeveloperPath.Application.Sources.Commands.UpdateSource.UpdateSourceCommand)">
-            <summary>
-            Update the source with given Id
-            </summary>
-            <param name="pathId">An id of the path</param>
-            <param name="moduleId">An id of the module</param>
-            <param name="themeId">An id of the theme</param>
-            <param name="sourceId">An id of the source</param>
-            <param name="command">Updated source object</param>
-            <returns>Updated spurce</returns>
-        </member>
-        <member name="M:DeveloperPath.WebUI.Controllers.SourcesController.Delete(System.Int32,System.Int32,System.Int32,System.Int32)">
-            <summary>
-            Delete the source with given Id
-            </summary>
-            <param name="pathId">An id of the path</param>
-            <param name="moduleId">And id of the module</param>
-            <param name="themeId">And id of the theme</param>
-            <param name="sourceId">An id of the source</param>
             <returns></returns>
         </member>
     </members>
