@@ -4,8 +4,10 @@ using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
+using DeveloperPath.Application.Common.Exceptions;
 using DeveloperPath.Application.Common.Interfaces;
 using DeveloperPath.Application.Common.Models;
+using DeveloperPath.Domain.Entities;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
@@ -17,12 +19,12 @@ namespace DeveloperPath.Application.Themes.Queries.GetThemes
     public int ModuleId { get; set; }
   }
 
-  public class GetThemesQueryHandler : IRequestHandler<GetThemeListQuery, IEnumerable<ThemeDto>>
+  public class GetThemeListQueryHandler : IRequestHandler<GetThemeListQuery, IEnumerable<ThemeDto>>
   {
     private readonly IApplicationDbContext _context;
     private readonly IMapper _mapper;
 
-    public GetThemesQueryHandler(IApplicationDbContext context, IMapper mapper)
+    public GetThemeListQueryHandler(IApplicationDbContext context, IMapper mapper)
     {
       _context = context;
       _mapper = mapper;
@@ -30,6 +32,12 @@ namespace DeveloperPath.Application.Themes.Queries.GetThemes
 
     public async Task<IEnumerable<ThemeDto>> Handle(GetThemeListQuery request, CancellationToken cancellationToken)
     {
+      var path = await _context.Paths
+        .Where(c => c.Id == request.PathId)
+        .FirstOrDefaultAsync(cancellationToken);
+      if (path == null)
+        throw new NotFoundException(nameof(Path), request.PathId);
+
       return await _context.Themes
         .Where(t => t.ModuleId == request.ModuleId)
         .OrderBy(t => t.Order)

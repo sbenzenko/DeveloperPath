@@ -31,6 +31,11 @@ namespace DeveloperPath.Application.Themes.Queries.GetThemes
 
     public async Task<ThemeDto> Handle(GetThemeQuery request, CancellationToken cancellationToken)
     {
+      //TODO: check if requested module is in requested path (???)
+      var path = await _context.Paths.FindAsync(new object[] { request.PathId }, cancellationToken);
+      if (path == null)
+        throw new NotFoundException(nameof(Path), request.PathId);
+
       var result = await _context.Themes
         .Include(t => t.Prerequisites)
         .Include(t => t.Related)
