@@ -67,7 +67,8 @@ namespace DeveloperPath.WebUI.Controllers
     /// <param name="command">Module object</param>
     /// <returns>Created module</returns>
     [HttpPost]
-    public async Task<ActionResult<ModuleDto>> Create(int pathId, CreateModuleCommand command)
+    public async Task<ActionResult<ModuleDto>> Create(int pathId,
+      [FromBody] CreateModuleCommand command)
     {
       if (pathId != command.PathId)
         return BadRequest();
@@ -85,7 +86,8 @@ namespace DeveloperPath.WebUI.Controllers
     /// <param name="command">Updated module object</param>
     /// <returns>Updated module</returns>
     [HttpPut("{moduleId}")]
-    public async Task<ActionResult<ModuleDto>> Update(int pathId, int moduleId, UpdateModuleCommand command)
+    public async Task<ActionResult<ModuleDto>> Update(int pathId, int moduleId,
+      [FromBody] UpdateModuleCommand command)
     {
       if (moduleId != command.Id)
         return BadRequest();

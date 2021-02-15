@@ -61,7 +61,7 @@ namespace DeveloperPath.WebApi.Controllers
     /// <param name="command">Path object</param>
     /// <returns>Created path</returns>
     [HttpPost]
-    public async Task<ActionResult<PathDto>> Create(CreatePathCommand command)
+    public async Task<ActionResult<PathDto>> Create([FromBody] CreatePathCommand command)
     {
       PathDto model = await Mediator.Send(command);
 
@@ -75,7 +75,8 @@ namespace DeveloperPath.WebApi.Controllers
     /// <param name="command">Updated path</param>
     /// <returns></returns>
     [HttpPut("{pathId}")]
-    public async Task<ActionResult<PathDto>> Update(int pathId, UpdatePathCommand command)
+    public async Task<ActionResult<PathDto>> Update(int pathId,
+      [FromBody] UpdatePathCommand command)
     {
       if (pathId != command.Id)
         return BadRequest();

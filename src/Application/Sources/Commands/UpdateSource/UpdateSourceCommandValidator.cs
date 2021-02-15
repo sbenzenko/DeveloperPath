@@ -24,7 +24,6 @@ namespace DeveloperPath.Application.Sources.Commands.UpdateSource
         .MaximumLength(500).WithMessage("URL must not exceed 500 characters.");
 
       RuleFor(v => v.Description)
-        //.NotEmpty().WithMessage("Description is required.")
         .MaximumLength(10000).WithMessage("Description must not exceed 10000 characters.");
     }
   }

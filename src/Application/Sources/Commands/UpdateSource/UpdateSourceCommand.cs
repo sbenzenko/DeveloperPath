@@ -16,6 +16,7 @@ namespace DeveloperPath.Application.Sources.Commands.UpdateSource
   public partial record UpdateSourceCommand : IRequest<SourceDto>
   {
     public int Id { get; init; }
+    public int PathId { get; init; }
     public int ModuleId { get; init; }
     public int ThemeId { get; init; }
     public string Title { get; init; }
@@ -40,17 +41,20 @@ namespace DeveloperPath.Application.Sources.Commands.UpdateSource
 
     public async Task<SourceDto> Handle(UpdateSourceCommand request, CancellationToken cancellationToken)
     {
-      var entity = await _context.Sources.FindAsync(new object[] { request.Id }, cancellationToken);
-      if (entity == null)
-        throw new NotFoundException(nameof(Source), request.Id);
+      //TODO: check if requested module is in requested path (???)
+      var path = await _context.Paths.FindAsync(new object[] { request.PathId }, cancellationToken);
+      if (path == null)
+        throw new NotFoundException(nameof(Path), request.PathId);
 
-      var theme = await _context.Themes.FindAsync(new object[] { request.ThemeId }, cancellationToken);
+      var theme = await _context.Themes
+        .Where(t => t.Id == request.ThemeId && t.ModuleId == request.ModuleId)
+        .FirstOrDefaultAsync(cancellationToken);
       if (theme == null)
         throw new NotFoundException(nameof(Theme), request.ThemeId);
 
-      var module = await _context.Modules.FindAsync(new object[] { request.ModuleId }, cancellationToken);
-      if (module == null)
-        throw new NotFoundException(nameof(Module), request.ModuleId);
+      var entity = await _context.Sources.FindAsync(new object[] { request.Id }, cancellationToken);
+      if (entity == null)
+        throw new NotFoundException(nameof(Source), request.Id);
 
       // TODO: is there a way to use init-only fields?
       entity.ThemeId = request.ThemeId;
