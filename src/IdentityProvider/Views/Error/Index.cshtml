@@ -1,0 +1,33 @@
+﻿@model IdentityProvider.Models.Error.ErrorModel
+<div class="container">
+    <div class="row h-50"> </div>
+    <div class="row h-50"> </div>
+    <div class="row h-100"> </div>
+    <div class="row">
+        <div class="col s2 m2 l2"></div>
+        <div class="col s8 m8 l8">
+            <div class="card">
+                <div class="card-content">
+                    <div class="center"><span class="card-title">Ошибка</span></div>
+                    @foreach (var item in @Model.Errors)
+                    {
+                        <div class="center">
+                            <p class="validation-invalid">@item</p>
+                        </div>
+                    }
+                    <div class="row">
+                        <div class="center">
+                           @if (Model!= null && !string.IsNullOrWhiteSpace(Model.ReturnUrl))
+                           {
+                               <text>Чтобы вернуться</text><a href="@Model.ReturnUrl"> нажмите сюда</a>
+                           }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col s2 m2 l2"></div>
+    </div>
+</div>
+
+

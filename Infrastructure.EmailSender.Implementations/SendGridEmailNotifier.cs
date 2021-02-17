@@ -1,14 +1,15 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using EmailSender.Interfaces;
 using SendGrid;
 using SendGrid.Helpers.Mail;
+
 
 namespace EmailSender.Implementations
 {
     public class SendGridEmailNotifier : IEmailNotifier
     {
         private readonly string _apiKey;
+
         public SendGridEmailNotifier(string apiKey)
         {
             _apiKey = apiKey;
