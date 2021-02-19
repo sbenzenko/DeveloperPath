@@ -10,11 +10,11 @@ namespace DeveloperPath.Infrastructure.Persistence.Configurations
     public void Configure(EntityTypeBuilder<Module> builder)
     {
       builder.Property(m => m.Title)
-          .HasMaxLength(100)
-          .IsRequired();
+        .HasMaxLength(100)
+        .IsRequired();
       builder.Property(m => m.Description)
-          .HasMaxLength(3000)
-          .IsRequired();
+        .HasMaxLength(3000)
+        .IsRequired();
       builder
           .Property(m => m.Tags)
           .HasConversion(

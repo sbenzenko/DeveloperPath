@@ -9,7 +9,7 @@ namespace DeveloperPath.Domain.Entities
     /// <summary>
     /// Source ID
     /// </summary>
-    public int Id { get; init; }
+    //public int Id { get; init; }
 
     /// <summary>
     /// Source Title
@@ -17,9 +17,19 @@ namespace DeveloperPath.Domain.Entities
     public string Title { get; set; }
 
     /// <summary>
+    /// Souce Description
+    /// </summary>
+    public string Description { get; set; }
+
+    /// <summary>
     /// Souce URL
     /// </summary>
     public string Url { get; set; }
+
+    /// <summary>
+    /// Theme id that the source is for
+    /// </summary>
+    public int ThemeId { get; set; }
 
     /// <summary>
     /// Theme that the source is for

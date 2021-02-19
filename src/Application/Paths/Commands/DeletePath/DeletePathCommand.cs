@@ -24,11 +24,8 @@ namespace DeveloperPath.Application.Paths.Commands.DeletePath
     public async Task<Unit> Handle(DeletePathCommand request, CancellationToken cancellationToken)
     {
       var entity = await _context.Paths.FindAsync(request.Id);
-
       if (entity == null)
-      {
         throw new NotFoundException(nameof(Path), request.Id);
-      }
 
       _context.Paths.Remove(entity);
 

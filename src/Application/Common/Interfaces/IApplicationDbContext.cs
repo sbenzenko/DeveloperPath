@@ -14,7 +14,13 @@ namespace DeveloperPath.Application.Common.Interfaces
 
         //TODO: this is from the template. Remove
         DbSet<TodoItem> TodoItems { get; set; }
+
+
         DbSet<Path> Paths { get; set; }
+        DbSet<Module> Modules { get; set; }
+        DbSet<Section> Sections { get; set; }
+        DbSet<Theme> Themes { get; set; }
+        DbSet<Source> Sources { get; set; }
 
         Task<int> SaveChangesAsync(CancellationToken cancellationToken);
     }

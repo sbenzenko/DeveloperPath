@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace DeveloperPath.Application.IntegrationTests.TodoItems.Commands
 {
     using static Testing;
-
+    [Obsolete("Left from project template. Remove")]
     public class CreateTodoItemTests : TestBase
     {
         [Test]

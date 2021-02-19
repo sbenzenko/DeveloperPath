@@ -2,7 +2,8 @@
 
 namespace DeveloperPath.Domain.Common
 {
-    //TODO: this class id from the template. Remove it
+    //TODO: this class is from the project template. Remove it
+    [Obsolete("This class is from the project template. Should not be used")]
     public abstract class AuditableEntityTemplate
     {
         public string CreatedBy { get; set; }

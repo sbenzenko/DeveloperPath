@@ -13,8 +13,10 @@ namespace DeveloperPath.Infrastructure.Persistence.Configurations
           .HasMaxLength(200)
           .IsRequired();
       builder.Property(t => t.Url)
-          .HasMaxLength(200)
+          .HasMaxLength(500)
           .IsRequired();
+      builder.Property(t => t.Description)
+          .HasMaxLength(10000);
       builder
           .Property(s => s.Tags)
           .HasConversion(

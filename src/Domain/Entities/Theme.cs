@@ -9,7 +9,7 @@ namespace DeveloperPath.Domain.Entities
     /// <summary>
     /// Theme ID
     /// </summary>
-    public int Id { get; init; }
+    //public int Id { get; init; }
 
     /// <summary>
     /// Theme Title
@@ -22,6 +22,11 @@ namespace DeveloperPath.Domain.Entities
     public string Description { get; set; }
 
     /// <summary>
+    /// Id of module that theme is in
+    /// </summary>
+    public int ModuleId { get; set; }
+
+    /// <summary>
     /// Module that theme is in
     /// </summary>
     public Module Module { get; init; }
@@ -29,7 +34,7 @@ namespace DeveloperPath.Domain.Entities
     /// <summary>
     /// Section that theme is in (can be null)
     /// </summary>
-    public Section? Section { get; init; }
+    public Section Section { get; set; }
 
     /// <summary>
     /// Complexity level

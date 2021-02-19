@@ -39,10 +39,25 @@ namespace DeveloperPath.Infrastructure.Persistence
     public DbSet<Section> Sections { get; set; }
     public DbSet<Theme> Themes { get; set; }
     public DbSet<Source> Sources { get; set; }
-    public DbSet<Tag> Tags { get; set; }
 
     public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
     {
+      foreach (var entry in ChangeTracker.Entries<AuditableEntity>())
+      {
+        switch (entry.State)
+        {
+          case EntityState.Added:
+            entry.Entity.CreatedBy = _currentUserService.UserId;
+            entry.Entity.Created = _dateTime.Now;
+            break;
+          case EntityState.Modified:
+            entry.Entity.LastModifiedBy = _currentUserService.UserId;
+            entry.Entity.LastModified = _dateTime.Now;
+            break;
+        }
+      }
+
+      // TODO: this is from the template. Remove it
       foreach (var entry in ChangeTracker.Entries<AuditableEntityTemplate>())
       {
         switch (entry.State)

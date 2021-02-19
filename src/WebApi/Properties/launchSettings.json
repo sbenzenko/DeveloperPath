@@ -1,0 +1,18 @@
+{
+  "DeveloperPath.WebApi": {
+    "commandName": "Project",
+    "applicationUrl": "https://localhost:7001;http://localhost:7000",
+    "environmentVariables": {
+      "DOTNET_ENVIRONMENT": "Development"
+    }
+  },
+  "profiles": {
+    "WebApi": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "http://localhost:7000;https://localhost:7001 "
+    }
+  }
+}

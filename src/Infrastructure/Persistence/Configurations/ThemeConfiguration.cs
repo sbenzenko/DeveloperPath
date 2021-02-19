@@ -10,7 +10,7 @@ namespace DeveloperPath.Infrastructure.Persistence.Configurations
     public void Configure(EntityTypeBuilder<Theme> builder)
     {
       builder.Property(t => t.Title)
-          .HasMaxLength(100)
+          .HasMaxLength(200)
           .IsRequired();
       builder.Property(t => t.Description)
           .HasMaxLength(3000)

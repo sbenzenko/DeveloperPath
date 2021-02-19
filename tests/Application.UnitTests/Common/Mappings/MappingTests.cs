@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
 using DeveloperPath.Application.Common.Mappings;
+using DeveloperPath.Application.Modules.Queries.GetModules;
+using DeveloperPath.Application.Paths.Queries.GetPaths;
 using DeveloperPath.Application.TodoLists.Queries.GetTodos;
 using DeveloperPath.Domain.Entities;
 using NUnit.Framework;
@@ -29,8 +31,8 @@ namespace DeveloperPath.Application.UnitTests.Common.Mappings
         }
         
         [Test]
-        [TestCase(typeof(TodoList), typeof(TodoListDto))]
-        [TestCase(typeof(TodoItem), typeof(TodoItemDto))]
+        [TestCase(typeof(Path), typeof(PathViewModel))]
+        [TestCase(typeof(Module), typeof(ModuleViewModel))]
         public void ShouldSupportMappingFromSourceToDestination(Type source, Type destination)
         {
             var instance = Activator.CreateInstance(source);

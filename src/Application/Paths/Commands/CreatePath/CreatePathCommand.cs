@@ -1,4 +1,6 @@
-﻿using DeveloperPath.Application.Common.Interfaces;
+﻿using AutoMapper;
+using DeveloperPath.Application.Common.Interfaces;
+using DeveloperPath.Application.Common.Models;
 using DeveloperPath.Domain.Entities;
 using MediatR;
 using System.Collections.Generic;
@@ -7,39 +9,25 @@ using System.Threading.Tasks;
 
 namespace DeveloperPath.Application.Paths.Commands.CreatePath
 {
-
-  /// <summary>
-  /// Represents developer path entity
-  /// </summary>
-  public record CreatePathCommand : IRequest<int>
+  public record CreatePathCommand : IRequest<PathDto>
   {
-    /// <summary>
-    /// Path name
-    /// </summary>
     public string Title { get; init; }
-    /// <summary>
-    /// Path short summary
-    /// </summary>
     public string Description { get; init; }
-    /// <summary>
-    /// List of tags related to path.
-    /// Use generalized tags, e.g.:
-    ///  - Path ASP.NET - Tags: #Development #Web
-    ///  - Path Unity - Tags: #Development #Games
-    /// </summary>
     public IList<string> Tags { get; init; }
   }
 
-  public class CreatePathCommandHandler : IRequestHandler<CreatePathCommand, int>
+  public class CreatePathCommandHandler : IRequestHandler<CreatePathCommand, PathDto>
   {
     private readonly IApplicationDbContext _context;
+    private readonly IMapper _mapper;
 
-    public CreatePathCommandHandler(IApplicationDbContext context)
+    public CreatePathCommandHandler(IApplicationDbContext context, IMapper mapper)
     {
       _context = context;
+      _mapper = mapper;
     }
 
-    public async Task<int> Handle(CreatePathCommand request, CancellationToken cancellationToken)
+    public async Task<PathDto> Handle(CreatePathCommand request, CancellationToken cancellationToken)
     {
       var entity = new Path
       {
@@ -52,7 +40,7 @@ namespace DeveloperPath.Application.Paths.Commands.CreatePath
 
       await _context.SaveChangesAsync(cancellationToken);
 
-      return entity.Id;
+      return _mapper.Map<PathDto>(entity);
     }
   }
 }
