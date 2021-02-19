@@ -10,7 +10,7 @@
     "WebApi": {
       "commandName": "Project",
       "launchBrowser": true,
-      "launchUrl": "https://localhost:7001/swagger",
+      "launchUrl": "https://localhost:7001/swagger/v1/swagger.json",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
