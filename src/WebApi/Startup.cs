@@ -33,7 +33,8 @@ namespace DeveloperPath.WebApi
             services.AddScoped<ICurrentUserService, CurrentUserService>();
 
             services.AddHttpContextAccessor();
-
+            services.AddControllers(
+                options => options.ReturnHttpNotAcceptable = true);
             services.AddHealthChecks()
                 .AddDbContextCheck<ApplicationDbContext>();
 
