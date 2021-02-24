@@ -9,8 +9,8 @@
   "profiles": {
     "WebApi": {
       "commandName": "Project",
-      "launchBrowser": true,
-      "launchUrl": "https://localhost:7001/swagger/v1/swagger.json",
+      "launchBrowser": false,
+      "launchUrl": "https://localhost:7001/api",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
