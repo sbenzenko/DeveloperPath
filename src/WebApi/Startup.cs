@@ -119,12 +119,15 @@ namespace DeveloperPath.WebApi
             app.UseHealthChecks("/health");
 
             app.UseHttpsRedirection();
+            app.UseOpenApi();
+            app.UseSwaggerUi3();
 
             app.UseSwaggerUi3(settings =>
             {
                 settings.Path = "/api";
-                settings.DocumentPath = "/api/specification.json";
+                settings.DocumentPath = "/swagger/v1/swagger.json";
             });
+           
 
             app.UseRouting();
 
