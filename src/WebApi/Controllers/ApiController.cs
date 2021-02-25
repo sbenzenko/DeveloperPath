@@ -1,10 +1,12 @@
-﻿using MediatR;
+﻿using DeveloperPath.WebApi.Filters;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace DeveloperPath.WebApi.Controllers
 {
     [ApiController]
+    [ApiExceptionFilter]
     [Route("api/[controller]")]
     public abstract class ApiController : ControllerBase
     {
