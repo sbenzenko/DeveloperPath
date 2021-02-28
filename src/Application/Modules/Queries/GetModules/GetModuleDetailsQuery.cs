@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using AutoMapper;
 using DeveloperPath.Application.Common.Exceptions;
 using DeveloperPath.Application.Common.Interfaces;
-using DeveloperPath.Application.Common.Models;
 using DeveloperPath.Domain.Entities;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -40,7 +39,6 @@ namespace DeveloperPath.Application.Modules.Queries.GetModules
 
       if (result == null || result.Paths.Where(p => p.Id == request.PathId) == null)
         throw new NotFoundException(nameof(Module), request.Id);
-
 
       //TODO: is there another way to map single item?
       return _mapper.Map<ModuleViewModel>(result);

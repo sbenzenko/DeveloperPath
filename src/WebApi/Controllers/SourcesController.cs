@@ -3,6 +3,7 @@ using DeveloperPath.Application.Sources.Commands.CreateSource;
 using DeveloperPath.Application.Sources.Commands.DeleteSource;
 using DeveloperPath.Application.Sources.Commands.UpdateSource;
 using DeveloperPath.Application.Sources.Queries.GetSources;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
@@ -14,6 +15,10 @@ namespace DeveloperPath.WebApi.Controllers
   [Route("api/paths/{pathId}/modules/{moduleId}/themes/{themeId}/sources")]
   public class SourcesController : ApiController
   {
+    public SourcesController(IMediator mediator)
+    {
+      _mediator = mediator;
+    }
     /// <summary>
     /// Get all available sources
     /// </summary>

@@ -1,10 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using DeveloperPath.Application.Common.Exceptions;
 using DeveloperPath.Application.Modules.Commands.CreateModule;
 using DeveloperPath.Application.Sources.Queries.GetSources;
-using DeveloperPath.Application.Themes.Commands.CreateTheme;
-using DeveloperPath.Application.Themes.Queries.GetThemes;
 using DeveloperPath.Domain.Entities;
 using FluentAssertions;
 using NUnit.Framework;
@@ -178,6 +177,105 @@ namespace DeveloperPath.Application.IntegrationTests.Queries
       createdSource.Type.Should().Be(Domain.Enums.SourceType.Documentation);
       createdSource.ThemeId.Should().Be(theme.Id);
       createdSource.Tags.Should().HaveCount(3);
+    }
+
+    [Test]
+    public void ListShouldReturnNotFound_WhenPathIdNotFound()
+    {
+      var query = new GetSourceListQuery() { PathId = 99999, ModuleId = 1, ThemeId = 1 };
+
+      FluentActions.Invoking(() =>
+          SendAsync(query)).Should().Throw<NotFoundException>();
+    }
+
+    [Test]
+    public void ListShouldReturnNotFound_WhenModuleIdNotFound()
+    {
+      var query = new GetSourceListQuery() { PathId = 1, ModuleId = 99999, ThemeId = 1 };
+
+      FluentActions.Invoking(() =>
+          SendAsync(query)).Should().Throw<NotFoundException>();
+    }
+
+    [Test]
+    public void ListShouldReturnNotFound_WhenThemeIdNotFound()
+    {
+      var query = new GetSourceListQuery() { PathId = 1, ModuleId = 1, ThemeId = 99999 };
+
+      FluentActions.Invoking(() =>
+          SendAsync(query)).Should().Throw<NotFoundException>();
+    }
+
+    [Test]
+    public void ShouldReturnNotFound_WhenIdNotFound()
+    {
+      var query = new GetSourceQuery() { PathId = 1, ModuleId = 1, ThemeId = 1, Id = 99999 };
+
+      FluentActions.Invoking(() =>
+          SendAsync(query)).Should().Throw<NotFoundException>();
+    }
+
+    [Test]
+    public void ShouldReturnNotFound_WhenThemeIdNotFound()
+    {
+      var query = new GetSourceQuery() { PathId = 1, ModuleId = 1, ThemeId = 99999, Id = 1 };
+
+      FluentActions.Invoking(() =>
+          SendAsync(query)).Should().Throw<NotFoundException>();
+    }
+
+    [Test]
+    public void ShouldReturnNotFound_WhenModuleIdNotFound()
+    {
+      var query = new GetSourceQuery() { PathId = 1, ModuleId = 99999, ThemeId = 1, Id = 1 };
+
+      FluentActions.Invoking(() =>
+          SendAsync(query)).Should().Throw<NotFoundException>();
+    }
+
+    [Test]
+    public void ShouldReturnNotFound_WhenPathIdNotFound()
+    {
+      var query = new GetSourceQuery() { PathId = 99999, ModuleId = 1, ThemeId = 1, Id = 1 };
+
+      FluentActions.Invoking(() =>
+          SendAsync(query)).Should().Throw<NotFoundException>();
+    }
+
+    [Test]
+    public void DetailsShouldReturnNotFound_WhenIdNotFound()
+    {
+      var query = new GetSourceDetailsQuery() { PathId = 1, ModuleId = 1, ThemeId = 1, Id = 99999 };
+
+      FluentActions.Invoking(() =>
+          SendAsync(query)).Should().Throw<NotFoundException>();
+    }
+
+    [Test]
+    public void DetailsShouldReturnNotFound_WhenThemeIdNotFound()
+    {
+      var query = new GetSourceDetailsQuery() { PathId = 1, ModuleId = 1, ThemeId = 99999, Id = 1 };
+
+      FluentActions.Invoking(() =>
+          SendAsync(query)).Should().Throw<NotFoundException>();
+    }
+
+    [Test]
+    public void DetailsShouldReturnNotFound_WhenModuleIdNotFound()
+    {
+      var query = new GetSourceDetailsQuery() { PathId = 1, ModuleId = 99999, ThemeId = 1, Id = 1 };
+
+      FluentActions.Invoking(() =>
+          SendAsync(query)).Should().Throw<NotFoundException>();
+    }
+
+    [Test]
+    public void DetailsShouldReturnNotFound_WhenPathIdNotFound()
+    {
+      var query = new GetSourceDetailsQuery() { PathId = 99999, ModuleId = 1, ThemeId = 1, Id = 1 };
+
+      FluentActions.Invoking(() =>
+          SendAsync(query)).Should().Throw<NotFoundException>();
     }
   }
 }

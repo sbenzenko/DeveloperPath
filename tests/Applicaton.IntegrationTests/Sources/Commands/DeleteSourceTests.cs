@@ -14,9 +14,34 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
   public class DeleteSourceTests : TestBase
   {
     [Test]
+    public void ShouldRequireValidPathId()
+    {
+      var command = new DeleteSourceCommand { PathId = 999999, ModuleId = 1, ThemeId = 1, Id = 1 };
+
+      FluentActions.Invoking(() =>
+          SendAsync(command)).Should().Throw<NotFoundException>();
+    }
+    [Test]
+    public void ShouldRequireValidModuleId()
+    {
+      var command = new DeleteSourceCommand { PathId = 1, ModuleId = 999999, ThemeId = 1, Id = 1 };
+
+      FluentActions.Invoking(() =>
+          SendAsync(command)).Should().Throw<NotFoundException>();
+    }
+    [Test]
+    public void ShouldRequireValidThemeId()
+    {
+      var command = new DeleteSourceCommand { PathId = 1, ModuleId = 1, ThemeId = 999999, Id = 1 };
+
+      FluentActions.Invoking(() =>
+          SendAsync(command)).Should().Throw<NotFoundException>();
+    }
+
+    [Test]
     public void ShouldRequireValidSourceId()
     {
-      var command = new DeleteSourceCommand { PathId = 1, ModuleId = 9999, ThemeId = 1, Id = 99999 };
+      var command = new DeleteSourceCommand { PathId = 1, ModuleId = 1, ThemeId = 1, Id = 999999 };
 
       FluentActions.Invoking(() =>
           SendAsync(command)).Should().Throw<NotFoundException>();

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using DeveloperPath.Application.Common.Exceptions;
 using DeveloperPath.Application.Modules.Commands.CreateModule;
 using DeveloperPath.Application.Modules.Queries.GetModules;
 using DeveloperPath.Domain.Entities;
@@ -110,6 +111,51 @@ namespace DeveloperPath.Application.IntegrationTests.Queries
       result.Description.Should().NotBeEmpty();
       result.Themes.Should().HaveCount(2);
       result.Tags.Should().HaveCount(3);
+    }
+
+    [Test]
+    public void ListShouldReturnNotFound_WhenPathIdNotFound()
+    {
+      var query = new GetModuleListQuery() { PathId = 99999 };
+
+      FluentActions.Invoking(() =>
+          SendAsync(query)).Should().Throw<NotFoundException>();
+    }
+
+    [Test]
+    public void ShouldReturnNotFound_WhenModuleIdNotFound()
+    {
+      var query = new GetModuleQuery() { PathId = 1, Id = 99999 };
+
+      FluentActions.Invoking(() =>
+          SendAsync(query)).Should().Throw<NotFoundException>();
+    }
+
+    [Test]
+    public void ShouldReturnNotFound_WhenPathIdNotFound()
+    {
+      var query = new GetModuleQuery() { PathId = 99999, Id = 1 };
+
+      FluentActions.Invoking(() =>
+          SendAsync(query)).Should().Throw<NotFoundException>();
+    }
+
+    [Test]
+    public void DetailsShouldReturnNotFound_WhenModuleIdNotFound()
+    {
+      var query = new GetModuleDetailsQuery() { PathId = 1, Id = 99999 };
+
+      FluentActions.Invoking(() =>
+          SendAsync(query)).Should().Throw<NotFoundException>();
+    }
+
+    [Test]
+    public void DetailsReturnNotFound_WhenPathIdNotFound()
+    {
+      var query = new GetModuleDetailsQuery() { PathId = 99999, Id = 1 };
+
+      FluentActions.Invoking(() =>
+          SendAsync(query)).Should().Throw<NotFoundException>();
     }
   }
 }

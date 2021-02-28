@@ -5,6 +5,7 @@ using DeveloperPath.Application.Themes.Commands.CreateTheme;
 using DeveloperPath.Application.Themes.Commands.DeleteTheme;
 using DeveloperPath.Application.Themes.Commands.UpdateTheme;
 using DeveloperPath.Application.Themes.Queries.GetThemes;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DeveloperPath.WebApi.Controllers
@@ -13,6 +14,11 @@ namespace DeveloperPath.WebApi.Controllers
   [Route("api/paths/{pathId}/modules/{moduleId}/themes")]
   public class ThemesController : ApiController
   {
+    public ThemesController(IMediator mediator)
+    {
+      _mediator = mediator;
+    }
+
     /// <summary>
     /// Get all available themes
     /// </summary>
