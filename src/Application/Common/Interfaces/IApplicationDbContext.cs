@@ -8,14 +8,6 @@ namespace DeveloperPath.Application.Common.Interfaces
   //TODO: update with DeveloperPath entities
     public interface IApplicationDbContext
     {
-
-        //TODO: this is from the template. Remove
-        DbSet<TodoList> TodoLists { get; set; }
-
-        //TODO: this is from the template. Remove
-        DbSet<TodoItem> TodoItems { get; set; }
-
-
         DbSet<Path> Paths { get; set; }
         DbSet<Module> Modules { get; set; }
         DbSet<Section> Sections { get; set; }

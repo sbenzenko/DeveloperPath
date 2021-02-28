@@ -49,7 +49,7 @@ namespace DeveloperPath.WebApi
                 options.InvalidModelStateResponseFactory = actionContext =>
                 {
                     var actionExecutingContext =
-            actionContext as Microsoft.AspNetCore.Mvc.Filters.ActionExecutingContext;
+                      actionContext as Microsoft.AspNetCore.Mvc.Filters.ActionExecutingContext;
 
                     // if there are modelstate errors & all keys were correctly
                     // found/parsed we're dealing with validation errors
@@ -79,20 +79,17 @@ namespace DeveloperPath.WebApi
             services.AddOpenApiDocument(configure =>
             {
                 configure.PostProcess = (document) =>
-          {
-              document.Info.Version = "v1";
-              document.Info.Title = "Developer Path API";
-              document.Info.Description = "Developer Path project Open API";
-              document.Info.Contact = new OpenApiContact
-              {
-                  Name = "Sergey Benzenko",
-                  Email = "sbenzenko@gmail.com",
-                  Url = "https://t.me/NetDeveloperDiary"
-              };
-          };
-
-
-
+                {
+                    document.Info.Version = "v1";
+                    document.Info.Title = "Developer Path API";
+                    document.Info.Description = "Developer Path project Open API";
+                    document.Info.Contact = new OpenApiContact
+                    {
+                        Name = "Sergey Benzenko",
+                        Email = "sbenzenko@gmail.com",
+                        Url = "https://t.me/NetDeveloperDiary"
+                    };
+                };
             });
         }
 
@@ -121,12 +118,15 @@ namespace DeveloperPath.WebApi
             app.UseHealthChecks("/health");
 
             app.UseHttpsRedirection();
+            app.UseOpenApi();
+            app.UseSwaggerUi3();
 
             app.UseSwaggerUi3(settings =>
             {
                 settings.Path = "/api";
-                settings.DocumentPath = "/api/specification.json";
+                settings.DocumentPath = "/swagger/v1/swagger.json";
             });
+           
 
             app.UseRouting();
 

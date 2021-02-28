@@ -9,6 +9,8 @@
   "profiles": {
     "WebApi": {
       "commandName": "Project",
+      "launchBrowser": false,
+      "launchUrl": "https://localhost:7001/api",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },

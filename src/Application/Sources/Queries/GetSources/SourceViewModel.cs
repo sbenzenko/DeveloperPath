@@ -13,6 +13,11 @@ namespace DeveloperPath.Application.Sources.Queries.GetSources
   public class SourceViewModel : IMapFrom<Source>
   {
     /// <summary>
+    /// Source ID
+    /// </summary>
+    public int Id { get; init; }
+
+    /// <summary>
     /// Source Title
     /// </summary>
     public string Title { get; set; }

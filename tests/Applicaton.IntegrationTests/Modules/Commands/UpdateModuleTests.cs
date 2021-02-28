@@ -30,7 +30,7 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
     }
 
     [Test]
-    public async Task ShouldRequireModuleTitle()
+    public async Task ShouldRequireTitle()
     {
       var path = await SendAsync(new CreatePathCommand
       {
@@ -60,7 +60,7 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
     }
 
     [Test]
-    public async Task ShouldRequireModuleDescription()
+    public async Task ShouldRequireDescription()
     {
       var path = await SendAsync(new CreatePathCommand
       {
@@ -90,7 +90,7 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
     }
 
     [Test]
-    public async Task ShouldDisallowLongModuleTitle()
+    public async Task ShouldDisallowLongTitle()
     {
       var path = await SendAsync(new CreatePathCommand
       {
