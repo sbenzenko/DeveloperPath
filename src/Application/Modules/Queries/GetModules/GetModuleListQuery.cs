@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿
+using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -7,18 +8,20 @@ using AutoMapper.QueryableExtensions;
 using DeveloperPath.Application.Common.Exceptions;
 using DeveloperPath.Application.Common.Interfaces;
 using DeveloperPath.Application.Common.Models;
-using DeveloperPath.Domain.Entities;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
 namespace DeveloperPath.Application.Modules.Queries.GetModules
 {
-  public class GetModuleListQuery : IRequest<IEnumerable<ModuleDto>>
+  public class GetModuleListQuery : IRequest<System.Collections.Generic.IEnumerable<ModuleDto>>
   {
     public int PathId { get; set; }
-  }
+    public int PageNumber { get; set; }
+    public int PageSize { get; set; }
 
-  public class GetModulesQueryHandler : IRequestHandler<GetModuleListQuery, IEnumerable<ModuleDto>>
+    }
+
+  public class GetModulesQueryHandler : IRequestHandler<GetModuleListQuery, System.Collections.Generic.IEnumerable<ModuleDto>>
   {
     private readonly IApplicationDbContext _context;
     private readonly IMapper _mapper;
@@ -29,7 +32,7 @@ namespace DeveloperPath.Application.Modules.Queries.GetModules
       _mapper = mapper;
     }
 
-    public async Task<IEnumerable<ModuleDto>> Handle(GetModuleListQuery request, CancellationToken cancellationToken)
+    public async Task<System.Collections.Generic.IEnumerable<ModuleDto>> Handle(GetModuleListQuery request, CancellationToken cancellationToken)
     {
       //TODO: check if requested module is in requested path (???)
       var path = await _context.Paths.FindAsync(new object[] { request.PathId }, cancellationToken);

@@ -1,4 +1,5 @@
-﻿using DeveloperPath.Application.Common.Models;
+﻿using System;
+using DeveloperPath.Application.Common.Models;
 using DeveloperPath.Application.Modules.Commands.CreateModule;
 using DeveloperPath.Application.Modules.Commands.DeleteModule;
 using DeveloperPath.Application.Modules.Commands.UpdateModule;
@@ -8,6 +9,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using DeveloperPath.WebApi.Filters;
+using DeveloperPath.WebApi.Paging;
 
 namespace DeveloperPath.WebApi.Controllers
 {
@@ -32,6 +35,22 @@ namespace DeveloperPath.WebApi.Controllers
       IEnumerable<ModuleDto> model = await Mediator.Send(new GetModuleListQuery { PathId = pathId });
 
       return Ok(model);
+    }
+
+    public async Task<ActionResult<Response<IEnumerable<ModuleDto>>>> Get(int pathId,[FromQuery] PaginationFilter filter)
+    {
+        if (filter == null)
+        {
+            var dtoCollection = await Mediator.Send(new GetModuleListQuery() {PathId = pathId});
+            var response = new Response<IEnumerable<ModuleDto>>();
+            response.Data = dtoCollection;
+            response.Succeeded = true;
+            return Ok(response);
+        }
+
+        var pagingModel = await Mediator.Send(new GetModuleListQuery()
+            {PathId = pathId, PageNumber = filter.PageNumber, PageSize = filter.PageSize});
+        throw new NotImplementedException();
     }
 
     /// <summary>
