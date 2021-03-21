@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using DeveloperPath.Application.Common.Exceptions;
 using DeveloperPath.Application.Modules.Commands.CreateModule;
-using DeveloperPath.Application.Themes.Commands.DeleteTheme;
+using DeveloperPath.Application.Sources.Commands.DeleteSource;
 using DeveloperPath.Domain.Entities;
 using FluentAssertions;
 using NUnit.Framework;
@@ -11,12 +11,12 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
 {
   using static Testing;
 
-  public class DeleteThemeTests : TestBase
+  public class DeleteSourceTests : TestBase
   {
     [Test]
     public void ShouldRequireValidPathId()
     {
-      var command = new DeleteThemeCommand { PathId = 999999, ModuleId = 1, Id = 1 };
+      var command = new DeleteSourceCommand { PathId = 999999, ModuleId = 1, ThemeId = 1, Id = 1 };
 
       FluentActions.Invoking(() =>
           SendAsync(command)).Should().Throw<NotFoundException>();
@@ -24,7 +24,7 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
     [Test]
     public void ShouldRequireValidModuleId()
     {
-      var command = new DeleteThemeCommand { PathId = 1, ModuleId = 999999, Id = 1 };
+      var command = new DeleteSourceCommand { PathId = 1, ModuleId = 999999, ThemeId = 1, Id = 1 };
 
       FluentActions.Invoking(() =>
           SendAsync(command)).Should().Throw<NotFoundException>();
@@ -32,14 +32,23 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
     [Test]
     public void ShouldRequireValidThemeId()
     {
-      var command = new DeleteThemeCommand { PathId = 1, ModuleId = 1, Id = 999999 };
+      var command = new DeleteSourceCommand { PathId = 1, ModuleId = 1, ThemeId = 999999, Id = 1 };
 
       FluentActions.Invoking(() =>
           SendAsync(command)).Should().Throw<NotFoundException>();
     }
 
     [Test]
-    public async Task ShouldDeleteTheme()
+    public void ShouldRequireValidSourceId()
+    {
+      var command = new DeleteSourceCommand { PathId = 1, ModuleId = 1, ThemeId = 1, Id = 999999 };
+
+      FluentActions.Invoking(() =>
+          SendAsync(command)).Should().Throw<NotFoundException>();
+    }
+
+    [Test]
+    public async Task ShouldDeleteSource()
     {
       var path = await AddAsync(new Path
       {
@@ -62,19 +71,33 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
         ModuleId = module.Id
       });
 
-      var themeAdded = await FindAsync<Theme>(theme.Id);
+      var source = await AddAsync(new Source
+      {
+        ThemeId = theme.Id,
+        Title = "Source 1",
+        Description = "Some description",
+        Url = "https://source1.com",
+        Order = 0,
+        Type = Domain.Enums.SourceType.Documentation,
+        Availability = Domain.Enums.AvailabilityLevel.Free,
+        Relevance = Domain.Enums.RelevanceLevel.Relevant,
+        Tags = new List<string> { "Tag1", "Tag2", "Tag3" }
+      });
 
-      await SendAsync(new DeleteThemeCommand
+      var sourceAdded = await FindAsync<Source>(source.Id);
+
+      await SendAsync(new DeleteSourceCommand
       {
         PathId = path.Id,
         ModuleId = module.Id,
-        Id = theme.Id
+        ThemeId = theme.Id,
+        Id = source.Id
       });
 
-      var themeDeleted = await FindAsync<Theme>(theme.Id);
+      var sourceDeleted = await FindAsync<Source>(source.Id);
 
-      themeAdded.Should().NotBeNull();
-      themeDeleted.Should().BeNull();
+      sourceAdded.Should().NotBeNull();
+      sourceDeleted.Should().BeNull();
     }
   }
 }

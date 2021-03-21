@@ -85,7 +85,7 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
     }
 
     [Test]
-    public async Task ShouldRequireModuleDescription()
+    public async Task ShouldRequireDescription()
     {
       var module = await AddAsync(new Module
       {
@@ -123,7 +123,7 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
     }
 
     [Test]
-    public async Task ShouldDisallowLongModuleTitle()
+    public async Task ShouldDisallowLongTitle()
     {
       var module = await AddAsync(new Module
       {

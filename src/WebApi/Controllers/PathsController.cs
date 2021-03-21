@@ -5,6 +5,7 @@ using DeveloperPath.Application.Paths.Commands.CreatePath;
 using DeveloperPath.Application.Paths.Commands.DeletePath;
 using DeveloperPath.Application.Paths.Commands.UpdatePath;
 using DeveloperPath.Application.Paths.Queries.GetPaths;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DeveloperPath.WebApi.Controllers
@@ -13,6 +14,11 @@ namespace DeveloperPath.WebApi.Controllers
   [Route("api/paths")]
   public class PathsController : ApiController
   {
+    public PathsController(IMediator mediator)
+    {
+      _mediator = mediator;
+    }
+
     /// <summary>
     /// Get all available paths
     /// </summary>

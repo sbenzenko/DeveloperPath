@@ -3,6 +3,7 @@ using DeveloperPath.Application.Modules.Commands.CreateModule;
 using DeveloperPath.Application.Modules.Commands.DeleteModule;
 using DeveloperPath.Application.Modules.Commands.UpdateModule;
 using DeveloperPath.Application.Modules.Queries.GetModules;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
@@ -14,6 +15,11 @@ namespace DeveloperPath.WebApi.Controllers
   [Route("api/paths/{pathId}/modules")]
   public class ModulesController : ApiController
   {
+    public ModulesController(IMediator mediator)
+    {
+      _mediator = mediator;
+    }
+
     /// <summary>
     /// Get all available modules
     /// </summary>

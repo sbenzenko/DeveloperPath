@@ -2,7 +2,6 @@
 using DeveloperPath.Application.Common.Mappings;
 using DeveloperPath.Application.Modules.Queries.GetModules;
 using DeveloperPath.Application.Paths.Queries.GetPaths;
-using DeveloperPath.Application.TodoLists.Queries.GetTodos;
 using DeveloperPath.Domain.Entities;
 using NUnit.Framework;
 using System;

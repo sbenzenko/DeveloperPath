@@ -9,11 +9,11 @@ namespace DeveloperPath.Application.Sources.Commands.UpdateSource
       RuleFor(v => v.Id)
           .NotEmpty().WithMessage("Source Id is required.");
 
-      RuleFor(v => v.ThemeId)
-          .NotEmpty().WithMessage("Theme Id is required.");
-
       RuleFor(v => v.ModuleId)
           .NotEmpty().WithMessage("Module Id is required.");
+
+      RuleFor(v => v.ThemeId)
+          .NotEmpty().WithMessage("Theme Id is required.");
 
       RuleFor(v => v.Title)
         .NotEmpty().WithMessage("Title is required.")
@@ -21,6 +21,8 @@ namespace DeveloperPath.Application.Sources.Commands.UpdateSource
 
       RuleFor(v => v.Url)
         .NotEmpty().WithMessage("URL is required.")
+        .Matches(@"https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,4}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)")
+          .WithMessage("URL must be in valid format, e.g. http://www.domain.com.")
         .MaximumLength(500).WithMessage("URL must not exceed 500 characters.");
 
       RuleFor(v => v.Description)
