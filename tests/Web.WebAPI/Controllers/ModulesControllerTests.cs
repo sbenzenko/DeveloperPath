@@ -7,6 +7,7 @@ using DeveloperPath.Application.Modules.Commands.CreateModule;
 using DeveloperPath.Application.Modules.Commands.DeleteModule;
 using DeveloperPath.Application.Modules.Commands.UpdateModule;
 using DeveloperPath.Application.Modules.Queries.GetModules;
+using DeveloperPath.Application.Paging;
 using DeveloperPath.WebApi.Controllers;
 using DeveloperPath.WebApi.Filters;
 using DeveloperPath.WebApi.Paging;
@@ -58,7 +59,7 @@ namespace DeveloperPath.Web.WebAPI.Controllers
                 .ReturnsAsync(sampleModule);
 
             moqMediator.Setup(m => m.Send(It.IsAny<GetModuleListQueryPaging>(), It.IsAny<CancellationToken>()))
-                      .ReturnsAsync(PagedModules);
+                      .ReturnsAsync((new PaginationData(1,10),Modules));
     
       // Create
             moqMediator

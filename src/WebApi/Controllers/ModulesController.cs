@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using DeveloperPath.WebApi.Filters;
 using DeveloperPath.WebApi.Paging;
+using Newtonsoft.Json;
 
 namespace DeveloperPath.WebApi.Controllers
 {
@@ -43,17 +44,21 @@ namespace DeveloperPath.WebApi.Controllers
         {
             if (filter == null)
             {
-                var dtoCollection = await Mediator.Send(new GetModuleListQueryPaging() { PathId = pathId,PageNumber = 0,PageSize = 0});               
-                return Ok(dtoCollection);
+                var (paginationData, result) = await Mediator.Send(new GetModuleListQueryPaging() { PathId = pathId, PageNumber = 0, PageSize = 0 });
+                Response.Headers.Add("X-Pagination", System.Text.Json.JsonSerializer.Serialize(paginationData));
+                return Ok(result);
             }
+            else
+            {
 
-            if (filter.PageSize < 0 || filter.PageNumber < 0)
-                return BadRequest("PageSize or PageNumber not valid");
+                if (filter.PageSize < 0 || filter.PageNumber < 0)
+                    return BadRequest("PageSize or PageNumber not valid");
 
-            var pagingModel = await Mediator.Send(new GetModuleListQueryPaging()
-            { PathId = pathId, PageNumber = filter.PageNumber, PageSize = filter.PageSize });
-
-            return Ok(pagingModel);
+                var (paginationData, result) = await Mediator.Send(new GetModuleListQueryPaging()
+                { PathId = pathId, PageNumber = filter.PageNumber, PageSize = filter.PageSize });
+                Response.Headers.Add("X-Pagination", System.Text.Json.JsonSerializer.Serialize(paginationData));
+                return Ok(paginationData);
+            }
         }
 
         /// <summary>
