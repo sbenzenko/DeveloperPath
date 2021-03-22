@@ -48,9 +48,13 @@ namespace DeveloperPath.WebApi.Controllers
             return Ok(response);
         }
 
+        if (filter.PageSize < 0 || filter.PageNumber < 0)
+            return BadRequest("PageSize or PageNumber not valid");
+
         var pagingModel = await Mediator.Send(new GetModuleListQuery()
             {PathId = pathId, PageNumber = filter.PageNumber, PageSize = filter.PageSize});
         throw new NotImplementedException();
+       // return pagingModel;
     }
 
     /// <summary>
