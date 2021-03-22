@@ -16,10 +16,7 @@ namespace DeveloperPath.Application.Modules.Queries.GetModules
   public class GetModuleListQuery : IRequest<System.Collections.Generic.IEnumerable<ModuleDto>>
   {
     public int PathId { get; set; }
-    public int PageNumber { get; set; }
-    public int PageSize { get; set; }
-
-    }
+  }
 
   public class GetModulesQueryHandler : IRequestHandler<GetModuleListQuery, System.Collections.Generic.IEnumerable<ModuleDto>>
   {

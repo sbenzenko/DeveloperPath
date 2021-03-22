@@ -14,129 +14,128 @@ using DeveloperPath.WebApi.Paging;
 
 namespace DeveloperPath.WebApi.Controllers
 {
-  //[Authorize]
-  [Route("api/paths/{pathId}/modules")]
-  public class ModulesController : ApiController
-  {
-    public ModulesController(IMediator mediator)
+    //[Authorize]
+    [Route("api/paths/{pathId}/modules")]
+    public class ModulesController : ApiController
     {
-      _mediator = mediator;
-    }
-
-    /// <summary>
-    /// Get all available modules
-    /// </summary>
-    /// <param name="pathId">An id of the path</param>
-    /// <returns>A collection of modules with summary information</returns>
-    [HttpGet]
-    [HttpHead]
-    public async Task<ActionResult<IEnumerable<ModuleDto>>> Get(int pathId)
-    {
-      IEnumerable<ModuleDto> model = await Mediator.Send(new GetModuleListQuery { PathId = pathId });
-
-      return Ok(model);
-    }
-
-    public async Task<ActionResult<Response<IEnumerable<ModuleDto>>>> Get(int pathId,[FromQuery] PaginationFilter filter)
-    {
-        if (filter == null)
+        public ModulesController(IMediator mediator)
         {
-            var dtoCollection = await Mediator.Send(new GetModuleListQuery() {PathId = pathId});
-            var response = new Response<IEnumerable<ModuleDto>>();
-            response.Data = dtoCollection;
-            response.Succeeded = true;
-            return Ok(response);
+            _mediator = mediator;
         }
 
-        if (filter.PageSize < 0 || filter.PageNumber < 0)
-            return BadRequest("PageSize or PageNumber not valid");
+        /// <summary>
+        /// Get all available modules
+        /// </summary>
+        /// <param name="pathId">An id of the path</param>
+        /// <returns>A collection of modules with summary information</returns>
+        [HttpGet]
+        [HttpHead]
+        public async Task<ActionResult<IEnumerable<ModuleDto>>> Get(int pathId)
+        {
+            IEnumerable<ModuleDto> model = await Mediator.Send(new GetModuleListQuery { PathId = pathId });
 
-        var pagingModel = await Mediator.Send(new GetModuleListQuery()
-            {PathId = pathId, PageNumber = filter.PageNumber, PageSize = filter.PageSize});
-        throw new NotImplementedException();
-       // return pagingModel;
+            return Ok(model);
+        }
+
+        [HttpGet("{filter}")]
+        [HttpHead("{filter}")]
+        public async Task<ActionResult<Response<IEnumerable<ModuleDto>>>> Get([FromQuery] int pathId, [FromQuery] PaginationFilter filter)
+        {
+            if (filter == null)
+            {
+                var dtoCollection = await Mediator.Send(new GetModuleListQueryPaging() { PathId = pathId,PageNumber = 0,PageSize = 0});               
+                return Ok(dtoCollection);
+            }
+
+            if (filter.PageSize < 0 || filter.PageNumber < 0)
+                return BadRequest("PageSize or PageNumber not valid");
+
+            var pagingModel = await Mediator.Send(new GetModuleListQueryPaging()
+            { PathId = pathId, PageNumber = filter.PageNumber, PageSize = filter.PageSize });
+
+            return Ok(pagingModel);
+        }
+
+        /// <summary>
+        /// Get module information by its Id
+        /// </summary>
+        /// <param name="pathId">An id of the path</param>
+        /// <param name="moduleId">An id of the module</param>
+        /// <returns>Information about the module</returns>
+        [HttpGet("{moduleId}", Name = "GetModule")]
+        [HttpHead("{moduleId}")]
+        public async Task<ActionResult<ModuleDto>> Get(int pathId, int moduleId)
+        {
+            ModuleDto model = await Mediator.Send(new GetModuleQuery { PathId = pathId, Id = moduleId });
+
+            return Ok(model);
+        }
+
+        ///// <summary>
+        ///// Get module details information by its Id
+        ///// </summary>
+        ///// <param name="pathId">An id of the path</param>
+        ///// <param name="moduleId">An id of the module</param>
+        ///// <returns>Detailed information of the module with themes included</returns>
+        //[Route("api/paths/{pathId}/moduledetails")]
+        //[HttpGet("{moduleId}", Name = "GetModuleDetails")]
+        //[HttpHead("{moduleId}")]
+        //public async Task<ActionResult<ModuleViewModel>> GetDetails(int pathId, int moduleId)
+        //{
+        //  ModuleViewModel model = await Mediator.Send(new GetModuleDetailsQuery { Id = moduleId });
+
+        //  return Ok(model);
+        //}
+
+        /// <summary>
+        /// Create a module
+        /// </summary>
+        /// <param name="pathId">An id of the path</param>
+        /// <param name="command">Module object</param>
+        /// <returns>Created module</returns>
+        [HttpPost]
+        public async Task<ActionResult<ModuleDto>> Create(int pathId,
+          [FromBody] CreateModuleCommand command)
+        {
+            if (pathId != command.PathId)
+                return BadRequest();
+
+            ModuleDto model = await Mediator.Send(command);
+
+            return CreatedAtRoute("GetModule", new { pathId = command.PathId, moduleId = model.Id }, model);
+        }
+
+        /// <summary>
+        /// Update the module with given Id
+        /// </summary>
+        /// <param name="pathId">An id of the path</param>
+        /// <param name="moduleId">An id of the module</param>
+        /// <param name="command">Updated module object</param>
+        /// <returns>Updated module</returns>
+        [HttpPut("{moduleId}")]
+        public async Task<ActionResult<ModuleDto>> Update(int pathId, int moduleId,
+          [FromBody] UpdateModuleCommand command)
+        {
+            if (moduleId != command.Id)
+                return BadRequest();
+
+            return Ok(await Mediator.Send(command));
+        }
+
+        // TODO: add PATCH
+
+        /// <summary>
+        /// Delete the module with given Id from path with given Id
+        /// </summary>
+        /// <param name="pathId">An id of the path</param>
+        /// <param name="moduleId">An id of the module</param>
+        /// <returns></returns>
+        [HttpDelete("{moduleId}")]
+        public async Task<ActionResult> Delete(int pathId, int moduleId)
+        {
+            await Mediator.Send(new DeleteModuleCommand { PathId = pathId, Id = moduleId });
+
+            return NoContent();
+        }
     }
-
-    /// <summary>
-    /// Get module information by its Id
-    /// </summary>
-    /// <param name="pathId">An id of the path</param>
-    /// <param name="moduleId">An id of the module</param>
-    /// <returns>Information about the module</returns>
-    [HttpGet("{moduleId}", Name = "GetModule")]
-    [HttpHead("{moduleId}")]
-    public async Task<ActionResult<ModuleDto>> Get(int pathId, int moduleId)
-    {
-      ModuleDto model = await Mediator.Send(new GetModuleQuery { PathId = pathId, Id = moduleId });
-
-      return Ok(model);
-    }
-
-    ///// <summary>
-    ///// Get module details information by its Id
-    ///// </summary>
-    ///// <param name="pathId">An id of the path</param>
-    ///// <param name="moduleId">An id of the module</param>
-    ///// <returns>Detailed information of the module with themes included</returns>
-    //[Route("api/paths/{pathId}/moduledetails")]
-    //[HttpGet("{moduleId}", Name = "GetModuleDetails")]
-    //[HttpHead("{moduleId}")]
-    //public async Task<ActionResult<ModuleViewModel>> GetDetails(int pathId, int moduleId)
-    //{
-    //  ModuleViewModel model = await Mediator.Send(new GetModuleDetailsQuery { Id = moduleId });
-
-    //  return Ok(model);
-    //}
-
-    /// <summary>
-    /// Create a module
-    /// </summary>
-    /// <param name="pathId">An id of the path</param>
-    /// <param name="command">Module object</param>
-    /// <returns>Created module</returns>
-    [HttpPost]
-    public async Task<ActionResult<ModuleDto>> Create(int pathId,
-      [FromBody] CreateModuleCommand command)
-    {
-      if (pathId != command.PathId)
-        return BadRequest();
-
-      ModuleDto model = await Mediator.Send(command);
-
-      return CreatedAtRoute("GetModule", new { pathId = command.PathId, moduleId = model.Id }, model);
-    }
-
-    /// <summary>
-    /// Update the module with given Id
-    /// </summary>
-    /// <param name="pathId">An id of the path</param>
-    /// <param name="moduleId">An id of the module</param>
-    /// <param name="command">Updated module object</param>
-    /// <returns>Updated module</returns>
-    [HttpPut("{moduleId}")]
-    public async Task<ActionResult<ModuleDto>> Update(int pathId, int moduleId,
-      [FromBody] UpdateModuleCommand command)
-    {
-      if (moduleId != command.Id)
-        return BadRequest();
-
-      return Ok(await Mediator.Send(command));
-    }
-
-    // TODO: add PATCH
-
-    /// <summary>
-    /// Delete the module with given Id from path with given Id
-    /// </summary>
-    /// <param name="pathId">An id of the path</param>
-    /// <param name="moduleId">An id of the module</param>
-    /// <returns></returns>
-    [HttpDelete("{moduleId}")]
-    public async Task<ActionResult> Delete(int pathId, int moduleId)
-    {
-      await Mediator.Send(new DeleteModuleCommand { PathId = pathId, Id = moduleId });
-
-      return NoContent();
-    }
-  }
 }

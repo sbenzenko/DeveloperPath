@@ -8,6 +8,8 @@ using DeveloperPath.Application.Modules.Commands.DeleteModule;
 using DeveloperPath.Application.Modules.Commands.UpdateModule;
 using DeveloperPath.Application.Modules.Queries.GetModules;
 using DeveloperPath.WebApi.Controllers;
+using DeveloperPath.WebApi.Filters;
+using DeveloperPath.WebApi.Paging;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
@@ -20,7 +22,7 @@ namespace DeveloperPath.Web.WebAPI.Controllers
         private readonly Mock<IMediator> moqMediator;
         private readonly ModuleDto sampleModule;
         private readonly IEnumerable<ModuleDto> Modules;
-
+        private readonly PagedResponse<IEnumerable<ModuleDto>> PagedModules;
         public ModulesControllerTests()
         {
             sampleModule = new ModuleDto { Id = 1, Title = "Module1", Description = "Description1" };
@@ -29,6 +31,21 @@ namespace DeveloperPath.Web.WebAPI.Controllers
         sampleModule,
         new ModuleDto { Id = 2, Title = "Module2", Description = "Description2" }
       };
+
+            PagedModules = new PagedResponse<IEnumerable<ModuleDto>>(Modules,1,10)
+            {
+                Data = Modules,
+                FirstPage = new System.Uri("http://firstPageUri.com"),
+                LastPage = new System.Uri("http://lastPageUri.com"),
+                Message = "Test paged dto",
+                NextPage = new System.Uri("http://secondPageUri.com"),
+                PageNumber = 1,
+                PageSize = 10,
+                PreviousPage = null,
+                Succeeded = true,
+                TotalPages = 100,
+                TotalRecords = 10 * 100
+            };
 
             moqMediator = new Mock<IMediator>();
             // Get all
@@ -39,10 +56,14 @@ namespace DeveloperPath.Web.WebAPI.Controllers
             moqMediator
               .Setup(m => m.Send(It.IsAny<GetModuleQuery>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(sampleModule);
-            // Create
+
+            moqMediator.Setup(m => m.Send(It.IsAny<GetModuleListQueryPaging>(), It.IsAny<CancellationToken>()))
+                      .ReturnsAsync(PagedModules);
+    
+      // Create
             moqMediator
-              .Setup(m => m.Send(It.IsAny<CreateModuleCommand>(), It.IsAny<CancellationToken>()))
-                .ReturnsAsync(sampleModule);
+        .Setup(m => m.Send(It.IsAny<CreateModuleCommand>(), It.IsAny<CancellationToken>()))
+          .ReturnsAsync(sampleModule);
             // Update
             moqMediator
               .Setup(m => m.Send(It.IsAny<UpdateModuleCommand>(), It.IsAny<CancellationToken>()))
@@ -79,17 +100,41 @@ namespace DeveloperPath.Web.WebAPI.Controllers
         }
 
         [Test]
-        public async Task Get_ReturnsModulePaging()
+        public async Task Get_ReturnsModulePagingNull()
         {
             var controller = new ModulesController(moqMediator.Object);
 
-            var result = await controller.Get(1, 1);
-            var content = GetObjectResultContent<ModuleDto>(result.Result);
+            var result = await controller.Get(1, null);
+
+            var contentResult = (OkObjectResult)result.Result;
+            var value = contentResult.Value as PagedResponse<IEnumerable<ModuleDto>>;
 
             Assert.IsInstanceOf(typeof(OkObjectResult), result.Result);
-            Assert.IsNotNull(content);
-            Assert.AreEqual(1, content.Id);
+            Assert.IsNotNull(contentResult);
+            Assert.AreEqual(1, value.Data.First().Id);
         }
+
+
+        [Test]
+        public async Task Get_ReturnsModulePagingNotValue()
+        {
+            var controller = new ModulesController(moqMediator.Object);
+
+            var result = await controller.Get(1, new PaginationFilter()
+            {
+                PageNumber = 1,
+                PageSize = 1
+            });
+
+
+            var contentResult = (OkObjectResult)result.Result;
+            var value = contentResult.Value as PagedResponse<IEnumerable<ModuleDto>>;
+         
+            Assert.IsInstanceOf(typeof(OkObjectResult), result.Result);
+            Assert.IsNotNull(contentResult);
+            Assert.AreEqual(1, value.Data.First().Id);
+        }
+
         [Test]
         public async Task Create_ReturnsCreatedAtRoute()
         {

@@ -66,8 +66,8 @@ namespace DeveloperPath.Application.Modules.Queries.GetModules
                 .Include(m => m.Prerequisites)
                 .ProjectTo<ModuleDto>(_mapper.ConfigurationProvider)
                 .ToListAsync(cancellationToken);
-            var modulesResult = new PagedResponse<IEnumerable<ModuleDto>>(modules, request.PageNumber, request.PageSize);
-            return modulesResult;
+            pagedResponse = new PagedResponse<IEnumerable<ModuleDto>>(modules, request.PageNumber, request.PageSize);
+            return pagedResponse;
 
         }
     }
