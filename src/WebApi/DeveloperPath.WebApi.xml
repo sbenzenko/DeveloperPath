@@ -4,11 +4,12 @@
         <name>DeveloperPath.WebApi</name>
     </assembly>
     <members>
-        <member name="M:DeveloperPath.WebApi.Controllers.ModulesController.Get(System.Int32)">
+        <member name="M:DeveloperPath.WebApi.Controllers.ModulesController.Get(System.Int32,DeveloperPath.WebApi.Filters.PaginationFilter)">
             <summary>
             Get all available modules
             </summary>
             <param name="pathId">An id of the path</param>
+            <param name="filter"></param>
             <returns>A collection of modules with summary information</returns>
         </member>
         <member name="M:DeveloperPath.WebApi.Controllers.ModulesController.Get(System.Int32,System.Int32)">
