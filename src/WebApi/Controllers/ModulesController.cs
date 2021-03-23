@@ -40,6 +40,7 @@ namespace DeveloperPath.WebApi.Controllers
 
         [HttpGet("{filter}")]
         [HttpHead("{filter}")]
+        //   [PaginationHeadersFilter()]
         public async Task<ActionResult<Response<IEnumerable<ModuleDto>>>> Get([FromQuery] int pathId, [FromQuery] PaginationFilter filter)
         {
             if (filter == null)
