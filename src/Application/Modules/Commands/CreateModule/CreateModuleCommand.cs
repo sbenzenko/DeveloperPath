@@ -7,7 +7,9 @@ using DeveloperPath.Domain.Enums;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+
 using System.Linq;
+using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -47,7 +49,7 @@ namespace DeveloperPath.Application.Modules.Commands.CreateModule
       if (path == null)
         throw new NotFoundException(nameof(Path), request.PathId);
 
-      var entity = new Module
+      var entity = new DeveloperPath.Domain.Entities.Module
       {
         Title = request.Title,
         Description = request.Description,
