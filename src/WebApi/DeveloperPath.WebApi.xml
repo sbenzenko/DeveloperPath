@@ -4,7 +4,7 @@
         <name>DeveloperPath.WebApi</name>
     </assembly>
     <members>
-        <member name="M:DeveloperPath.WebApi.Controllers.ModulesController.Get(System.Int32)">
+        <member name="M:DeveloperPath.WebApi.Controllers.ModulesController.Get(System.Int32,DeveloperPath.WebApi.RequestParams)">
             <summary>
             Get all available modules
             </summary>

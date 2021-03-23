@@ -31,23 +31,19 @@ namespace DeveloperPath.WebApi.Controllers
         /// <returns>A collection of modules with summary information</returns>
         [HttpGet]
         [HttpHead]
-        public async Task<ActionResult<IEnumerable<ModuleDto>>> Get(int pathId)
+        public async Task<ActionResult<IEnumerable<ModuleDto>>> Get(int pathId, [FromQuery] RequestParams requestParams=null)
         {
-            IEnumerable<ModuleDto> model = await Mediator.Send(new GetModuleListQuery { PathId = pathId });
-
-            return Ok(model);
+            return await GetInternal(pathId, requestParams);
         }
 
-        [HttpGet("{filter}")]
-        [HttpHead("{filter}")]
-        //   [PaginationHeadersFilter()]
-        public async Task<ActionResult<Response<IEnumerable<ModuleDto>>>> Get([FromQuery] int pathId, [FromQuery] PaginationFilter filter)
+
+
+        private async Task<ActionResult<IEnumerable<ModuleDto>>> GetInternal([FromQuery] int pathId, RequestParams filter)
         {
             if (filter == null)
             {
-                var (paginationData, result) = await Mediator.Send(new GetModuleListQueryPaging() { PathId = pathId, PageNumber = 0, PageSize = 0 });
-                Response.Headers.Add("X-Pagination", System.Text.Json.JsonSerializer.Serialize(paginationData));
-                return Ok(result);
+                IEnumerable<ModuleDto> model = await Mediator.Send(new GetModuleListQuery { PathId = pathId });
+                return Ok(model);
             }
             else
             {

@@ -121,7 +121,7 @@ namespace DeveloperPath.Web.WebAPI.Controllers
         {
             var controller = new ModulesController(moqMediator.Object);
 
-            var result = await controller.Get(1, new PaginationFilter()
+            var result = await controller.Get(1, new WebApi.RequestParams()
             {
                 PageNumber = 1,
                 PageSize = 1
