@@ -1,16 +1,14 @@
-﻿using System;
-using DeveloperPath.Application.Common.Models;
+﻿using DeveloperPath.Application.Common.Models;
 using DeveloperPath.Application.Modules.Commands.CreateModule;
 using DeveloperPath.Application.Modules.Commands.DeleteModule;
 using DeveloperPath.Application.Modules.Commands.UpdateModule;
 using DeveloperPath.Application.Modules.Queries.GetModules;
 using MediatR;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using DeveloperPath.Application.Paging;
 using DeveloperPath.WebApi.Filters;
-using DeveloperPath.WebApi.Paging;
 
 namespace DeveloperPath.WebApi.Controllers
 {
@@ -40,6 +38,7 @@ namespace DeveloperPath.WebApi.Controllers
     /// <returns>A collection of modules with summary information</returns>
     [HttpGet]
     [HttpHead]
+    [PaginationResultFilter]
     public async Task<ActionResult<Response<IEnumerable<ModuleDto>>>> Get(int pathId, [FromQuery] PaginationFilter filter = null)
     {
       if (filter == null)
@@ -52,11 +51,9 @@ namespace DeveloperPath.WebApi.Controllers
         if (filter.PageSize < 0 || filter.PageNumber < 0)
           return BadRequest("PageSize or PageNumber not valid");
 
-        var (paginationData, result) = await Mediator.Send(new GetModuleListQueryPaging()
+        var result = await Mediator.Send(new GetModuleListQueryPaging()
               { PathId = pathId, PageNumber = filter.PageNumber, PageSize = filter.PageSize });
 
-        Response.Headers.Add("X-Pagination", System.Text.Json.JsonSerializer.Serialize(paginationData));
-        
         return Ok(result);
       }
     }
