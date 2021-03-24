@@ -108,11 +108,11 @@ namespace DeveloperPath.Web.WebAPI.Controllers
             var result = await controller.Get(1, null);
 
             var contentResult = (OkObjectResult)result.Result;
-            var value = contentResult.Value as PagedResponse<IEnumerable<ModuleDto>>;
+            var value = contentResult.Value as IEnumerable<ModuleDto>;
 
             Assert.IsInstanceOf(typeof(OkObjectResult), result.Result);
             Assert.IsNotNull(contentResult);
-            Assert.AreEqual(1, value.Data.First().Id);
+            Assert.AreEqual(1, value.First().Id);
         }
 
 
@@ -129,11 +129,11 @@ namespace DeveloperPath.Web.WebAPI.Controllers
 
 
             var contentResult = (OkObjectResult)result.Result;
-            var value = contentResult.Value as PagedResponse<IEnumerable<ModuleDto>>;
+            var value = contentResult.Value as IEnumerable<ModuleDto>;
          
             Assert.IsInstanceOf(typeof(OkObjectResult), result.Result);
             Assert.IsNotNull(contentResult);
-            Assert.AreEqual(1, value.Data.First().Id);
+            Assert.AreEqual(1, value.First().Id);
         }
 
         [Test]

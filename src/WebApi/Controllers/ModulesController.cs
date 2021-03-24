@@ -53,8 +53,8 @@ namespace DeveloperPath.WebApi.Controllers
 
                 var (paginationData, result) = await Mediator.Send(new GetModuleListQueryPaging()
                 { PathId = pathId, PageNumber = filter.PageNumber, PageSize = filter.PageSize });
-                Response.Headers.Add("X-Pagination", System.Text.Json.JsonSerializer.Serialize(paginationData));
-                return Ok(paginationData);
+                Response?.Headers?.Add("X-Pagination", System.Text.Json.JsonSerializer.Serialize(paginationData));
+                return Ok(result);
             }
         }
 
