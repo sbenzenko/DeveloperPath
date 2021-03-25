@@ -137,6 +137,27 @@ namespace DeveloperPath.Web.WebAPI.Controllers
             Assert.AreEqual(1, value.First().Id);
         }
 
+
+        [Test]
+        public async Task Get_ReturnsModulePagingNotValid()
+        {
+            var controller = new ModulesController(moqMediator.Object);
+
+            var result = await controller.Get(1, new WebApi.RequestParams()
+            {
+                PageNumber = -1,
+                PageSize = -1
+            });
+
+
+            var contentResult = (BadRequestObjectResult)result.Result;
+            var value = contentResult.Value as IEnumerable<ModuleDto>;
+
+            Assert.IsInstanceOf(typeof(BadRequestObjectResult), result.Result);
+            Assert.IsNotNull(contentResult);
+            Assert.IsNull(value);
+        }
+
         [Test]
         public async Task Create_ReturnsCreatedAtRoute()
         {
