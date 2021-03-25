@@ -33,16 +33,18 @@ namespace DeveloperPath.WebApi.Controllers
         [HttpHead]
         public async Task<ActionResult<IEnumerable<ModuleDto>>> Get(int pathId, [FromQuery] RequestParams requestParams = null)
         {
-            if (requestParams == null || requestParams.PageNumber == 0 || requestParams.PageSize == 0)
-            {
-                IEnumerable<ModuleDto> model = await Mediator.Send(new GetModuleListQuery { PathId = pathId });
-                return Ok(model);
-            }
-
-            return await GetInternal(pathId, requestParams);
+            return requestParams == null || requestParams.PageNumber == 0 || requestParams.PageSize == 0
+                ? await GetAllInternal(pathId)
+                : await GetPageInternal(pathId, requestParams);
         }
 
-        private async Task<ActionResult<IEnumerable<ModuleDto>>> GetInternal([FromQuery] int pathId, RequestParams filter)
+        private async Task<ActionResult<IEnumerable<ModuleDto>>> GetAllInternal(int pathId)
+        {
+            IEnumerable<ModuleDto> model = await Mediator.Send(new GetModuleListQuery { PathId = pathId });
+            return Ok(model);
+        }
+
+        private async Task<ActionResult<IEnumerable<ModuleDto>>> GetPageInternal(int pathId, RequestParams filter)
         {
             if (filter.PageSize < 0 || filter.PageNumber < 0)
                 return BadRequest("PageSize or PageNumber not valid");
