@@ -31,8 +31,14 @@ namespace DeveloperPath.WebApi.Controllers
         /// <returns>A collection of modules with summary information</returns>
         [HttpGet]
         [HttpHead]
-        public async Task<ActionResult<IEnumerable<ModuleDto>>> Get(int pathId, [FromQuery] RequestParams requestParams=null)
+        public async Task<ActionResult<IEnumerable<ModuleDto>>> Get(int pathId, [FromQuery] RequestParams requestParams = null)
         {
+            if (requestParams == null || requestParams.PageNumber == 0 || requestParams.PageSize == 0)
+            {
+                IEnumerable<ModuleDto> model = await Mediator.Send(new GetModuleListQuery { PathId = pathId });
+                return Ok(model);
+            }
+
             return await GetInternal(pathId, requestParams);
         }
 
@@ -40,22 +46,14 @@ namespace DeveloperPath.WebApi.Controllers
 
         private async Task<ActionResult<IEnumerable<ModuleDto>>> GetInternal([FromQuery] int pathId, RequestParams filter)
         {
-            if (filter == null)
-            {
-                IEnumerable<ModuleDto> model = await Mediator.Send(new GetModuleListQuery { PathId = pathId });
-                return Ok(model);
-            }
-            else
-            {
+            if (filter.PageSize < 0 || filter.PageNumber < 0)
+                return BadRequest("PageSize or PageNumber not valid");
 
-                if (filter.PageSize < 0 || filter.PageNumber < 0)
-                    return BadRequest("PageSize or PageNumber not valid");
+            var (paginationData, result) = await Mediator.Send(new GetModuleListQueryPaging()
+            { PathId = pathId, PageNumber = filter.PageNumber, PageSize = filter.PageSize });
+            Response?.Headers?.Add("X-Pagination", System.Text.Json.JsonSerializer.Serialize(paginationData));
+            return Ok(result);
 
-                var (paginationData, result) = await Mediator.Send(new GetModuleListQueryPaging()
-                { PathId = pathId, PageNumber = filter.PageNumber, PageSize = filter.PageSize });
-                Response?.Headers?.Add("X-Pagination", System.Text.Json.JsonSerializer.Serialize(paginationData));
-                return Ok(result);
-            }
         }
 
         /// <summary>
