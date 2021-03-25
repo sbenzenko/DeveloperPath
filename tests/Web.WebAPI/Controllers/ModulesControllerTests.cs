@@ -12,6 +12,7 @@ using DeveloperPath.WebApi.Controllers;
 using DeveloperPath.WebApi.Filters;
 using DeveloperPath.WebApi.Paging;
 using MediatR;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using NUnit.Framework;
