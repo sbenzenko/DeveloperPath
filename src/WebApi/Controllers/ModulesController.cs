@@ -36,8 +36,6 @@ namespace DeveloperPath.WebApi.Controllers
             return await GetInternal(pathId, requestParams);
         }
 
-
-
         private async Task<ActionResult<IEnumerable<ModuleDto>>> GetInternal([FromQuery] int pathId, RequestParams filter)
         {
             if (filter == null)
@@ -47,7 +45,6 @@ namespace DeveloperPath.WebApi.Controllers
             }
             else
             {
-
                 if (filter.PageSize < 0 || filter.PageNumber < 0)
                     return BadRequest("PageSize or PageNumber not valid");
 
