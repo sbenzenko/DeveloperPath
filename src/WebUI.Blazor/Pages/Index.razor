@@ -9,8 +9,8 @@
         </h2>
         <ul>
             @foreach (var claim in context.User.Claims)
-            {
-                <li><b>@claim.Type</b>: @claim.Value</li>
+                {
+            <li><b>@claim.Type</b>: @claim.Value</li>
             }
         </ul>
     </Authorized>
