@@ -6,7 +6,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 using WebUI.Blazor.Security;
-
+using MatBlazor;
 
 namespace WebUI.Blazor
 {
@@ -29,7 +29,7 @@ namespace WebUI.Blazor
                 });
 
             builder.Services.AddScoped(sp => sp.GetService<IHttpClientFactory>().CreateClient("pathapi"));
-
+            builder.Services.AddMatBlazor();
             builder.Services
                 .AddOidcAuthentication(options =>
                 {
@@ -37,7 +37,6 @@ namespace WebUI.Blazor
                     options.UserOptions.RoleClaim = "role";
                 })
                 .AddAccountClaimsPrincipalFactory<ArrayClaimsPrincipalFactory<RemoteUserAccount>>();
-
             await builder.Build().RunAsync();
         }
     }
