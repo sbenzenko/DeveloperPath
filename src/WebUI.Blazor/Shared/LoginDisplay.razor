@@ -9,9 +9,7 @@
         <div style="margin-right:20px">
             <NavLink class="text-white nav-link">@context.User.Identity.Name</NavLink>
         </div>
-      
-            <MatIconButton Icon="exit_to_app" OnClick="BeginSignOut" Style="color:white"></MatIconButton>
-        
+        <MatIconButton Icon="exit_to_app" OnClick="BeginSignOut"></MatIconButton>
     </Authorized>
     <NotAuthorized>
         <NavLink class="text-white nav-link" href="authentication/login">Log In</NavLink>
@@ -19,7 +17,7 @@
 </AuthorizeView>
 
 @code{
-    private async Task BeginSignOut( )
+    private async Task BeginSignOut()
     {
         await SignOutManager.SetSignOutState();
         Navigation.NavigateTo("authentication/logout");

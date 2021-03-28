@@ -3,8 +3,9 @@
     <MatAppBarContainer>
         <MatAppBar Fixed="true">
             <MatAppBarRow>
-                 <MatAppBarSection Align="@MatAppBarSectionAlign.Start">
-                     <MatIconButton Icon="menu"></MatIconButton>
+                <MatAppBarSection Align="@MatAppBarSectionAlign.Start">
+                    <MatIconButton Icon="menu" OnClick="ButtonClicked"></MatIconButton>
+                    <MatAppBarTitle>DEVELOPER PATH</MatAppBarTitle>
                 </MatAppBarSection>
                 <MatAppBarSection Align="@MatAppBarSectionAlign.End">
                     <LoginDisplay></LoginDisplay>
@@ -12,16 +13,41 @@
             </MatAppBarRow>
         </MatAppBar>
         <MatAppBarContent>
-            @Body
+            <MatDrawerContainer Style="width: 100vw; height: 100vh;">
+                <MatDrawer @bind-Opened="@DrawerOpened">
+                    <MatListGroup>
+                        <MatListGroupSubHeader>Header</MatListGroupSubHeader>
+                        <MatList>
+                            <MatListItem>
+                                Home
+                            </MatListItem>
+                            <MatListItem>
+                                Paths
+                            </MatListItem>
+                        </MatList>
+                    </MatListGroup>
+                </MatDrawer>
+                <MatDrawerContent>
+                </MatDrawerContent>
+            </MatDrawerContainer>
         </MatAppBarContent>
     </MatAppBarContainer>
 </MatThemeProvider>
 
 @code
 {
-        MatTheme theme1 = new MatTheme()
-        {
-            Primary = "#0277bd",
-            Secondary = MatThemeColors.BlueGrey._500.Value
-        };
+    bool DrawerOpened = false;
+    bool IsOpened = false;
+
+    void ButtonClicked()
+    {
+        DrawerOpened = !DrawerOpened;
+        StateHasChanged();
+    }
+
+    MatTheme theme1 = new MatTheme()
+    {
+        Primary = "#0277bd",
+        Secondary = MatThemeColors.BlueGrey._500.Value
+    };
 }
