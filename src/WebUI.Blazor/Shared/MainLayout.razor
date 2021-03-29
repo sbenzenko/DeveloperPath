@@ -1,10 +1,13 @@
-﻿@inherits LayoutComponentBase
+﻿
+@inherits LayoutComponentBase
+@inject IStringLocalizer<LanguageResources> localizer
+
 <MatThemeProvider Theme="@theme1">
     <MatAppBarContainer>
         <MatAppBar Fixed="true">
             <MatAppBarRow>
                 <MatAppBarSection Align="@MatAppBarSectionAlign.Start">
-                    <MatIconButton Icon="menu" OnClick="ButtonClicked"></MatIconButton>
+                    <MatIconButton Icon="menu" OnClick="ButtonClicked" ></MatIconButton>
                     <MatAppBarTitle>DEVELOPER PATH</MatAppBarTitle>
                 </MatAppBarSection>
                 <MatAppBarSection Align="@MatAppBarSectionAlign.End">
@@ -16,18 +19,19 @@
             <MatDrawerContainer Style="width: 100vw; height: 100vh;">
                 <MatDrawer @bind-Opened="@DrawerOpened">
                     <MatListGroup>
-                        <MatListGroupSubHeader>Header</MatListGroupSubHeader>
+                        <MatListGroupSubHeader>@localizer["Menu"]</MatListGroupSubHeader>
                         <MatList>
                             <MatListItem>
-                                Home
+                                <MatIcon Icon="home"></MatIcon> <div class="listitem">@localizer["Home"]</div> 
                             </MatListItem>
                             <MatListItem>
-                                Paths
+                                <MatIcon Icon="school"></MatIcon> <div class="listitem">@localizer["Paths"]</div> 
                             </MatListItem>
                         </MatList>
                     </MatListGroup>
                 </MatDrawer>
                 <MatDrawerContent>
+                    <div class="content">@Body</div>
                 </MatDrawerContent>
             </MatDrawerContainer>
         </MatAppBarContent>

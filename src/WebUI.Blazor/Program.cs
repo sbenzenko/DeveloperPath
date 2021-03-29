@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 using WebUI.Blazor.Security;
 using MatBlazor;
-
+ 
 namespace WebUI.Blazor
 {
     public class Program
@@ -27,6 +27,8 @@ namespace WebUI.Blazor
                             scopes: new[] { "pathapi" });
                     return handler;
                 });
+
+            builder.Services.AddLocalization();
 
             builder.Services.AddScoped(sp => sp.GetService<IHttpClientFactory>().CreateClient("pathapi"));
             builder.Services.AddMatBlazor();
