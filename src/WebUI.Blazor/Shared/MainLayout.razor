@@ -1,42 +1,44 @@
-﻿
-@inherits LayoutComponentBase
+﻿@inherits LayoutComponentBase
 @inject IStringLocalizer<LanguageResources> localizer
 
-<MatThemeProvider Theme="@theme1">
-    <MatAppBarContainer>
-        <MatAppBar Fixed="true">
-            <MatAppBarRow>
-                <MatAppBarSection Align="@MatAppBarSectionAlign.Start">
-                    <MatIconButton Icon="menu" OnClick="ButtonClicked" ></MatIconButton>
-                    <MatAppBarTitle>DEVELOPER PATH</MatAppBarTitle>
-                </MatAppBarSection>
-                <MatAppBarSection Align="@MatAppBarSectionAlign.End">
-                    <LoginDisplay></LoginDisplay>
-                </MatAppBarSection>
-            </MatAppBarRow>
-        </MatAppBar>
-        <MatAppBarContent>
-            <MatDrawerContainer Style="width: 100vw; height: 100vh;">
-                <MatDrawer @bind-Opened="@DrawerOpened">
-                    <MatListGroup>
-                        <MatListGroupSubHeader>@localizer["Menu"]</MatListGroupSubHeader>
-                        <MatList>
-                            <MatListItem>
-                                <MatIcon Icon="home"></MatIcon> <div class="listitem">@localizer["Home"]</div> 
-                            </MatListItem>
-                            <MatListItem>
-                                <MatIcon Icon="school"></MatIcon> <div class="listitem">@localizer["Paths"]</div> 
-                            </MatListItem>
-                        </MatList>
-                    </MatListGroup>
-                </MatDrawer>
-                <MatDrawerContent>
-                    <div class="content">@Body</div>
-                </MatDrawerContent>
-            </MatDrawerContainer>
-        </MatAppBarContent>
-    </MatAppBarContainer>
-</MatThemeProvider>
+<CascadingValue Name="Theme" Value="@theme1">
+    <MatThemeProvider Theme="@theme1">
+        <MatAppBarContainer>
+            <MatAppBar Fixed="true">
+                <MatAppBarRow>
+                    <MatAppBarSection Align="@MatAppBarSectionAlign.Start">
+                        <MatIconButton Icon="menu" OnClick="ButtonClicked"></MatIconButton>
+                        <MatAppBarTitle>DEVELOPER PATH</MatAppBarTitle>
+                    </MatAppBarSection>
+                    <MatAppBarSection Align="@MatAppBarSectionAlign.End">
+                        <CultureSelector></CultureSelector>
+                        <LoginDisplay></LoginDisplay>
+                    </MatAppBarSection>
+                </MatAppBarRow>
+            </MatAppBar>
+            <MatAppBarContent>
+                <MatDrawerContainer Style="width: 100vw; height: 100vh;">
+                    <MatDrawer @bind-Opened="@DrawerOpened">
+                        <MatListGroup>
+                            <MatListGroupSubHeader>@localizer["Menu"]</MatListGroupSubHeader>
+                            <MatList>
+                                <MatListItem>
+                                    <MatIcon Icon="home"></MatIcon> <div class="listitem">@localizer["Home"]</div>
+                                </MatListItem>
+                                <MatListItem>
+                                    <MatIcon Icon="school"></MatIcon> <div class="listitem">@localizer["Paths"]</div>
+                                </MatListItem>
+                            </MatList>
+                        </MatListGroup>
+                    </MatDrawer>
+                    <MatDrawerContent>
+                        <div class="content">@Body</div>
+                    </MatDrawerContent>
+                </MatDrawerContainer>
+            </MatAppBarContent>
+        </MatAppBarContainer>
+    </MatThemeProvider>
+</CascadingValue>
 
 @code
 {

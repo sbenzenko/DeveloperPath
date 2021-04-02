@@ -7,7 +7,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 using WebUI.Blazor.Security;
 using MatBlazor;
- 
+using WebUI.Blazor.Extensions;
+
 namespace WebUI.Blazor
 {
     public class Program
@@ -39,7 +40,10 @@ namespace WebUI.Blazor
                     options.UserOptions.RoleClaim = "role";
                 })
                 .AddAccountClaimsPrincipalFactory<ArrayClaimsPrincipalFactory<RemoteUserAccount>>();
-            await builder.Build().RunAsync();
+
+            var host = builder.Build();
+            await host.SetDefaultCulture();
+            await host.RunAsync();
         }
     }
 }

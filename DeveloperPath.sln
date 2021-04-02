@@ -33,9 +33,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DomainLayer", "DomainLayer"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "InfrastructureLayer", "InfrastructureLayer", "{24EF268B-250A-4E37-8470-60EA85253982}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmailSender.Interfaces", "Infrastructure.EmailSender.Interfaces\EmailSender.Interfaces.csproj", "{5F5145DF-FB9F-4D27-99C9-97161E8C12C1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EmailSender.Interfaces", "Infrastructure.EmailSender.Interfaces\EmailSender.Interfaces.csproj", "{5F5145DF-FB9F-4D27-99C9-97161E8C12C1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmailSender.Implementations", "Infrastructure.EmailSender.Implementations\EmailSender.Implementations.csproj", "{F86A1C8F-E6A9-474C-8CB4-9C283FC3EEAB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EmailSender.Implementations", "Infrastructure.EmailSender.Implementations\EmailSender.Implementations.csproj", "{F86A1C8F-E6A9-474C-8CB4-9C283FC3EEAB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
