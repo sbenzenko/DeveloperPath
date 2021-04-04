@@ -19,7 +19,7 @@ steps:
     zipAfterPublish: false
 - task: AzureStaticWebApp@0
   inputs:
-    app_location: '$(Build.ArtifactStagingDirectory)'
+    app_location: '$(Build.ArtifactStagingDirectory)/wwwroot'
     api_location: 'api'
   env:
     azure_static_web_apps_api_token: $(deployment_token)
