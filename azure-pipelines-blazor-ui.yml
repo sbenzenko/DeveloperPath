@@ -17,6 +17,11 @@ steps:
     projects: '**/src/WebUI.Blazor/WebUI.Blazor.csproj'
     arguments: '--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)'
     zipAfterPublish: false
-
+- task: AzureStaticWebApp@0
+  inputs:
+    app_location: '$(Build.ArtifactStagingDirectory)'
+    api_location: 'api'
+  env:
+    azure_static_web_apps_api_token: $(deployment_token)
 - task: PublishBuildArtifacts@1
   displayName: 'Publish artifacts'
