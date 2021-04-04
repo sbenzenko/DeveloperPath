@@ -8,6 +8,12 @@ steps:
     projects: '**/src/WebApi/*.csproj'
     arguments: '--configuration $(buildConfiguration)'
 
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'test'
+    projects: '**/tests/*/*.csproj'
+    arguments: '-- configuration ($buildConfiguration)'
+
 - task: DotNetCoreCLI@2 
   displayName: 'Publish'
   inputs:
