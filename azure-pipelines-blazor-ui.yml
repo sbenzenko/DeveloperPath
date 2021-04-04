@@ -11,7 +11,7 @@ steps:
 
 - task: AzureStaticWebApp@0
   inputs:
-    app_location: '/wwwroot'
+    app_location: '**/src/WebUI.Blazor/wwwroot'
     output_location: ''
     api_location: 'api'
   env:
