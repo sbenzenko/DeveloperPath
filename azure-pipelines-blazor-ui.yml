@@ -9,14 +9,6 @@ steps:
     projects: '**/src/WebUI.Blazor/*.csproj'
     arguments: '--configuration $(buildConfiguration)'
 
-- task: AzureStaticWebApp@0
-  inputs:
-    app_location: '**/src/WebUI.Blazor/wwwroot'
-    output_location: ''
-    api_location: 'api'
-  env:
-    azure_static_web_apps_api_token: $(deployment_token)
-
 - task: DotNetCoreCLI@2 
   displayName: 'Publish'
   inputs:
