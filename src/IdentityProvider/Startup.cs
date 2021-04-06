@@ -2,6 +2,8 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
 
+using EmailSender.Implementations;
+using EmailSender.Interfaces;
 using System;
 using IdentityServer4;
 using IdentityProvider.Data;
@@ -33,6 +35,15 @@ namespace IdentityProvider
 
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
+
+
+            services.AddSingleton<IEmailNotifierConfig>(new EmailNotifierConfig
+            {
+                //there should be some config 
+            });
+
+            services.AddScoped<IEmailNotifier>(provider => new SendGridEmailNotifier(provider.GetRequiredService<IEmailNotifierConfig>().EmailApiKey));
+            
 
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()

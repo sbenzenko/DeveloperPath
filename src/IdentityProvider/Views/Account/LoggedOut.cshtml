@@ -1,29 +1,37 @@
-@model LoggedOutViewModel
-
+﻿@model IdentityProvider.Models.Account.LoggedOutViewModel
 @{ 
     // set this so the layout rendering sees an anonymous user
     ViewData["signed-out"] = true;
 }
 
-<div class="logged-out-page">
-    <h1>
-        Logout
-        <small>You are now logged out</small>
-    </h1>
 
-    @if (Model.PostLogoutRedirectUri != null)
-    {
-        <div>
-            Click <a class="PostLogoutRedirectUri" href="@Model.PostLogoutRedirectUri">here</a> to return to the
-            <span>@Model.ClientName</span> application.
+<div class="container">
+    <div class="row h-50"> </div>
+    <div class="row h-50"> </div>
+    <div class="row h-100"> </div>
+    <div class="row">
+        <div class="col s2 m2 l2"></div>
+        <div class="col s8 m8 l8">
+            <div class="card">
+                <div class="card-content">
+                    <div class="center"><span class="card-title">Вы вышли из аккаунта</span></div>
+                    @if (Model.PostLogoutRedirectUri != null)
+                    {
+                        <div class="center">
+                            Нажмите <a class="PostLogoutRedirectUri" href="@Model.PostLogoutRedirectUri">на ссылку</a> чтобы вернутся к приложению
+                        </div>
+                    }
+                </div>
+            </div>
         </div>
-    }
-
-    @if (Model.SignOutIframeUrl != null)
-    {
-        <iframe width="0" height="0" class="signout" src="@Model.SignOutIframeUrl"></iframe>
-    }
+        <div class="col s2 m2 l2"></div>
+    </div>
 </div>
+
+@if (Model.SignOutIframeUrl != null)
+{
+    <iframe width="0" height="0" class="signout" src="@Model.SignOutIframeUrl"></iframe>
+}
 
 @section scripts
 {

@@ -1,0 +1,59 @@
+﻿@model IdentityProvider.Models.Register.RegisterModel
+
+<div class="container">
+    <div class="row h-50"> </div>
+    <div class="row h-50"> </div>
+    <div class="row h-100"> </div>
+    <div class="row">
+        <div class="col s2 m2 l2"></div>
+        <div class="col s8 m8 l8">
+            <div class="card">
+                <div class="card-content">
+                    <div class="center"><span class="card-title">Новый аккаунт</span></div>
+                    <form asp-route-returnUrl="@Model.ReturnUrl" method="post">
+                        <div asp-validation-summary="ModelOnly" class="helper-text"></div>
+                        <div class="row h-100"></div>
+                        <div class="input-field">
+                            <label asp-for="@Model.Login"></label>
+                            <input asp-for="@Model.Login" class="validate" />
+                            <span asp-validation-for="@Model.Login" class="helper-text"></span>
+                        </div>
+                        <div class="input-field">
+                            <label asp-for="@Model.Email"></label>
+                            <input asp-for="@Model.Email" class="validate" />
+                            <span asp-validation-for="@Model.Email" class="helper-text"></span>
+                        </div>
+                        <div class="input-field">
+                            <label asp-for="@Model.Name"></label>
+                            <input asp-for="@Model.Name" class="validate" />
+                            <span asp-validation-for="@Model.Name" class="helper-text"></span>
+                        </div>
+                        <div class="input-field">
+                            <label asp-for="@Model.Password"></label>
+                            <input asp-for="@Model.Password" class="validate" />
+                            <span asp-validation-for="@Model.Password" class="helper-text"></span>
+                        </div>
+                        <div class="input-field">
+                            <label asp-for="@Model.ConfirmPassword"></label>
+                            <input asp-for="@Model.ConfirmPassword" class="validate" />
+                            <span asp-validation-for="@Model.ConfirmPassword" class="helper-text"></span>
+                        </div>
+                        <div class="center">
+                            <button type="submit" class="btn w-100 light-blue darken-3">Регистрация</button>
+                        </div>
+                    </form>
+
+                    <div class="row">
+                        <div class="center">
+                            <text>Уже есть аккаунт?</text><a asp-controller="Account" asp-action="Login" asp-route-returnUrl="@Model.ReturnUrl"> Войти</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col s2 m2 l2"></div>
+    </div>
+</div>
+
+
+ 
