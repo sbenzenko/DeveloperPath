@@ -21,8 +21,8 @@ steps:
 
 - task: AzureStaticWebApp@0
   inputs:
-    app_location: $(Build.ArtifactStagingDirectory)/WebUI.Blazor
-    api_location: "api"
+    app_location: '**/$(Build.ArtifactStagingDirectory)/WebUI.Blazor'
+    api_location: 'api'
     output_location: "wwwroot"
   env:
       azure_static_web_apps_api_token: $(deployment_token)
