@@ -17,12 +17,21 @@ steps:
     projects: '**/src/WebUI.Blazor/WebUI.Blazor.csproj'
     arguments: '--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)'
     zipAfterPublish: true
-    
+
+- task: DotNetCoreCLI@2 
+  displayName: 'Publish'
+  inputs:
+    command: 'publish'
+    publishWebProjects: false
+    projects: '**/src/WebUI.Blazor/WebUI.Blazor.csproj'
+    arguments: '--configuration $(BuildConfiguration) --output data'
+    zipAfterPublish: true
+      
 - task: PowerShell@2
   inputs:
     targetType: 'inline'
-    script: |
-      cd $(Build.ArtifactStagingDirectory)
+    script: |echo "cd data"
+      cd data
       ls
     errorActionPreference: 'continue'
 
