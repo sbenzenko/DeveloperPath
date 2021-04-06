@@ -9,8 +9,6 @@ steps:
     projects: '**/src/WebUI.Blazor/*.csproj'
     arguments: '--configuration $(buildConfiguration)'
 
-
-
 - task: DotNetCoreCLI@2 
   displayName: 'Publish'
   inputs:
@@ -19,6 +17,14 @@ steps:
     projects: '**/src/WebUI.Blazor/WebUI.Blazor.csproj'
     arguments: '--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)'
     zipAfterPublish: true
+
+- task: PowerShell@2
+  inputs:
+    targetType: 'inline'
+    script: |
+      cd $(Build.ArtifactStagingDirectory)
+      ls
+    errorActionPreference: 'continue'
 
 - task: PublishBuildArtifacts@1
   displayName: 'Publish artifacts'
