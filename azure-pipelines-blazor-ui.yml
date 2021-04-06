@@ -22,9 +22,12 @@ steps:
   inputs:
     targetType: 'inline'
     script: |
-      cd $(Build.ArtifactStagingDirectory)
+      ls
+      cd $(Build.ArtifactStagingDirectory)/WebUI.Blazor
       ls
     errorActionPreference: 'continue'
+
+
 
 - task: PublishBuildArtifacts@1
   displayName: 'Publish artifacts'
