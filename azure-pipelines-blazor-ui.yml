@@ -18,6 +18,14 @@ steps:
     arguments: '--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)'
     zipAfterPublish: true
     
+- task: PowerShell@2
+  inputs:
+    targetType: 'inline'
+    script: |
+      cd $(Build.ArtifactStagingDirectory)
+      ls
+    errorActionPreference: 'continue'
+
 - task: ExtractFiles@1
   inputs:
     archiveFilePatterns: '**/$(Build.ArtifactStagingDirectory)/*.zip'
