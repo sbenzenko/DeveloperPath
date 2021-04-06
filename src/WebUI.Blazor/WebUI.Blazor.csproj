@@ -29,6 +29,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Update="wwwroot\appsettings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
     <EmbeddedResource Update="Resources\LanguageResources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>LanguageResources.Designer.cs</LastGenOutput>
