@@ -49,7 +49,7 @@ steps:
     
 - task: AzureStaticWebApp@0
   inputs:
-    app_location: 'PublishData'
+    app_location: 'PublishData/wwwroot'
     api_location: 'api'
     output_location: "wwwroot"
   env:
