@@ -1,6 +1,6 @@
 variables:
     buildConfiguration: 'Release'
-    deployment_token: '44289d89f422d620382ee144a8d094258f35093f8de800352520b51efc96c307-d3bdb0c6-bb8c-47bd-b90f-343578017e6600320587'
+    deployment_token: '67086dabeb7881b9814e74f38b3cab53e5fb4719ac2536951e7038c6a9644fb0-babda254-a2eb-422a-b901-2c2e310c7e4f00320803'
 
 steps:
 - task: DotNetCoreCLI@2
@@ -18,16 +18,14 @@ steps:
     arguments: '--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)'
     zipAfterPublish: false
 
-- task: PowerShell@2
+
+- task: AzureStaticWebApp@0
   inputs:
-    targetType: 'inline'
-    script: |
-      ls
-      cd $(Build.ArtifactStagingDirectory)/WebUI.Blazor
-      ls
-    errorActionPreference: 'continue'
-
-
+    app_location: $(Build.ArtifactStagingDirectory)/WebUI.Blazor
+    api_location: "api"
+    output_location: "wwwroot"
+  env:
+      azure_static_web_apps_api_token: $(deployment_token)
 
 - task: PublishBuildArtifacts@1
   displayName: 'Publish artifacts'
