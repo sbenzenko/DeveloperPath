@@ -17,14 +17,14 @@ steps:
     projects: '**/src/WebUI.Blazor/WebUI.Blazor.csproj'
     arguments: '--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)'
     zipAfterPublish: false
-
 - task: PowerShell@2
   inputs:
     targetType: 'inline'
     script: |
-      cd $(Build.ArtifactStagingDirectory)/WebUI.Blazor
-      ls'
-
+      cd $(Build.ArtifactStagingDirectory)/WebUI.Blazor 
+      ls
+    errorActionPreference: 'continue'
+    
 - task: AzureStaticWebApp@0
   inputs:
     app_location: '**$(Build.ArtifactStagingDirectory)/WebUI.Blazor'
