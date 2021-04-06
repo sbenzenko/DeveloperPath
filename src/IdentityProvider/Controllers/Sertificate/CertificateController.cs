@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace IdentityServer.Controllers.Sertificate
+namespace IdentityProvider.Controllers.Sertificate
 {
     [Route("/.well-known/pki-validation/godaddy.html")]
     public class CertificateController : Controller
