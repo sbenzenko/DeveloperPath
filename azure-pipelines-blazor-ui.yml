@@ -30,9 +30,9 @@ steps:
 - task: PowerShell@2
   inputs:
     targetType: 'inline'
-    script: echo "cd data"
+    script:
       cd data
-      ls
+      ls -R
     errorActionPreference: 'continue'
 
 - task: ExtractFiles@1
