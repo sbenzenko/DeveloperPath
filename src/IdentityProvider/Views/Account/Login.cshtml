@@ -1,92 +1,65 @@
-@model LoginViewModel
-
-<div class="login-page">
-    <div class="lead">
-        <h1>Login</h1>
-        <p>Choose how to login</p>
-    </div>
-
-    <partial name="_ValidationSummary" />
-
+﻿@model IdentityProvider.Models.Account.LoginViewModel
+<div class="container">
+    <div class="row h-50"> </div>
+    <div class="row h-50"> </div>
+    <div class="row h-100"> </div>
     <div class="row">
-
-        @if (Model.EnableLocalLogin)
-        {
-            <div class="col-sm-6">
-                <div class="card">
-                    <div class="card-header">
-                        <h2>Local Account</h2>
-                    </div>
-
-                    <div class="card-body">
-                        <form asp-route="Login">
-                            <input type="hidden" asp-for="ReturnUrl" />
-
-                            <div class="form-group">
-                                <label asp-for="Username"></label>
-                                <input class="form-control" placeholder="Username" asp-for="Username" autofocus>
+        <div class="col s2 m2 l2"></div>
+        <div class="col s8 m8 l8">
+            <div class="card">
+                <div class="card-content">
+                    <div class="center"><span class="card-title">Войти</span></div>
+                    <form asp-route="Login">
+                        <input type="hidden" asp-for="ReturnUrl"/>
+                        <div class="input-field">
+                            <i class="material-icons prefix">account_circle</i>
+                            <input asp-for="Username" type="text" class="validate">
+                            <label asp-for="Username">Имя входа</label>
+                            <span class="helper-text" asp-validation-for="Username"></span>
+                        </div>
+                        <div class="input-field">
+                            <i class="material-icons prefix">remove_red_eye</i>
+                            <input asp-for="Password" type="password" class="validate">
+                            <label asp-for="Password">Пароль</label>
+                            <span class="helper-text" asp-validation-for="Password"></span>
+                        </div>
+                        <div class="center">
+                            <div asp-validation-summary="ModelOnly" class="helper-text"></div>
+                        </div>
+                        <div class="row h-100"></div>
+                        <div class="right">
+                            <p>
+                                <label>
+                                    <input asp-for="RememberLogin" type="checkbox"/>
+                                    <span>Оставаться в системе?</span>
+                                </label>
+                            </p>
+                        </div>
+                        <div class="row h-100"></div>
+                        <div class="row">
+                            <div class="col center s12">
+                                <button class="btn w-100 light-blue darken-3" name="button" value="login">&nbsp;&nbsp;&nbsp;&nbsp;Вход&nbsp;&nbsp;&nbsp;&nbsp;</button>
                             </div>
-                            <div class="form-group">
-                                <label asp-for="Password"></label>
-                                <input type="password" class="form-control" placeholder="Password" asp-for="Password" autocomplete="off">
-                            </div>
-                            @if (Model.AllowRememberLogin)
-                            {
-                                <div class="form-group">
-                                    <div class="form-check">
-                                        <input class="form-check-input" asp-for="RememberLogin">
-                                        <label class="form-check-label" asp-for="RememberLogin">
-                                            Remember My Login
-                                        </label>
-                                    </div>
-                                </div>
-                            }
+                        </div>
+                    </form>
 
-                            <div>
-                                <p>The default users are alice/bob, password: Pass123$</p>
+                    <div>
+                        <div class="row">
+                            <div class="center">
+                                <a asp-controller="Account" asp-action="Login">Забыли пароль?</a>
                             </div>
-
-                            <button class="btn btn-primary" name="button" value="login">Login</button>
-                            <button class="btn btn-secondary" name="button" value="cancel">Cancel</button>
-                        </form>
+                        </div>
+                        <div class="row">
+                            <div class="center">
+                                <text>Нет аккаунта?</text><a asp-controller="Register" asp-action="Register" asp-route-returnUrl="@Model.ReturnUrl"> Зарегистрироваться</a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-        }
+        </div>
+        <div class="col s2 m2 l2"></div>
 
-        @if (Model.VisibleExternalProviders.Any())
-        {
-            <div class="col-sm-6">
-                <div class="card">
-                    <div class="card-header">
-                        <h2>External Account</h2>
-                    </div>
-                    <div class="card-body">
-                        <ul class="list-inline">
-                            @foreach (var provider in Model.VisibleExternalProviders)
-                            {
-                                <li class="list-inline-item">
-                                    <a class="btn btn-secondary"
-                                       asp-controller="External"
-                                       asp-action="Challenge"
-                                       asp-route-scheme="@provider.AuthenticationScheme"
-                                       asp-route-returnUrl="@Model.ReturnUrl">
-                                        @provider.DisplayName
-                                    </a>
-                                </li>
-                            }
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        }
-
-        @if (!Model.EnableLocalLogin && !Model.VisibleExternalProviders.Any())
-        {
-            <div class="alert alert-warning">
-                <strong>Invalid login request</strong>
-                There are no login schemes configured for this request.
-            </div>
-        }
     </div>
 </div>
+
