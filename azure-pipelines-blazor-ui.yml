@@ -30,7 +30,7 @@ steps:
 - task: PowerShell@2
   inputs:
     targetType: 'inline'
-    script: |echo "cd data"
+    script: echo "cd data"
       cd data
       ls
     errorActionPreference: 'continue'
