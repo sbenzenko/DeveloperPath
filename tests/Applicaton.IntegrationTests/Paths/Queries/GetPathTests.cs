@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using DeveloperPath.Application.Common.Exceptions;
 using DeveloperPath.Application.Paths.Queries.GetPaths;
 using DeveloperPath.Domain.Entities;
 using DeveloperPath.Domain.Enums;
@@ -10,7 +11,7 @@ namespace DeveloperPath.Application.IntegrationTests.Queries
 {
   using static Testing;
 
-  public class GetPathsTests : TestBase
+  public class GetPathTests : TestBase
   {
     [Test]
     public async Task ShouldReturnPathList()
@@ -46,6 +47,15 @@ namespace DeveloperPath.Application.IntegrationTests.Queries
     }
 
     [Test]
+    public void ShouldReturnNotFound_WhenIdNotFound()
+    {
+      var query = new GetPathQuery() { Id = 99999 };
+
+      FluentActions.Invoking(() =>
+          SendAsync(query)).Should().Throw<NotFoundException>();
+    }
+
+    [Test]
     public async Task ShouldReturnPathWithModules()
     {
       var path = await AddAsync(new Path
@@ -70,6 +80,15 @@ namespace DeveloperPath.Application.IntegrationTests.Queries
       result.Title.Should().NotBeEmpty();
       result.Modules.Should().HaveCount(5);
       result.Tags.Should().HaveCount(3);
+    }
+
+    [Test]
+    public void DetailsShouldReturnNotFound_WhenIdNotFound()
+    {
+      var query = new GetPathDetailsQuery() { Id = 99999 };
+
+      FluentActions.Invoking(() =>
+          SendAsync(query)).Should().Throw<NotFoundException>();
     }
   }
 }

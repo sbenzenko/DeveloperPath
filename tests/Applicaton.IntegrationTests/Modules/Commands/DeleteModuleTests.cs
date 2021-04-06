@@ -17,7 +17,7 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
     [Test]
     public void ShouldRequireValidPathId()
     {
-      var command = new DeleteModuleCommand { PathId = 99, Id = 1 };
+      var command = new DeleteModuleCommand { PathId = 999999, Id = 1 };
 
       FluentActions.Invoking(() =>
           SendAsync(command)).Should().Throw<NotFoundException>();
@@ -26,7 +26,7 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
     [Test]
     public void ShouldRequireValidModuleId()
     {
-      var command = new DeleteModuleCommand { PathId = 1, Id = 99 };
+      var command = new DeleteModuleCommand { PathId = 1, Id = 999999 };
 
       FluentActions.Invoking(() =>
           SendAsync(command)).Should().Throw<NotFoundException>();

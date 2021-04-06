@@ -1,0 +1,22 @@
+variables:
+    buildConfiguration: 'Release'
+    deployment_token: '44289d89f422d620382ee144a8d094258f35093f8de800352520b51efc96c307-d3bdb0c6-bb8c-47bd-b90f-343578017e6600320587'
+
+steps:
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'build'
+    projects: '**/src/WebUI.Blazor/*.csproj'
+    arguments: '--configuration $(buildConfiguration)'
+
+- task: DotNetCoreCLI@2 
+  displayName: 'Publish'
+  inputs:
+    command: 'publish'
+    publishWebProjects: false
+    projects: '**/src/WebUI.Blazor/WebUI.Blazor.csproj'
+    arguments: '--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)'
+    zipAfterPublish: false
+
+- task: PublishBuildArtifacts@1
+  displayName: 'Publish artifacts'

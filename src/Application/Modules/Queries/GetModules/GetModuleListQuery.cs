@@ -4,8 +4,10 @@ using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
+using DeveloperPath.Application.Common.Exceptions;
 using DeveloperPath.Application.Common.Interfaces;
 using DeveloperPath.Application.Common.Models;
+using DeveloperPath.Domain.Entities;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
@@ -29,6 +31,11 @@ namespace DeveloperPath.Application.Modules.Queries.GetModules
 
     public async Task<IEnumerable<ModuleDto>> Handle(GetModuleListQuery request, CancellationToken cancellationToken)
     {
+      //TODO: check if requested module is in requested path (???)
+      var path = await _context.Paths.FindAsync(new object[] { request.PathId }, cancellationToken);
+      if (path == null)
+        throw new NotFoundException(nameof(Path), request.PathId);
+
       // TODO: Order modules (from PathModules.Order)
       return await _context.Paths
         .Where(p => p.Id == request.PathId)

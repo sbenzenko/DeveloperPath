@@ -14,9 +14,25 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
   public class DeleteThemeTests : TestBase
   {
     [Test]
+    public void ShouldRequireValidPathId()
+    {
+      var command = new DeleteThemeCommand { PathId = 999999, ModuleId = 1, Id = 1 };
+
+      FluentActions.Invoking(() =>
+          SendAsync(command)).Should().Throw<NotFoundException>();
+    }
+    [Test]
+    public void ShouldRequireValidModuleId()
+    {
+      var command = new DeleteThemeCommand { PathId = 1, ModuleId = 999999, Id = 1 };
+
+      FluentActions.Invoking(() =>
+          SendAsync(command)).Should().Throw<NotFoundException>();
+    }
+    [Test]
     public void ShouldRequireValidThemeId()
     {
-      var command = new DeleteThemeCommand { Id = 99999, ModuleId = 9999 };
+      var command = new DeleteThemeCommand { PathId = 1, ModuleId = 1, Id = 999999 };
 
       FluentActions.Invoking(() =>
           SendAsync(command)).Should().Throw<NotFoundException>();

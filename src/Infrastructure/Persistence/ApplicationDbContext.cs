@@ -30,10 +30,6 @@ namespace DeveloperPath.Infrastructure.Persistence
       _dateTime = dateTime;
     }
 
-    public DbSet<TodoList> TodoLists { get; set; }
-
-    public DbSet<TodoItem> TodoItems { get; set; }
-
     public DbSet<Path> Paths { get; set; }
     public DbSet<Domain.Entities.Module> Modules { get; set; }
     public DbSet<Section> Sections { get; set; }
@@ -43,22 +39,6 @@ namespace DeveloperPath.Infrastructure.Persistence
     public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
     {
       foreach (var entry in ChangeTracker.Entries<AuditableEntity>())
-      {
-        switch (entry.State)
-        {
-          case EntityState.Added:
-            entry.Entity.CreatedBy = _currentUserService.UserId;
-            entry.Entity.Created = _dateTime.Now;
-            break;
-          case EntityState.Modified:
-            entry.Entity.LastModifiedBy = _currentUserService.UserId;
-            entry.Entity.LastModified = _dateTime.Now;
-            break;
-        }
-      }
-
-      // TODO: this is from the template. Remove it
-      foreach (var entry in ChangeTracker.Entries<AuditableEntityTemplate>())
       {
         switch (entry.State)
         {

@@ -4,6 +4,8 @@
 
 using EmailSender.Implementations;
 using EmailSender.Interfaces;
+using System;
+using IdentityServer4;
 using IdentityProvider.Data;
 using IdentityProvider.Models;
 using Microsoft.AspNetCore.Builder;
@@ -60,8 +62,9 @@ namespace IdentityProvider
                 .AddInMemoryClients(Config.Clients)
                 .AddAspNetIdentity<ApplicationUser>();
 
-            // not recommended for production - you need to store your key material somewhere secure
-            builder.AddDeveloperSigningCredential();
+            var rsa = new RsaKeyService(Environment, TimeSpan.FromDays(30));
+            services.AddSingleton<RsaKeyService>(provider => rsa);
+            builder.AddSigningCredential(rsa.GetKey(), IdentityServerConstants.RsaSigningAlgorithm.RS512);
 
             services.AddAuthentication();
         }

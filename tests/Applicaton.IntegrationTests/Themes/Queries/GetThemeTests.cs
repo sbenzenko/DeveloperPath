@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using DeveloperPath.Application.Common.Exceptions;
 using DeveloperPath.Application.Modules.Commands.CreateModule;
 using DeveloperPath.Application.Themes.Queries.GetThemes;
 using DeveloperPath.Domain.Entities;
@@ -113,18 +114,16 @@ namespace DeveloperPath.Application.IntegrationTests.Queries
     [Test]
     public async Task ShouldReturnThemeDetails()
     {
-      var module = await AddAsync(new Module
+      var path = await AddAsync(
+        new Path { Title = "Some Path", Description = "Some Path Description" });
+
+      var module = await SendAsync(new CreateModuleCommand
       {
-        Title = "New Other Module",
-        Description = "New Other Module Description",
+        PathId = path.Id,
+        Title = "New Module Module",
+        Description = "New Module Description",
         Necessity = Domain.Enums.NecessityLevel.MustKnow,
-        Themes = new List<Theme> { },
-        Paths = new List<Path> { new Path
-          {
-            Title = "Some Path",
-            Description = "Some Path Description"
-          }
-        }
+        Tags = new List<string> { "Tag1", "Tag2", "Tag3" }
       });
 
       var theme = await AddAsync(new Theme
@@ -156,7 +155,7 @@ namespace DeveloperPath.Application.IntegrationTests.Queries
         }
       });
 
-      var query = new GetThemeDetailsQuery() { Id = theme.Id, ModuleId = module.Id };
+      var query = new GetThemeDetailsQuery() { Id = theme.Id, PathId = path.Id, ModuleId = module.Id };
 
       var createdTheme = await SendAsync(query);
 
@@ -168,6 +167,78 @@ namespace DeveloperPath.Application.IntegrationTests.Queries
       createdTheme.Module.Id.Should().Be(module.Id);
       createdTheme.Sources.Should().HaveCount(2);
       createdTheme.Tags.Should().HaveCount(3);
+    }
+
+    [Test]
+    public void ListShouldReturnNotFound_WhenPathIdNotFound()
+    {
+      var query = new GetThemeListQuery() { PathId = 99999, ModuleId = 1 };
+
+      FluentActions.Invoking(() =>
+          SendAsync(query)).Should().Throw<NotFoundException>();
+    }
+
+    [Test]
+    public void ListShouldReturnNotFound_WhenModuleIdNotFound()
+    {
+      var query = new GetThemeListQuery() { PathId = 1, ModuleId = 99999 };
+
+      FluentActions.Invoking(() =>
+          SendAsync(query)).Should().Throw<NotFoundException>();
+    }
+
+    [Test]
+    public void ShouldReturnNotFound_WhenIdNotFound()
+    {
+      var query = new GetThemeQuery() { PathId = 1, ModuleId = 1, Id = 99999 };
+
+      FluentActions.Invoking(() =>
+          SendAsync(query)).Should().Throw<NotFoundException>();
+    }
+
+    [Test]
+    public void ShouldReturnNotFound_WhenModuleIdNotFound()
+    {
+      var query = new GetThemeQuery() { PathId = 1, ModuleId = 99999, Id = 1 };
+
+      FluentActions.Invoking(() =>
+          SendAsync(query)).Should().Throw<NotFoundException>();
+    }
+
+    [Test]
+    public void ShouldReturnNotFound_WhenPathIdNotFound()
+    {
+      var query = new GetThemeQuery() { PathId = 99999, ModuleId = 1, Id = 1 };
+
+      FluentActions.Invoking(() =>
+          SendAsync(query)).Should().Throw<NotFoundException>();
+    }
+
+    [Test]
+    public void DetailsShouldReturnNotFound_WhenIdNotFound()
+    {
+      var query = new GetThemeDetailsQuery() { PathId = 1, ModuleId = 1, Id = 99999 };
+
+      FluentActions.Invoking(() =>
+          SendAsync(query)).Should().Throw<NotFoundException>();
+    }
+
+    [Test]
+    public void DetailsShouldReturnNotFound_WhenModuleIdNotFound()
+    {
+      var query = new GetThemeDetailsQuery() { PathId = 1, ModuleId = 99999, Id = 1 };
+
+      FluentActions.Invoking(() =>
+          SendAsync(query)).Should().Throw<NotFoundException>();
+    }
+
+    [Test]
+    public void DetailsShouldReturnNotFound_WhenPathIdNotFound()
+    {
+      var query = new GetThemeDetailsQuery() { PathId = 99999, ModuleId = 1, Id = 1 };
+
+      FluentActions.Invoking(() =>
+          SendAsync(query)).Should().Throw<NotFoundException>();
     }
   }
 }
