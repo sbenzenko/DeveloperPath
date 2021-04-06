@@ -31,32 +31,8 @@ steps:
   inputs:
     targetType: 'inline'
     script:
-      cd data
       ls -R
     errorActionPreference: 'continue'
-
-- task: ExtractFiles@1
-  inputs:
-    archiveFilePatterns: '\**/WebUI.Blazor.zip'
-    destinationFolder: 'PublishData'
-    cleanDestinationFolder: true
-    overwriteExistingFiles: false
-    
-- task: PowerShell@2
-  inputs:
-    targetType: 'inline'
-    script: |
-      cd PublishData
-      ls
-    errorActionPreference: 'continue'
-    
-- task: AzureStaticWebApp@0
-  inputs:
-    app_location: 'PublishData'
-    api_location: 'api'
-    output_location: "wwwroot"
-  env:
-    azure_static_web_apps_api_token: $(deployment_token)
 
 - task: PublishBuildArtifacts@1
   displayName: 'Publish artifacts'
