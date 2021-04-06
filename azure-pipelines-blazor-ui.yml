@@ -33,6 +33,19 @@ steps:
     script:
       ls -R
     errorActionPreference: 'continue'
+- task: ExtractFiles@1
+  inputs:
+    archiveFilePatterns: '**/data/WebUI.Blazor.zip'
+    destinationFolder: 'PublishData'
+    cleanDestinationFolder: true
+    overwriteExistingFiles: false
+
+- task: PowerShell@2
+  inputs:
+    targetType: 'inline'
+    script:
+      ls -R
+    errorActionPreference: 'continue'
 
 - task: PublishBuildArtifacts@1
   displayName: 'Publish artifacts'
