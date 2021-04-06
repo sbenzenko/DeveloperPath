@@ -18,14 +18,20 @@ steps:
     arguments: '--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)'
     zipAfterPublish: false
 
+- task: PowerShell@2
+  inputs:
+    targetType: 'inline'
+    script: |
+      cd $(Build.ArtifactStagingDirectory)/WebUI.Blazor
+      ls'
 
 - task: AzureStaticWebApp@0
   inputs:
-    app_location: '**/$(Build.ArtifactStagingDirectory)/WebUI.Blazor'
+    app_location: '**$(Build.ArtifactStagingDirectory)/WebUI.Blazor'
     api_location: 'api'
     output_location: "wwwroot"
   env:
-      azure_static_web_apps_api_token: $(deployment_token)
+    azure_static_web_apps_api_token: $(deployment_token)
 
 - task: PublishBuildArtifacts@1
   displayName: 'Publish artifacts'
