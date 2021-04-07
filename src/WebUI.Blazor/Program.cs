@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
@@ -36,7 +37,13 @@ namespace WebUI.Blazor
             builder.Services
                 .AddOidcAuthentication(options =>
                 {
-                    builder.Configuration.Bind("oidc", options.ProviderOptions);
+                    options.ProviderOptions.Authority = "https://devpathprovider.com";
+                    options.ProviderOptions.ClientId = "WebUI.Blazor";
+                    options.ProviderOptions.DefaultScopes.Add("openid");
+                    options.ProviderOptions.DefaultScopes.Add("profile");
+                    options.ProviderOptions.DefaultScopes.Add("pathapi");
+                    options.ProviderOptions.PostLogoutRedirectUri = "/";
+                    options.ProviderOptions.ResponseType = "code";
                     options.UserOptions.RoleClaim = "role";
                 })
                 .AddAccountClaimsPrincipalFactory<ArrayClaimsPrincipalFactory<RemoteUserAccount>>();
