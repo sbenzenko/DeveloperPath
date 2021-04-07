@@ -42,7 +42,7 @@ namespace IdentityProvider
                     AllowedGrantTypes = GrantTypes.Code,
                     RequirePkce = true,
                     RequireClientSecret = false,
-                    AllowedCorsOrigins = { "https://victorious-cliff-02bdab803.azurestaticapps.net/" },
+                    AllowedCorsOrigins = { "https://localhost:8001","https://victorious-cliff-02bdab803.azurestaticapps.net"  },
                     AllowedScopes =
                     {
                         IdentityServerConstants.StandardScopes.OpenId,
@@ -50,8 +50,8 @@ namespace IdentityProvider
                         //IdentityServerConstants.StandardScopes.Email,
                         "pathapi"
                     },
-                    RedirectUris = { "https://victorious-cliff-02bdab803.azurestaticapps.net/authentication/login-callback" },
-                    PostLogoutRedirectUris = { "https://victorious-cliff-02bdab803.azurestaticapps.net/" },
+                    RedirectUris = { "https://localhost:8001/authentication/login-callback", "https://victorious-cliff-02bdab803.azurestaticapps.net"  },
+                    PostLogoutRedirectUris = { "https://localhost:8001", "https://victorious-cliff-02bdab803.azurestaticapps.net"  },
                     Enabled = true
                 },
             };
