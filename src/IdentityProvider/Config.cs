@@ -50,7 +50,7 @@ namespace IdentityProvider
                         //IdentityServerConstants.StandardScopes.Email,
                         "pathapi"
                     },
-                    RedirectUris = { "https://victorious-cliff-02bdab803.azurestaticapps.net//authentication/login-callback" },
+                    RedirectUris = { "https://victorious-cliff-02bdab803.azurestaticapps.net/authentication/login-callback" },
                     PostLogoutRedirectUris = { "https://victorious-cliff-02bdab803.azurestaticapps.net/" },
                     Enabled = true
                 },
