@@ -50,7 +50,7 @@ namespace IdentityProvider
                         //IdentityServerConstants.StandardScopes.Email,
                         "pathapi"
                     },
-                    RedirectUris = { "https://localhost:8001/authentication/login-callback", "https://victorious-cliff-02bdab803.azurestaticapps.net"  },
+                    RedirectUris = { "https://localhost:8001/authentication/login-callback", "https://victorious-cliff-02bdab803.azurestaticapps.net/authentication/login-callback"  },
                     PostLogoutRedirectUris = { "https://localhost:8001", "https://victorious-cliff-02bdab803.azurestaticapps.net"  },
                     Enabled = true
                 },
