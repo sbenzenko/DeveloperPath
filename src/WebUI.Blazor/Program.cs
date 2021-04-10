@@ -34,7 +34,7 @@ namespace WebUI.Blazor
                 .CreateClient("pathapi"));
 
             builder.Services.AddMatBlazor();
-
+             
             builder.Services
                 .AddOidcAuthentication(options =>
                 {
