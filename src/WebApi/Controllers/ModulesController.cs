@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using DeveloperPath.Application.Common.Models;
 using DeveloperPath.Application.Modules.Commands.CreateModule;
 using DeveloperPath.Application.Modules.Commands.DeleteModule;

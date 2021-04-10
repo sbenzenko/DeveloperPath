@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -9,10 +9,8 @@ using DeveloperPath.Application.Modules.Commands.UpdateModule;
 using DeveloperPath.Application.Modules.Queries.GetModules;
 using DeveloperPath.Application.Paging;
 using DeveloperPath.WebApi.Controllers;
-using DeveloperPath.WebApi.Filters;
 using DeveloperPath.WebApi.Paging;
 using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using NUnit.Framework;
@@ -121,13 +119,11 @@ namespace DeveloperPath.Web.WebAPI.Controllers
         public async Task Get_ReturnsModulePagingNotValue()
         {
             var controller = new ModulesController(moqMediator.Object);
-
             var result = await controller.Get(1, new WebApi.RequestParams()
             {
                 PageNumber = 1,
                 PageSize = 1
             });
-
 
             var contentResult = (OkObjectResult)result.Result;
             var value = contentResult.Value as IEnumerable<ModuleDto>;
@@ -137,12 +133,10 @@ namespace DeveloperPath.Web.WebAPI.Controllers
             Assert.AreEqual(1, value.First().Id);
         }
 
-
         [Test]
         public async Task Get_ReturnsModulePagingNotValid()
         {
             var controller = new ModulesController(moqMediator.Object);
-
             var result = await controller.Get(1, new WebApi.RequestParams()
             {
                 PageNumber = -1,
