@@ -37,6 +37,7 @@ namespace IdentityProvider
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
 
+            services.AddDatabaseDeveloperPageExceptionFilter();      
 
             services.AddSingleton<IEmailNotifierConfig>(new EmailNotifierConfig
             {
@@ -75,9 +76,8 @@ namespace IdentityProvider
             if (Environment.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseDatabaseErrorPage();
             }
-            app.UseDeveloperExceptionPage();
+
             app.UseStaticFiles();
 
             app.UseRouting();

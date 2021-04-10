@@ -3,7 +3,6 @@ using EmailSender.Interfaces;
 using SendGrid;
 using SendGrid.Helpers.Mail;
 
-
 namespace EmailSender.Implementations
 {
     public class SendGridEmailNotifier : IEmailNotifier

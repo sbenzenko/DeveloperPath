@@ -4,11 +4,12 @@
         <name>DeveloperPath.WebApi</name>
     </assembly>
     <members>
-        <member name="M:DeveloperPath.WebApi.Controllers.ModulesController.Get(System.Int32,DeveloperPath.WebApi.RequestParams)">
+        <member name="M:DeveloperPath.WebApi.Controllers.ModulesController.Get(System.Int32,DeveloperPath.WebApi.Models.RequestParams)">
             <summary>
             Get all available modules
             </summary>
             <param name="pathId">An id of the path</param>
+            <param name="requestParams">Request parameters</param>
             <returns>A collection of modules with summary information</returns>
         </member>
         <member name="M:DeveloperPath.WebApi.Controllers.ModulesController.Get(System.Int32,System.Int32)">
@@ -44,7 +45,7 @@
             <param name="moduleId">An id of the module</param>
             <returns></returns>
         </member>
-        <member name="M:DeveloperPath.WebApi.Controllers.PathsController.Get(DeveloperPath.WebApi.RequestParams)">
+        <member name="M:DeveloperPath.WebApi.Controllers.PathsController.Get(DeveloperPath.WebApi.Models.RequestParams)">
             <summary>
             Get all available paths
             </summary>
