@@ -2,6 +2,9 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
 
+using EmailSender.Implementations;
+using EmailSender.Interfaces;
+using System;
 using IdentityServer4;
 using IdentityProvider.Data;
 using IdentityProvider.Models;
@@ -28,10 +31,20 @@ namespace IdentityProvider
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddApplicationInsightsTelemetry();
             services.AddControllersWithViews();
 
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
+
+
+            services.AddSingleton<IEmailNotifierConfig>(new EmailNotifierConfig
+            {
+                //there should be some config 
+            });
+
+            services.AddScoped<IEmailNotifier>(provider => new SendGridEmailNotifier(provider.GetRequiredService<IEmailNotifierConfig>().EmailApiKey));
+            
 
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
@@ -50,8 +63,9 @@ namespace IdentityProvider
                 .AddInMemoryClients(Config.Clients)
                 .AddAspNetIdentity<ApplicationUser>();
 
-            // not recommended for production - you need to store your key material somewhere secure
-            builder.AddDeveloperSigningCredential();
+            var rsa = new RsaKeyService(Environment, TimeSpan.FromDays(30));
+            services.AddSingleton<RsaKeyService>(provider => rsa);
+            builder.AddSigningCredential(rsa.GetKey(), IdentityServerConstants.RsaSigningAlgorithm.RS512);
 
             services.AddAuthentication();
         }
@@ -63,7 +77,7 @@ namespace IdentityProvider
                 app.UseDeveloperExceptionPage();
                 app.UseDatabaseErrorPage();
             }
-
+            app.UseDeveloperExceptionPage();
             app.UseStaticFiles();
 
             app.UseRouting();

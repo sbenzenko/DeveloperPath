@@ -2,11 +2,13 @@ using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 using WebUI.Blazor.Security;
-
+using MatBlazor;
+using WebUI.Blazor.Extensions;
 
 namespace WebUI.Blazor
 {
@@ -28,17 +30,27 @@ namespace WebUI.Blazor
                     return handler;
                 });
 
-            builder.Services.AddScoped(sp => sp.GetService<IHttpClientFactory>().CreateClient("pathapi"));
+            builder.Services.AddLocalization();
 
+            builder.Services.AddScoped(sp => sp.GetService<IHttpClientFactory>().CreateClient("pathapi"));
+            builder.Services.AddMatBlazor();
             builder.Services
                 .AddOidcAuthentication(options =>
                 {
-                    builder.Configuration.Bind("oidc", options.ProviderOptions);
+                    options.ProviderOptions.Authority = "https://localhost:6001";
+                    options.ProviderOptions.ClientId = "WebUI.Blazor";
+                    options.ProviderOptions.DefaultScopes.Add("openid");
+                    options.ProviderOptions.DefaultScopes.Add("profile");
+                    options.ProviderOptions.DefaultScopes.Add("pathapi");
+                    options.ProviderOptions.PostLogoutRedirectUri = "/";
+                    options.ProviderOptions.ResponseType = "code";
                     options.UserOptions.RoleClaim = "role";
                 })
                 .AddAccountClaimsPrincipalFactory<ArrayClaimsPrincipalFactory<RemoteUserAccount>>();
 
-            await builder.Build().RunAsync();
+            var host = builder.Build();
+            await host.SetDefaultCulture();
+            await host.RunAsync();
         }
     }
 }

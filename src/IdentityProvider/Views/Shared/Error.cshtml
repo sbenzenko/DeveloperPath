@@ -1,4 +1,4 @@
-@model ErrorViewModel
+@model IdentityProvider.Controllers.Home.ErrorViewModel
 
 @{
     var error = Model?.Error?.Error;
@@ -6,7 +6,7 @@
     var request_id = Model?.Error?.RequestId;
 }
 
-<div class="error-page">
+<div class="container">
     <div class="lead">
         <h1>Error</h1>
     </div>
@@ -33,7 +33,7 @@
 
             @if (request_id != null)
             {
-                <div class="request-id">Request Id: @request_id</div>
+                <div class="font-weight-bold">Request Id: @request_id</div>
             }
         </div>
     </div>
