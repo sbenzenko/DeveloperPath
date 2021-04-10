@@ -177,15 +177,17 @@ namespace IdentityProvider.Controllers.Account
         public async Task<IActionResult> Logout(LogoutInputModel model)
         {
             // build a model so the logged out page knows what to display
-            var vm = await BuildLoggedOutViewModelAsync(model.LogoutId);
+            var vm = await BuildLoggedOutViewModelAsync(model.LogoutId)
+                .ConfigureAwait(false); ;
 
             if (User?.Identity.IsAuthenticated == true)
             {
                 // delete local authentication cookie
-                await _signInManager.SignOutAsync();
+                await _signInManager.SignOutAsync().ConfigureAwait(false); ;
 
                 // raise the logout event
                 await _events.RaiseAsync(new UserLogoutSuccessEvent(User.GetSubjectId(), User.GetDisplayName()));
+                await HttpContext.SignOutAsync(IdentityConstants.ApplicationScheme).ConfigureAwait(false);
             }
 
             // check if we need to trigger sign-out at an upstream identity provider
