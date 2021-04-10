@@ -1,4 +1,7 @@
-﻿using AutoMapper;
+﻿using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
+using AutoMapper;
 using DeveloperPath.Application.Common.Exceptions;
 using DeveloperPath.Application.Common.Interfaces;
 using DeveloperPath.Application.Common.Models;
@@ -6,10 +9,6 @@ using DeveloperPath.Domain.Entities;
 using DeveloperPath.Domain.Enums;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace DeveloperPath.Application.Sources.Commands.UpdateSource
 {

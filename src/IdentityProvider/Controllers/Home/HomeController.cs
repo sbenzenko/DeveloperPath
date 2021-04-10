@@ -2,6 +2,7 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
 
+using System;
 using System.Threading.Tasks;
 using IdentityServer.Controllers;
 using IdentityServer4.Services;
@@ -48,16 +49,23 @@ namespace IdentityProvider.Controllers.Home
             var vm = new ErrorViewModel();
 
             // retrieve error details from identityserver
-            var message = await _interaction.GetErrorContextAsync(errorId);
-            if (message != null)
+            try
             {
-                vm.Error = message;
-
-                if (!_environment.IsDevelopment())
+                var message = await _interaction.GetErrorContextAsync(errorId);
+                if (message != null)
                 {
-                    // only show in development
-                    message.ErrorDescription = null;
+                    vm.Error = message;
+
+                    if (!_environment.IsDevelopment())
+                    {
+                        // only show in development
+                        message.ErrorDescription = null;
+                    }
                 }
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e.Message);
             }
 
             return View("Error", vm);

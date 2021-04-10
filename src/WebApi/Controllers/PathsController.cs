@@ -5,6 +5,8 @@ using DeveloperPath.Application.Paths.Commands.CreatePath;
 using DeveloperPath.Application.Paths.Commands.DeletePath;
 using DeveloperPath.Application.Paths.Commands.UpdatePath;
 using DeveloperPath.Application.Paths.Queries.GetPaths;
+using DeveloperPath.WebApi.Extensions;
+using DeveloperPath.WebApi.Models;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -25,11 +27,12 @@ namespace DeveloperPath.WebApi.Controllers
     /// <returns>A collection of paths with summary information</returns>
     [HttpGet]
     [HttpHead]
-    public async Task<ActionResult<IEnumerable<PathDto>>> Get()
+    public async Task<ActionResult<IEnumerable<PathDto>>> Get([FromQuery] RequestParams requestParams = null)
     {
-      IEnumerable<PathDto> model = await Mediator.Send(new GetPathListQuery());
-
-      return Ok(model);
+      //TODO: consider adding default page size and show 1st page instead of all
+      return requestParams is not null && requestParams.UsePaging()
+        ? await GetPage(requestParams)
+        : await GetAll();
     }
 
     /// <summary>
@@ -103,6 +106,25 @@ namespace DeveloperPath.WebApi.Controllers
       await Mediator.Send(new DeletePathCommand { Id = pathId });
 
       return NoContent();
+    }
+
+    private async Task<ActionResult<IEnumerable<PathDto>>> GetAll()
+    {
+      IEnumerable<PathDto> model = await Mediator.Send(new GetPathListQuery());
+      return Ok(model);
+    }
+
+    private async Task<ActionResult<IEnumerable<PathDto>>> GetPage(RequestParams filter)
+    {
+      var (paginationData, result) = await Mediator.Send(
+        new GetPathListQueryPaging()
+        {
+          PageNumber = filter.PageNumber,
+          PageSize = filter.PageSize
+        });
+
+      Response?.Headers?.Add("X-Pagination", System.Text.Json.JsonSerializer.Serialize(paginationData));
+      return Ok(result);
     }
   }
 }

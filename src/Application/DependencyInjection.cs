@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using DeveloperPath.Application.Common.Behaviours;
+﻿using DeveloperPath.Application.Common.Behaviours;
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;

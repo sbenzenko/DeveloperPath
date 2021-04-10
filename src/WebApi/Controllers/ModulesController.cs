@@ -1,13 +1,14 @@
-﻿using DeveloperPath.Application.Common.Models;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using DeveloperPath.Application.Common.Models;
 using DeveloperPath.Application.Modules.Commands.CreateModule;
 using DeveloperPath.Application.Modules.Commands.DeleteModule;
 using DeveloperPath.Application.Modules.Commands.UpdateModule;
 using DeveloperPath.Application.Modules.Queries.GetModules;
+using DeveloperPath.WebApi.Extensions;
+using DeveloperPath.WebApi.Models;
 using MediatR;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace DeveloperPath.WebApi.Controllers
 {
@@ -24,14 +25,16 @@ namespace DeveloperPath.WebApi.Controllers
     /// Get all available modules
     /// </summary>
     /// <param name="pathId">An id of the path</param>
+    /// <param name="requestParams">Request parameters</param>
     /// <returns>A collection of modules with summary information</returns>
     [HttpGet]
     [HttpHead]
-    public async Task<ActionResult<IEnumerable<ModuleDto>>> Get(int pathId)
+    public async Task<ActionResult<IEnumerable<ModuleDto>>> Get(int pathId, [FromQuery] RequestParams requestParams = null)
     {
-      IEnumerable<ModuleDto> model = await Mediator.Send(new GetModuleListQuery { PathId = pathId });
-
-      return Ok(model);
+      //TODO: consider adding default page size and show 1st page instead of all
+      return requestParams is not null && requestParams.UsePaging()
+        ? await GetPage(pathId, requestParams)
+        : await GetAll(pathId);
     }
 
     /// <summary>
@@ -114,6 +117,26 @@ namespace DeveloperPath.WebApi.Controllers
       await Mediator.Send(new DeleteModuleCommand { PathId = pathId, Id = moduleId });
 
       return NoContent();
+    }
+
+    private async Task<ActionResult<IEnumerable<ModuleDto>>> GetAll(int pathId)
+    {
+      IEnumerable<ModuleDto> model = await Mediator.Send(new GetModuleListQuery { PathId = pathId });
+      return Ok(model);
+    }
+
+    private async Task<ActionResult<IEnumerable<ModuleDto>>> GetPage(int pathId, RequestParams filter)
+    {
+      var (paginationData, result) = await Mediator.Send(
+          new GetModuleListQueryPaging()
+          {
+            PathId = pathId,
+            PageNumber = filter.PageNumber,
+            PageSize = filter.PageSize
+          });
+
+      Response?.Headers?.Add("X-Pagination", System.Text.Json.JsonSerializer.Serialize(paginationData));
+      return Ok(result);
     }
   }
 }

@@ -40,7 +40,6 @@ namespace WebUI.Blazor
                 {
                     builder.Configuration.Bind("oidc", options.ProviderOptions);
                     options.UserOptions.RoleClaim = "role";
-                    options.ProviderOptions.PostLogoutRedirectUri = "https://localhost:5005/";
                 })
                 .AddAccountClaimsPrincipalFactory<ArrayClaimsPrincipalFactory<RemoteUserAccount>>();
 
