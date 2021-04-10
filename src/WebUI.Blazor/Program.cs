@@ -37,7 +37,7 @@ namespace WebUI.Blazor
             builder.Services
                 .AddOidcAuthentication(options =>
                 {
-                    options.ProviderOptions.Authority = "https://devpathprovider.com";
+                    options.ProviderOptions.Authority = "https://localhost:6001";
                     options.ProviderOptions.ClientId = "WebUI.Blazor";
                     options.ProviderOptions.DefaultScopes.Add("openid");
                     options.ProviderOptions.DefaultScopes.Add("profile");
