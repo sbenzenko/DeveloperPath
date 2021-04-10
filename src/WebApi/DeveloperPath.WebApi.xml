@@ -44,7 +44,7 @@
             <param name="moduleId">An id of the module</param>
             <returns></returns>
         </member>
-        <member name="M:DeveloperPath.WebApi.Controllers.PathsController.Get">
+        <member name="M:DeveloperPath.WebApi.Controllers.PathsController.Get(DeveloperPath.WebApi.RequestParams)">
             <summary>
             Get all available paths
             </summary>
