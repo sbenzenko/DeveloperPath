@@ -51,14 +51,14 @@ namespace IdentityProvider
                 .AddDefaultTokenProviders();
 
             var builder = services.AddIdentityServer(options =>
-            {
-                options.Events.RaiseErrorEvents = true;
-                options.Events.RaiseInformationEvents = true;
-                options.Events.RaiseFailureEvents = true;
-                options.Events.RaiseSuccessEvents = true;
-            })
-                .AddInMemoryIdentityResources(Config.IdentityResources)
+                {
+                    options.Events.RaiseErrorEvents = true;
+                    options.Events.RaiseInformationEvents = true;
+                    options.Events.RaiseFailureEvents = true;
+                    options.Events.RaiseSuccessEvents = true;
+                })
                 .AddInMemoryApiScopes(Config.Scopes)
+                .AddInMemoryIdentityResources(Config.Ids)
                 .AddInMemoryApiResources(Config.Apis)
                 .AddInMemoryClients(Config.Clients)
                 .AddAspNetIdentity<ApplicationUser>();

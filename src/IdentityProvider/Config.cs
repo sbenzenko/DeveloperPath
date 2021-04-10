@@ -2,18 +2,30 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
 
+using IdentityModel;
 using IdentityServer4.Models;
 using System.Collections.Generic;
-using IdentityServer4;
 
 namespace IdentityProvider
 {
     public static class Config
     {
+        public static IEnumerable<IdentityResource> Ids =>
+            new IdentityResource[]
+            {
+                new IdentityResources.OpenId(),
+
+                // let's include the role claim in the profile
+                new ProfileWithRoleIdentityResource(),
+                new IdentityResources.Email()
+            };
+
+
         public static IEnumerable<ApiResource> Apis =>
             new ApiResource[]
             {
-                new ApiResource("pathapi", "The Developer Path API")
+                // the api requires the role claim
+                new ApiResource("pathapi", "The Developer Path API", new[] { JwtClaimTypes.Role })
                 {
                     Scopes = { "pathapi" }
                 }
@@ -25,13 +37,6 @@ namespace IdentityProvider
                 new ApiScope("pathapi")
             };
 
-        public static IEnumerable<IdentityResource> IdentityResources =>
-            new IdentityResource[]
-            {
-                new IdentityResources.OpenId(),
-                new ProfileWithRoleIdentityResource(),
-                new IdentityResources.Email()
-            };
 
         public static IEnumerable<Client> Clients =>
             new Client[]
@@ -42,16 +47,10 @@ namespace IdentityProvider
                     AllowedGrantTypes = GrantTypes.Code,
                     RequirePkce = true,
                     RequireClientSecret = false,
-                    AllowedCorsOrigins = { "https://localhost:8001","https://victorious-cliff-02bdab803.azurestaticapps.net"  },
-                    AllowedScopes =
-                    {
-                        IdentityServerConstants.StandardScopes.OpenId,
-                        IdentityServerConstants.StandardScopes.Profile,
-                        //IdentityServerConstants.StandardScopes.Email,
-                        "pathapi"
-                    },
-                    RedirectUris = { "https://localhost:8001/authentication/login-callback", "https://victorious-cliff-02bdab803.azurestaticapps.net/authentication/login-callback"  },
-                    PostLogoutRedirectUris = { "https://localhost:8001", "https://victorious-cliff-02bdab803.azurestaticapps.net"  },
+                    AllowedCorsOrigins = { "https://localhost:5005", "https://victorious-cliff-02bdab803.azurestaticapps.net" },
+                    AllowedScopes = { "openid", "profile", "email", "pathapi" },
+                    RedirectUris = { "https://localhost:5005/authentication/login-callback", "https://victorious-cliff-02bdab803.azurestaticapps.net/authentication/login-callback" },
+                    PostLogoutRedirectUris = { "https://localhost:5005/", "https://victorious-cliff-02bdab803.azurestaticapps.net/" },
                     Enabled = true
                 },
             };
