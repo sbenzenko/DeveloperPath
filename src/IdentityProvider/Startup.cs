@@ -33,9 +33,9 @@ namespace IdentityProvider
         {
             services.AddApplicationInsightsTelemetry();
             services.AddControllersWithViews();
-
+       
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
+                options.UseSqlServer(Configuration["SqlConnection"]));
 
             services.AddDatabaseDeveloperPageExceptionFilter();      
 
@@ -67,7 +67,6 @@ namespace IdentityProvider
             var rsa = new RsaKeyService(Environment, TimeSpan.FromDays(30));
             services.AddSingleton<RsaKeyService>(provider => rsa);
             builder.AddSigningCredential(rsa.GetKey(), IdentityServerConstants.RsaSigningAlgorithm.RS512);
-
             services.AddAuthentication();
         }
 

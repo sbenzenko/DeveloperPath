@@ -11,6 +11,7 @@ using Serilog.Events;
 using Serilog.Sinks.SystemConsole.Themes;
 using System;
 using System.Linq;
+using Azure.Identity;
 
 namespace IdentityProvider
 {
@@ -43,13 +44,15 @@ namespace IdentityProvider
                     args = args.Except(new[] { "/seed" }).ToArray();
                 }
 
-                var host = CreateHostBuilder(args).Build();
+                var host = CreateHostBuilder(args)
+                    .Build();
+
 
                 if (seed)
                 {
                     Log.Information("Seeding database...");
                     var config = host.Services.GetRequiredService<IConfiguration>();
-                    var connectionString = config.GetConnectionString("DefaultConnection");
+                    var connectionString = config["SqlConnection"];
                     SeedData.EnsureSeedData(connectionString);
                     Log.Information("Done seeding database.");
                     return 0;
@@ -74,8 +77,17 @@ namespace IdentityProvider
             Host.CreateDefaultBuilder(args)
                 .UseSerilog()
                 .ConfigureWebHostDefaults(webBuilder =>
-                {
-                    webBuilder.UseStartup<Startup>();
-                });
+                    webBuilder.ConfigureAppConfiguration((hostingContext, config) =>
+                    {
+                        var settings = config.Build();
+                        config.AddAzureAppConfiguration(options =>
+                        {
+                            options.Connect(settings["ConnectionStrings:AppConfig"])
+                                .ConfigureKeyVault(kv =>
+                                {
+                                    kv.SetCredential(new DefaultAzureCredential());
+                                });
+                        });
+                    }).UseStartup<Startup>());
     }
 }
