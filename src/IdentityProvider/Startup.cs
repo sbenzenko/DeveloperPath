@@ -31,7 +31,10 @@ namespace IdentityProvider
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddApplicationInsightsTelemetry();
+            if (Environment.IsProduction())
+            {
+              services.AddApplicationInsightsTelemetry();
+            }
             services.AddControllersWithViews();
        
             services.AddDbContext<ApplicationDbContext>(options =>

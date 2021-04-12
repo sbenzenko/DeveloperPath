@@ -79,15 +79,18 @@ namespace IdentityProvider
                 .ConfigureWebHostDefaults(webBuilder =>
                     webBuilder.ConfigureAppConfiguration((hostingContext, config) =>
                     {
+                      if (hostingContext.HostingEnvironment.IsProduction())
+                      {
                         var settings = config.Build();
                         config.AddAzureAppConfiguration(options =>
                         {
-                            options.Connect(settings["ConnectionStrings:AppConfig"])
-                                .ConfigureKeyVault(kv =>
-                                {
-                                    kv.SetCredential(new DefaultAzureCredential());
-                                });
+                          options.Connect(settings["ConnectionStrings:AppConfig"])
+                              .ConfigureKeyVault(kv =>
+                              {
+                                kv.SetCredential(new DefaultAzureCredential());
+                              });
                         });
+                      }
                     }).UseStartup<Startup>());
     }
 }
