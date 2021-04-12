@@ -5,7 +5,7 @@ namespace EmailSender.Implementations
 {
   public class FakeEmailNotifier : IEmailNotifier
   {
-    public Task SendEmailAsync(Email email)
+    public Task SendEmailAsync(IEmail email)
     {
       return Task.CompletedTask;
     }

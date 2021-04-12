@@ -19,12 +19,12 @@ namespace EmailSender.Implementations
         /// </summary>
         /// <param name="email"><seealso cref="Email"/> letter model</param>
         /// <returns>SendGrid <seealso cref="Response"/></returns>
-        public async Task SendEmailAsync(Email email)
+        public async Task SendEmailAsync(IEmail email)
         {
             await Execute(email);
         }
 
-        private Task Execute(Email email)
+        private Task Execute(IEmail email)
         {
             var client = new SendGridClient(_apiKey);
             var letter = new SendGridMessage

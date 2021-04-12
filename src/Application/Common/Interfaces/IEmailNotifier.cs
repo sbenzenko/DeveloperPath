@@ -4,6 +4,6 @@ namespace EmailSender.Interfaces
 {
     public interface IEmailNotifier
     {
-        Task SendEmailAsync(Email email);
+        Task SendEmailAsync(IEmail email);
     }
 }
