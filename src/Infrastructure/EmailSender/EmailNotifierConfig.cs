@@ -1,6 +1,6 @@
-﻿using EmailSender.Interfaces;
+﻿using DeveloperPath.Application.Common.Interfaces;
 
-namespace EmailSender.Implementations
+namespace DeveloperPath.Infrastructure.EmailSender
 {
   public class EmailNotifierConfig : IEmailNotifierConfig
   {

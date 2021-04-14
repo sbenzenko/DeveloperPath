@@ -2,7 +2,8 @@
 using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
-using EmailSender.Interfaces;
+using DeveloperPath.Application.Common.Interfaces;
+using DeveloperPath.Infrastructure.EmailSender;
 using IdentityModel;
 using IdentityProvider.Models;
 using IdentityProvider.Models.Error;
@@ -115,7 +116,7 @@ namespace IdentityProvider.Controllers.Register
             var email = new Email()
             {
                 HtmlContent = message.ToString(),
-                EmailSender = new EmailSender.Interfaces.EmailSender()
+                EmailSender = new DeveloperPath.Infrastructure.EmailSender.EmailSender()
                 {
                     Email = _emailNotifierConfig.Email,
                     Name = _emailNotifierConfig.EmailUserName

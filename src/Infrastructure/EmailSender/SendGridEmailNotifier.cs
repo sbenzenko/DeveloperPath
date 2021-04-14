@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
-using EmailSender.Interfaces;
+using DeveloperPath.Application.Common.Interfaces;
+using DeveloperPath.Infrastructure.EmailSender;
 using SendGrid;
 using SendGrid.Helpers.Mail;
 
@@ -19,12 +20,12 @@ namespace EmailSender.Implementations
         /// </summary>
         /// <param name="email"><seealso cref="Email"/> letter model</param>
         /// <returns>SendGrid <seealso cref="Response"/></returns>
-        public async Task SendEmailAsync(Email email)
+        public async Task SendEmailAsync(IEmail email)
         {
             await Execute(email);
         }
 
-        private Task Execute(Email email)
+        private Task Execute(IEmail email)
         {
             var client = new SendGridClient(_apiKey);
             var letter = new SendGridMessage
