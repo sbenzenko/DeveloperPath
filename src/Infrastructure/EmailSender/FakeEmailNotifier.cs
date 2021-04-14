@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using EmailSender.Interfaces;
 
-namespace EmailSender.Implementations
+namespace DeveloperPath.Infrastructure.EmailSender
 {
   public class FakeEmailNotifier : IEmailNotifier
   {

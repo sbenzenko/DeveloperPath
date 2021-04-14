@@ -1,4 +1,6 @@
-﻿namespace EmailSender.Interfaces
+﻿using EmailSender.Interfaces;
+
+namespace DeveloperPath.Infrastructure.EmailSender
 {
   public class Email : IEmail
   {

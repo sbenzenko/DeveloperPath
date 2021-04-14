@@ -5,6 +5,7 @@
 using EmailSender.Implementations;
 using EmailSender.Interfaces;
 using System;
+using DeveloperPath.Infrastructure.EmailSender;
 using IdentityServer4;
 using IdentityProvider.Data;
 using IdentityProvider.Models;
