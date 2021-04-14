@@ -1,4 +1,4 @@
-﻿namespace EmailSender.Interfaces
+﻿namespace DeveloperPath.Application.Common.Interfaces
 {
   public interface IEmail
   {

@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace EmailSender.Interfaces
+namespace DeveloperPath.Application.Common.Interfaces
 {
     public interface IEmailNotifier
     {

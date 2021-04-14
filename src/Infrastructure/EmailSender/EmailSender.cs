@@ -1,4 +1,4 @@
-﻿using EmailSender.Interfaces;
+﻿using DeveloperPath.Application.Common.Interfaces;
 
 namespace DeveloperPath.Infrastructure.EmailSender
 {

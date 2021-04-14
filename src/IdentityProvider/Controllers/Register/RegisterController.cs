@@ -2,8 +2,8 @@
 using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
+using DeveloperPath.Application.Common.Interfaces;
 using DeveloperPath.Infrastructure.EmailSender;
-using EmailSender.Interfaces;
 using IdentityModel;
 using IdentityProvider.Models;
 using IdentityProvider.Models.Error;
