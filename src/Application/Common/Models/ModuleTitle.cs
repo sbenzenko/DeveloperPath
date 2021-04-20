@@ -3,6 +3,9 @@ using DeveloperPath.Domain.Entities;
 
 namespace DeveloperPath.Application.Common.Models
 {
+  /// <summary>
+  /// Module title
+  /// </summary>
   public class ModuleTitle : IMapFrom<Module>
   {
     /// <summary>
@@ -11,7 +14,7 @@ namespace DeveloperPath.Application.Common.Models
     public int Id { get; init; }
 
     /// <summary>
-    /// Module name
+    /// Module title
     /// </summary>
     public string Title { get; init; }
   }

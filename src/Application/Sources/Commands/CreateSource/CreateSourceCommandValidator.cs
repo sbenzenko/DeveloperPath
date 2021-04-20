@@ -2,8 +2,13 @@
 
 namespace DeveloperPath.Application.Sources.Commands.CreateSource
 {
+  /// <summary>
+  /// Validation rules for creating source
+  /// </summary>
   public class CreateSourceCommandValidator : AbstractValidator<CreateSourceCommand>
   {
+    /// <summary>
+    /// </summary>
     public CreateSourceCommandValidator()
     {
       RuleFor(v => v.ModuleId)

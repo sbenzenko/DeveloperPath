@@ -86,7 +86,7 @@
             </summary>
             <param name="pathId">An id of the path</param>
             <param name="moduleId">An id of the module</param>
-            <param name="themeId">An id of the module</param>
+            <param name="themeId">An id of the theme</param>
             <returns>A collection of sources with summary information</returns>
         </member>
         <member name="M:DeveloperPath.WebApi.Controllers.SourcesController.Get(System.Int32,System.Int32,System.Int32,System.Int32)">

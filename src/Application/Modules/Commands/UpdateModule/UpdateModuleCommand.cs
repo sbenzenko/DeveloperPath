@@ -11,18 +11,39 @@ using System.Threading.Tasks;
 
 namespace DeveloperPath.Application.Modules.Commands.UpdateModule
 {
-  public partial record UpdateModuleCommand : IRequest<ModuleDto>
+  /// <summary>
+  /// Module to update
+  /// </summary>
+  public record UpdateModuleCommand : IRequest<ModuleDto>
   {
     // TODO: add Prerequisites, provide Order
+    /// <summary>
+    /// Module Id
+    /// </summary>
     public int Id { get; init; }
+    /// <summary>
+    /// Module title
+    /// </summary>
     public string Title { get; init; }
+    /// <summary>
+    /// Module short summary
+    /// </summary>
     public string Description { get; init; }
+    /// <summary>
+    /// Necessity level (Other (default) | Possibilities | Interesting | Good to know | Must know)
+    /// </summary>
     public NecessityLevel Necessity { get; init; }
+    /// <summary>
+    /// Order of module in path (0-based)
+    /// </summary>
     public int Order { get; init; }
+    /// <summary>
+    /// List of tags related to the module
+    /// </summary>
     public IList<string> Tags { get; init; }
   }
 
-  public class UpdateModuleCommandHandler : IRequestHandler<UpdateModuleCommand, ModuleDto>
+  internal class UpdateModuleCommandHandler : IRequestHandler<UpdateModuleCommand, ModuleDto>
   {
     private readonly IApplicationDbContext _context;
     private readonly IMapper _mapper;

@@ -2,8 +2,14 @@
 
 namespace DeveloperPath.Application.Common.Interfaces
 {
-    public interface IDateTime
-    {
-        DateTime Now { get; }
-    }
+  /// <summary>
+  /// Date time interface
+  /// </summary>
+  public interface IDateTime
+  {
+    /// <summary>
+    /// Current date time
+    /// </summary>
+    DateTime Now { get; }
+  }
 }

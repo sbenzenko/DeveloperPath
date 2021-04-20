@@ -13,13 +13,22 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DeveloperPath.Application.Themes.Queries.GetThemes
 {
+  /// <summary>
+  /// Get themes list parameters
+  /// </summary>
   public class GetThemeListQuery : IRequest<IEnumerable<ThemeDto>>
   {
-    public int PathId { get; set; }
-    public int ModuleId { get; set; }
+    /// <summary>
+    /// Path Id
+    /// </summary>
+    public int PathId { get; init; }
+    /// <summary>
+    /// Module Id
+    /// </summary>
+    public int ModuleId { get; init; }
   }
 
-  public class GetThemeListQueryHandler : IRequestHandler<GetThemeListQuery, IEnumerable<ThemeDto>>
+  internal class GetThemeListQueryHandler : IRequestHandler<GetThemeListQuery, IEnumerable<ThemeDto>>
   {
     private readonly IApplicationDbContext _context;
     private readonly IMapper _mapper;

@@ -7,9 +7,16 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DeveloperPath.Application.Paths.Commands.UpdatePath
 {
+  /// <summary>
+  /// Validation rules for updating path
+  /// </summary>
   public class UpdatePathCommandValidator : AbstractValidator<UpdatePathCommand>
   {
     private readonly IApplicationDbContext _context;
+
+    /// <summary>
+    /// </summary>
+    /// <param name="context"></param>
     public UpdatePathCommandValidator(IApplicationDbContext context)
     {
       _context = context;
@@ -24,6 +31,13 @@ namespace DeveloperPath.Application.Paths.Commands.UpdatePath
         .MaximumLength(3000).WithMessage("Description must not exceed 3000 characters.");
     }
 
+    /// <summary>
+    /// Request to context to check for unique title
+    /// </summary>
+    /// <param name="model"></param>
+    /// <param name="title"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
     public async Task<bool> BeUniqueTitle(UpdatePathCommand model, string title, CancellationToken cancellationToken)
     {
       return await _context.Paths

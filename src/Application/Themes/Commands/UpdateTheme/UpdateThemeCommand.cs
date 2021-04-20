@@ -6,26 +6,61 @@ using DeveloperPath.Domain.Entities;
 using DeveloperPath.Domain.Enums;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace DeveloperPath.Application.Themes.Commands.UpdateTheme
 {
+  /// <summary>
+  /// Theme to update
+  /// </summary>
   public partial record UpdateThemeCommand : IRequest<ThemeDto>
   {
+    /// <summary>
+    /// Theme id
+    /// </summary>
     public int Id { get; init; }
+    /// <summary>
+    /// Path id
+    /// </summary>
     public int PathId { get; init; }
+    /// <summary>
+    /// Module Id
+    /// </summary>
     public int ModuleId { get; init; }
+    /// <summary>
+    /// Theme title
+    /// </summary>
     public string Title { get; init; }
+    /// <summary>
+    /// Theme short summary
+    /// </summary>
     public string Description { get; init; }
+    /// <summary>
+    /// Theme section id (can be null)
+    /// </summary>
     public int SectionId { get; init; }
+    /// <summary>
+    /// Complexity level (Beginner | Intermediate | Advanced)
+    /// </summary>
     public ComplexityLevel Complexity { get; init; }
+    /// <summary>
+    /// Necessity level (Other | Possibilities | Interesting | Good to know | Must know)
+    /// </summary>
     public NecessityLevel Necessity { get; init; }
+    /// <summary>
+    /// Position of the theme in module (0-based)
+    /// </summary>
     public int Order { get; init; }
+    /// <summary>
+    /// List of tags related to the theme
+    /// </summary>
+    public IList<string> Tags { get; set; }
   }
 
-  public class UpdateThemeCommandHandler : IRequestHandler<UpdateThemeCommand, ThemeDto>
+  internal class UpdateThemeCommandHandler : IRequestHandler<UpdateThemeCommand, ThemeDto>
   {
     private readonly IApplicationDbContext _context;
     private readonly IMapper _mapper;

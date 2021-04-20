@@ -1,0 +1,1642 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>DeveloperPath.Application</name>
+    </assembly>
+    <members>
+        <member name="T:DeveloperPath.Application.Common.Behaviours.LoggingBehaviour`1">
+            <summary>
+            Mediator pipilene behaviour for logging
+            </summary>
+            <typeparam name="TRequest"></typeparam>
+        </member>
+        <member name="M:DeveloperPath.Application.Common.Behaviours.LoggingBehaviour`1.#ctor(Microsoft.Extensions.Logging.ILogger{`0},DeveloperPath.Application.Common.Interfaces.ICurrentUserService,DeveloperPath.Application.Common.Interfaces.IIdentityService)">
+            <summary>
+            Ctor for injecting dependencies
+            </summary>
+            <param name="logger"></param>
+            <param name="currentUserService"></param>
+            <param name="identityService"></param>
+        </member>
+        <member name="M:DeveloperPath.Application.Common.Behaviours.LoggingBehaviour`1.Process(`0,System.Threading.CancellationToken)">
+            <summary>
+            Process method executes before calling the Handle method on handler
+            </summary>
+            <param name="request"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="T:DeveloperPath.Application.Common.Behaviours.PerformanceBehaviour`2">
+            <summary>
+            Mediator pipilene behaviour for measuring performance
+            </summary>
+            <typeparam name="TRequest"></typeparam>
+            <typeparam name="TResponse"></typeparam>
+        </member>
+        <member name="M:DeveloperPath.Application.Common.Behaviours.PerformanceBehaviour`2.#ctor(Microsoft.Extensions.Logging.ILogger{`0},DeveloperPath.Application.Common.Interfaces.ICurrentUserService,DeveloperPath.Application.Common.Interfaces.IIdentityService)">
+            <summary>
+            Ctor for injecting dependencies
+            </summary>
+            <param name="logger"></param>
+            <param name="currentUserService"></param>
+            <param name="identityService"></param>
+        </member>
+        <member name="M:DeveloperPath.Application.Common.Behaviours.PerformanceBehaviour`2.Handle(`0,System.Threading.CancellationToken,MediatR.RequestHandlerDelegate{`1})">
+            <summary>
+            Pipeline handler. Perform any additional behavior and await the next delegate as necessary
+            </summary>
+            <param name="request"></param>
+            <param name="cancellationToken"></param>
+            <param name="next"></param>
+            <returns></returns>
+        </member>
+        <member name="T:DeveloperPath.Application.Common.Behaviours.UnhandledExceptionBehaviour`2">
+            <summary>
+            Mediator pipilene behaviour for handling exceptions
+            </summary>
+            <typeparam name="TRequest"></typeparam>
+            <typeparam name="TResponse"></typeparam>
+        </member>
+        <member name="M:DeveloperPath.Application.Common.Behaviours.UnhandledExceptionBehaviour`2.#ctor(Microsoft.Extensions.Logging.ILogger{`0})">
+            <summary>
+            Ctor for injecting dependencies
+            </summary>
+            <param name="logger"></param>
+        </member>
+        <member name="M:DeveloperPath.Application.Common.Behaviours.UnhandledExceptionBehaviour`2.Handle(`0,System.Threading.CancellationToken,MediatR.RequestHandlerDelegate{`1})">
+            <summary>
+            Pipeline handler. Perform any additional behavior and await the next delegate as necessary
+            </summary>
+            <param name="request"></param>
+            <param name="cancellationToken"></param>
+            <param name="next"></param>
+            <returns></returns>
+        </member>
+        <member name="T:DeveloperPath.Application.Common.Behaviours.ValidationBehavior`2">
+            <summary>
+            Mediator pipilene behaviour for validation
+            </summary>
+            <typeparam name="TRequest"></typeparam>
+            <typeparam name="TResponse"></typeparam>
+        </member>
+        <member name="M:DeveloperPath.Application.Common.Behaviours.ValidationBehavior`2.#ctor(System.Collections.Generic.IEnumerable{FluentValidation.IValidator{`0}})">
+            <summary>
+            Ctor for injecting dependencies
+            </summary>
+            <param name="validators"></param>
+        </member>
+        <member name="M:DeveloperPath.Application.Common.Behaviours.ValidationBehavior`2.Handle(`0,System.Threading.CancellationToken,MediatR.RequestHandlerDelegate{`1})">
+            <summary>
+            Pipeline handler. Perform any additional behavior and await the next delegate as necessary
+            </summary>
+            <param name="request"></param>
+            <param name="cancellationToken"></param>
+            <param name="next"></param>
+            <returns></returns>
+        </member>
+        <member name="T:DeveloperPath.Application.Common.Exceptions.NotFoundException">
+            <summary>
+            Custom API exception for not found errors
+            </summary>
+        </member>
+        <member name="M:DeveloperPath.Application.Common.Exceptions.NotFoundException.#ctor">
+            <summary>
+            </summary>
+        </member>
+        <member name="M:DeveloperPath.Application.Common.Exceptions.NotFoundException.#ctor(System.String)">
+            <summary>
+            </summary>
+            <param name="message"></param>
+        </member>
+        <member name="M:DeveloperPath.Application.Common.Exceptions.NotFoundException.#ctor(System.String,System.Exception)">
+            <summary>
+            </summary>
+            <param name="message"></param>
+            <param name="innerException"></param>
+        </member>
+        <member name="M:DeveloperPath.Application.Common.Exceptions.NotFoundException.#ctor(System.String,System.Object)">
+            <summary>
+            </summary>
+            <param name="name"></param>
+            <param name="key"></param>
+        </member>
+        <member name="T:DeveloperPath.Application.Common.Exceptions.ValidationException">
+            <summary>
+            Custom API exception for validation errors
+            </summary>
+        </member>
+        <member name="M:DeveloperPath.Application.Common.Exceptions.ValidationException.#ctor">
+            <summary>
+            </summary>
+        </member>
+        <member name="M:DeveloperPath.Application.Common.Exceptions.ValidationException.#ctor(System.Collections.Generic.IEnumerable{FluentValidation.Results.ValidationFailure})">
+            <summary>
+            </summary>
+            <param name="failures"></param>
+        </member>
+        <member name="P:DeveloperPath.Application.Common.Exceptions.ValidationException.Errors">
+            <summary>
+            List of errors
+            </summary>
+        </member>
+        <member name="T:DeveloperPath.Application.Common.Interfaces.IApplicationDbContext">
+            <summary>
+            Db context interface
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Common.Interfaces.IApplicationDbContext.Paths">
+            <summary>
+            Paths
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Common.Interfaces.IApplicationDbContext.Modules">
+            <summary>
+            Modules
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Common.Interfaces.IApplicationDbContext.Sections">
+            <summary>
+            Sections
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Common.Interfaces.IApplicationDbContext.Themes">
+            <summary>
+            Themes
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Common.Interfaces.IApplicationDbContext.Sources">
+            <summary>
+            Sources
+            </summary>
+        </member>
+        <member name="M:DeveloperPath.Application.Common.Interfaces.IApplicationDbContext.SaveChangesAsync(System.Threading.CancellationToken)">
+            <summary>
+            Save changes
+            </summary>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="T:DeveloperPath.Application.Common.Interfaces.ICurrentUserService">
+            <summary>
+            Current API user interface
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Common.Interfaces.ICurrentUserService.UserId">
+            <summary>
+            User id
+            </summary>
+        </member>
+        <member name="T:DeveloperPath.Application.Common.Interfaces.IDateTime">
+            <summary>
+            Date time interface
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Common.Interfaces.IDateTime.Now">
+            <summary>
+            Current date time
+            </summary>
+        </member>
+        <member name="T:DeveloperPath.Application.Common.Interfaces.IEmail">
+            <summary>
+            Email interface
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Common.Interfaces.IEmail.EmailSender">
+            <summary>
+            Sender
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Common.Interfaces.IEmail.HtmlContent">
+            <summary>
+            Html content
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Common.Interfaces.IEmail.PlainText">
+            <summary>
+            Plain text content
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Common.Interfaces.IEmail.Recipients">
+            <summary>
+            Recipients array
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Common.Interfaces.IEmail.Subject">
+            <summary>
+            Email subject
+            </summary>
+        </member>
+        <member name="T:DeveloperPath.Application.Common.Interfaces.IEmailNotifier">
+            <summary>
+            Email notifier interface
+            </summary>
+        </member>
+        <member name="M:DeveloperPath.Application.Common.Interfaces.IEmailNotifier.SendEmailAsync(DeveloperPath.Application.Common.Interfaces.IEmail)">
+            <summary>
+            Sending email
+            </summary>
+            <param name="email"></param>
+            <returns></returns>
+        </member>
+        <member name="T:DeveloperPath.Application.Common.Interfaces.IEmailNotifierConfig">
+            <summary>
+            Email notifier configuration interface
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Common.Interfaces.IEmailNotifierConfig.EmailUserName">
+            <summary>
+            Notifier service user name
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Common.Interfaces.IEmailNotifierConfig.EmailApiKey">
+            <summary>
+            Notifier service api key
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Common.Interfaces.IEmailNotifierConfig.Email">
+            <summary>
+            Notifier service email
+            </summary>
+        </member>
+        <member name="T:DeveloperPath.Application.Common.Interfaces.IEmailSender">
+            <summary>
+            Email sender interface
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Common.Interfaces.IEmailSender.Email">
+            <summary>
+            Sender email
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Common.Interfaces.IEmailSender.Name">
+            <summary>
+            Sender name
+            </summary>
+        </member>
+        <member name="T:DeveloperPath.Application.Common.Interfaces.IIdentityService">
+            <summary>
+            Identity service interface
+            </summary>
+        </member>
+        <member name="M:DeveloperPath.Application.Common.Interfaces.IIdentityService.GetUserNameAsync(System.String)">
+            <summary>
+            Get user name
+            </summary>
+            <param name="userId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:DeveloperPath.Application.Common.Interfaces.IIdentityService.CreateUserAsync(System.String,System.String)">
+            <summary>
+            Create user
+            </summary>
+            <param name="userName"></param>
+            <param name="password"></param>
+            <returns></returns>
+        </member>
+        <member name="M:DeveloperPath.Application.Common.Interfaces.IIdentityService.DeleteUserAsync(System.String)">
+            <summary>
+            Delete user
+            </summary>
+            <param name="userId"></param>
+            <returns></returns>
+        </member>
+        <member name="T:DeveloperPath.Application.Common.Mappings.IMapFrom`1">
+            <summary>
+            Common mapping interface
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="M:DeveloperPath.Application.Common.Mappings.IMapFrom`1.Mapping(AutoMapper.Profile)">
+            <summary>
+            Default mapping implementation
+            </summary>
+            <param name="profile"></param>
+        </member>
+        <member name="T:DeveloperPath.Application.Common.Mappings.MappingProfile">
+            <summary>
+            Automapper mapping profile
+            </summary>
+        </member>
+        <member name="M:DeveloperPath.Application.Common.Mappings.MappingProfile.#ctor">
+            <summary>
+            Applies mapping profiles from the executing assembly
+            </summary>
+        </member>
+        <member name="T:DeveloperPath.Application.Common.Models.ModuleDto">
+            <summary>
+            Represents module (skill) of the path, e.g. Programming language, Databases, CI/CD. etc.
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Common.Models.ModuleDto.Id">
+            <summary>
+            Module ID
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Common.Models.ModuleDto.Title">
+            <summary>
+            Module title
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Common.Models.ModuleDto.Description">
+            <summary>
+            Module short summary
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Common.Models.ModuleDto.Paths">
+            <summary>
+            Paths module attached to
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Common.Models.ModuleDto.Necessity">
+            <summary>
+            Necessity level (Other (default) | Possibilities | Interesting | Good to know | Must know)
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Common.Models.ModuleDto.Prerequisites">
+            <summary>
+            Modules required to know before studying this module
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Common.Models.ModuleDto.Tags">
+            <summary>
+            List of tags related to the module
+            </summary>
+        </member>
+        <member name="T:DeveloperPath.Application.Common.Models.ModuleTitle">
+            <summary>
+            Module title
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Common.Models.ModuleTitle.Id">
+            <summary>
+            Module ID
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Common.Models.ModuleTitle.Title">
+            <summary>
+            Module title
+            </summary>
+        </member>
+        <member name="T:DeveloperPath.Application.Common.Models.PathDto">
+            <summary>
+            Developer path information
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Common.Models.PathDto.Id">
+            <summary>
+            Path ID
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Common.Models.PathDto.Title">
+            <summary>
+            Path title
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Common.Models.PathDto.Description">
+            <summary>
+            Path short summary
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Common.Models.PathDto.Tags">
+            <summary>
+            List of tags related to path
+            </summary>
+        </member>
+        <member name="T:DeveloperPath.Application.Common.Models.PathTitle">
+            <summary>
+            Path title
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Common.Models.PathTitle.Id">
+            <summary>
+            Path ID
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Common.Models.PathTitle.Title">
+            <summary>
+            Path title
+            </summary>
+        </member>
+        <member name="T:DeveloperPath.Application.Common.Models.Result">
+            <summary>
+            Identity service common result
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Common.Models.Result.Succeeded">
+            <summary>
+            Success status
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Common.Models.Result.Errors">
+            <summary>
+            List of errors
+            </summary>
+        </member>
+        <member name="M:DeveloperPath.Application.Common.Models.Result.Success">
+            <summary>
+            Result success
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:DeveloperPath.Application.Common.Models.Result.Failure(System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            Result failure
+            </summary>
+            <param name="errors"></param>
+            <returns></returns>
+        </member>
+        <member name="T:DeveloperPath.Application.Common.Models.SectionDto">
+            <summary>
+            Module section (logical group of themes, like a book chapter)
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Common.Models.SectionDto.Id">
+            <summary>
+            Section ID
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Common.Models.SectionDto.Title">
+            <summary>
+            Section Title
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Common.Models.SectionDto.Necessity">
+            <summary>
+            Necessity level (Other (default) | Possibilities | Interesting | Good to know | Must know)
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Common.Models.SectionDto.Order">
+            <summary>
+            Position of section in module (0-based)
+            </summary>
+        </member>
+        <member name="T:DeveloperPath.Application.Common.Models.SourceDto">
+            <summary>
+            Source of information (book, article, blog post, course)
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Common.Models.SourceDto.Id">
+            <summary>
+            Source ID
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Common.Models.SourceDto.Title">
+            <summary>
+            Source Title
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Common.Models.SourceDto.Description">
+            <summary>
+            Souce short summary
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Common.Models.SourceDto.Url">
+            <summary>
+            Souce URL
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Common.Models.SourceDto.ThemeId">
+            <summary>
+            Theme id that the source is for
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Common.Models.SourceDto.Theme">
+            <summary>
+            Theme that the source is for
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Common.Models.SourceDto.Order">
+            <summary>
+            Position of source in theme (0-based).
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Common.Models.SourceDto.Type">
+            <summary>
+            Type of source (None | Book | Blog | Course | Documentation | QandA | Video)
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Common.Models.SourceDto.Availability">
+            <summary>
+            Whether the resource Free | Requires registration | Paid only
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Common.Models.SourceDto.Relevance">
+            <summary>
+            Whether inforation is Not applicable (default) | Up-to-date | Somewhat up-to-date | Outdated
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Common.Models.SourceDto.Tags">
+            <summary>
+            List of tags related to theme
+            </summary>
+        </member>
+        <member name="T:DeveloperPath.Application.Common.Models.ThemeDto">
+            <summary>
+            Particular theme of the module
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Common.Models.ThemeDto.Id">
+            <summary>
+            Theme ID
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Common.Models.ThemeDto.Title">
+            <summary>
+            Theme title
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Common.Models.ThemeDto.Description">
+            <summary>
+            Theme short summary
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Common.Models.ThemeDto.ModuleId">
+            <summary>
+            Id of module that theme is in
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Common.Models.ThemeDto.Section">
+            <summary>
+            Section that theme is in (can be null)
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Common.Models.ThemeDto.Complexity">
+            <summary>
+            Complexity level (Beginner | Intermediate | Advanced)
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Common.Models.ThemeDto.Necessity">
+            <summary>
+            Necessity level (Other | Possibilities | Interesting | Good to know | Must know)
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Common.Models.ThemeDto.Order">
+            <summary>
+            Position of theme in module (0-based)
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Common.Models.ThemeDto.Tags">
+            <summary>
+            List of tags related to the theme
+            </summary>
+        </member>
+        <member name="T:DeveloperPath.Application.DependencyInjection">
+            <summary>
+            </summary>
+        </member>
+        <member name="M:DeveloperPath.Application.DependencyInjection.AddApplication(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Extension method for startup class to add application services
+            </summary>
+            <param name="services"></param>
+            <returns></returns>
+        </member>
+        <member name="T:DeveloperPath.Application.Modules.Commands.CreateModule.CreateModuleCommand">
+            <summary>
+            A module to create
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Modules.Commands.CreateModule.CreateModuleCommand.PathId">
+            <summary>
+            Id of path the module is in
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Modules.Commands.CreateModule.CreateModuleCommand.Title">
+            <summary>
+            Module title
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Modules.Commands.CreateModule.CreateModuleCommand.Description">
+            <summary>
+            Path short summary
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Modules.Commands.CreateModule.CreateModuleCommand.Necessity">
+            <summary>
+            Necessity level (Other (default) | Possibilities | Interesting | Good to know | Must know)
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Modules.Commands.CreateModule.CreateModuleCommand.Order">
+            <summary>
+            Position of module in path (0-based)
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Modules.Commands.CreateModule.CreateModuleCommand.Tags">
+            <summary>
+            List of tags related to the module
+            </summary>
+        </member>
+        <member name="T:DeveloperPath.Application.Modules.Commands.CreateModule.CreateModuleCommandValidator">
+            <summary>
+            Validation rules for creating module
+            </summary>
+        </member>
+        <member name="M:DeveloperPath.Application.Modules.Commands.CreateModule.CreateModuleCommandValidator.#ctor(DeveloperPath.Application.Common.Interfaces.IApplicationDbContext)">
+            <summary>
+            </summary>
+            <param name="context"></param>
+        </member>
+        <member name="M:DeveloperPath.Application.Modules.Commands.CreateModule.CreateModuleCommandValidator.BeUniqueTitle(DeveloperPath.Application.Modules.Commands.CreateModule.CreateModuleCommand,System.String,System.Threading.CancellationToken)">
+            <summary>
+            Request to context to check for unique title
+            </summary>
+            <param name="model"></param>
+            <param name="title"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="T:DeveloperPath.Application.Modules.Commands.DeleteModule.DeleteModuleCommand">
+            <summary>
+            Delete module parameters
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Modules.Commands.DeleteModule.DeleteModuleCommand.Id">
+            <summary>
+            Module Id
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Modules.Commands.DeleteModule.DeleteModuleCommand.PathId">
+            <summary>
+            Path id
+            </summary>
+        </member>
+        <member name="T:DeveloperPath.Application.Modules.Commands.UpdateModule.UpdateModuleCommand">
+            <summary>
+            Module to update
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Modules.Commands.UpdateModule.UpdateModuleCommand.Id">
+            <summary>
+            Module Id
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Modules.Commands.UpdateModule.UpdateModuleCommand.Title">
+            <summary>
+            Module title
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Modules.Commands.UpdateModule.UpdateModuleCommand.Description">
+            <summary>
+            Module short summary
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Modules.Commands.UpdateModule.UpdateModuleCommand.Necessity">
+            <summary>
+            Necessity level (Other (default) | Possibilities | Interesting | Good to know | Must know)
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Modules.Commands.UpdateModule.UpdateModuleCommand.Order">
+            <summary>
+            Order of module in path (0-based)
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Modules.Commands.UpdateModule.UpdateModuleCommand.Tags">
+            <summary>
+            List of tags related to the module
+            </summary>
+        </member>
+        <member name="T:DeveloperPath.Application.Modules.Commands.UpdateModule.UpdateModuleCommandValidator">
+            <summary>
+            Validation rules for updating module
+            </summary>
+        </member>
+        <member name="M:DeveloperPath.Application.Modules.Commands.UpdateModule.UpdateModuleCommandValidator.#ctor(DeveloperPath.Application.Common.Interfaces.IApplicationDbContext)">
+            <summary>
+            </summary>
+            <param name="context"></param>
+        </member>
+        <member name="M:DeveloperPath.Application.Modules.Commands.UpdateModule.UpdateModuleCommandValidator.BeUniqueTitle(DeveloperPath.Application.Modules.Commands.UpdateModule.UpdateModuleCommand,System.String,System.Threading.CancellationToken)">
+            <summary>
+            Request to context to check for unique title
+            </summary>
+            <param name="model"></param>
+            <param name="title"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="T:DeveloperPath.Application.Modules.Queries.GetModules.GetModuleDetailsQuery">
+            <summary>
+            Get module details parameters
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Modules.Queries.GetModules.GetModuleDetailsQuery.Id">
+            <summary>
+            Module Id
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Modules.Queries.GetModules.GetModuleDetailsQuery.PathId">
+            <summary>
+            Path Id
+            </summary>
+        </member>
+        <member name="T:DeveloperPath.Application.Modules.Queries.GetModules.GetModuleListQuery">
+            <summary>
+            Get module parameters
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Modules.Queries.GetModules.GetModuleListQuery.PathId">
+            <summary>
+            Path id
+            </summary>
+        </member>
+        <member name="T:DeveloperPath.Application.Modules.Queries.GetModules.GetModuleListQueryPaging">
+            <summary>
+            Get modules paged
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Modules.Queries.GetModules.GetModuleListQueryPaging.PathId">
+            <summary>
+            Path id
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Modules.Queries.GetModules.GetModuleListQueryPaging.PageNumber">
+            <summary>
+            Page number
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Modules.Queries.GetModules.GetModuleListQueryPaging.PageSize">
+            <summary>
+            Items per page
+            </summary>
+        </member>
+        <member name="T:DeveloperPath.Application.Modules.Queries.GetModules.GetModuleQuery">
+            <summary>
+            Get module parameters
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Modules.Queries.GetModules.GetModuleQuery.Id">
+            <summary>
+            Module Id
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Modules.Queries.GetModules.GetModuleQuery.PathId">
+            <summary>
+            Path Id
+            </summary>
+        </member>
+        <member name="T:DeveloperPath.Application.Modules.Queries.GetModules.ModuleViewModel">
+            <summary>
+            Detailed information about the module
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Modules.Queries.GetModules.ModuleViewModel.Id">
+            <summary>
+            Module ID
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Modules.Queries.GetModules.ModuleViewModel.Title">
+            <summary>
+            Module title
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Modules.Queries.GetModules.ModuleViewModel.Description">
+            <summary>
+            Module short summary
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Modules.Queries.GetModules.ModuleViewModel.Paths">
+            <summary>
+            Paths module attached to
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Modules.Queries.GetModules.ModuleViewModel.Necessity">
+            <summary>
+            Necessity level (Other (default) | Possibilities | Interesting | Good to know | Must know)
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Modules.Queries.GetModules.ModuleViewModel.Sections">
+            <summary>
+            Sections that module consists of (may be empty)
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Modules.Queries.GetModules.ModuleViewModel.Themes">
+            <summary>
+            Themes that module consists of
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Modules.Queries.GetModules.ModuleViewModel.Prerequisites">
+            <summary>
+            Modules required to know before studying this module
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Modules.Queries.GetModules.ModuleViewModel.Tags">
+            <summary>
+            List of tags related to module
+            </summary>
+        </member>
+        <member name="T:DeveloperPath.Application.Paging.PaginationData">
+            <summary>
+            Class for adding pagination data to output headers
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Paging.PaginationData.PageNumber">
+            <summary>
+            Page number
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Paging.PaginationData.PageSize">
+            <summary>
+            Items per page
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Paging.PaginationData.FirstPage">
+            <summary>
+            Link to first page
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Paging.PaginationData.NextPage">
+            <summary>
+            Link to next page
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Paging.PaginationData.PreviousPage">
+            <summary>
+            Link to previous page
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Paging.PaginationData.LastPage">
+            <summary>
+            Link to last page
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Paging.PaginationData.TotalPages">
+            <summary>
+            Total number of pages
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Paging.PaginationData.TotalRecords">
+            <summary>
+            Total number of items
+            </summary>
+        </member>
+        <member name="M:DeveloperPath.Application.Paging.PaginationData.#ctor(System.Int32,System.Int32)">
+            <summary>
+            Creates simple pagination object
+            </summary>
+            <param name="pageNumber"></param>
+            <param name="pageSize"></param>
+        </member>
+        <member name="T:DeveloperPath.Application.Paths.Commands.CreatePath.CreatePathCommand">
+            <summary>
+            Path to create
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Paths.Commands.CreatePath.CreatePathCommand.Title">
+            <summary>
+            Path title
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Paths.Commands.CreatePath.CreatePathCommand.Description">
+            <summary>
+            Path short summary
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Paths.Commands.CreatePath.CreatePathCommand.Tags">
+            <summary>
+            List of tags related to path
+            </summary>
+        </member>
+        <member name="T:DeveloperPath.Application.Paths.Commands.CreatePath.CreatePathCommandValidator">
+            <summary>
+            Validation rules for creating path
+            </summary>
+        </member>
+        <member name="M:DeveloperPath.Application.Paths.Commands.CreatePath.CreatePathCommandValidator.#ctor(DeveloperPath.Application.Common.Interfaces.IApplicationDbContext)">
+            <summary>
+            </summary>
+            <param name="context"></param>
+        </member>
+        <member name="M:DeveloperPath.Application.Paths.Commands.CreatePath.CreatePathCommandValidator.BeUniqueTitle(System.String,System.Threading.CancellationToken)">
+            <summary>
+            Request to context to check for unique title
+            </summary>
+            <param name="title"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="T:DeveloperPath.Application.Paths.Commands.DeletePath.DeletePathCommand">
+            <summary>
+            Delete path parameters
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Paths.Commands.DeletePath.DeletePathCommand.Id">
+            <summary>
+            Path ID
+            </summary>
+        </member>
+        <member name="T:DeveloperPath.Application.Paths.Commands.UpdatePath.UpdatePathCommand">
+            <summary>
+            Path to update
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Paths.Commands.UpdatePath.UpdatePathCommand.Id">
+            <summary>
+            Id of the path to update
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Paths.Commands.UpdatePath.UpdatePathCommand.Title">
+            <summary>
+            Path title
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Paths.Commands.UpdatePath.UpdatePathCommand.Description">
+            <summary>
+            Path short summary
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Paths.Commands.UpdatePath.UpdatePathCommand.Tags">
+            <summary>
+            List of tags related to path
+            </summary>
+        </member>
+        <member name="T:DeveloperPath.Application.Paths.Commands.UpdatePath.UpdatePathCommandValidator">
+            <summary>
+            Validation rules for updating path
+            </summary>
+        </member>
+        <member name="M:DeveloperPath.Application.Paths.Commands.UpdatePath.UpdatePathCommandValidator.#ctor(DeveloperPath.Application.Common.Interfaces.IApplicationDbContext)">
+            <summary>
+            </summary>
+            <param name="context"></param>
+        </member>
+        <member name="M:DeveloperPath.Application.Paths.Commands.UpdatePath.UpdatePathCommandValidator.BeUniqueTitle(DeveloperPath.Application.Paths.Commands.UpdatePath.UpdatePathCommand,System.String,System.Threading.CancellationToken)">
+            <summary>
+            Request to context to check for unique title
+            </summary>
+            <param name="model"></param>
+            <param name="title"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="T:DeveloperPath.Application.Paths.Queries.GetPaths.GetPathDetailsQuery">
+            <summary>
+            Get path details parameters
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Paths.Queries.GetPaths.GetPathDetailsQuery.Id">
+            <summary>
+            Path id
+            </summary>
+        </member>
+        <member name="T:DeveloperPath.Application.Paths.Queries.GetPaths.GetPathListQuery">
+            <summary>
+            Get path
+            </summary>
+        </member>
+        <member name="T:DeveloperPath.Application.Paths.Queries.GetPaths.GetPathListQueryPaging">
+            <summary>
+            Get paths paged
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Paths.Queries.GetPaths.GetPathListQueryPaging.PageNumber">
+            <summary>
+            Page number
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Paths.Queries.GetPaths.GetPathListQueryPaging.PageSize">
+            <summary>
+            Items per page
+            </summary>
+        </member>
+        <member name="T:DeveloperPath.Application.Paths.Queries.GetPaths.GetPathQuery">
+            <summary>
+            Get path parameters
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Paths.Queries.GetPaths.GetPathQuery.Id">
+            <summary>
+            Path id
+            </summary>
+        </member>
+        <member name="T:DeveloperPath.Application.Paths.Queries.GetPaths.PathViewModel">
+            <summary>
+            Detailed information about the path
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Paths.Queries.GetPaths.PathViewModel.Id">
+            <summary>
+            Path ID
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Paths.Queries.GetPaths.PathViewModel.Title">
+            <summary>
+            Path name
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Paths.Queries.GetPaths.PathViewModel.Description">
+            <summary>
+            Path short summary
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Paths.Queries.GetPaths.PathViewModel.Modules">
+            <summary>
+            Modules that path consists of
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Paths.Queries.GetPaths.PathViewModel.Tags">
+            <summary>
+            List of tags related to path.
+            Use generalized tags, e.g.:
+             - Path ASP.NET - Tags: #Development #Web
+             - Path Unity - Tags: #Development #Games
+            </summary>
+        </member>
+        <member name="T:DeveloperPath.Application.Sources.Commands.CreateSource.CreateSourceCommand">
+            <summary>
+            Source to create
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Sources.Commands.CreateSource.CreateSourceCommand.PathId">
+            <summary>
+            Path Id
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Sources.Commands.CreateSource.CreateSourceCommand.ModuleId">
+            <summary>
+            Module Id
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Sources.Commands.CreateSource.CreateSourceCommand.ThemeId">
+            <summary>
+            Theme id that the source is for
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Sources.Commands.CreateSource.CreateSourceCommand.Title">
+            <summary>
+            Source title
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Sources.Commands.CreateSource.CreateSourceCommand.Description">
+            <summary>
+            Source short summary
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Sources.Commands.CreateSource.CreateSourceCommand.Url">
+            <summary>
+            Source Url
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Sources.Commands.CreateSource.CreateSourceCommand.Order">
+            <summary>
+            Position of source in theme (0-based).
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Sources.Commands.CreateSource.CreateSourceCommand.Type">
+            <summary>
+            Type of source (None | Book | Blog | Course | Documentation | QandA | Video)
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Sources.Commands.CreateSource.CreateSourceCommand.Availability">
+            <summary>
+            Whether the resource Free | Requires registration | Paid only
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Sources.Commands.CreateSource.CreateSourceCommand.Relevance">
+            <summary>
+            Whether inforation is Not applicable (default) | Up-to-date | Somewhat up-to-date | Outdated
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Sources.Commands.CreateSource.CreateSourceCommand.Tags">
+            <summary>
+            List of tags related to theme
+            </summary>
+        </member>
+        <member name="T:DeveloperPath.Application.Sources.Commands.CreateSource.CreateSourceCommandValidator">
+            <summary>
+            Validation rules for creating source
+            </summary>
+        </member>
+        <member name="M:DeveloperPath.Application.Sources.Commands.CreateSource.CreateSourceCommandValidator.#ctor">
+            <summary>
+            </summary>
+        </member>
+        <member name="T:DeveloperPath.Application.Sources.Commands.DeleteSource.DeleteSourceCommand">
+            <summary>
+            Delete source parameters
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Sources.Commands.DeleteSource.DeleteSourceCommand.Id">
+            <summary>
+            Source Id
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Sources.Commands.DeleteSource.DeleteSourceCommand.PathId">
+            <summary>
+            Path Id
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Sources.Commands.DeleteSource.DeleteSourceCommand.ModuleId">
+            <summary>
+            Module Id
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Sources.Commands.DeleteSource.DeleteSourceCommand.ThemeId">
+            <summary>
+            Theme Id
+            </summary>
+        </member>
+        <member name="T:DeveloperPath.Application.Sources.Commands.UpdateSource.UpdateSourceCommand">
+            <summary>
+            Source to update
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Sources.Commands.UpdateSource.UpdateSourceCommand.Id">
+            <summary>
+            Source Id
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Sources.Commands.UpdateSource.UpdateSourceCommand.PathId">
+            <summary>
+            Path Id
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Sources.Commands.UpdateSource.UpdateSourceCommand.ModuleId">
+            <summary>
+            Module Id
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Sources.Commands.UpdateSource.UpdateSourceCommand.ThemeId">
+            <summary>
+            Theme id that the source is for
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Sources.Commands.UpdateSource.UpdateSourceCommand.Title">
+            <summary>
+            Source title
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Sources.Commands.UpdateSource.UpdateSourceCommand.Description">
+            <summary>
+            Source short summary
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Sources.Commands.UpdateSource.UpdateSourceCommand.Url">
+            <summary>
+            Source Url
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Sources.Commands.UpdateSource.UpdateSourceCommand.Order">
+            <summary>
+            Position of source in theme (0-based).
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Sources.Commands.UpdateSource.UpdateSourceCommand.Type">
+            <summary>
+            Type of source (None | Book | Blog | Course | Documentation | QandA | Video)
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Sources.Commands.UpdateSource.UpdateSourceCommand.Availability">
+            <summary>
+            Whether the resource Free | Requires registration | Paid only
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Sources.Commands.UpdateSource.UpdateSourceCommand.Relevance">
+            <summary>
+            Whether inforation is Not applicable (default) | Up-to-date | Somewhat up-to-date | Outdated
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Sources.Commands.UpdateSource.UpdateSourceCommand.Tags">
+            <summary>
+            List of tags related to theme
+            </summary>
+        </member>
+        <member name="T:DeveloperPath.Application.Sources.Commands.UpdateSource.UpdateSourceCommandValidator">
+            <summary>
+            Validation rules for updating source
+            </summary>
+        </member>
+        <member name="M:DeveloperPath.Application.Sources.Commands.UpdateSource.UpdateSourceCommandValidator.#ctor">
+            <summary>
+            </summary>
+        </member>
+        <member name="T:DeveloperPath.Application.Sources.Queries.GetSources.GetSourceDetailsQuery">
+            <summary>
+            Get source details parameters
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Sources.Queries.GetSources.GetSourceDetailsQuery.Id">
+            <summary>
+            Source Id
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Sources.Queries.GetSources.GetSourceDetailsQuery.PathId">
+            <summary>
+            Path Id
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Sources.Queries.GetSources.GetSourceDetailsQuery.ModuleId">
+            <summary>
+            Module Id
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Sources.Queries.GetSources.GetSourceDetailsQuery.ThemeId">
+            <summary>
+            Theme Id
+            </summary>
+        </member>
+        <member name="T:DeveloperPath.Application.Sources.Queries.GetSources.GetSourceListQuery">
+            <summary>
+            Get sources list parameters
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Sources.Queries.GetSources.GetSourceListQuery.PathId">
+            <summary>
+            Path id
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Sources.Queries.GetSources.GetSourceListQuery.ModuleId">
+            <summary>
+            Module Id
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Sources.Queries.GetSources.GetSourceListQuery.ThemeId">
+            <summary>
+            Theme Id
+            </summary>
+        </member>
+        <member name="T:DeveloperPath.Application.Sources.Queries.GetSources.GetSourceQuery">
+            <summary>
+            Get source parameters
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Sources.Queries.GetSources.GetSourceQuery.Id">
+            <summary>
+            Source Id
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Sources.Queries.GetSources.GetSourceQuery.PathId">
+            <summary>
+            Path Id
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Sources.Queries.GetSources.GetSourceQuery.ModuleId">
+            <summary>
+            Module Id
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Sources.Queries.GetSources.GetSourceQuery.ThemeId">
+            <summary>
+            Theme Id
+            </summary>
+        </member>
+        <member name="T:DeveloperPath.Application.Sources.Queries.GetSources.SourceViewModel">
+            <summary>
+            Detailed information about the source
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Sources.Queries.GetSources.SourceViewModel.Id">
+            <summary>
+            Source ID
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Sources.Queries.GetSources.SourceViewModel.Title">
+            <summary>
+            Source Title
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Sources.Queries.GetSources.SourceViewModel.Description">
+            <summary>
+            Souce Description
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Sources.Queries.GetSources.SourceViewModel.Url">
+            <summary>
+            Souce URL
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Sources.Queries.GetSources.SourceViewModel.ThemeId">
+            <summary>
+            Theme id that the source is for
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Sources.Queries.GetSources.SourceViewModel.Theme">
+            <summary>
+            Theme that the source is for
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Sources.Queries.GetSources.SourceViewModel.Order">
+            <summary>
+            Position of source in theme (0-based).
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Sources.Queries.GetSources.SourceViewModel.Type">
+            <summary>
+            Type of source (book, video, blog, etc.)
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Sources.Queries.GetSources.SourceViewModel.Availability">
+            <summary>
+            Whether the resource is available free or paid
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Sources.Queries.GetSources.SourceViewModel.Relevance">
+            <summary>
+            Whether inforation if up-to-date
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Sources.Queries.GetSources.SourceViewModel.Tags">
+            <summary>
+            List of tags related to theme
+            </summary>
+        </member>
+        <member name="T:DeveloperPath.Application.Themes.Commands.CreateTheme.CreateThemeCommand">
+            <summary>
+            Theme to create
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Themes.Commands.CreateTheme.CreateThemeCommand.PathId">
+            <summary>
+            Path id
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Themes.Commands.CreateTheme.CreateThemeCommand.ModuleId">
+            <summary>
+            Module Id
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Themes.Commands.CreateTheme.CreateThemeCommand.Title">
+            <summary>
+            Theme title
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Themes.Commands.CreateTheme.CreateThemeCommand.Description">
+            <summary>
+            Theme short summary
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Themes.Commands.CreateTheme.CreateThemeCommand.SectionId">
+            <summary>
+            Theme section id (can be null)
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Themes.Commands.CreateTheme.CreateThemeCommand.Complexity">
+            <summary>
+            Complexity level (Beginner | Intermediate | Advanced)
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Themes.Commands.CreateTheme.CreateThemeCommand.Necessity">
+            <summary>
+            Necessity level (Other | Possibilities | Interesting | Good to know | Must know)
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Themes.Commands.CreateTheme.CreateThemeCommand.Order">
+            <summary>
+            Position of the theme in module (0-based)
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Themes.Commands.CreateTheme.CreateThemeCommand.Tags">
+            <summary>
+            List of tags related to the theme
+            </summary>
+        </member>
+        <member name="T:DeveloperPath.Application.Themes.Commands.CreateTheme.CreateThemeCommandValidator">
+            <summary>
+            Validation rules for creating theme
+            </summary>
+        </member>
+        <member name="M:DeveloperPath.Application.Themes.Commands.CreateTheme.CreateThemeCommandValidator.#ctor(DeveloperPath.Application.Common.Interfaces.IApplicationDbContext)">
+            <summary>
+            </summary>
+            <param name="context"></param>
+        </member>
+        <member name="M:DeveloperPath.Application.Themes.Commands.CreateTheme.CreateThemeCommandValidator.BeUniqueTitle(DeveloperPath.Application.Themes.Commands.CreateTheme.CreateThemeCommand,System.String,System.Threading.CancellationToken)">
+            <summary>
+            Request to context to check for unique title
+            </summary>
+            <param name="model"></param>
+            <param name="title"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="T:DeveloperPath.Application.Themes.Commands.DeleteTheme.DeleteThemeCommand">
+            <summary>
+            Delete theme parameters
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Themes.Commands.DeleteTheme.DeleteThemeCommand.Id">
+            <summary>
+            Theme id
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Themes.Commands.DeleteTheme.DeleteThemeCommand.PathId">
+            <summary>
+            Path id
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Themes.Commands.DeleteTheme.DeleteThemeCommand.ModuleId">
+            <summary>
+            Module id
+            </summary>
+        </member>
+        <member name="T:DeveloperPath.Application.Themes.Commands.UpdateTheme.UpdateThemeCommand">
+            <summary>
+            Theme to update
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Themes.Commands.UpdateTheme.UpdateThemeCommand.Id">
+            <summary>
+            Theme id
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Themes.Commands.UpdateTheme.UpdateThemeCommand.PathId">
+            <summary>
+            Path id
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Themes.Commands.UpdateTheme.UpdateThemeCommand.ModuleId">
+            <summary>
+            Module Id
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Themes.Commands.UpdateTheme.UpdateThemeCommand.Title">
+            <summary>
+            Theme title
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Themes.Commands.UpdateTheme.UpdateThemeCommand.Description">
+            <summary>
+            Theme short summary
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Themes.Commands.UpdateTheme.UpdateThemeCommand.SectionId">
+            <summary>
+            Theme section id (can be null)
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Themes.Commands.UpdateTheme.UpdateThemeCommand.Complexity">
+            <summary>
+            Complexity level (Beginner | Intermediate | Advanced)
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Themes.Commands.UpdateTheme.UpdateThemeCommand.Necessity">
+            <summary>
+            Necessity level (Other | Possibilities | Interesting | Good to know | Must know)
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Themes.Commands.UpdateTheme.UpdateThemeCommand.Order">
+            <summary>
+            Position of the theme in module (0-based)
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Themes.Commands.UpdateTheme.UpdateThemeCommand.Tags">
+            <summary>
+            List of tags related to the theme
+            </summary>
+        </member>
+        <member name="T:DeveloperPath.Application.Themes.Commands.UpdateTheme.UpdateThemeCommandValidator">
+            <summary>
+            Validation rules for updating theme
+            </summary>
+        </member>
+        <member name="M:DeveloperPath.Application.Themes.Commands.UpdateTheme.UpdateThemeCommandValidator.#ctor(DeveloperPath.Application.Common.Interfaces.IApplicationDbContext)">
+            <summary>
+            </summary>
+            <param name="context"></param>
+        </member>
+        <member name="M:DeveloperPath.Application.Themes.Commands.UpdateTheme.UpdateThemeCommandValidator.BeUniqueTitle(DeveloperPath.Application.Themes.Commands.UpdateTheme.UpdateThemeCommand,System.String,System.Threading.CancellationToken)">
+            <summary>
+            Request to context to check for unique title
+            </summary>
+            <param name="model"></param>
+            <param name="title"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="T:DeveloperPath.Application.Themes.Queries.GetThemes.GetThemeDetailsQuery">
+            <summary>
+            Get theme details parameters
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Themes.Queries.GetThemes.GetThemeDetailsQuery.Id">
+            <summary>
+            Theme Id
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Themes.Queries.GetThemes.GetThemeDetailsQuery.PathId">
+            <summary>
+            Path Id
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Themes.Queries.GetThemes.GetThemeDetailsQuery.ModuleId">
+            <summary>
+            Module Id
+            </summary>
+        </member>
+        <member name="T:DeveloperPath.Application.Themes.Queries.GetThemes.GetThemeListQuery">
+            <summary>
+            Get themes list parameters
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Themes.Queries.GetThemes.GetThemeListQuery.PathId">
+            <summary>
+            Path Id
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Themes.Queries.GetThemes.GetThemeListQuery.ModuleId">
+            <summary>
+            Module Id
+            </summary>
+        </member>
+        <member name="T:DeveloperPath.Application.Themes.Queries.GetThemes.GetThemeQuery">
+            <summary>
+            Get theme parameters
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Themes.Queries.GetThemes.GetThemeQuery.Id">
+            <summary>
+            Theme Id
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Themes.Queries.GetThemes.GetThemeQuery.PathId">
+            <summary>
+            Path Id
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Themes.Queries.GetThemes.GetThemeQuery.ModuleId">
+            <summary>
+            Module Id
+            </summary>
+        </member>
+        <member name="T:DeveloperPath.Application.Themes.Queries.GetThemes.ThemeTitle">
+            <summary>
+            Theme title
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Themes.Queries.GetThemes.ThemeTitle.Id">
+            <summary>
+            Theme id
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Themes.Queries.GetThemes.ThemeTitle.Title">
+            <summary>
+            Theme title
+            </summary>
+        </member>
+        <member name="T:DeveloperPath.Application.Themes.Queries.GetThemes.ThemeViewModel">
+            <summary>
+            Detailed information about the theme
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Themes.Queries.GetThemes.ThemeViewModel.Id">
+            <summary>
+            Theme ID
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Themes.Queries.GetThemes.ThemeViewModel.Title">
+            <summary>
+            Theme Title
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Themes.Queries.GetThemes.ThemeViewModel.Description">
+            <summary>
+            Theme short summary
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Themes.Queries.GetThemes.ThemeViewModel.Module">
+            <summary>
+            Module that theme is in
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Themes.Queries.GetThemes.ThemeViewModel.Section">
+            <summary>
+            Section that theme is in (can be null)
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Themes.Queries.GetThemes.ThemeViewModel.Complexity">
+            <summary>
+            Complexity level
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Themes.Queries.GetThemes.ThemeViewModel.Necessity">
+            <summary>
+            Necessity level
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Themes.Queries.GetThemes.ThemeViewModel.Order">
+            <summary>
+            Position of theme in module (0-based). 
+            Multiple themes can have same order number (meaning they can be studied simultaneously)
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Themes.Queries.GetThemes.ThemeViewModel.Sources">
+            <summary>
+            Sources fo this theme
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Themes.Queries.GetThemes.ThemeViewModel.Prerequisites">
+            <summary>
+            Themes required to know before studying this theme
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Themes.Queries.GetThemes.ThemeViewModel.Related">
+            <summary>
+            Related themes ("See also" section)
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Themes.Queries.GetThemes.ThemeViewModel.Tags">
+            <summary>
+            List of tags related to theme
+            </summary>
+        </member>
+    </members>
+</doc>

@@ -5,7 +5,7 @@ using DeveloperPath.Domain.Entities;
 namespace DeveloperPath.Application.Common.Models
 {
   /// <summary>
-  /// Summary information about the path
+  /// Developer path information
   /// </summary>
   public class PathDto : IMapFrom<Path>
   {
@@ -15,7 +15,7 @@ namespace DeveloperPath.Application.Common.Models
     public int Id { get; init; }
 
     /// <summary>
-    /// Path name
+    /// Path title
     /// </summary>
     public string Title { get; init; }
 
@@ -25,10 +25,7 @@ namespace DeveloperPath.Application.Common.Models
     public string Description { get; init; }
 
     /// <summary>
-    /// List of tags related to path.
-    /// Use generalized tags, e.g.:
-    ///  - Path ASP.NET - Tags: #Development #Web
-    ///  - Path Unity - Tags: #Development #Games
+    /// List of tags related to path
     /// </summary>
     public ICollection<string> Tags { get; set; }
   }

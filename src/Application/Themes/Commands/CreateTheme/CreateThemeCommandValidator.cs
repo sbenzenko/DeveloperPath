@@ -7,10 +7,16 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DeveloperPath.Application.Themes.Commands.CreateTheme
 {
+  /// <summary>
+  /// Validation rules for creating theme
+  /// </summary>
   public class CreateThemeCommandValidator : AbstractValidator<CreateThemeCommand>
   {
     private readonly IApplicationDbContext _context;
 
+    /// <summary>
+    /// </summary>
+    /// <param name="context"></param>
     public CreateThemeCommandValidator(IApplicationDbContext context)
     {
       _context = context;
@@ -28,6 +34,13 @@ namespace DeveloperPath.Application.Themes.Commands.CreateTheme
         .MaximumLength(3000).WithMessage("Description must not exceed 3000 characters.");
     }
 
+    /// <summary>
+    /// Request to context to check for unique title
+    /// </summary>
+    /// <param name="model"></param>
+    /// <param name="title"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
     public async Task<bool> BeUniqueTitle(CreateThemeCommand model, string title, CancellationToken cancellationToken)
     {
       //Verify that all themes in module have titles different than title

@@ -24,7 +24,7 @@ namespace DeveloperPath.WebApi.Controllers
     /// </summary>
     /// <param name="pathId">An id of the path</param>
     /// <param name="moduleId">An id of the module</param>
-    /// <param name="themeId">An id of the module</param>
+    /// <param name="themeId">An id of the theme</param>
     /// <returns>A collection of sources with summary information</returns>
     [HttpGet]
     [HttpHead]

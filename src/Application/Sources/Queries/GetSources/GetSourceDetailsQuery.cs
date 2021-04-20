@@ -10,15 +10,30 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DeveloperPath.Application.Sources.Queries.GetSources
 {
+  /// <summary>
+  /// Get source details parameters
+  /// </summary>
   public class GetSourceDetailsQuery : IRequest<SourceViewModel>
   {
-    public int Id { get; set; }
-    public int PathId { get; set; }
-    public int ModuleId { get; set; }
-    public int ThemeId { get; set; }
+    /// <summary>
+    /// Source Id
+    /// </summary>
+    public int Id { get; init; }
+    /// <summary>
+    /// Path Id
+    /// </summary>
+    public int PathId { get; init; }
+    /// <summary>
+    /// Module Id
+    /// </summary>
+    public int ModuleId { get; init; }
+    /// <summary>
+    /// Theme Id
+    /// </summary>
+    public int ThemeId { get; init; }
   }
 
-  public class GetSourceDetailsQueryHandler : IRequestHandler<GetSourceDetailsQuery, SourceViewModel>
+  internal class GetSourceDetailsQueryHandler : IRequestHandler<GetSourceDetailsQuery, SourceViewModel>
   {
     private readonly IApplicationDbContext _context;
     private readonly IMapper _mapper;

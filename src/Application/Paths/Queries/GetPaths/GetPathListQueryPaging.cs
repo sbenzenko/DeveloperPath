@@ -12,13 +12,22 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DeveloperPath.Application.Paths.Queries.GetPaths
 {
+  /// <summary>
+  /// Get paths paged
+  /// </summary>
   public class GetPathListQueryPaging : IRequest<(PaginationData, IEnumerable<PathDto>)>
   {
-    public int PageNumber { get; set; }
-    public int PageSize { get; set; }
+    /// <summary>
+    /// Page number
+    /// </summary>
+    public int PageNumber { get; init; }
+    /// <summary>
+    /// Items per page
+    /// </summary>
+    public int PageSize { get; init; }
   }
 
-  public class GetPathsPagingQueryHandler : IRequestHandler<GetPathListQueryPaging, (PaginationData, IEnumerable<PathDto>)>
+  internal class GetPathsPagingQueryHandler : IRequestHandler<GetPathListQueryPaging, (PaginationData, IEnumerable<PathDto>)>
   {
     private readonly IApplicationDbContext _context;
     private readonly IMapper _mapper;

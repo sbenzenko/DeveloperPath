@@ -9,27 +9,44 @@ using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 
 using System.Linq;
-using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace DeveloperPath.Application.Modules.Commands.CreateModule
 {
   /// <summary>
-  /// Represents developer module entity
+  /// A module to create
   /// </summary>
   public record CreateModuleCommand : IRequest<ModuleDto>
   {
     // TODO: add Prerequisites, provide Order
+    /// <summary>
+    /// Id of path the module is in
+    /// </summary>
     public int PathId { get; init; }
+    /// <summary>
+    /// Module title
+    /// </summary>
     public string Title { get; init; }
+    /// <summary>
+    /// Path short summary
+    /// </summary>
     public string Description { get; init; }
+    /// <summary>
+    /// Necessity level (Other (default) | Possibilities | Interesting | Good to know | Must know)
+    /// </summary>
     public NecessityLevel Necessity { get; init; }
+    /// <summary>
+    /// Position of module in path (0-based)
+    /// </summary>
     public int Order { get; init; }
+    /// <summary>
+    /// List of tags related to the module
+    /// </summary>
     public IList<string> Tags { get; init; }
   }
 
-  public class CreateModuleCommandHandler : IRequestHandler<CreateModuleCommand, ModuleDto>
+  internal class CreateModuleCommandHandler : IRequestHandler<CreateModuleCommand, ModuleDto>
   {
     private readonly IApplicationDbContext _context;
     private readonly IMapper _mapper;
@@ -49,7 +66,7 @@ namespace DeveloperPath.Application.Modules.Commands.CreateModule
       if (path == null)
         throw new NotFoundException(nameof(Path), request.PathId);
 
-      var entity = new DeveloperPath.Domain.Entities.Module
+      var entity = new Domain.Entities.Module
       {
         Title = request.Title,
         Description = request.Description,

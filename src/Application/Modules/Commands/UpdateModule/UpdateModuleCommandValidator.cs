@@ -7,10 +7,16 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DeveloperPath.Application.Modules.Commands.UpdateModule
 {
+  /// <summary>
+  /// Validation rules for updating module
+  /// </summary>
   public class UpdateModuleCommandValidator : AbstractValidator<UpdateModuleCommand>
   {
     private readonly IApplicationDbContext _context;
 
+    /// <summary>
+    /// </summary>
+    /// <param name="context"></param>
     public UpdateModuleCommandValidator(IApplicationDbContext context)
     {
       _context = context;
@@ -25,6 +31,13 @@ namespace DeveloperPath.Application.Modules.Commands.UpdateModule
         .MaximumLength(3000).WithMessage("Description must not exceed 3000 characters.");
     }
 
+    /// <summary>
+    /// Request to context to check for unique title
+    /// </summary>
+    /// <param name="model"></param>
+    /// <param name="title"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
     public async Task<bool> BeUniqueTitle(UpdateModuleCommand model, string title, CancellationToken cancellationToken)
     {
       var pathIds = await _context.Modules

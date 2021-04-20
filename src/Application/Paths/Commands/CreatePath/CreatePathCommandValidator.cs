@@ -6,10 +6,16 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DeveloperPath.Application.Paths.Commands.CreatePath
 {
+  /// <summary>
+  /// Validation rules for creating path
+  /// </summary>
   public class CreatePathCommandValidator : AbstractValidator<CreatePathCommand>
   {
     private readonly IApplicationDbContext _context;
 
+    /// <summary>
+    /// </summary>
+    /// <param name="context"></param>
     public CreatePathCommandValidator(IApplicationDbContext context)
     {
       _context = context;
@@ -24,6 +30,12 @@ namespace DeveloperPath.Application.Paths.Commands.CreatePath
         .MaximumLength(3000).WithMessage("Description must not exceed 3000 characters.");
     }
 
+    /// <summary>
+    /// Request to context to check for unique title
+    /// </summary>
+    /// <param name="title"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
     public async Task<bool> BeUniqueTitle(string title, CancellationToken cancellationToken)
     {
       return await _context.Paths

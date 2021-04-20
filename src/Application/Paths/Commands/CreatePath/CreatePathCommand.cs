@@ -9,14 +9,26 @@ using System.Threading.Tasks;
 
 namespace DeveloperPath.Application.Paths.Commands.CreatePath
 {
+  /// <summary>
+  /// Path to create
+  /// </summary>
   public record CreatePathCommand : IRequest<PathDto>
   {
+    /// <summary>
+    /// Path title
+    /// </summary>
     public string Title { get; init; }
+    /// <summary>
+    /// Path short summary
+    /// </summary>
     public string Description { get; init; }
+    /// <summary>
+    /// List of tags related to path
+    /// </summary>
     public IList<string> Tags { get; init; }
   }
 
-  public class CreatePathCommandHandler : IRequestHandler<CreatePathCommand, PathDto>
+  internal class CreatePathCommandHandler : IRequestHandler<CreatePathCommand, PathDto>
   {
     private readonly IApplicationDbContext _context;
     private readonly IMapper _mapper;

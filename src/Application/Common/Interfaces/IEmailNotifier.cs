@@ -2,8 +2,16 @@
 
 namespace DeveloperPath.Application.Common.Interfaces
 {
-    public interface IEmailNotifier
-    {
-        Task SendEmailAsync(IEmail email);
-    }
+  /// <summary>
+  /// Email notifier interface
+  /// </summary>
+  public interface IEmailNotifier
+  {
+    /// <summary>
+    /// Sending email
+    /// </summary>
+    /// <param name="email"></param>
+    /// <returns></returns>
+    Task SendEmailAsync(IEmail email);
+  }
 }

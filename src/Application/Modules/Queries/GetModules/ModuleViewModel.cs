@@ -17,7 +17,7 @@ namespace DeveloperPath.Application.Modules.Queries.GetModules
     public int Id { get; init; }
 
     /// <summary>
-    /// Module Title
+    /// Module title
     /// </summary>
     public string Title { get; set; }
 
@@ -32,7 +32,7 @@ namespace DeveloperPath.Application.Modules.Queries.GetModules
     public ICollection<PathTitle> Paths { get; init; }
 
     /// <summary>
-    /// Necessity level
+    /// Necessity level (Other (default) | Possibilities | Interesting | Good to know | Must know)
     /// </summary>
     public NecessityLevel Necessity { get; set; }
 

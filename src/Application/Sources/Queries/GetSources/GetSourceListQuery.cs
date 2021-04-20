@@ -13,14 +13,26 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DeveloperPath.Application.Sources.Queries.GetSources
 {
+  /// <summary>
+  /// Get sources list parameters
+  /// </summary>
   public class GetSourceListQuery : IRequest<IEnumerable<SourceDto>>
   {
-    public int PathId { get; set; }
-    public int ModuleId { get; set; }
-    public int ThemeId { get; set; }
+    /// <summary>
+    /// Path id
+    /// </summary>
+    public int PathId { get; init; }
+    /// <summary>
+    /// Module Id
+    /// </summary>
+    public int ModuleId { get; init; }
+    /// <summary>
+    /// Theme Id
+    /// </summary>
+    public int ThemeId { get; init; }
   }
 
-  public class GetSourceListQueryHandler : IRequestHandler<GetSourceListQuery, IEnumerable<SourceDto>>
+  internal class GetSourceListQueryHandler : IRequestHandler<GetSourceListQuery, IEnumerable<SourceDto>>
   {
     private readonly IApplicationDbContext _context;
     private readonly IMapper _mapper;

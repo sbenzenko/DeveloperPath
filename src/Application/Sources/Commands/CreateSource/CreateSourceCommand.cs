@@ -6,27 +6,65 @@ using DeveloperPath.Domain.Entities;
 using DeveloperPath.Domain.Enums;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace DeveloperPath.Application.Sources.Commands.CreateSource
 {
+  /// <summary>
+  /// Source to create
+  /// </summary>
   public record CreateSourceCommand : IRequest<SourceDto>
   {
+    /// <summary>
+    /// Path Id
+    /// </summary>
     public int PathId { get; init; }
+    /// <summary>
+    /// Module Id
+    /// </summary>
     public int ModuleId { get; init; }
+    /// <summary>
+    /// Theme id that the source is for
+    /// </summary>
     public int ThemeId { get; init; }
+    /// <summary>
+    /// Source title
+    /// </summary>
     public string Title { get; init; }
+    /// <summary>
+    /// Source short summary
+    /// </summary>
     public string Description { get; init; }
+    /// <summary>
+    /// Source Url
+    /// </summary>
     public string Url { get; init; }
+    /// <summary>
+    /// Position of source in theme (0-based).
+    /// </summary>
     public int Order { get; init; }
+    /// <summary>
+    /// Type of source (None | Book | Blog | Course | Documentation | QandA | Video)
+    /// </summary>
     public SourceType Type { get; init; }
+    /// <summary>
+    /// Whether the resource Free | Requires registration | Paid only
+    /// </summary>
     public AvailabilityLevel Availability { get; init; }
+    /// <summary>
+    /// Whether inforation is Not applicable (default) | Up-to-date | Somewhat up-to-date | Outdated
+    /// </summary>
     public RelevanceLevel Relevance { get; init; }
+    /// <summary>
+    /// List of tags related to theme
+    /// </summary>
+    public IList<string> Tags { get; init; }
   }
 
-  public class CreateSourceCommandHandler : IRequestHandler<CreateSourceCommand, SourceDto>
+  internal class CreateSourceCommandHandler : IRequestHandler<CreateSourceCommand, SourceDto>
   {
     private readonly IApplicationDbContext _context;
     private readonly IMapper _mapper;

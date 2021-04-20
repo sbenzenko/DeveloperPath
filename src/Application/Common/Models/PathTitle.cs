@@ -4,7 +4,7 @@ using DeveloperPath.Domain.Entities;
 namespace DeveloperPath.Application.Common.Models
 {
   /// <summary>
-  /// Summary information about the path
+  /// Path title
   /// </summary>
   public class PathTitle : IMapFrom<Path>
   {
@@ -14,7 +14,7 @@ namespace DeveloperPath.Application.Common.Models
     public int Id { get; init; }
 
     /// <summary>
-    /// Path name
+    /// Path title
     /// </summary>
     public string Title { get; init; }
   }

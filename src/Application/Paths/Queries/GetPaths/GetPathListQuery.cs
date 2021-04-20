@@ -11,11 +11,14 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DeveloperPath.Application.Paths.Queries.GetPaths
 {
+  /// <summary>
+  /// Get path
+  /// </summary>
   public class GetPathListQuery : IRequest<IEnumerable<PathDto>>
   {
   }
 
-  public class GetPathsQueryHandler : IRequestHandler<GetPathListQuery, IEnumerable<PathDto>>
+  internal class GetPathsQueryHandler : IRequestHandler<GetPathListQuery, IEnumerable<PathDto>>
   {
     private readonly IApplicationDbContext _context;
     private readonly IMapper _mapper;

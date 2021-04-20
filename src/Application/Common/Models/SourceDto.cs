@@ -5,6 +5,9 @@ using DeveloperPath.Domain.Enums;
 
 namespace DeveloperPath.Application.Common.Models
 {
+  /// <summary>
+  /// Source of information (book, article, blog post, course)
+  /// </summary>
   public class SourceDto : IMapFrom<Source>
   {
     /// <summary>
@@ -18,7 +21,7 @@ namespace DeveloperPath.Application.Common.Models
     public string Title { get; set; }
 
     /// <summary>
-    /// Souce Description
+    /// Souce short summary
     /// </summary>
     public string Description { get; set; }
 
@@ -43,17 +46,17 @@ namespace DeveloperPath.Application.Common.Models
     public int Order { get; set; }
 
     /// <summary>
-    /// Type of source (book, video, blog, etc.)
+    /// Type of source (None | Book | Blog | Course | Documentation | QandA | Video)
     /// </summary>
     public SourceType Type { get; set; }
 
     /// <summary>
-    /// Whether the resource is available free or paid
+    /// Whether the resource Free | Requires registration | Paid only
     /// </summary>
     public AvailabilityLevel Availability { get; set; }
 
     /// <summary>
-    /// Whether inforation if up-to-date
+    /// Whether inforation is Not applicable (default) | Up-to-date | Somewhat up-to-date | Outdated
     /// </summary>
     public RelevanceLevel Relevance { get; set; }
 

@@ -1,5 +1,8 @@
+using System;
+using System.Reflection;
 using DeveloperPath.Application;
 using DeveloperPath.Application.Common.Interfaces;
+using DeveloperPath.Domain.Entities;
 using DeveloperPath.Infrastructure;
 using DeveloperPath.Infrastructure.Persistence;
 using DeveloperPath.WebApi.Services;
@@ -11,7 +14,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
-using NSwag;
 
 namespace DeveloperPath.WebApi
 {
@@ -38,7 +40,6 @@ namespace DeveloperPath.WebApi
 
             services.AddHealthChecks()
                     .AddDbContextCheck<ApplicationDbContext>();
-
 
             // Customise default API behaviour
             services.Configure<ApiBehaviorOptions>(options =>
@@ -76,20 +77,24 @@ namespace DeveloperPath.WebApi
                     };
                 });
 
-            services.AddOpenApiDocument(configure =>
+            services.AddSwaggerGen(setupAction =>
             {
-                configure.PostProcess = (document) =>
+              setupAction.SwaggerDoc("DeveloperPathAPISpecification",
+                new Microsoft.OpenApi.Models.OpenApiInfo()
                 {
-                    document.Info.Version = "v1";
-                    document.Info.Title = "Developer Path API";
-                    document.Info.Description = "Developer Path project Open API";
-                    document.Info.Contact = new OpenApiContact
-                    {
-                        Name = "Sergey Benzenko",
-                        Email = "sbenzenko@gmail.com",
-                        Url = "https://t.me/NetDeveloperDiary"
-                    };
-                };
+                  Version = "v1",
+                  Title = "Developer Path API",
+                  Description = "Developer Path project Open API specification",
+                  Contact = new Microsoft.OpenApi.Models.OpenApiContact
+                  {
+                    Name = "Sergey Benzenko",
+                    Email = "sbenzenko@gmail.com",
+                    Url = new System.Uri("https://t.me/NetDeveloperDiary")
+                  }
+                });
+
+              setupAction.IncludeXmlComments(System.IO.Path.Combine(AppContext.BaseDirectory, "DeveloperPath.Api.xml"));
+              setupAction.IncludeXmlComments(System.IO.Path.Combine(AppContext.BaseDirectory, "DeveloperPath.Models.xml"));
             });
         }
 
@@ -118,16 +123,14 @@ namespace DeveloperPath.WebApi
             app.UseHealthChecks("/health");
 
             app.UseHttpsRedirection();
-            app.UseOpenApi();
-            app.UseSwaggerUi3();
 
-            app.UseSwaggerUi3(settings =>
+            app.UseSwagger();
+            app.UseSwaggerUI(settings =>
             {
-                settings.Path = "/api";
-                settings.DocumentPath = "/swagger/v1/swagger.json";
+                settings.RoutePrefix = "";
+                settings.SwaggerEndpoint("/swagger/DeveloperPathAPISpecification/swagger.json", "DeveloperPath API");
             });
            
-
             app.UseRouting();
 
             app.UseAuthentication();

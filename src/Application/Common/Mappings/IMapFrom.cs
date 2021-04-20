@@ -2,8 +2,16 @@
 
 namespace DeveloperPath.Application.Common.Mappings
 {
-    public interface IMapFrom<T>
-    {   
-        void Mapping(Profile profile) => profile.CreateMap(typeof(T), GetType());
-    }
+  /// <summary>
+  /// Common mapping interface
+  /// </summary>
+  /// <typeparam name="T"></typeparam>
+  public interface IMapFrom<T>
+  {
+    /// <summary>
+    /// Default mapping implementation
+    /// </summary>
+    /// <param name="profile"></param>
+    void Mapping(Profile profile) => profile.CreateMap(typeof(T), GetType());
+  }
 }

@@ -9,14 +9,26 @@ using System.Threading.Tasks;
 
 namespace DeveloperPath.Application.Themes.Commands.DeleteTheme
 {
+  /// <summary>
+  /// Delete theme parameters
+  /// </summary>
   public record DeleteThemeCommand : IRequest
   {
+    /// <summary>
+    /// Theme id
+    /// </summary>
     public int Id { get; init; }
+    /// <summary>
+    /// Path id
+    /// </summary>
     public int PathId { get; init; }
+    /// <summary>
+    /// Module id
+    /// </summary>
     public int ModuleId { get; init; }
   }
 
-  public class DeleteThemeCommandHandler : IRequestHandler<DeleteThemeCommand>
+  internal class DeleteThemeCommandHandler : IRequestHandler<DeleteThemeCommand>
   {
     private readonly IApplicationDbContext _context;
 

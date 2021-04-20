@@ -1,7 +1,13 @@
 ﻿namespace DeveloperPath.Application.Common.Interfaces
 {
-    public interface ICurrentUserService
-    {
-        string UserId { get; }
-    }
+  /// <summary>
+  /// Current API user interface
+  /// </summary>
+  public interface ICurrentUserService
+  {
+    /// <summary>
+    /// User id
+    /// </summary>
+    string UserId { get; }
+  }
 }

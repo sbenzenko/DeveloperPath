@@ -11,13 +11,22 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DeveloperPath.Application.Modules.Queries.GetModules
 {
+  /// <summary>
+  /// Get module parameters
+  /// </summary>
   public class GetModuleQuery : IRequest<ModuleDto>
   {
-    public int Id { get; set; }
-    public int PathId { get; set; }
+    /// <summary>
+    /// Module Id
+    /// </summary>
+    public int Id { get; init; }
+    /// <summary>
+    /// Path Id
+    /// </summary>
+    public int PathId { get; init; }
   }
 
-  public class GetModuleQueryHandler : IRequestHandler<GetModuleQuery, ModuleDto>
+  internal class GetModuleQueryHandler : IRequestHandler<GetModuleQuery, ModuleDto>
   {
     private readonly IApplicationDbContext _context;
     private readonly IMapper _mapper;

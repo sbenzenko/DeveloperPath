@@ -5,6 +5,9 @@ using DeveloperPath.Domain.Enums;
 
 namespace DeveloperPath.Application.Common.Models
 {
+  /// <summary>
+  /// Particular theme of the module
+  /// </summary>
   public class ThemeDto : IMapFrom<Theme>
   {
     /// <summary>
@@ -13,7 +16,7 @@ namespace DeveloperPath.Application.Common.Models
     public int Id { get; init; }
 
     /// <summary>
-    /// Theme Title
+    /// Theme title
     /// </summary>
     public string Title { get; set; }
 
@@ -33,23 +36,22 @@ namespace DeveloperPath.Application.Common.Models
     public SectionDto Section { get; init; }
 
     /// <summary>
-    /// Complexity level
+    /// Complexity level (Beginner | Intermediate | Advanced)
     /// </summary>
     public ComplexityLevel Complexity { get; set; }
 
     /// <summary>
-    /// Necessity level
+    /// Necessity level (Other | Possibilities | Interesting | Good to know | Must know)
     /// </summary>
     public NecessityLevel Necessity { get; set; }
 
     /// <summary>
-    /// Position of theme in module (0-based). 
-    /// Multiple themes can have same order number (meaning they can be studied simultaneously)
+    /// Position of theme in module (0-based)
     /// </summary>
     public int Order { get; set; }
 
     /// <summary>
-    /// List of tags related to theme
+    /// List of tags related to the theme
     /// </summary>
     public ICollection<string> Tags { get; set; }
   }

@@ -9,13 +9,22 @@ using System.Threading.Tasks;
 
 namespace DeveloperPath.Application.Modules.Commands.DeleteModule
 {
+  /// <summary>
+  /// Delete module parameters
+  /// </summary>
   public record DeleteModuleCommand : IRequest
   {
+    /// <summary>
+    /// Module Id
+    /// </summary>
     public int Id { get; init; }
+    /// <summary>
+    /// Path id
+    /// </summary>
     public int PathId { get; init; }
   }
 
-  public class DeleteModuleCommandHandler : IRequestHandler<DeleteModuleCommand>
+  internal class DeleteModuleCommandHandler : IRequestHandler<DeleteModuleCommand>
   {
     private readonly IApplicationDbContext _context;
 

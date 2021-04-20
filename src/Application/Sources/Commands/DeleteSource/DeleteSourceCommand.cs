@@ -9,15 +9,30 @@ using System.Threading.Tasks;
 
 namespace DeveloperPath.Application.Sources.Commands.DeleteSource
 {
+  /// <summary>
+  /// Delete source parameters
+  /// </summary>
   public record DeleteSourceCommand : IRequest
   {
+    /// <summary>
+    /// Source Id
+    /// </summary>
     public int Id { get; init; }
+    /// <summary>
+    /// Path Id
+    /// </summary>
     public int PathId { get; init; }
+    /// <summary>
+    /// Module Id
+    /// </summary>
     public int ModuleId { get; init; }
+    /// <summary>
+    /// Theme Id
+    /// </summary>
     public int ThemeId { get; init; }
   }
 
-  public class DeleteSourceCommandHandler : IRequestHandler<DeleteSourceCommand>
+  internal class DeleteSourceCommandHandler : IRequestHandler<DeleteSourceCommand>
   {
     private readonly IApplicationDbContext _context;
 

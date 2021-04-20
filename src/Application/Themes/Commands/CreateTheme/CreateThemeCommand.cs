@@ -6,29 +6,57 @@ using DeveloperPath.Domain.Entities;
 using DeveloperPath.Domain.Enums;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace DeveloperPath.Application.Themes.Commands.CreateTheme
 {
-
   /// <summary>
-  /// Represents developer theme entity
+  /// Theme to create
   /// </summary>
   public record CreateThemeCommand : IRequest<ThemeDto>
   {
+    /// <summary>
+    /// Path id
+    /// </summary>
     public int PathId { get; init; }
+    /// <summary>
+    /// Module Id
+    /// </summary>
     public int ModuleId { get; init; }
+    /// <summary>
+    /// Theme title
+    /// </summary>
     public string Title { get; init; }
+    /// <summary>
+    /// Theme short summary
+    /// </summary>
     public string Description { get; init; }
+    /// <summary>
+    /// Theme section id (can be null)
+    /// </summary>
     public int SectionId { get; init; }
+    /// <summary>
+    /// Complexity level (Beginner | Intermediate | Advanced)
+    /// </summary>
     public ComplexityLevel Complexity { get; init; }
+    /// <summary>
+    /// Necessity level (Other | Possibilities | Interesting | Good to know | Must know)
+    /// </summary>
     public NecessityLevel Necessity { get; init; }
+    /// <summary>
+    /// Position of the theme in module (0-based)
+    /// </summary>
     public int Order { get; init; }
+    /// <summary>
+    /// List of tags related to the theme
+    /// </summary>
+    public IList<string> Tags { get; set; }
   }
 
-  public class CreateThemeCommandHandler : IRequestHandler<CreateThemeCommand, ThemeDto>
+  internal class CreateThemeCommandHandler : IRequestHandler<CreateThemeCommand, ThemeDto>
   {
     private readonly IApplicationDbContext _context;
     private readonly IMapper _mapper;

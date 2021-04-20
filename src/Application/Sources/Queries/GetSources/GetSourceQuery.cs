@@ -11,15 +11,30 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DeveloperPath.Application.Sources.Queries.GetSources
 {
+  /// <summary>
+  /// Get source parameters
+  /// </summary>
   public class GetSourceQuery : IRequest<SourceDto>
   {
-    public int Id { get; set; }
-    public int PathId { get; set; }
-    public int ModuleId { get; set; }
-    public int ThemeId { get; set; }
+    /// <summary>
+    /// Source Id
+    /// </summary>
+    public int Id { get; init; }
+    /// <summary>
+    /// Path Id
+    /// </summary>
+    public int PathId { get; init; }
+    /// <summary>
+    /// Module Id
+    /// </summary>
+    public int ModuleId { get; init; }
+    /// <summary>
+    /// Theme Id
+    /// </summary>
+    public int ThemeId { get; init; }
   }
 
-  public class GetSourceQueryHandler : IRequestHandler<GetSourceQuery, SourceDto>
+  internal class GetSourceQueryHandler : IRequestHandler<GetSourceQuery, SourceDto>
   {
     private readonly IApplicationDbContext _context;
     private readonly IMapper _mapper;

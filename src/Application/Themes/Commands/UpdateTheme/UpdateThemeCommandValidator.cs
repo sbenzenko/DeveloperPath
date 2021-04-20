@@ -7,10 +7,16 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DeveloperPath.Application.Themes.Commands.UpdateTheme
 {
+  /// <summary>
+  /// Validation rules for updating theme
+  /// </summary>
   public class UpdateThemeCommandValidator : AbstractValidator<UpdateThemeCommand>
   {
     private readonly IApplicationDbContext _context;
 
+    /// <summary>
+    /// </summary>
+    /// <param name="context"></param>
     public UpdateThemeCommandValidator(IApplicationDbContext context)
     {
       _context = context;
@@ -31,6 +37,13 @@ namespace DeveloperPath.Application.Themes.Commands.UpdateTheme
         .MaximumLength(3000).WithMessage("Description must not exceed 3000 characters.");
     }
 
+    /// <summary>
+    /// Request to context to check for unique title
+    /// </summary>
+    /// <param name="model"></param>
+    /// <param name="title"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
     public async Task<bool> BeUniqueTitle(UpdateThemeCommand model, string title, CancellationToken cancellationToken)
     {
       //Verify that all themes in module have titles different than title

@@ -10,18 +10,17 @@ using System.Threading.Tasks;
 
 namespace DeveloperPath.Application.Paths.Commands.UpdatePath
 {
-
   /// <summary>
-  /// Represents developer path entity
+  /// Path to update
   /// </summary>
-  public partial record UpdatePathCommand : IRequest<PathDto>
+  public record UpdatePathCommand : IRequest<PathDto>
   {
     /// <summary>
     /// Id of the path to update
     /// </summary>
     public int Id { get; init; }
     /// <summary>
-    /// Path name
+    /// Path title
     /// </summary>
     public string Title { get; init; }
     /// <summary>
@@ -29,15 +28,12 @@ namespace DeveloperPath.Application.Paths.Commands.UpdatePath
     /// </summary>
     public string Description { get; init; }
     /// <summary>
-    /// List of tags related to path.
-    /// Use generalized tags, e.g.:
-    ///  - Path ASP.NET - Tags: #Development #Web
-    ///  - Path Unity - Tags: #Development #Games
+    /// List of tags related to path
     /// </summary>
     public IList<string> Tags { get; init; }
   }
 
-  public class UpdatePathCommandHandler : IRequestHandler<UpdatePathCommand, PathDto>
+  internal class UpdatePathCommandHandler : IRequestHandler<UpdatePathCommand, PathDto>
   {
     private readonly IApplicationDbContext _context;
     private readonly IMapper _mapper;

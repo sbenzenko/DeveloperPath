@@ -4,6 +4,9 @@ using DeveloperPath.Domain.Enums;
 
 namespace DeveloperPath.Domain.Entities
 {
+  /// <summary>
+  /// Particular theme of the module
+  /// </summary>
   public record Theme : AuditableEntity
   {
     /// <summary>

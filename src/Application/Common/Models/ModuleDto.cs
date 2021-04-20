@@ -5,20 +5,23 @@ using DeveloperPath.Domain.Enums;
 
 namespace DeveloperPath.Application.Common.Models
 {
+  /// <summary>
+  /// Represents module (skill) of the path, e.g. Programming language, Databases, CI/CD. etc.
+  /// </summary>
   public class ModuleDto : IMapFrom<Module>
   {
     /// <summary>
-    /// Path ID
+    /// Module ID
     /// </summary>
     public int Id { get; init; }
 
     /// <summary>
-    /// Path name
+    /// Module title
     /// </summary>
     public string Title { get; init; }
 
     /// <summary>
-    /// Path short summary
+    /// Module short summary
     /// </summary>
     public string Description { get; init; }
 
@@ -28,7 +31,7 @@ namespace DeveloperPath.Application.Common.Models
     public ICollection<PathTitle> Paths { get; init; }
 
     /// <summary>
-    /// Necessity level
+    /// Necessity level (Other (default) | Possibilities | Interesting | Good to know | Must know)
     /// </summary>
     public NecessityLevel Necessity { get; init; }
 
@@ -38,7 +41,7 @@ namespace DeveloperPath.Application.Common.Models
     public ICollection<ModuleTitle> Prerequisites { get; init; }
 
     /// <summary>
-    /// List of tags related to module
+    /// List of tags related to the module
     /// </summary>
     public ICollection<string> Tags { get; set; }
   }

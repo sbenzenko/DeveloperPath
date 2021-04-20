@@ -17,7 +17,7 @@ namespace DeveloperPath.Domain.Entities
     //TODO: add unique moniker (e.g. stripped Title) to use in URL, e.g. api/paths/ASPNET/modules/CSharp
 
     /// <summary>
-    /// Module Title
+    /// Module title
     /// </summary>
     public string Title { get; set; }
 

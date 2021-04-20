@@ -13,12 +13,18 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DeveloperPath.Application.Modules.Queries.GetModules
 {
+  /// <summary>
+  /// Get module parameters
+  /// </summary>
   public class GetModuleListQuery : IRequest<System.Collections.Generic.IEnumerable<ModuleDto>>
   {
-    public int PathId { get; set; }
+    /// <summary>
+    /// Path id
+    /// </summary>
+    public int PathId { get; init; }
   }
 
-  public class GetModulesQueryHandler : IRequestHandler<GetModuleListQuery, System.Collections.Generic.IEnumerable<ModuleDto>>
+  internal class GetModulesQueryHandler : IRequestHandler<GetModuleListQuery, System.Collections.Generic.IEnumerable<ModuleDto>>
   {
     private readonly IApplicationDbContext _context;
     private readonly IMapper _mapper;

@@ -7,12 +7,18 @@ using System.Threading.Tasks;
 
 namespace DeveloperPath.Application.Paths.Commands.DeletePath
 {
+  /// <summary>
+  /// Delete path parameters
+  /// </summary>
   public record DeletePathCommand : IRequest
   {
+    /// <summary>
+    /// Path ID
+    /// </summary>
     public int Id { get; init; }
   }
 
-  public class DeletePathCommandHandler : IRequestHandler<DeletePathCommand>
+  internal class DeletePathCommandHandler : IRequestHandler<DeletePathCommand>
   {
     private readonly IApplicationDbContext _context;
 

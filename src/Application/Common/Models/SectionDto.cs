@@ -4,6 +4,9 @@ using DeveloperPath.Domain.Enums;
 
 namespace DeveloperPath.Application.Common.Models
 {
+  /// <summary>
+  /// Module section (logical group of themes, like a book chapter)
+  /// </summary>
   public class SectionDto : IMapFrom<Section>
   {
     /// <summary>
@@ -17,13 +20,12 @@ namespace DeveloperPath.Application.Common.Models
     public string Title { get; set; }
 
     /// <summary>
-    /// Necessity level
+    /// Necessity level (Other (default) | Possibilities | Interesting | Good to know | Must know)
     /// </summary>
     public NecessityLevel Necessity { get; set; }
 
     /// <summary>
-    /// Position of section in module (0-based). 
-    /// Multiple sections can have same order number (meaning they can be studied simultaneously)
+    /// Position of section in module (0-based)
     /// </summary>
     public int Order { get; set; }
   }

@@ -14,15 +14,27 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DeveloperPath.Application.Modules.Queries.GetModules
 {
+  /// <summary>
+  /// Get modules paged
+  /// </summary>
   public class GetModuleListQueryPaging : IRequest<(PaginationData, IEnumerable<ModuleDto>)>
   {
-    public int PathId { get; set; }
-    public int PageNumber { get; set; }
-    public int PageSize { get; set; }
+    /// <summary>
+    /// Path id
+    /// </summary>
+    public int PathId { get; init; }
+    /// <summary>
+    /// Page number
+    /// </summary>
+    public int PageNumber { get; init; }
+    /// <summary>
+    /// Items per page
+    /// </summary>
+    public int PageSize { get; init; }
   }
 
 
-  public class GetModulesQueryPagingHandler : IRequestHandler<GetModuleListQueryPaging, (PaginationData, IEnumerable<ModuleDto>)>
+  internal class GetModulesQueryPagingHandler : IRequestHandler<GetModuleListQueryPaging, (PaginationData, IEnumerable<ModuleDto>)>
   {
     private readonly IApplicationDbContext _context;
     private readonly IMapper _mapper;

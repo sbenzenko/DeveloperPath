@@ -2,8 +2,13 @@
 
 namespace DeveloperPath.Application.Sources.Commands.UpdateSource
 {
+  /// <summary>
+  /// Validation rules for updating source
+  /// </summary>
   public class UpdateSourceCommandValidator : AbstractValidator<UpdateSourceCommand>
   {
+    /// <summary>
+    /// </summary>
     public UpdateSourceCommandValidator()
     {
       RuleFor(v => v.Id)

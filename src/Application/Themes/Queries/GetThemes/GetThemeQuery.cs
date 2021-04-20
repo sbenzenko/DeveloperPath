@@ -11,14 +11,26 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DeveloperPath.Application.Themes.Queries.GetThemes
 {
+  /// <summary>
+  /// Get theme parameters
+  /// </summary>
   public class GetThemeQuery : IRequest<ThemeDto>
   {
-    public int Id { get; set; }
-    public int PathId { get; set; }
-    public int ModuleId { get; set; }
+    /// <summary>
+    /// Theme Id
+    /// </summary>
+    public int Id { get; init; }
+    /// <summary>
+    /// Path Id
+    /// </summary>
+    public int PathId { get; init; }
+    /// <summary>
+    /// Module Id
+    /// </summary>
+    public int ModuleId { get; init; }
   }
 
-  public class GetThemeQueryHandler : IRequestHandler<GetThemeQuery, ThemeDto>
+  internal class GetThemeQueryHandler : IRequestHandler<GetThemeQuery, ThemeDto>
   {
     private readonly IApplicationDbContext _context;
     private readonly IMapper _mapper;
