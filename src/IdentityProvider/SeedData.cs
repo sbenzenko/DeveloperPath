@@ -52,11 +52,13 @@ namespace IdentityProvider
                         }
 
                         result = userMgr.AddClaimsAsync(alice, new Claim[]{
+                            new Claim(JwtClaimTypes.Role, "Administrator"),
                             new Claim(JwtClaimTypes.Name, "Alice Smith"),
                             new Claim(JwtClaimTypes.GivenName, "Alice"),
                             new Claim(JwtClaimTypes.FamilyName, "Smith"),
                             new Claim(JwtClaimTypes.WebSite, "http://alice.com"),
                         }).Result;
+
                         if (!result.Succeeded)
                         {
                             throw new Exception(result.Errors.First().Description);
@@ -84,6 +86,7 @@ namespace IdentityProvider
                         }
 
                         result = userMgr.AddClaimsAsync(bob, new Claim[]{
+                            new Claim(JwtClaimTypes.Role, "User"),
                             new Claim(JwtClaimTypes.Name, "Bob Smith"),
                             new Claim(JwtClaimTypes.GivenName, "Bob"),
                             new Claim(JwtClaimTypes.FamilyName, "Smith"),

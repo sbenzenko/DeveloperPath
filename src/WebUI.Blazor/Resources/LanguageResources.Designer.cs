@@ -61,6 +61,15 @@ namespace WebUI.Blazor.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Administrator zone.
+        /// </summary>
+        public static string Administrator_zone {
+            get {
+                return ResourceManager.GetString("Administrator zone", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Home.
         /// </summary>
         public static string Home {
