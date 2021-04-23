@@ -69,8 +69,8 @@ namespace DeveloperPath.WebApi
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
                 {
-                    options.Authority = "https://localhost:6001";
-                    options.Audience = "pathapi";
+                    options.Authority = Configuration["Authority"] ?? throw new Exception("Value can't be null: Authority");
+                    options.Audience = Configuration["Audience"] ?? throw new Exception("Value can't be null: Audience");
                     options.TokenValidationParameters = new TokenValidationParameters()
                     {
                         NameClaimType = "name"

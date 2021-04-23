@@ -3,7 +3,10 @@
     "SelfHost": {
       "commandName": "Project",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "AZURE_CLIENT_SECRET": "-Lm-bnob~h82J4jRqaDpd6.wc08lT9Pncz",
+        "AZURE_CLIENT_ID": "88f4f66b-8f04-41ca-824d-12ba52dfba8a",
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "AZURE_TENANT_ID": "0ad185de-d1f6-426f-a89d-7f4620a13cec"
       },
       "applicationUrl": "https://localhost:6001"
     }

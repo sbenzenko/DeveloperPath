@@ -1,5 +1,7 @@
 ﻿@inherits LayoutComponentBase
 @inject IStringLocalizer<LanguageResources> localizer
+@using Microsoft.AspNetCore.Components.WebAssembly.Authentication
+
 
 <CascadingValue Name="Theme" Value="@theme1">
     <MatThemeProvider Theme="@theme1">
@@ -30,6 +32,16 @@
                                 </MatListItem>
                             </MatList>
                         </MatListGroup>
+                        <AuthorizeView Roles="Administrator">
+                            <Authorized>
+                                <MatListGroupSubHeader>@localizer["Administrator zone"]</MatListGroupSubHeader>
+                                <MatList>
+                                    <MatListItem>
+                                        <MatIcon Icon="merge_type"></MatIcon> <div class="listitem">@localizer["Paths"]</div>
+                                    </MatListItem>
+                                </MatList>
+                            </Authorized>
+                        </AuthorizeView>
                     </MatDrawer>
                     <MatDrawerContent>
                         <div class="content">@Body</div>
@@ -39,6 +51,7 @@
         </MatAppBarContainer>
     </MatThemeProvider>
 </CascadingValue>
+
 
 @code
 {
