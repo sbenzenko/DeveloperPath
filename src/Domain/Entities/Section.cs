@@ -1,14 +1,14 @@
 ﻿using System.Collections.Generic;
 using DeveloperPath.Domain.Common;
-using DeveloperPath.Domain.Enums;
+using Domain.Shared.Enums;
 
 namespace DeveloperPath.Domain.Entities
 {
-  /// <summary>
-  /// Represents a section in module (logical group of themes, like a book chapter).
-  /// May or may not exist in a module
-  /// </summary>
-  public record Section : AuditableEntity
+    /// <summary>
+    /// Represents a section in module (logical group of themes, like a book chapter).
+    /// May or may not exist in a module
+    /// </summary>
+    public record Section : AuditableEntity
   {
     /// <summary>
     /// Section ID

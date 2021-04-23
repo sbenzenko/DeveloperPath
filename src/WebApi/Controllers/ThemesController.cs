@@ -1,17 +1,18 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using DeveloperPath.Application.Common.Models;
-using DeveloperPath.Application.Themes.Commands.CreateTheme;
-using DeveloperPath.Application.Themes.Commands.DeleteTheme;
-using DeveloperPath.Application.Themes.Commands.UpdateTheme;
-using DeveloperPath.Application.Themes.Queries.GetThemes;
+using Application.Shared.Dtos.Models;
+using DeveloperPath.Application.CQRS.Themes.Commands.CreateTheme;
+using DeveloperPath.Application.CQRS.Themes.Commands.DeleteTheme;
+using DeveloperPath.Application.CQRS.Themes.Commands.UpdateTheme;
+using DeveloperPath.Application.CQRS.Themes.Queries.GetThemes;
+ 
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DeveloperPath.WebApi.Controllers
 {
-  //[Authorize]
-  [Route("api/paths/{pathId}/modules/{moduleId}/themes")]
+    //[Authorize]
+    [Route("api/paths/{pathId}/modules/{moduleId}/themes")]
   public class ThemesController : ApiController
   {
     public ThemesController(IMediator mediator)

@@ -2,11 +2,11 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using DeveloperPath.Application.Common.Models;
-using DeveloperPath.Application.Modules.Commands.CreateModule;
-using DeveloperPath.Application.Modules.Commands.DeleteModule;
-using DeveloperPath.Application.Modules.Commands.UpdateModule;
-using DeveloperPath.Application.Modules.Queries.GetModules;
+using Application.Shared.Dtos.Models;
+using DeveloperPath.Application.CQRS.Modules.Commands.CreateModule;
+using DeveloperPath.Application.CQRS.Modules.Commands.DeleteModule;
+using DeveloperPath.Application.CQRS.Modules.Commands.UpdateModule;
+using DeveloperPath.Application.CQRS.Modules.Queries.GetModules;
 using DeveloperPath.Application.Paging;
 using DeveloperPath.WebApi.Controllers;
 using DeveloperPath.WebApi.Models;
@@ -17,7 +17,7 @@ using NUnit.Framework;
 
 namespace DeveloperPath.Web.WebAPI.Controllers
 {
-  public class ModulesControllerTests : TestBase
+    public class ModulesControllerTests : TestBase
   {
     private readonly Mock<IMediator> moqMediator;
     private readonly ModuleDto sampleModule;

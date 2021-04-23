@@ -1,5 +1,5 @@
-﻿using DeveloperPath.Application.Common.Interfaces;
-using DeveloperPath.Application.Common.Models;
+﻿using Application.Shared.Dtos.Models;
+using DeveloperPath.Application.Common.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;

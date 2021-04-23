@@ -1,4 +1,4 @@
-﻿using DeveloperPath.Application.Common.Models;
+﻿using Application.Shared.Dtos.Models;
 using Microsoft.AspNetCore.Identity;
 using System.Linq;
 

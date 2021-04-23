@@ -1,4 +1,5 @@
-﻿using DeveloperPath.Application.Common.Models;
+﻿
+using Application.Shared.Dtos.Models;
 using System.Threading.Tasks;
 
 namespace DeveloperPath.Application.Common.Interfaces

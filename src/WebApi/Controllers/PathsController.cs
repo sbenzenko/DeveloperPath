@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using DeveloperPath.Application.Common.Models;
-using DeveloperPath.Application.Paths.Commands.CreatePath;
-using DeveloperPath.Application.Paths.Commands.DeletePath;
-using DeveloperPath.Application.Paths.Commands.UpdatePath;
-using DeveloperPath.Application.Paths.Queries.GetPaths;
+using Application.Shared.Dtos.Models;
+using DeveloperPath.Application.CQRS.Paths.Commands.CreatePath;
+using DeveloperPath.Application.CQRS.Paths.Commands.DeletePath;
+using DeveloperPath.Application.CQRS.Paths.Commands.UpdatePath;
+using DeveloperPath.Application.CQRS.Paths.Queries.GetPaths;
 using DeveloperPath.WebApi.Extensions;
 using DeveloperPath.WebApi.Models;
 using MediatR;
@@ -12,8 +12,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace DeveloperPath.WebApi.Controllers
 {
-  //[Authorize]
-  [Route("api/paths")]
+    //[Authorize]
+    [Route("api/paths")]
   public class PathsController : ApiController
   {
     public PathsController(IMediator mediator)

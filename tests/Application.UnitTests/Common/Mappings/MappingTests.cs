@@ -1,7 +1,8 @@
 ﻿using AutoMapper;
-using DeveloperPath.Application.Common.Mappings;
-using DeveloperPath.Application.Modules.Queries.GetModules;
-using DeveloperPath.Application.Paths.Queries.GetPaths;
+using DeveloperPath.Application.Common.Mappings.Interfaces;
+using DeveloperPath.Application.Common.Mappings.Profiles;
+using DeveloperPath.Application.CQRS.Modules.Queries.GetModules;
+using DeveloperPath.Application.CQRS.Paths.Queries.GetPaths;
 using DeveloperPath.Domain.Entities;
 using NUnit.Framework;
 using System;
@@ -18,6 +19,11 @@ namespace DeveloperPath.Application.UnitTests.Common.Mappings
             _configuration = new MapperConfiguration(cfg =>
             {
                 cfg.AddProfile<MappingProfile>();
+                cfg.AddProfile<ModuleProfile>();
+                cfg.AddProfile<PathProfile>();
+                cfg.AddProfile<SectionProfile>();
+                cfg.AddProfile<SourceProfile>();
+                cfg.AddProfile<ThemeProfile>();
             });
 
             _mapper = _configuration.CreateMapper();
@@ -26,7 +32,7 @@ namespace DeveloperPath.Application.UnitTests.Common.Mappings
         [Test]
         public void ShouldHaveValidConfiguration()
         {
-            _configuration.AssertConfigurationIsValid();
+            _configuration.AssertConfigurationIsValid<MappingProfile>();
         }
         
         [Test]

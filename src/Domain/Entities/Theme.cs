@@ -1,13 +1,13 @@
 ﻿using System.Collections.Generic;
 using DeveloperPath.Domain.Common;
-using DeveloperPath.Domain.Enums;
+using Domain.Shared.Enums;
 
 namespace DeveloperPath.Domain.Entities
 {
-  /// <summary>
-  /// Particular theme of the module
-  /// </summary>
-  public record Theme : AuditableEntity
+    /// <summary>
+    /// Particular theme of the module
+    /// </summary>
+    public record Theme : AuditableEntity
   {
     /// <summary>
     /// Theme ID

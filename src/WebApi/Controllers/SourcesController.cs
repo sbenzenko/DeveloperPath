@@ -1,8 +1,8 @@
-﻿using DeveloperPath.Application.Common.Models;
-using DeveloperPath.Application.Sources.Commands.CreateSource;
-using DeveloperPath.Application.Sources.Commands.DeleteSource;
-using DeveloperPath.Application.Sources.Commands.UpdateSource;
-using DeveloperPath.Application.Sources.Queries.GetSources;
+﻿using Application.Shared.Dtos.Models;
+using DeveloperPath.Application.CQRS.Sources.Commands.CreateSource;
+using DeveloperPath.Application.CQRS.Sources.Commands.DeleteSource;
+using DeveloperPath.Application.CQRS.Sources.Commands.UpdateSource;
+using DeveloperPath.Application.CQRS.Sources.Queries.GetSources;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -11,8 +11,8 @@ using System.Threading.Tasks;
 
 namespace DeveloperPath.WebApi.Controllers
 {
-  //[Authorize]
-  [Route("api/paths/{pathId}/modules/{moduleId}/themes/{themeId}/sources")]
+    //[Authorize]
+    [Route("api/paths/{pathId}/modules/{moduleId}/themes/{themeId}/sources")]
   public class SourcesController : ApiController
   {
     public SourcesController(IMediator mediator)

@@ -1,13 +1,13 @@
 ﻿using System.Collections.Generic;
 using DeveloperPath.Domain.Common;
-using DeveloperPath.Domain.Enums;
+using Domain.Shared.Enums;
 
 namespace DeveloperPath.Domain.Entities
 {
-  /// <summary>
-  /// Represents module (skill) of the path, e.g. Programming language, Databases, CI/CD. etc.
-  /// </summary>
-  public record Module : AuditableEntity
+    /// <summary>
+    /// Represents module (skill) of the path, e.g. Programming language, Databases, CI/CD. etc.
+    /// </summary>
+    public record Module : AuditableEntity
   {
     /// <summary>
     /// Module ID

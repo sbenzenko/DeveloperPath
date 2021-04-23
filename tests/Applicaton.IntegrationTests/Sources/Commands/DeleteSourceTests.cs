@@ -1,17 +1,18 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using DeveloperPath.Application.Common.Exceptions;
-using DeveloperPath.Application.Modules.Commands.CreateModule;
-using DeveloperPath.Application.Sources.Commands.DeleteSource;
+using DeveloperPath.Application.CQRS.Modules.Commands.CreateModule;
+using DeveloperPath.Application.CQRS.Sources.Commands.DeleteSource;
 using DeveloperPath.Domain.Entities;
+using Domain.Shared.Enums;
 using FluentAssertions;
 using NUnit.Framework;
 
 namespace DeveloperPath.Application.IntegrationTests.Commands
 {
-  using static Testing;
+    using static Testing;
 
-  public class DeleteSourceTests : TestBase
+    public class DeleteSourceTests : TestBase
   {
     [Test]
     public void ShouldRequireValidPathId()
@@ -78,9 +79,9 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
         Description = "Some description",
         Url = "https://source1.com",
         Order = 0,
-        Type = Domain.Enums.SourceType.Documentation,
-        Availability = Domain.Enums.AvailabilityLevel.Free,
-        Relevance = Domain.Enums.RelevanceLevel.Relevant,
+        Type = SourceType.Documentation,
+        Availability =  AvailabilityLevel.Free,
+        Relevance =  RelevanceLevel.Relevant,
         Tags = new List<string> { "Tag1", "Tag2", "Tag3" }
       });
 

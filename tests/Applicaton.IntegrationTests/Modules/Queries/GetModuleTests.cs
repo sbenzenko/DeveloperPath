@@ -1,17 +1,18 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using DeveloperPath.Application.Common.Exceptions;
-using DeveloperPath.Application.Modules.Commands.CreateModule;
-using DeveloperPath.Application.Modules.Queries.GetModules;
+using DeveloperPath.Application.CQRS.Modules.Commands.CreateModule;
+using DeveloperPath.Application.CQRS.Modules.Queries.GetModules;
 using DeveloperPath.Domain.Entities;
+using Domain.Shared.Enums;
 using FluentAssertions;
 using NUnit.Framework;
 
 namespace DeveloperPath.Application.IntegrationTests.Queries
 {
-  using static Testing;
+    using static Testing;
 
-  public class GetModuleTests : TestBase
+    public class GetModuleTests : TestBase
   {
     [Test]
     public async Task ShouldReturnModuleList()
@@ -55,7 +56,7 @@ namespace DeveloperPath.Application.IntegrationTests.Queries
         PathId = path.Id,
         Title = "New Module",
         Description = "New Module Description",
-        Necessity = Domain.Enums.NecessityLevel.MustKnow,
+        Necessity =  NecessityLevel.MustKnow,
         Tags = new List<string> { "Tag1", "Tag2", "Tag3" }
       });
 
@@ -79,7 +80,7 @@ namespace DeveloperPath.Application.IntegrationTests.Queries
         PathId = path.Id,
         Title = "New Other Module",
         Description = "New Other Module Description",
-        Necessity = Domain.Enums.NecessityLevel.MustKnow,
+        Necessity =  NecessityLevel.MustKnow,
         Tags = new List<string> { "Tag1", "Tag2", "Tag3" }
       });
       await AddAsync(new Theme
@@ -87,8 +88,8 @@ namespace DeveloperPath.Application.IntegrationTests.Queries
         Title = "New Theme1",
         ModuleId = module.Id,
         Description = "New Theme1 Description",
-        Necessity = Domain.Enums.NecessityLevel.MustKnow,
-        Complexity = Domain.Enums.ComplexityLevel.Beginner,
+        Necessity =  NecessityLevel.MustKnow,
+        Complexity =  ComplexityLevel.Beginner,
         Tags = new List<string> { "Theme1", "ThemeTag2", "Tag3" },
         Order = 1
       });
@@ -97,8 +98,8 @@ namespace DeveloperPath.Application.IntegrationTests.Queries
         Title = "New Theme2",
         ModuleId = module.Id,
         Description = "New Theme2 Description",
-        Necessity = Domain.Enums.NecessityLevel.MustKnow,
-        Complexity = Domain.Enums.ComplexityLevel.Beginner,
+        Necessity =  NecessityLevel.MustKnow,
+        Complexity =  ComplexityLevel.Beginner,
         Tags = new List<string> { "Theme2", "ThemeTag2", "Tag3" },
         Order = 2
       });

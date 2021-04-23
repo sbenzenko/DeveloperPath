@@ -1,6 +1,6 @@
 ﻿using DeveloperPath.Application.Common.Behaviours;
 using DeveloperPath.Application.Common.Interfaces;
-using DeveloperPath.Application.Paths.Commands.CreatePath;
+using DeveloperPath.Application.CQRS.Paths.Commands.CreatePath;
 using Microsoft.Extensions.Logging;
 using Moq;
 using NUnit.Framework;

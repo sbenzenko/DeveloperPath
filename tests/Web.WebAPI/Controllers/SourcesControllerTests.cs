@@ -2,11 +2,11 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using DeveloperPath.Application.Common.Models;
-using DeveloperPath.Application.Sources.Commands.CreateSource;
-using DeveloperPath.Application.Sources.Commands.DeleteSource;
-using DeveloperPath.Application.Sources.Commands.UpdateSource;
-using DeveloperPath.Application.Sources.Queries.GetSources;
+using Application.Shared.Dtos.Models;
+using DeveloperPath.Application.CQRS.Sources.Commands.CreateSource;
+using DeveloperPath.Application.CQRS.Sources.Commands.DeleteSource;
+using DeveloperPath.Application.CQRS.Sources.Commands.UpdateSource;
+using DeveloperPath.Application.CQRS.Sources.Queries.GetSources;
 using DeveloperPath.WebApi.Controllers;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -15,7 +15,7 @@ using NUnit.Framework;
 
 namespace DeveloperPath.Web.WebAPI.Controllers
 {
-  public class SourcesControllerTests : TestBase
+    public class SourcesControllerTests : TestBase
   {
     private readonly Mock<IMediator> moqMediator;
     private readonly SourceDto sampleSource;

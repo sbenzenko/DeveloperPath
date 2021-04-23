@@ -1,17 +1,18 @@
 ﻿using System;
 using System.Threading.Tasks;
 using DeveloperPath.Application.Common.Exceptions;
-using DeveloperPath.Application.Modules.Commands.CreateModule;
-using DeveloperPath.Application.Sources.Commands.CreateSource;
+using DeveloperPath.Application.CQRS.Modules.Commands.CreateModule;
+using DeveloperPath.Application.CQRS.Sources.Commands.CreateSource;
 using DeveloperPath.Domain.Entities;
+using Domain.Shared.Enums;
 using FluentAssertions;
 using NUnit.Framework;
 
 namespace DeveloperPath.Application.IntegrationTests.Commands
 {
-  using static Testing;
+    using static Testing;
 
-  public class CreateSourceTests : TestBase
+    public class CreateSourceTests : TestBase
   {
     [Test]
     public void ShouldRequireMinimumFields()
@@ -181,8 +182,8 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
         Title = "New Theme",
         ModuleId = module.Id,
         Description = "New Theme Description",
-        Necessity = Domain.Enums.NecessityLevel.MustKnow,
-        Complexity = Domain.Enums.ComplexityLevel.Beginner,
+        Necessity =  NecessityLevel.MustKnow,
+        Complexity =  ComplexityLevel.Beginner,
         Order = 2
       });
 
@@ -194,9 +195,9 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
         Title = "New Theme",
         Description = "New Theme Description",
         Url = "https://www.test.com",
-        Type = Domain.Enums.SourceType.Book,
-        Availability = Domain.Enums.AvailabilityLevel.RequiresRegistration,
-        Relevance = Domain.Enums.RelevanceLevel.Relevant,
+        Type = SourceType.Book,
+        Availability =  AvailabilityLevel.RequiresRegistration,
+        Relevance =  RelevanceLevel.Relevant,
         Order = 1
       };
 

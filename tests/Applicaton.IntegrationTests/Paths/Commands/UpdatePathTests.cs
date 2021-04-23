@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
 using DeveloperPath.Application.Common.Exceptions;
-using DeveloperPath.Application.Paths.Commands.CreatePath;
-using DeveloperPath.Application.Paths.Commands.UpdatePath;
+using DeveloperPath.Application.CQRS.Paths.Commands.CreatePath;
+using DeveloperPath.Application.CQRS.Paths.Commands.UpdatePath;
 using DeveloperPath.Domain.Entities;
 using FluentAssertions;
 using NUnit.Framework;

@@ -8,4 +8,8 @@
 		<AnalysisLevel>latest</AnalysisLevel>
 	</PropertyGroup>
 
+	<ItemGroup>
+	  <ProjectReference Include="..\Domain.Shared\Domain.Shared\Domain.Shared.csproj" />
+	</ItemGroup>
+
 </Project>

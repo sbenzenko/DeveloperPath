@@ -20,7 +20,7 @@
             <param name="moduleId">An id of the module</param>
             <returns>Information about the module</returns>
         </member>
-        <member name="M:DeveloperPath.WebApi.Controllers.ModulesController.Create(System.Int32,DeveloperPath.Application.Modules.Commands.CreateModule.CreateModuleCommand)">
+        <member name="M:DeveloperPath.WebApi.Controllers.ModulesController.Create(System.Int32,DeveloperPath.Application.CQRS.Modules.Commands.CreateModule.CreateModuleCommand)">
             <summary>
             Create a module
             </summary>
@@ -28,7 +28,7 @@
             <param name="command">Module object</param>
             <returns>Created module</returns>
         </member>
-        <member name="M:DeveloperPath.WebApi.Controllers.ModulesController.Update(System.Int32,System.Int32,DeveloperPath.Application.Modules.Commands.UpdateModule.UpdateModuleCommand)">
+        <member name="M:DeveloperPath.WebApi.Controllers.ModulesController.Update(System.Int32,System.Int32,DeveloperPath.Application.CQRS.Modules.Commands.UpdateModule.UpdateModuleCommand)">
             <summary>
             Update the module with given Id
             </summary>
@@ -58,14 +58,14 @@
             <param name="pathId">An id of the path</param>
             <returns>Information of the path with modules included</returns>
         </member>
-        <member name="M:DeveloperPath.WebApi.Controllers.PathsController.Create(DeveloperPath.Application.Paths.Commands.CreatePath.CreatePathCommand)">
+        <member name="M:DeveloperPath.WebApi.Controllers.PathsController.Create(DeveloperPath.Application.CQRS.Paths.Commands.CreatePath.CreatePathCommand)">
             <summary>
             Create a path
             </summary>
             <param name="command">Path object</param>
             <returns>Created path</returns>
         </member>
-        <member name="M:DeveloperPath.WebApi.Controllers.PathsController.Update(System.Int32,DeveloperPath.Application.Paths.Commands.UpdatePath.UpdatePathCommand)">
+        <member name="M:DeveloperPath.WebApi.Controllers.PathsController.Update(System.Int32,DeveloperPath.Application.CQRS.Paths.Commands.UpdatePath.UpdatePathCommand)">
             <summary>
             Update the path with given Id
             </summary>
@@ -99,7 +99,7 @@
             <param name="sourceId">An id of the source</param>
             <returns>Detailed information of the source with sources included</returns>
         </member>
-        <member name="M:DeveloperPath.WebApi.Controllers.SourcesController.Create(System.Int32,System.Int32,System.Int32,DeveloperPath.Application.Sources.Commands.CreateSource.CreateSourceCommand)">
+        <member name="M:DeveloperPath.WebApi.Controllers.SourcesController.Create(System.Int32,System.Int32,System.Int32,DeveloperPath.Application.CQRS.Sources.Commands.CreateSource.CreateSourceCommand)">
             <summary>
             Create a source
             </summary>
@@ -109,7 +109,7 @@
             <param name="command">Command object</param>
             <returns>Created source</returns>
         </member>
-        <member name="M:DeveloperPath.WebApi.Controllers.SourcesController.Update(System.Int32,System.Int32,System.Int32,System.Int32,DeveloperPath.Application.Sources.Commands.UpdateSource.UpdateSourceCommand)">
+        <member name="M:DeveloperPath.WebApi.Controllers.SourcesController.Update(System.Int32,System.Int32,System.Int32,System.Int32,DeveloperPath.Application.CQRS.Sources.Commands.UpdateSource.UpdateSourceCommand)">
             <summary>
             Update the source with given Id
             </summary>
@@ -147,7 +147,7 @@
             <param name="themeId">An id of the theme</param>
             <returns>Information about the theme</returns>
         </member>
-        <member name="M:DeveloperPath.WebApi.Controllers.ThemesController.Create(System.Int32,System.Int32,DeveloperPath.Application.Themes.Commands.CreateTheme.CreateThemeCommand)">
+        <member name="M:DeveloperPath.WebApi.Controllers.ThemesController.Create(System.Int32,System.Int32,DeveloperPath.Application.CQRS.Themes.Commands.CreateTheme.CreateThemeCommand)">
             <summary>
             Create a theme
             </summary>
@@ -156,7 +156,7 @@
             <param name="command">Theme object</param>
             <returns>Created theme</returns>
         </member>
-        <member name="M:DeveloperPath.WebApi.Controllers.ThemesController.Update(System.Int32,System.Int32,System.Int32,DeveloperPath.Application.Themes.Commands.UpdateTheme.UpdateThemeCommand)">
+        <member name="M:DeveloperPath.WebApi.Controllers.ThemesController.Update(System.Int32,System.Int32,System.Int32,DeveloperPath.Application.CQRS.Themes.Commands.UpdateTheme.UpdateThemeCommand)">
             <summary>
             Update the theme with given Id
             </summary>
