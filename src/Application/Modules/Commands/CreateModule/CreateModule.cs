@@ -31,7 +31,7 @@ namespace DeveloperPath.Application.Modules.Commands.CreateModule
     [MaxLength(100)]
     public string Title { get; init; }
     /// <summary>
-    /// Path short summary
+    /// Module short summary
     /// </summary>
     [Required]
     [MaxLength(3000)]

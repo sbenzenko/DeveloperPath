@@ -19,6 +19,8 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.5" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="5.0.5" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning" Version="5.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning.ApiExplorer" Version="5.0.0" />
     <PackageReference Include="Microsoft.Extensions.Diagnostics.HealthChecks.EntityFrameworkCore" Version="5.0.5" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.1.2" />
   </ItemGroup>
@@ -40,12 +42,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
-
-  <!--<Target Name="NSwag" AfterTargets="Build" Condition="'$(Configuration)' == 'Debug'">
-    <Copy SourceFiles="@(Reference)" DestinationFolder="$(OutDir)References" />
-    <Exec Command="$(NSwagExe_Core31) run /variables:Configuration=$(Configuration)" />
-    <RemoveDir Directories="$(OutDir)References" />
-  </Target>-->
 
 
 </Project>

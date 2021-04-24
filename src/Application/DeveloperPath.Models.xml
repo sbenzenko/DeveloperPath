@@ -608,7 +608,7 @@
         </member>
         <member name="P:DeveloperPath.Application.Modules.Commands.CreateModule.CreateModule.Description">
             <summary>
-            Path short summary
+            Module short summary
             </summary>
         </member>
         <member name="P:DeveloperPath.Application.Modules.Commands.CreateModule.CreateModule.Necessity">

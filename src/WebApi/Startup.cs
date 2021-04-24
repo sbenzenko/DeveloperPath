@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -35,46 +36,11 @@ namespace DeveloperPath.WebApi
       services.AddScoped<ICurrentUserService, CurrentUserService>();
 
       services.AddHttpContextAccessor();
-      services.AddControllers(options =>
-      {
-        options.ReturnHttpNotAcceptable = true;
-        options.Filters.Add(
-          new ProducesAttribute("application/json", "application/xml"));
-      })
-        .AddXmlDataContractSerializerFormatters()
-        .AddJsonOptions(options =>
-        {
-          // serialize enums as strings
-          options.JsonSerializerOptions.Converters.Add(new System.Text.Json.Serialization.JsonStringEnumConverter());
-        });
+
+      services.AddApiConfiguration();
 
       services.AddHealthChecks()
               .AddDbContextCheck<ApplicationDbContext>();
-
-      // Customise default API behaviour
-      services.Configure<ApiBehaviorOptions>(options =>
-      {
-        //options.SuppressModelStateInvalidFilter = true;
-
-        // in case of Model validation error return HTTP 422 instead of 401
-        options.InvalidModelStateResponseFactory = actionContext =>
-        {
-          var actionExecutingContext =
-                        actionContext as Microsoft.AspNetCore.Mvc.Filters.ActionExecutingContext;
-
-          // if there are modelstate errors & all keys were correctly
-          // found/parsed we're dealing with validation errors
-          if (actionContext.ModelState.ErrorCount > 0
-              && actionExecutingContext?.ActionArguments.Count == actionContext.ActionDescriptor.Parameters.Count)
-          {
-            return new UnprocessableEntityObjectResult(actionContext.ModelState);
-          }
-
-          // if one of the keys wasn't correctly found / couldn't be parsed
-          // we're dealing with null/unparsable input
-          return new BadRequestObjectResult(actionContext.ModelState);
-        };
-      });
 
       services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
           .AddJwtBearer(options =>
@@ -86,30 +52,10 @@ namespace DeveloperPath.WebApi
               NameClaimType = "name"
             };
           });
-
-      services.AddSwaggerGen(setupAction =>
-      {
-        setupAction.SwaggerDoc("DeveloperPathAPISpecification",
-          new Microsoft.OpenApi.Models.OpenApiInfo()
-          {
-            Version = "1",
-            Title = "Developer Path API",
-            Description = "Developer Path project Open API specification",
-            Contact = new Microsoft.OpenApi.Models.OpenApiContact
-            {
-              Name = "Sergey Benzenko",
-              Email = "sbenzenko@gmail.com",
-              Url = new Uri("https://t.me/NetDeveloperDiary")
-            }
-          });
-
-        setupAction.IncludeXmlComments(System.IO.Path.Combine(AppContext.BaseDirectory, "DeveloperPath.Api.xml"));
-        setupAction.IncludeXmlComments(System.IO.Path.Combine(AppContext.BaseDirectory, "DeveloperPath.Models.xml"));
-      });
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-    public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+    public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IApiVersionDescriptionProvider apiVersionDescriptionProvider)
     {
       if (env.IsDevelopment())
       {
@@ -137,8 +83,13 @@ namespace DeveloperPath.WebApi
       app.UseSwagger();
       app.UseSwaggerUI(settings =>
       {
-        settings.RoutePrefix = "";
-        settings.SwaggerEndpoint("/swagger/DeveloperPathAPISpecification/swagger.json", "DeveloperPath API");
+        foreach (var description in apiVersionDescriptionProvider.ApiVersionDescriptions)
+        {
+          settings.RoutePrefix = "";
+          settings.SwaggerEndpoint(
+            $"/swagger/DeveloperPathAPISpecification{description.GroupName}/swagger.json",
+            $"DeveloperPath API {description.GroupName.ToUpperInvariant()}");
+        }
       });
 
       app.UseRouting();
