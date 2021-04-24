@@ -120,6 +120,12 @@
   <data name="Administrator zone" xml:space="preserve">
     <value>Administrator zone</value>
   </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Edit</value>
+  </data>
   <data name="Home" xml:space="preserve">
     <value>Home</value>
   </data>
