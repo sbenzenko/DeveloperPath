@@ -12,6 +12,7 @@
             <param name="requestParams">Request parameters</param>
             <returns>A collection of modules with summary information</returns>
             <response code="200">Returns a list of modules in the path</response>
+            <response code="404">Path not found</response>
         </member>
         <member name="M:DeveloperPath.WebApi.Controllers.ModulesController.Get(System.Int32,System.Int32)">
             <summary>
@@ -112,6 +113,7 @@
             <param name="themeId">An id of the theme</param>
             <returns>A collection of sources with summary information</returns>
             <response code="200">Returns a list of sources in the theme</response>
+            <response code="404">Theme not found</response>
         </member>
         <member name="M:DeveloperPath.WebApi.Controllers.SourcesController.Get(System.Int32,System.Int32,System.Int32,System.Int32)">
             <summary>
@@ -173,6 +175,7 @@
             <param name="moduleId">An id of the module</param>
             <returns>A collection of themes with summary information</returns>
             <response code="200">Returns a list of themes in the module</response>
+            <response code="404">Module not found</response>
         </member>
         <member name="M:DeveloperPath.WebApi.Controllers.ThemesController.Get(System.Int32,System.Int32,System.Int32)">
             <summary>

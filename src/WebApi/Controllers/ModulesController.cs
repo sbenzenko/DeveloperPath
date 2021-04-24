@@ -28,6 +28,7 @@ namespace DeveloperPath.WebApi.Controllers
     /// <param name="requestParams">Request parameters</param>
     /// <returns>A collection of modules with summary information</returns>
     /// <response code="200">Returns a list of modules in the path</response>
+    /// <response code="404">Path not found</response>
     [HttpGet]
     [HttpHead]
     public async Task<ActionResult<IEnumerable<Module>>> Get(int pathId, [FromQuery] RequestParams requestParams = null)

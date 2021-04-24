@@ -27,6 +27,7 @@ namespace DeveloperPath.WebApi.Controllers
     /// <param name="themeId">An id of the theme</param>
     /// <returns>A collection of sources with summary information</returns>
     /// <response code="200">Returns a list of sources in the theme</response>
+    /// <response code="404">Theme not found</response>
     [HttpGet]
     [HttpHead]
     public async Task<ActionResult<IEnumerable<Source>>> Get(int pathId, int moduleId, int themeId)

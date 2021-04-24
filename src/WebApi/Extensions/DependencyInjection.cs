@@ -1,26 +1,16 @@
-﻿using DeveloperPath.Application.Common.Behaviours;
-using FluentValidation;
-using MediatR;
+﻿using System;
+using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Abstractions;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Linq;
 
 namespace DeveloperPath.WebApi.Extensions
 {
-  /// <summary>
-  /// </summary>
   internal static class DependencyInjection
   {
-    /// <summary>
-    /// Extension method for startup class to add API configuration services
-    /// </summary>
-    /// <param name="services"></param>
-    /// <returns></returns>
-    public static IServiceCollection AddApiConfiguration(this IServiceCollection services)
+    internal static IServiceCollection AddApiConfiguration(this IServiceCollection services)
     {
       services.AddApiControllers();
       services.ConfigureBehaviour();

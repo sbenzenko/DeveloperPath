@@ -26,6 +26,7 @@ namespace DeveloperPath.WebApi.Controllers
     /// <param name="moduleId">An id of the module</param>
     /// <returns>A collection of themes with summary information</returns>
     /// <response code="200">Returns a list of themes in the module</response>
+    /// <response code="404">Module not found</response>
     [HttpGet]
     [HttpHead]
     public async Task<ActionResult<IEnumerable<Theme>>> Get(int pathId, int moduleId)

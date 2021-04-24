@@ -15,7 +15,7 @@ namespace DeveloperPath.WebApi.Extensions
     { }
 
     [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
     [ProducesDefaultResponseType]
     public static void Get(
       [ApiConventionNameMatch(ApiConventionNameMatchBehavior.Any)]
@@ -25,11 +25,11 @@ namespace DeveloperPath.WebApi.Extensions
     { }
 
     [ProducesResponseType(StatusCodes.Status201Created)]
-    [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
-    [ProducesResponseType(StatusCodes.Status406NotAcceptable)]
-    [ProducesResponseType(StatusCodes.Status415UnsupportedMediaType)]
-    [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status406NotAcceptable)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status415UnsupportedMediaType)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status422UnprocessableEntity)]
     [ProducesDefaultResponseType]
     public static void Create(
       [ApiConventionTypeMatch(ApiConventionTypeMatchBehavior.Any)]
@@ -37,11 +37,11 @@ namespace DeveloperPath.WebApi.Extensions
     { }
 
     [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
-    [ProducesResponseType(StatusCodes.Status406NotAcceptable)]
-    [ProducesResponseType(StatusCodes.Status415UnsupportedMediaType)]
-    [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status406NotAcceptable)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status415UnsupportedMediaType)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status422UnprocessableEntity)]
     [ProducesDefaultResponseType]
     public static void Update(
       [ApiConventionNameMatch(ApiConventionNameMatchBehavior.Any)]
@@ -50,8 +50,8 @@ namespace DeveloperPath.WebApi.Extensions
       params object[] requestParams)
     { }
 
-    [ProducesResponseType(StatusCodes.Status204NoContent)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(NoContentResult), StatusCodes.Status204NoContent)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
     [ProducesDefaultResponseType]
     public static void Delete(
       [ApiConventionTypeMatch(ApiConventionTypeMatchBehavior.Any)]
