@@ -19,19 +19,19 @@ namespace DeveloperPath.Application.IntegrationTests.Queries
       var path = await AddAsync(
         new Path { Title = "Some Path", Description = "Some Path Description" });
 
-      _ = await SendAsync(new CreateModuleCommand
+      _ = await SendAsync(new CreateModule
       {
         PathId = path.Id,
         Title = "New Module1",
         Description = "New Module1 Description"
       });
-      _ = await SendAsync(new CreateModuleCommand
+      _ = await SendAsync(new CreateModule
       {
         PathId = path.Id,
         Title = "New Module2",
         Description = "New Module2 Description"
       });
-      _ = await SendAsync(new CreateModuleCommand
+      _ = await SendAsync(new CreateModule
       {
         PathId = path.Id,
         Title = "New Module3",
@@ -50,12 +50,12 @@ namespace DeveloperPath.Application.IntegrationTests.Queries
       var path = await AddAsync(
         new Path { Title = "Some Other Path", Description = "Some Path Description" });
 
-      var module = await SendAsync(new CreateModuleCommand
+      var module = await SendAsync(new CreateModule
       {
         PathId = path.Id,
         Title = "New Module",
         Description = "New Module Description",
-        Necessity = Domain.Enums.NecessityLevel.MustKnow,
+        Necessity = Domain.Enums.Necessity.MustKnow,
         Tags = new List<string> { "Tag1", "Tag2", "Tag3" }
       });
 
@@ -74,12 +74,12 @@ namespace DeveloperPath.Application.IntegrationTests.Queries
       var path = await AddAsync(
         new Path { Title = "Some Another Path", Description = "Path Description" });
 
-      var module = await SendAsync(new CreateModuleCommand
+      var module = await SendAsync(new CreateModule
       {
         PathId = path.Id,
         Title = "New Other Module",
         Description = "New Other Module Description",
-        Necessity = Domain.Enums.NecessityLevel.MustKnow,
+        Necessity = Domain.Enums.Necessity.MustKnow,
         Tags = new List<string> { "Tag1", "Tag2", "Tag3" }
       });
       await AddAsync(new Theme
@@ -87,8 +87,8 @@ namespace DeveloperPath.Application.IntegrationTests.Queries
         Title = "New Theme1",
         ModuleId = module.Id,
         Description = "New Theme1 Description",
-        Necessity = Domain.Enums.NecessityLevel.MustKnow,
-        Complexity = Domain.Enums.ComplexityLevel.Beginner,
+        Necessity = Domain.Enums.Necessity.MustKnow,
+        Complexity = Domain.Enums.Complexity.Beginner,
         Tags = new List<string> { "Theme1", "ThemeTag2", "Tag3" },
         Order = 1
       });
@@ -97,8 +97,8 @@ namespace DeveloperPath.Application.IntegrationTests.Queries
         Title = "New Theme2",
         ModuleId = module.Id,
         Description = "New Theme2 Description",
-        Necessity = Domain.Enums.NecessityLevel.MustKnow,
-        Complexity = Domain.Enums.ComplexityLevel.Beginner,
+        Necessity = Domain.Enums.Necessity.MustKnow,
+        Complexity = Domain.Enums.Complexity.Beginner,
         Tags = new List<string> { "Theme2", "ThemeTag2", "Tag3" },
         Order = 2
       });

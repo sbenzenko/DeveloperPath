@@ -1,7 +1,5 @@
 ﻿using System.Collections.Generic;
 using DeveloperPath.Application.Common.Mappings;
-using DeveloperPath.Application.Common.Models;
-using DeveloperPath.Domain.Entities;
 using DeveloperPath.Domain.Enums;
 
 namespace DeveloperPath.Application.Sources.Queries.GetSources
@@ -10,7 +8,7 @@ namespace DeveloperPath.Application.Sources.Queries.GetSources
   /// Detailed information about the source
   /// </summary>
   // TODO: Add comments, rating, etc.
-  public class SourceViewModel : IMapFrom<Source>
+  public class SourceDetails : IMapFrom<Domain.Entities.Source>
   {
     /// <summary>
     /// Source ID
@@ -40,7 +38,7 @@ namespace DeveloperPath.Application.Sources.Queries.GetSources
     /// <summary>
     /// Theme that the source is for
     /// </summary>
-    public ThemeDto Theme { get; init; }
+    public Common.Models.Theme Theme { get; init; }
 
     /// <summary>
     /// Position of source in theme (0-based).
@@ -55,12 +53,12 @@ namespace DeveloperPath.Application.Sources.Queries.GetSources
     /// <summary>
     /// Whether the resource is available free or paid
     /// </summary>
-    public AvailabilityLevel Availability { get; set; }
+    public Availability Availability { get; set; }
 
     /// <summary>
     /// Whether inforation if up-to-date
     /// </summary>
-    public RelevanceLevel Relevance { get; set; }
+    public Relevance Relevance { get; set; }
 
     /// <summary>
     /// List of tags related to theme

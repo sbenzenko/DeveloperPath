@@ -10,7 +10,7 @@ namespace DeveloperPath.Application.Themes.Commands.CreateTheme
   /// <summary>
   /// Validation rules for creating theme
   /// </summary>
-  public class CreateThemeCommandValidator : AbstractValidator<CreateThemeCommand>
+  public class CreateThemeCommandValidator : AbstractValidator<CreateTheme>
   {
     private readonly IApplicationDbContext _context;
 
@@ -41,7 +41,7 @@ namespace DeveloperPath.Application.Themes.Commands.CreateTheme
     /// <param name="title"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    public async Task<bool> BeUniqueTitle(CreateThemeCommand model, string title, CancellationToken cancellationToken)
+    public async Task<bool> BeUniqueTitle(CreateTheme model, string title, CancellationToken cancellationToken)
     {
       //Verify that all themes in module have titles different than title
       var moduleThemes = await _context.Modules

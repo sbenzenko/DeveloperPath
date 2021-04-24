@@ -10,7 +10,7 @@ namespace DeveloperPath.Application.Modules.Commands.UpdateModule
   /// <summary>
   /// Validation rules for updating module
   /// </summary>
-  public class UpdateModuleCommandValidator : AbstractValidator<UpdateModuleCommand>
+  public class UpdateModuleCommandValidator : AbstractValidator<UpdateModule>
   {
     private readonly IApplicationDbContext _context;
 
@@ -38,7 +38,7 @@ namespace DeveloperPath.Application.Modules.Commands.UpdateModule
     /// <param name="title"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    public async Task<bool> BeUniqueTitle(UpdateModuleCommand model, string title, CancellationToken cancellationToken)
+    public async Task<bool> BeUniqueTitle(UpdateModule model, string title, CancellationToken cancellationToken)
     {
       var pathIds = await _context.Modules
         .Where(m => m.Id == model.Id)

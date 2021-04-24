@@ -30,7 +30,7 @@ namespace DeveloperPath.WebApi.Controllers
     /// <response code="200">Returns a list of modules in the path</response>
     [HttpGet]
     [HttpHead]
-    public async Task<ActionResult<IEnumerable<ModuleDto>>> Get(int pathId, [FromQuery] RequestParams requestParams = null)
+    public async Task<ActionResult<IEnumerable<Module>>> Get(int pathId, [FromQuery] RequestParams requestParams = null)
     {
       //TODO: consider adding default page size and show 1st page instead of all
       return requestParams is not null && requestParams.UsePaging()
@@ -47,9 +47,9 @@ namespace DeveloperPath.WebApi.Controllers
     /// <response code="200">Returns requested module</response>
     [HttpGet("{moduleId}", Name = "GetModule")]
     [HttpHead("{moduleId}")]
-    public async Task<ActionResult<ModuleDto>> Get(int pathId, int moduleId)
+    public async Task<ActionResult<Module>> Get(int pathId, int moduleId)
     {
-      ModuleDto model = await Mediator.Send(new GetModuleQuery { PathId = pathId, Id = moduleId });
+      Module model = await Mediator.Send(new GetModuleQuery { PathId = pathId, Id = moduleId });
 
       return Ok(model);
     }
@@ -83,13 +83,13 @@ namespace DeveloperPath.WebApi.Controllers
     /// <response code="422">Unprocessible entity provided</response>
     [HttpPost]
     [Consumes("application/json")]
-    public async Task<ActionResult<ModuleDto>> Create(int pathId,
-      [FromBody] CreateModuleCommand command)
+    public async Task<ActionResult<Module>> Create(int pathId,
+      [FromBody] CreateModule command)
     {
       if (pathId != command.PathId)
         return BadRequest();
 
-      ModuleDto model = await Mediator.Send(command);
+      Module model = await Mediator.Send(command);
 
       return CreatedAtRoute("GetModule", new { pathId = command.PathId, moduleId = model.Id }, model);
     }
@@ -107,8 +107,8 @@ namespace DeveloperPath.WebApi.Controllers
     /// <response code="422">Unprocessible entity provided</response>
     [HttpPut("{moduleId}")]
     [Consumes("application/json")]
-    public async Task<ActionResult<ModuleDto>> Update(int pathId, int moduleId,
-      [FromBody] UpdateModuleCommand command)
+    public async Task<ActionResult<Module>> Update(int pathId, int moduleId,
+      [FromBody] UpdateModule command)
     {
       if (moduleId != command.Id)
         return BadRequest();
@@ -128,18 +128,18 @@ namespace DeveloperPath.WebApi.Controllers
     [HttpDelete("{moduleId}")]
     public async Task<ActionResult> Delete(int pathId, int moduleId)
     {
-      await Mediator.Send(new DeleteModuleCommand { PathId = pathId, Id = moduleId });
+      await Mediator.Send(new DeleteModule { PathId = pathId, Id = moduleId });
 
       return NoContent();
     }
 
-    private async Task<ActionResult<IEnumerable<ModuleDto>>> GetAll(int pathId)
+    private async Task<ActionResult<IEnumerable<Module>>> GetAll(int pathId)
     {
-      IEnumerable<ModuleDto> model = await Mediator.Send(new GetModuleListQuery { PathId = pathId });
+      IEnumerable<Module> model = await Mediator.Send(new GetModuleListQuery { PathId = pathId });
       return Ok(model);
     }
 
-    private async Task<ActionResult<IEnumerable<ModuleDto>>> GetPage(int pathId, RequestParams filter)
+    private async Task<ActionResult<IEnumerable<Module>>> GetPage(int pathId, RequestParams filter)
     {
       var (paginationData, result) = await Mediator.Send(
           new GetModuleListQueryPaging()

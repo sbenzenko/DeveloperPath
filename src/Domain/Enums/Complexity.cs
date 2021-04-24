@@ -3,7 +3,7 @@
   /// <summary>
   /// Level of complexity of module/theme
   /// </summary>
-  public enum ComplexityLevel
+  public enum Complexity
   {
     /// <summary>
     /// Easy (beginner) level (default)

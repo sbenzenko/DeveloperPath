@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -18,7 +17,7 @@ namespace DeveloperPath.Application.Modules.Queries.GetModules
   /// <summary>
   /// Get modules paged
   /// </summary>
-  public class GetModuleListQueryPaging : IRequest<(PaginationData, IEnumerable<ModuleDto>)>
+  public class GetModuleListQueryPaging : IRequest<(PaginationData, IEnumerable<Module>)>
   {
     /// <summary>
     /// Path id
@@ -36,7 +35,7 @@ namespace DeveloperPath.Application.Modules.Queries.GetModules
   }
 
 
-  internal class GetModulesQueryPagingHandler : IRequestHandler<GetModuleListQueryPaging, (PaginationData, IEnumerable<ModuleDto>)>
+  internal class GetModulesQueryPagingHandler : IRequestHandler<GetModuleListQueryPaging, (PaginationData, IEnumerable<Module>)>
   {
     private readonly IApplicationDbContext _context;
     private readonly IMapper _mapper;
@@ -47,13 +46,13 @@ namespace DeveloperPath.Application.Modules.Queries.GetModules
       _mapper = mapper;
     }
 
-    public async Task<(PaginationData, IEnumerable<ModuleDto>)> Handle(GetModuleListQueryPaging request, CancellationToken cancellationToken)
+    public async Task<(PaginationData, IEnumerable<Module>)> Handle(GetModuleListQueryPaging request, CancellationToken cancellationToken)
     {
       //TODO: check if requested module is in requested path (???)
       var path = await _context.Paths.FindAsync(new object[] { request.PathId }, cancellationToken);
       if (path == null)
         throw new NotFoundException(nameof(Path), request.PathId);
-      IEnumerable<ModuleDto> modules = null;
+      IEnumerable<Module> modules = null;
 
       if (request.PageNumber > 0 || request.PageSize > 0)
       {
@@ -62,7 +61,7 @@ namespace DeveloperPath.Application.Modules.Queries.GetModules
            .SelectMany(p => p.Modules)
            .Include(m => m.Paths)
            .Include(m => m.Prerequisites)
-           .ProjectTo<ModuleDto>(_mapper.ConfigurationProvider).Skip((request.PageNumber - 1) * request.PageSize)
+           .ProjectTo<Module>(_mapper.ConfigurationProvider).Skip((request.PageNumber - 1) * request.PageSize)
            .Take(request.PageSize)
            .ToListAsync(cancellationToken);
         return (new PaginationData(request.PageNumber, request.PageSize), modules);
@@ -74,7 +73,7 @@ namespace DeveloperPath.Application.Modules.Queries.GetModules
           .SelectMany(p => p.Modules)
           .Include(m => m.Paths)
           .Include(m => m.Prerequisites)
-          .ProjectTo<ModuleDto>(_mapper.ConfigurationProvider)
+          .ProjectTo<Module>(_mapper.ConfigurationProvider)
           .ToListAsync(cancellationToken);
       return (new PaginationData(request.PageNumber, request.PageSize), modules);
     }

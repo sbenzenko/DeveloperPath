@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using DeveloperPath.Application.Common.Mappings;
-using DeveloperPath.Domain.Entities;
 using DeveloperPath.Domain.Enums;
 
 namespace DeveloperPath.Application.Common.Models
@@ -8,7 +7,7 @@ namespace DeveloperPath.Application.Common.Models
   /// <summary>
   /// Particular theme of the module
   /// </summary>
-  public class ThemeDto : IMapFrom<Theme>
+  public class Theme : IMapFrom<Domain.Entities.Theme>
   {
     /// <summary>
     /// Theme ID
@@ -33,17 +32,17 @@ namespace DeveloperPath.Application.Common.Models
     /// <summary>
     /// Section that theme is in (can be null)
     /// </summary>
-    public SectionDto Section { get; init; }
+    public Section Section { get; init; }
 
     /// <summary>
     /// Complexity level (Beginner | Intermediate | Advanced)
     /// </summary>
-    public ComplexityLevel Complexity { get; set; }
+    public Complexity Complexity { get; set; }
 
     /// <summary>
     /// Necessity level (Other | Possibilities | Interesting | Good to know | Must know)
     /// </summary>
-    public NecessityLevel Necessity { get; set; }
+    public Necessity Necessity { get; set; }
 
     /// <summary>
     /// Position of theme in module (0-based)

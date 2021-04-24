@@ -5,7 +5,7 @@ namespace DeveloperPath.Application.Sources.Commands.UpdateSource
   /// <summary>
   /// Validation rules for updating source
   /// </summary>
-  public class UpdateSourceCommandValidator : AbstractValidator<UpdateSourceCommand>
+  public class UpdateSourceCommandValidator : AbstractValidator<UpdateSource>
   {
     /// <summary>
     /// </summary>

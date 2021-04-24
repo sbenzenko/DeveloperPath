@@ -13,7 +13,7 @@ namespace DeveloperPath.Application.Modules.Commands.DeleteModule
   /// <summary>
   /// Delete module parameters
   /// </summary>
-  public record DeleteModuleCommand : IRequest
+  public record DeleteModule : IRequest
   {
     /// <summary>
     /// Module Id
@@ -27,7 +27,7 @@ namespace DeveloperPath.Application.Modules.Commands.DeleteModule
     public int PathId { get; init; }
   }
 
-  internal class DeleteModuleCommandHandler : IRequestHandler<DeleteModuleCommand>
+  internal class DeleteModuleCommandHandler : IRequestHandler<DeleteModule>
   {
     private readonly IApplicationDbContext _context;
 
@@ -36,7 +36,7 @@ namespace DeveloperPath.Application.Modules.Commands.DeleteModule
       _context = context;
     }
 
-    public async Task<Unit> Handle(DeleteModuleCommand request, CancellationToken cancellationToken)
+    public async Task<Unit> Handle(DeleteModule request, CancellationToken cancellationToken)
     {
       var entity = await _context.Modules
         .Include(m => m.Paths)

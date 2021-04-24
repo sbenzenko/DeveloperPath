@@ -1,6 +1,9 @@
 ﻿namespace DeveloperPath.Domain.Enums
 {
-  public enum NecessityLevel
+  /// <summary>
+  /// Level of necessity of module/theme
+  /// </summary>
+  public enum Necessity
   {
     /// <summary>
     /// Other (default)

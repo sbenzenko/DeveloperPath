@@ -5,7 +5,7 @@ namespace DeveloperPath.Application.Sources.Commands.CreateSource
   /// <summary>
   /// Validation rules for creating source
   /// </summary>
-  public class CreateSourceCommandValidator : AbstractValidator<CreateSourceCommand>
+  public class CreateSourceCommandValidator : AbstractValidator<CreateSource>
   {
     /// <summary>
     /// </summary>

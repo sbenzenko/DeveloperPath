@@ -14,7 +14,7 @@ namespace DeveloperPath.Application.Paths.Queries.GetPaths
   /// <summary>
   /// Get path details parameters
   /// </summary>
-  public class GetPathDetailsQuery : IRequest<PathViewModel>
+  public class GetPathDetailsQuery : IRequest<PathDetails>
   {
     /// <summary>
     /// Path id
@@ -23,7 +23,7 @@ namespace DeveloperPath.Application.Paths.Queries.GetPaths
     public int Id { get; init; }
   }
 
-  internal class GetPathDetailsQueryHandler : IRequestHandler<GetPathDetailsQuery, PathViewModel>
+  internal class GetPathDetailsQueryHandler : IRequestHandler<GetPathDetailsQuery, PathDetails>
   {
     private readonly IApplicationDbContext _context;
     private readonly IMapper _mapper;
@@ -34,7 +34,7 @@ namespace DeveloperPath.Application.Paths.Queries.GetPaths
       _mapper = mapper;
     }
 
-    public async Task<PathViewModel> Handle(GetPathDetailsQuery request, CancellationToken cancellationToken)
+    public async Task<PathDetails> Handle(GetPathDetailsQuery request, CancellationToken cancellationToken)
     {
       var result = await _context.Paths
         .Include(p => p.Modules)
@@ -47,7 +47,7 @@ namespace DeveloperPath.Application.Paths.Queries.GetPaths
       }
 
       //TODO: is there another way to map single item?
-      return _mapper.Map<PathViewModel>(result);
+      return _mapper.Map<PathDetails>(result);
     }
   }
 }

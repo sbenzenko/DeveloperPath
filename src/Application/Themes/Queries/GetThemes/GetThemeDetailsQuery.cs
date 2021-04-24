@@ -14,7 +14,7 @@ namespace DeveloperPath.Application.Themes.Queries.GetThemes
   /// <summary>
   /// Get theme details parameters
   /// </summary>
-  public class GetThemeDetailsQuery : IRequest<ThemeViewModel>
+  public class GetThemeDetailsQuery : IRequest<ThemeDetails>
   {
     /// <summary>
     /// Theme Id
@@ -33,7 +33,7 @@ namespace DeveloperPath.Application.Themes.Queries.GetThemes
     public int ModuleId { get; init; }
   }
 
-  internal class GetThemeDetailsQueryHandler : IRequestHandler<GetThemeDetailsQuery, ThemeViewModel>
+  internal class GetThemeDetailsQueryHandler : IRequestHandler<GetThemeDetailsQuery, ThemeDetails>
   {
     private readonly IApplicationDbContext _context;
     private readonly IMapper _mapper;
@@ -44,7 +44,7 @@ namespace DeveloperPath.Application.Themes.Queries.GetThemes
       _mapper = mapper;
     }
 
-    public async Task<ThemeViewModel> Handle(GetThemeDetailsQuery request, CancellationToken cancellationToken)
+    public async Task<ThemeDetails> Handle(GetThemeDetailsQuery request, CancellationToken cancellationToken)
     {
       //TODO: check if requested module is in requested path (???)
       var path = await _context.Paths.FindAsync(new object[] { request.PathId }, cancellationToken);
@@ -64,7 +64,7 @@ namespace DeveloperPath.Application.Themes.Queries.GetThemes
         throw new NotFoundException(nameof(Theme), request.Id);
 
       //TODO: is there another way to map single item?
-      return _mapper.Map<ThemeViewModel>(result);
+      return _mapper.Map<ThemeDetails>(result);
     }
   }
 }

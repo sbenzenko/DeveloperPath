@@ -52,12 +52,12 @@ namespace DeveloperPath.Domain.Entities
     /// <summary>
     /// Whether the resource is available free or paid
     /// </summary>
-    public AvailabilityLevel Availability { get; set; }
+    public Availability Availability { get; set; }
     
     /// <summary>
     /// Whether inforation if up-to-date
     /// </summary>
-    public RelevanceLevel Relevance { get; set; }
+    public Relevance Relevance { get; set; }
 
     /// <summary>
     /// List of tags related to theme

@@ -2,29 +2,26 @@
 using DeveloperPath.Application.Common.Exceptions;
 using DeveloperPath.Application.Common.Interfaces;
 using DeveloperPath.Application.Common.Models;
-using DeveloperPath.Domain.Entities;
 using DeveloperPath.Domain.Enums;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace DeveloperPath.Application.Modules.Commands.CreateModule
+namespace DeveloperPath.Application.Modules.Commands.UpdateModule
 {
   /// <summary>
-  /// A module to create
+  /// Module to update
   /// </summary>
-  public record CreateModuleCommand : IRequest<ModuleDto>
+  public record UpdateModule : IRequest<Module>
   {
     // TODO: add Prerequisites, provide Order
     /// <summary>
-    /// Id of path the module is in
+    /// Module Id
     /// </summary>
     [Required]
-    public int PathId { get; init; }
+    public int Id { get; init; }
     /// <summary>
     /// Module title
     /// </summary>
@@ -32,7 +29,7 @@ namespace DeveloperPath.Application.Modules.Commands.CreateModule
     [MaxLength(100)]
     public string Title { get; init; }
     /// <summary>
-    /// Path short summary
+    /// Module short summary
     /// </summary>
     [Required]
     [MaxLength(3000)]
@@ -40,9 +37,9 @@ namespace DeveloperPath.Application.Modules.Commands.CreateModule
     /// <summary>
     /// Necessity level (Other (default) | Possibilities | Interesting | Good to know | Must know)
     /// </summary>
-    public NecessityLevel Necessity { get; init; }
+    public Necessity Necessity { get; init; }
     /// <summary>
-    /// Position of module in path (0-based)
+    /// Order of module in path (0-based)
     /// </summary>
     public int Order { get; init; }
     /// <summary>
@@ -51,40 +48,32 @@ namespace DeveloperPath.Application.Modules.Commands.CreateModule
     public IList<string> Tags { get; init; }
   }
 
-  internal class CreateModuleCommandHandler : IRequestHandler<CreateModuleCommand, ModuleDto>
+  internal class UpdateModuleCommandHandler : IRequestHandler<UpdateModule, Module>
   {
     private readonly IApplicationDbContext _context;
     private readonly IMapper _mapper;
 
-    public CreateModuleCommandHandler(IApplicationDbContext context, IMapper mapper)
+    public UpdateModuleCommandHandler(IApplicationDbContext context, IMapper mapper)
     {
       _context = context;
       _mapper = mapper;
     }
 
-    public async Task<ModuleDto> Handle(CreateModuleCommand request, CancellationToken cancellationToken)
+    public async Task<Module> Handle(UpdateModule request, CancellationToken cancellationToken)
     {
-      var path = await _context.Paths
-        .Where(c => c.Id == request.PathId)
-        .FirstOrDefaultAsync(cancellationToken);
+      var entity = await _context.Modules.FindAsync(new object[] { request.Id }, cancellationToken);
+      if (entity == null)
+        throw new NotFoundException(nameof(Module), request.Id);
 
-      if (path == null)
-        throw new NotFoundException(nameof(Path), request.PathId);
-
-      var entity = new Domain.Entities.Module
-      {
-        Title = request.Title,
-        Description = request.Description,
-        Necessity = request.Necessity,
-        Tags = request.Tags,
-        Paths = new List<Path> { path }
-      };
-
-      _context.Modules.Add(entity);
+      // TODO: is there a way to use init-only fields?
+      entity.Title = request.Title;
+      entity.Description = request.Description;
+      entity.Necessity = request.Necessity;
+      entity.Tags = request.Tags;
 
       await _context.SaveChangesAsync(cancellationToken);
 
-      return _mapper.Map<ModuleDto>(entity);
+      return _mapper.Map<Module>(entity);
     }
   }
 }

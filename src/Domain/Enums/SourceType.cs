@@ -1,5 +1,8 @@
 ﻿namespace DeveloperPath.Domain.Enums
 {
+  /// <summary>
+  /// Type of the resource
+  /// </summary>
   public enum SourceType
   {
     /// <summary>

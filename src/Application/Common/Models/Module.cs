@@ -1,15 +1,13 @@
 ﻿using System.Collections.Generic;
 using DeveloperPath.Application.Common.Mappings;
-using DeveloperPath.Application.Common.Models;
-using DeveloperPath.Domain.Entities;
 using DeveloperPath.Domain.Enums;
 
-namespace DeveloperPath.Application.Modules.Queries.GetModules
+namespace DeveloperPath.Application.Common.Models
 {
   /// <summary>
-  /// Detailed information about the module
+  /// Represents module (skill) of the path, e.g. Programming language, Databases, CI/CD. etc.
   /// </summary>
-  public class ModuleViewModel : IMapFrom<Module>
+  public class Module : IMapFrom<Domain.Entities.Module>
   {
     /// <summary>
     /// Module ID
@@ -19,12 +17,12 @@ namespace DeveloperPath.Application.Modules.Queries.GetModules
     /// <summary>
     /// Module title
     /// </summary>
-    public string Title { get; set; }
+    public string Title { get; init; }
 
     /// <summary>
     /// Module short summary
     /// </summary>
-    public string Description { get; set; }
+    public string Description { get; init; }
 
     /// <summary>
     /// Paths module attached to
@@ -34,17 +32,7 @@ namespace DeveloperPath.Application.Modules.Queries.GetModules
     /// <summary>
     /// Necessity level (Other (default) | Possibilities | Interesting | Good to know | Must know)
     /// </summary>
-    public NecessityLevel Necessity { get; set; }
-
-    /// <summary>
-    /// Sections that module consists of (may be empty)
-    /// </summary>
-    public ICollection<SectionDto> Sections { get; init; }
-
-    /// <summary>
-    /// Themes that module consists of
-    /// </summary>
-    public ICollection<ThemeDto> Themes { get; init; }
+    public Necessity Necessity { get; init; }
 
     /// <summary>
     /// Modules required to know before studying this module
@@ -52,7 +40,7 @@ namespace DeveloperPath.Application.Modules.Queries.GetModules
     public ICollection<ModuleTitle> Prerequisites { get; init; }
 
     /// <summary>
-    /// List of tags related to module
+    /// List of tags related to the module
     /// </summary>
     public ICollection<string> Tags { get; set; }
   }

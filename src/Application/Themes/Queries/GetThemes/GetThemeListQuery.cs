@@ -8,7 +8,6 @@ using AutoMapper.QueryableExtensions;
 using DeveloperPath.Application.Common.Exceptions;
 using DeveloperPath.Application.Common.Interfaces;
 using DeveloperPath.Application.Common.Models;
-using DeveloperPath.Domain.Entities;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
@@ -17,7 +16,7 @@ namespace DeveloperPath.Application.Themes.Queries.GetThemes
   /// <summary>
   /// Get themes list parameters
   /// </summary>
-  public class GetThemeListQuery : IRequest<IEnumerable<ThemeDto>>
+  public class GetThemeListQuery : IRequest<IEnumerable<Theme>>
   {
     /// <summary>
     /// Path Id
@@ -31,7 +30,7 @@ namespace DeveloperPath.Application.Themes.Queries.GetThemes
     public int ModuleId { get; init; }
   }
 
-  internal class GetThemeListQueryHandler : IRequestHandler<GetThemeListQuery, IEnumerable<ThemeDto>>
+  internal class GetThemeListQueryHandler : IRequestHandler<GetThemeListQuery, IEnumerable<Theme>>
   {
     private readonly IApplicationDbContext _context;
     private readonly IMapper _mapper;
@@ -42,7 +41,7 @@ namespace DeveloperPath.Application.Themes.Queries.GetThemes
       _mapper = mapper;
     }
 
-    public async Task<IEnumerable<ThemeDto>> Handle(GetThemeListQuery request, CancellationToken cancellationToken)
+    public async Task<IEnumerable<Theme>> Handle(GetThemeListQuery request, CancellationToken cancellationToken)
     {
       //TODO: check if requested module is in requested path (???)
       var path = await _context.Paths.FindAsync(new object[] { request.PathId }, cancellationToken);
@@ -52,7 +51,7 @@ namespace DeveloperPath.Application.Themes.Queries.GetThemes
       return await _context.Themes
         .Where(t => t.ModuleId == request.ModuleId)
         .OrderBy(t => t.Order)
-        .ProjectTo<ThemeDto>(_mapper.ConfigurationProvider)
+        .ProjectTo<Theme>(_mapper.ConfigurationProvider)
         .ToListAsync(cancellationToken);
     }
   }

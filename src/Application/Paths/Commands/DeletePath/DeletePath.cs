@@ -11,7 +11,7 @@ namespace DeveloperPath.Application.Paths.Commands.DeletePath
   /// <summary>
   /// Delete path parameters
   /// </summary>
-  public record DeletePathCommand : IRequest
+  public record DeletePath : IRequest
   {
     /// <summary>
     /// Path ID
@@ -20,7 +20,7 @@ namespace DeveloperPath.Application.Paths.Commands.DeletePath
     public int Id { get; init; }
   }
 
-  internal class DeletePathCommandHandler : IRequestHandler<DeletePathCommand>
+  internal class DeletePathCommandHandler : IRequestHandler<DeletePath>
   {
     private readonly IApplicationDbContext _context;
 
@@ -29,7 +29,7 @@ namespace DeveloperPath.Application.Paths.Commands.DeletePath
       _context = context;
     }
 
-    public async Task<Unit> Handle(DeletePathCommand request, CancellationToken cancellationToken)
+    public async Task<Unit> Handle(DeletePath request, CancellationToken cancellationToken)
     {
       var entity = await _context.Paths.FindAsync(new object[] { request.Id }, cancellationToken);
       if (entity == null)

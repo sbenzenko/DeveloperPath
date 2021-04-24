@@ -28,7 +28,7 @@ namespace DeveloperPath.WebApi.Controllers
     /// <response code="200">Returns a list of paths</response>
     [HttpGet]
     [HttpHead]
-    public async Task<ActionResult<IEnumerable<PathDto>>> Get([FromQuery] RequestParams requestParams = null)
+    public async Task<ActionResult<IEnumerable<Path>>> Get([FromQuery] RequestParams requestParams = null)
     {
       //TODO: consider adding default page size and show 1st page instead of all
       return requestParams is not null && requestParams.UsePaging()
@@ -44,9 +44,9 @@ namespace DeveloperPath.WebApi.Controllers
     /// /// <response code="200">Returns requested path</response>
     [HttpGet("{pathId}", Name = "GetPath")]
     [HttpHead("{pathId}")]
-    public async Task<ActionResult<PathDto>> Get(int pathId)
+    public async Task<ActionResult<Path>> Get(int pathId)
     {
-      PathDto model = await Mediator.Send(new GetPathQuery { Id = pathId });
+      Path model = await Mediator.Send(new GetPathQuery { Id = pathId });
 
       return Ok(model);
     }
@@ -78,9 +78,9 @@ namespace DeveloperPath.WebApi.Controllers
     [HttpPost]
     //TODO: adding "application/xml" causes "An error occurred while deserializing input data." error for some reason
     [Consumes("application/json")]
-    public async Task<ActionResult<PathDto>> Create([FromBody] CreatePathCommand command)
+    public async Task<ActionResult<Path>> Create([FromBody] CreatePath command)
     {
-      PathDto model = await Mediator.Send(command);
+      Path model = await Mediator.Send(command);
 
       return CreatedAtRoute("GetPath", new { pathId = model.Id }, model);
     }
@@ -97,8 +97,8 @@ namespace DeveloperPath.WebApi.Controllers
     /// <response code="422">Unprocessible entity provided</response>
     [HttpPut("{pathId}")]
     [Consumes("application/json")]
-    public async Task<ActionResult<PathDto>> Update(int pathId,
-      [FromBody] UpdatePathCommand command)
+    public async Task<ActionResult<Path>> Update(int pathId,
+      [FromBody] UpdatePath command)
     {
       if (pathId != command.Id)
         return BadRequest();
@@ -117,18 +117,18 @@ namespace DeveloperPath.WebApi.Controllers
     [HttpDelete("{pathId}")]
     public async Task<IActionResult> Delete(int pathId)
     {
-      await Mediator.Send(new DeletePathCommand { Id = pathId });
+      await Mediator.Send(new DeletePath { Id = pathId });
 
       return NoContent();
     }
 
-    private async Task<ActionResult<IEnumerable<PathDto>>> GetAll()
+    private async Task<ActionResult<IEnumerable<Path>>> GetAll()
     {
-      IEnumerable<PathDto> model = await Mediator.Send(new GetPathListQuery());
+      IEnumerable<Path> model = await Mediator.Send(new GetPathListQuery());
       return Ok(model);
     }
 
-    private async Task<ActionResult<IEnumerable<PathDto>>> GetPage(RequestParams filter)
+    private async Task<ActionResult<IEnumerable<Path>>> GetPage(RequestParams filter)
     {
       var (paginationData, result) = await Mediator.Send(
         new GetPathListQueryPaging()

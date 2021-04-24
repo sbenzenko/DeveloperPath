@@ -8,7 +8,6 @@ using AutoMapper.QueryableExtensions;
 using DeveloperPath.Application.Common.Exceptions;
 using DeveloperPath.Application.Common.Interfaces;
 using DeveloperPath.Application.Common.Models;
-using DeveloperPath.Domain.Entities;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
@@ -17,7 +16,7 @@ namespace DeveloperPath.Application.Sources.Queries.GetSources
   /// <summary>
   /// Get sources list parameters
   /// </summary>
-  public class GetSourceListQuery : IRequest<IEnumerable<SourceDto>>
+  public class GetSourceListQuery : IRequest<IEnumerable<Source>>
   {
     /// <summary>
     /// Path id
@@ -36,7 +35,7 @@ namespace DeveloperPath.Application.Sources.Queries.GetSources
     public int ThemeId { get; init; }
   }
 
-  internal class GetSourceListQueryHandler : IRequestHandler<GetSourceListQuery, IEnumerable<SourceDto>>
+  internal class GetSourceListQueryHandler : IRequestHandler<GetSourceListQuery, IEnumerable<Source>>
   {
     private readonly IApplicationDbContext _context;
     private readonly IMapper _mapper;
@@ -47,7 +46,7 @@ namespace DeveloperPath.Application.Sources.Queries.GetSources
       _mapper = mapper;
     }
 
-    public async Task<IEnumerable<SourceDto>> Handle(GetSourceListQuery request, CancellationToken cancellationToken)
+    public async Task<IEnumerable<Source>> Handle(GetSourceListQuery request, CancellationToken cancellationToken)
     {
       //TODO: check if requested module is in requested path (???)
       var path = await _context.Paths.FindAsync(new object[] { request.PathId }, cancellationToken);
@@ -63,7 +62,7 @@ namespace DeveloperPath.Application.Sources.Queries.GetSources
       return await _context.Sources
         .Where(s => s.ThemeId == request.ThemeId)
         .OrderBy(s => s.Order)
-        .ProjectTo<SourceDto>(_mapper.ConfigurationProvider)
+        .ProjectTo<Source>(_mapper.ConfigurationProvider)
         .ToListAsync(cancellationToken);
     }
   }

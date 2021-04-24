@@ -1,5 +1,4 @@
 ﻿using DeveloperPath.Application.Common.Mappings;
-using DeveloperPath.Domain.Entities;
 using DeveloperPath.Domain.Enums;
 
 namespace DeveloperPath.Application.Common.Models
@@ -7,7 +6,7 @@ namespace DeveloperPath.Application.Common.Models
   /// <summary>
   /// Module section (logical group of themes, like a book chapter)
   /// </summary>
-  public class SectionDto : IMapFrom<Section>
+  public class Section : IMapFrom<Domain.Entities.Section>
   {
     /// <summary>
     /// Section ID
@@ -22,7 +21,7 @@ namespace DeveloperPath.Application.Common.Models
     /// <summary>
     /// Necessity level (Other (default) | Possibilities | Interesting | Good to know | Must know)
     /// </summary>
-    public NecessityLevel Necessity { get; set; }
+    public Necessity Necessity { get; set; }
 
     /// <summary>
     /// Position of section in module (0-based)

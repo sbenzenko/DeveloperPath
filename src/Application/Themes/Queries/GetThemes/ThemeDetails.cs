@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using DeveloperPath.Application.Common.Mappings;
 using DeveloperPath.Application.Common.Models;
-using DeveloperPath.Domain.Entities;
 using DeveloperPath.Domain.Enums;
 
 namespace DeveloperPath.Application.Themes.Queries.GetThemes
@@ -9,7 +8,7 @@ namespace DeveloperPath.Application.Themes.Queries.GetThemes
   /// <summary>
   /// Detailed information about the theme
   /// </summary>
-  public class ThemeViewModel : IMapFrom<Theme>
+  public class ThemeDetails : IMapFrom<Domain.Entities.Theme>
   {
     /// <summary>
     /// Theme ID
@@ -29,22 +28,22 @@ namespace DeveloperPath.Application.Themes.Queries.GetThemes
     /// <summary>
     /// Module that theme is in
     /// </summary>
-    public ModuleDto Module { get; init; }
+    public Module Module { get; init; }
 
     /// <summary>
     /// Section that theme is in (can be null)
     /// </summary>
-    public SectionDto Section { get; init; }
+    public Section Section { get; init; }
 
     /// <summary>
     /// Complexity level
     /// </summary>
-    public ComplexityLevel Complexity { get; set; }
+    public Complexity Complexity { get; set; }
 
     /// <summary>
     /// Necessity level
     /// </summary>
-    public NecessityLevel Necessity { get; set; }
+    public Necessity Necessity { get; set; }
 
     /// <summary>
     /// Position of theme in module (0-based). 
@@ -55,7 +54,7 @@ namespace DeveloperPath.Application.Themes.Queries.GetThemes
     /// <summary>
     /// Sources fo this theme
     /// </summary>
-    public IList<SourceDto> Sources { get; init; }
+    public IList<Source> Sources { get; init; }
 
     /// <summary>
     /// Themes required to know before studying this theme

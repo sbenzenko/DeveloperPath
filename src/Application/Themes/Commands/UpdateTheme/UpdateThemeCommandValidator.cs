@@ -10,7 +10,7 @@ namespace DeveloperPath.Application.Themes.Commands.UpdateTheme
   /// <summary>
   /// Validation rules for updating theme
   /// </summary>
-  public class UpdateThemeCommandValidator : AbstractValidator<UpdateThemeCommand>
+  public class UpdateThemeCommandValidator : AbstractValidator<UpdateTheme>
   {
     private readonly IApplicationDbContext _context;
 
@@ -44,7 +44,7 @@ namespace DeveloperPath.Application.Themes.Commands.UpdateTheme
     /// <param name="title"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    public async Task<bool> BeUniqueTitle(UpdateThemeCommand model, string title, CancellationToken cancellationToken)
+    public async Task<bool> BeUniqueTitle(UpdateTheme model, string title, CancellationToken cancellationToken)
     {
       //Verify that all themes in module have titles different than title
       var moduleThemes = await _context.Modules

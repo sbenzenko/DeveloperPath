@@ -17,7 +17,7 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
     [Test]
     public void ShouldRequireValidModuleId()
     {
-      var command = new UpdateModuleCommand
+      var command = new UpdateModule
       {
         Id = 99,
         Title = "New Title",
@@ -32,20 +32,20 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
     [Test]
     public async Task ShouldRequireTitle()
     {
-      var path = await SendAsync(new CreatePathCommand
+      var path = await SendAsync(new CreatePath
       {
         Title = "New Path",
         Description = "New Path Description"
       });
 
-      var module = await SendAsync(new CreateModuleCommand
+      var module = await SendAsync(new CreateModule
       {
         PathId = path.Id,
         Title = "New Module",
         Description = "New Module Description"
       });
 
-      var command = new UpdateModuleCommand
+      var command = new UpdateModule
       {
         Id = module.Id,
         Title = "",
@@ -62,20 +62,20 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
     [Test]
     public async Task ShouldRequireDescription()
     {
-      var path = await SendAsync(new CreatePathCommand
+      var path = await SendAsync(new CreatePath
       {
         Title = "New Path",
         Description = "New Path Description"
       });
 
-      var module = await SendAsync(new CreateModuleCommand
+      var module = await SendAsync(new CreateModule
       {
         PathId = path.Id,
         Title = "New Module",
         Description = "New Module Description"
       });
 
-      var command = new UpdateModuleCommand
+      var command = new UpdateModule
       {
         Id = module.Id,
         Title = "Updated Module",
@@ -92,20 +92,20 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
     [Test]
     public async Task ShouldDisallowLongTitle()
     {
-      var path = await SendAsync(new CreatePathCommand
+      var path = await SendAsync(new CreatePath
       {
         Title = "New Path",
         Description = "New Path Description"
       });
 
-      var module = await SendAsync(new CreateModuleCommand
+      var module = await SendAsync(new CreateModule
       {
         PathId = path.Id,
         Title = "New Module",
         Description = "New Module Description"
       });
 
-      var command = new UpdateModuleCommand
+      var command = new UpdateModule
       {
         Id = module.Id,
         Title = "This module title is too long and exceeds one hundred characters allowed for module titles by UpdateModuleCommandValidator",
@@ -128,21 +128,21 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
         Description = "New Path Description"
       });
 
-      var module = await SendAsync(new CreateModuleCommand
+      var module = await SendAsync(new CreateModule
       {
         PathId = path.Id,
         Title = "New Module",
         Description = "New Module Description"
       });
 
-      await SendAsync(new CreateModuleCommand
+      await SendAsync(new CreateModule
       {
         PathId = path.Id,
         Title = "Other New Module",
         Description = "New Other Path Description"
       });
 
-      var command = new UpdateModuleCommand
+      var command = new UpdateModule
       {
         Id = module.Id,
         Title = "Other New Module",
@@ -166,14 +166,14 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
         Description = "New Path Description"
       });
 
-      var module = await SendAsync(new CreateModuleCommand
+      var module = await SendAsync(new CreateModule
       {
         PathId = path.Id,
         Title = "New Module",
         Description = "New Module Description"
       });
 
-      var command = new UpdateModuleCommand
+      var command = new UpdateModule
       {
         Id = module.Id,
         Title = "Updated title",

@@ -42,12 +42,12 @@ namespace DeveloperPath.Domain.Entities
     /// <summary>
     /// Complexity level
     /// </summary>
-    public ComplexityLevel Complexity { get; set; }
+    public Complexity Complexity { get; set; }
 
     /// <summary>
     /// Necessity level
     /// </summary>
-    public NecessityLevel Necessity { get; set; }
+    public Necessity Necessity { get; set; }
 
     /// <summary>
     /// Position of theme in module (0-based). 

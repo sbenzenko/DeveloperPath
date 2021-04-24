@@ -1,12 +1,11 @@
 ﻿using DeveloperPath.Application.Common.Mappings;
-using DeveloperPath.Domain.Entities;
 
 namespace DeveloperPath.Application.Common.Models
 {
   /// <summary>
   /// Path title
   /// </summary>
-  public class PathTitle : IMapFrom<Path>
+  public class PathTitle : IMapFrom<Domain.Entities.Path>
   {
     /// <summary>
     /// Path ID

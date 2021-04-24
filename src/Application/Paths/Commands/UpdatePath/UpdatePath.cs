@@ -2,7 +2,6 @@
 using DeveloperPath.Application.Common.Exceptions;
 using DeveloperPath.Application.Common.Interfaces;
 using DeveloperPath.Application.Common.Models;
-using DeveloperPath.Domain.Entities;
 using MediatR;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -14,7 +13,7 @@ namespace DeveloperPath.Application.Paths.Commands.UpdatePath
   /// <summary>
   /// Path to update
   /// </summary>
-  public record UpdatePathCommand : IRequest<PathDto>
+  public record UpdatePath : IRequest<Path>
   {
     /// <summary>
     /// Id of the path to update
@@ -39,7 +38,7 @@ namespace DeveloperPath.Application.Paths.Commands.UpdatePath
     public IList<string> Tags { get; init; }
   }
 
-  internal class UpdatePathCommandHandler : IRequestHandler<UpdatePathCommand, PathDto>
+  internal class UpdatePathCommandHandler : IRequestHandler<UpdatePath, Path>
   {
     private readonly IApplicationDbContext _context;
     private readonly IMapper _mapper;
@@ -50,7 +49,7 @@ namespace DeveloperPath.Application.Paths.Commands.UpdatePath
       _mapper = mapper;
     }
 
-    public async Task<PathDto> Handle(UpdatePathCommand request, CancellationToken cancellationToken)
+    public async Task<Path> Handle(UpdatePath request, CancellationToken cancellationToken)
     {
       var entity = await _context.Paths.FindAsync(new object[] { request.Id }, cancellationToken);
 
@@ -66,7 +65,7 @@ namespace DeveloperPath.Application.Paths.Commands.UpdatePath
 
       await _context.SaveChangesAsync(cancellationToken);
 
-      return _mapper.Map<PathDto>(entity);
+      return _mapper.Map<Path>(entity);
     }
   }
 }

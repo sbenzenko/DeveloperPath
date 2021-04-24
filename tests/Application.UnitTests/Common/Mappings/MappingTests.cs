@@ -30,8 +30,8 @@ namespace DeveloperPath.Application.UnitTests.Common.Mappings
         }
         
         [Test]
-        [TestCase(typeof(Path), typeof(PathViewModel))]
-        [TestCase(typeof(Module), typeof(ModuleViewModel))]
+        [TestCase(typeof(Path), typeof(PathDetails))]
+        [TestCase(typeof(Module), typeof(ModuleDetails))]
         public void ShouldSupportMappingFromSourceToDestination(Type source, Type destination)
         {
             var instance = Activator.CreateInstance(source);

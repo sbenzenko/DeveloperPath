@@ -10,7 +10,7 @@ namespace DeveloperPath.Application.Paths.Commands.UpdatePath
   /// <summary>
   /// Validation rules for updating path
   /// </summary>
-  public class UpdatePathCommandValidator : AbstractValidator<UpdatePathCommand>
+  public class UpdatePathCommandValidator : AbstractValidator<UpdatePath>
   {
     private readonly IApplicationDbContext _context;
 
@@ -38,7 +38,7 @@ namespace DeveloperPath.Application.Paths.Commands.UpdatePath
     /// <param name="title"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    public async Task<bool> BeUniqueTitle(UpdatePathCommand model, string title, CancellationToken cancellationToken)
+    public async Task<bool> BeUniqueTitle(UpdatePath model, string title, CancellationToken cancellationToken)
     {
       return await _context.Paths
         .Where(p => p.Id != model.Id)

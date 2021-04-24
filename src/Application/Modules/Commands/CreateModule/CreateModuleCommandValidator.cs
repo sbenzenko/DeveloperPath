@@ -10,7 +10,7 @@ namespace DeveloperPath.Application.Modules.Commands.CreateModule
   /// <summary>
   /// Validation rules for creating module
   /// </summary>
-  public class CreateModuleCommandValidator : AbstractValidator<CreateModuleCommand>
+  public class CreateModuleCommandValidator : AbstractValidator<CreateModule>
   {
     private readonly IApplicationDbContext _context;
 
@@ -41,7 +41,7 @@ namespace DeveloperPath.Application.Modules.Commands.CreateModule
     /// <param name="title"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    public async Task<bool> BeUniqueTitle(CreateModuleCommand model, string title, CancellationToken cancellationToken)
+    public async Task<bool> BeUniqueTitle(CreateModule model, string title, CancellationToken cancellationToken)
     {
       //Verify that all modules in path have titles different than title
       var pathModules = await _context.Paths

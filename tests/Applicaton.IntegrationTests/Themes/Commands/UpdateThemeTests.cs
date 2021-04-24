@@ -17,7 +17,7 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
     [Test]
     public void ShouldRequireValidThemeId()
     {
-      var command = new UpdateThemeCommand
+      var command = new UpdateTheme
       {
         Id = 99999,
         ModuleId = 1,
@@ -33,7 +33,7 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
     [Test]
     public void ShouldRequireValidModuleId()
     {
-      var command = new UpdateThemeCommand
+      var command = new UpdateTheme
       {
         Id = 1,
         ModuleId = 99999,
@@ -69,7 +69,7 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
         ModuleId = module.Id
       });
 
-      var command = new UpdateThemeCommand
+      var command = new UpdateTheme
       {
         Id = theme.Id,
         ModuleId = module.Id,
@@ -107,7 +107,7 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
         ModuleId = module.Id
       });
 
-      var command = new UpdateThemeCommand
+      var command = new UpdateTheme
       {
         Id = theme.Id,
         ModuleId = module.Id,
@@ -145,7 +145,7 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
         ModuleId = module.Id
       });
 
-      var command = new UpdateThemeCommand
+      var command = new UpdateTheme
       {
         Id = theme.Id,
         Title = "This theme title is too long and exceeds two hundred characters allowed for theme titles by CreateThemeCommandValidator. And this theme title in incredibly long and ugly. I imagine no one would create a title this long but just in case",
@@ -189,7 +189,7 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
         ModuleId = module.Id
       });
 
-      var command = new UpdateThemeCommand
+      var command = new UpdateTheme
       {
         Id = theme.Id,
         ModuleId = module.Id,
@@ -214,7 +214,7 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
         Description = "Some Path Description"
       });
 
-      var module = await SendAsync(new CreateModuleCommand
+      var module = await SendAsync(new CreateModule
       {
         PathId = path.Id,
         Title = "Module Title",
@@ -228,7 +228,7 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
         ModuleId = module.Id
       });
 
-      var command = new UpdateThemeCommand
+      var command = new UpdateTheme
       {
         PathId = path.Id,
         ModuleId = module.Id,

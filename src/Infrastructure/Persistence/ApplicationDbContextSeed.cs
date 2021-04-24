@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using DeveloperPath.Domain.Entities;
+using DeveloperPath.Domain.Enums;
 using DeveloperPath.Infrastructure.Identity;
 using Microsoft.AspNetCore.Identity;
 
@@ -30,27 +31,27 @@ namespace DeveloperPath.Infrastructure.Persistence
           Title = "Types and variables",
           Url = "https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/language-specification/introduction#types-and-variables",
           Order = 0,
-          Type = Domain.Enums.SourceType.Documentation,
-          Availability = Domain.Enums.AvailabilityLevel.Free,
-          Relevance = Domain.Enums.RelevanceLevel.Relevant
+          Type = SourceType.Documentation,
+          Availability = Availability.Free,
+          Relevance = Relevance.Relevant
         };
         var tagSrc1 = new Source
         {
           Title = "Tag Helpers",
           Url = "https://docs.microsoft.com/en-us/aspnet/core/mvc/views/tag-helpers/intro",
           Order = 0,
-          Type = Domain.Enums.SourceType.Documentation,
-          Availability = Domain.Enums.AvailabilityLevel.Free,
-          Relevance = Domain.Enums.RelevanceLevel.Relevant
+          Type = SourceType.Documentation,
+          Availability = Availability.Free,
+          Relevance = Relevance.Relevant
         };
         var tagSrc2 = new Source
         {
           Title = "Tag-хелперы",
           Url = "https://metanit.com/sharp/aspnet5/10.1.php",
           Order = 1,
-          Type = Domain.Enums.SourceType.Course,
-          Availability = Domain.Enums.AvailabilityLevel.Free,
-          Relevance = Domain.Enums.RelevanceLevel.Relevant
+          Type = SourceType.Course,
+          Availability = Availability.Free,
+          Relevance = Relevance.Relevant
         };
 
         // Sections 
@@ -70,8 +71,8 @@ namespace DeveloperPath.Infrastructure.Persistence
         {
           Title = "Primitive types",
           Description = "Learn about C# built-in data types.",
-          Complexity = Domain.Enums.ComplexityLevel.Beginner,
-          Necessity = Domain.Enums.NecessityLevel.MustKnow,
+          Complexity = Complexity.Beginner,
+          Necessity = Necessity.MustKnow,
           Section = basics,
           Sources = new List<Source> { primitivesSrc },
           Order = 0
@@ -80,8 +81,8 @@ namespace DeveloperPath.Infrastructure.Persistence
         {
           Title = "Classes and objects",
           Description = "Classes are the most fundamental of C#’s types.",
-          Complexity = Domain.Enums.ComplexityLevel.Beginner,
-          Necessity = Domain.Enums.NecessityLevel.MustKnow,
+          Complexity = Complexity.Beginner,
+          Necessity = Necessity.MustKnow,
           Section = basics,
           Order = 1
         };
@@ -89,8 +90,8 @@ namespace DeveloperPath.Infrastructure.Persistence
         {
           Title = "Interfaces",
           Description = "An interface contains definitions for a group of related functionalities that a non-abstract class or a struct must implement.",
-          Complexity = Domain.Enums.ComplexityLevel.Beginner,
-          Necessity = Domain.Enums.NecessityLevel.MustKnow,
+          Complexity = Complexity.Beginner,
+          Necessity = Necessity.MustKnow,
           Section = basics,
           Prerequisites = new List<Theme> { classes },
           Order = 2
@@ -99,8 +100,8 @@ namespace DeveloperPath.Infrastructure.Persistence
         {
           Title = "Asynchronous programming",
           Description = "The core of async programming is the Task and Task<T> objects, which model asynchronous operations.",
-          Complexity = Domain.Enums.ComplexityLevel.Advanced,
-          Necessity = Domain.Enums.NecessityLevel.MustKnow,
+          Complexity = Complexity.Advanced,
+          Necessity = Necessity.MustKnow,
           Section = advanced,
           Order = 0
         };
@@ -109,16 +110,16 @@ namespace DeveloperPath.Infrastructure.Persistence
         {
           Title = "Razor",
           Description = "Introduction to ASP.NET Web Programming Using the Razor Syntax.",
-          Complexity = Domain.Enums.ComplexityLevel.Beginner,
-          Necessity = Domain.Enums.NecessityLevel.MustKnow,
+          Complexity = Complexity.Beginner,
+          Necessity = Necessity.MustKnow,
           Order = 2
         };
         var tagHelpers = new Theme
         {
           Title = "Tag Helpers",
           Description = "Tag Helpers enable server-side code to participate in creating and rendering HTML elements in Razor files.",
-          Complexity = Domain.Enums.ComplexityLevel.Intermediate,
-          Necessity = Domain.Enums.NecessityLevel.GoodToKnow,
+          Complexity = Complexity.Intermediate,
+          Necessity = Necessity.GoodToKnow,
           Prerequisites = new List<Theme> { razor },
           Sources = new List<Source> { tagSrc1, tagSrc2 },
           Order = 2
@@ -130,7 +131,7 @@ namespace DeveloperPath.Infrastructure.Persistence
           Title = "C#",
           Description = "C# is the most commonly used language for leveraging the .NET Framework. " +
           "As such, learning C# is a springboard to creating enterprise systems, desktop applications, websites and mobile applications.",
-          Necessity = Domain.Enums.NecessityLevel.MustKnow,
+          Necessity = Necessity.MustKnow,
           Themes = new List<Theme> { primitiveTypes, classes, interfaces, asyncronous },
           Sections = new List<Section> { basics, advanced },
           Tags =
@@ -151,7 +152,7 @@ namespace DeveloperPath.Infrastructure.Persistence
                 "Web", "Development", "Programming"
               },
           Prerequisites = new List<Module>() { cSharp },
-          Necessity = Domain.Enums.NecessityLevel.MustKnow
+          Necessity = Necessity.MustKnow
         };
 
         // Paths

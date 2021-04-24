@@ -6,7 +6,6 @@ using AutoMapper;
 using DeveloperPath.Application.Common.Exceptions;
 using DeveloperPath.Application.Common.Interfaces;
 using DeveloperPath.Application.Common.Models;
-using DeveloperPath.Domain.Entities;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
@@ -15,7 +14,7 @@ namespace DeveloperPath.Application.Sources.Queries.GetSources
   /// <summary>
   /// Get source parameters
   /// </summary>
-  public class GetSourceQuery : IRequest<SourceDto>
+  public class GetSourceQuery : IRequest<Source>
   {
     /// <summary>
     /// Source Id
@@ -39,7 +38,7 @@ namespace DeveloperPath.Application.Sources.Queries.GetSources
     public int ThemeId { get; init; }
   }
 
-  internal class GetSourceQueryHandler : IRequestHandler<GetSourceQuery, SourceDto>
+  internal class GetSourceQueryHandler : IRequestHandler<GetSourceQuery, Source>
   {
     private readonly IApplicationDbContext _context;
     private readonly IMapper _mapper;
@@ -50,7 +49,7 @@ namespace DeveloperPath.Application.Sources.Queries.GetSources
       _mapper = mapper;
     }
 
-    public async Task<SourceDto> Handle(GetSourceQuery request, CancellationToken cancellationToken)
+    public async Task<Source> Handle(GetSourceQuery request, CancellationToken cancellationToken)
     {
       //TODO: check if requested module is in requested path (???)
       var path = await _context.Paths.FindAsync(new object[] { request.PathId }, cancellationToken);
@@ -72,7 +71,7 @@ namespace DeveloperPath.Application.Sources.Queries.GetSources
         throw new NotFoundException(nameof(Source), request.Id);
 
       //TODO: is there another way to map single item?
-      return _mapper.Map<SourceDto>(result);
+      return _mapper.Map<Source>(result);
     }
   }
 }

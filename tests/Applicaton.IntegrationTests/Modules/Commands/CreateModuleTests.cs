@@ -16,7 +16,7 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
     [Test]
     public void ShouldRequireMinimumFields()
     {
-      var command = new CreateModuleCommand();
+      var command = new CreateModule();
 
       FluentActions.Invoking(() =>
           SendAsync(command)).Should().Throw<ValidationException>();
@@ -25,7 +25,7 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
     [Test]
     public void ShouldRequirePathId()
     {
-      var command = new CreateModuleCommand
+      var command = new CreateModule
       {
         Title = "Module Title",
         Description = "Module Decription"
@@ -40,7 +40,7 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
     [Test]
     public void ShouldReturnNotFoundForNonExistingPath()
     {
-      var command = new CreateModuleCommand
+      var command = new CreateModule
       {
         PathId = 999,
         Title = "New Title",
@@ -55,7 +55,7 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
     [Test]
     public void ShouldRequireTitle()
     {
-      var command = new CreateModuleCommand
+      var command = new CreateModule
       {
         PathId = 1,
         Title = "",
@@ -71,7 +71,7 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
     [Test]
     public void ShouldDisallowLongTitle()
     {
-      var command = new CreateModuleCommand
+      var command = new CreateModule
       {
         PathId = 1,
         Title = "This module title is too long and exceeds one hundred characters allowed for module titles by CreateModuleCommandValidator",
@@ -87,7 +87,7 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
     [Test]
     public void ShouldRequireDescription()
     {
-      var command = new CreateModuleCommand
+      var command = new CreateModule
       {
         PathId = 1,
         Title = "Module Title"
@@ -108,14 +108,14 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
         Description = "Some Path Description"
       });
 
-      await SendAsync(new CreateModuleCommand
+      await SendAsync(new CreateModule
       {
         PathId = path.Id,
         Title = "Module Title",
         Description = "Module Decription"
       });
 
-      var command = new CreateModuleCommand
+      var command = new CreateModule
       {
         PathId = path.Id,
         Title = "Module Title",
@@ -139,12 +139,12 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
         Description = "Some Path Description"
       });
 
-      var command = new CreateModuleCommand
+      var command = new CreateModule
       {
         PathId = path.Id,
         Title = "New Module",
         Description = "New Module Description",
-        Necessity = Domain.Enums.NecessityLevel.Other,
+        Necessity = Domain.Enums.Necessity.Other,
         Tags = new List<string> { "Tag1", "Tag2", "Tag3" }
       };
 

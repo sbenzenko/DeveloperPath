@@ -29,9 +29,9 @@ namespace DeveloperPath.WebApi.Controllers
     /// <response code="200">Returns a list of sources in the theme</response>
     [HttpGet]
     [HttpHead]
-    public async Task<ActionResult<IEnumerable<SourceDto>>> Get(int pathId, int moduleId, int themeId)
+    public async Task<ActionResult<IEnumerable<Source>>> Get(int pathId, int moduleId, int themeId)
     {
-      IEnumerable<SourceDto> sources = await Mediator.Send(
+      IEnumerable<Source> sources = await Mediator.Send(
          new GetSourceListQuery { PathId = pathId, ModuleId = moduleId, ThemeId = themeId });
 
       return Ok(sources);
@@ -48,9 +48,9 @@ namespace DeveloperPath.WebApi.Controllers
     /// <response code="200">Returns requested source</response>
     [HttpGet("{sourceId}", Name = "GetSource")]
     [HttpHead("{sourceId}")]
-    public async Task<ActionResult<SourceDto>> Get(int pathId, int moduleId, int themeId, int sourceId)
+    public async Task<ActionResult<Source>> Get(int pathId, int moduleId, int themeId, int sourceId)
     {
-      SourceDto model = await Mediator.Send(
+      Source model = await Mediator.Send(
         new GetSourceQuery { PathId = pathId, ModuleId = moduleId, ThemeId = themeId, Id = sourceId });
 
       return Ok(model);
@@ -91,13 +91,13 @@ namespace DeveloperPath.WebApi.Controllers
     /// <response code="422">Unprocessible entity provided</response>
     [HttpPost]
     [Consumes("application/json")]
-    public async Task<ActionResult<SourceDto>> Create(int pathId, int moduleId, int themeId,
-      [FromBody] CreateSourceCommand command)
+    public async Task<ActionResult<Source>> Create(int pathId, int moduleId, int themeId,
+      [FromBody] CreateSource command)
     {
       if (pathId != command.PathId || moduleId != command.ModuleId || themeId != command.ThemeId)
         return BadRequest();
 
-      SourceDto model = await Mediator.Send(command);
+      Source model = await Mediator.Send(command);
 
       return CreatedAtRoute("GetSource", 
         new { pathId = command.PathId, moduleId = command.ModuleId, themeId = model.ThemeId, sourceId = model.Id }, model);
@@ -118,8 +118,8 @@ namespace DeveloperPath.WebApi.Controllers
     /// <response code="422">Unprocessible entity provided</response>
     [HttpPut("{sourceId}")]
     [Consumes("application/json")]
-    public async Task<ActionResult<SourceDto>> Update(int pathId, int moduleId, int themeId, int sourceId, 
-      [FromBody] UpdateSourceCommand command)
+    public async Task<ActionResult<Source>> Update(int pathId, int moduleId, int themeId, int sourceId, 
+      [FromBody] UpdateSource command)
     {
       if (pathId != command.PathId || moduleId != command.ModuleId || 
           themeId != command.ThemeId || sourceId != command.Id)
@@ -142,7 +142,7 @@ namespace DeveloperPath.WebApi.Controllers
     [HttpDelete("{sourceId}")]
     public async Task<ActionResult> Delete(int pathId, int moduleId, int themeId, int sourceId)
     {
-      await Mediator.Send(new DeleteSourceCommand { PathId = pathId, ModuleId = moduleId, ThemeId = themeId, Id = sourceId });
+      await Mediator.Send(new DeleteSource { PathId = pathId, ModuleId = moduleId, ThemeId = themeId, Id = sourceId });
 
       return NoContent();
     }

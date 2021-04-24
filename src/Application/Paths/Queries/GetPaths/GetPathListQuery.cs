@@ -14,11 +14,11 @@ namespace DeveloperPath.Application.Paths.Queries.GetPaths
   /// <summary>
   /// Get path
   /// </summary>
-  public class GetPathListQuery : IRequest<IEnumerable<PathDto>>
+  public class GetPathListQuery : IRequest<IEnumerable<Path>>
   {
   }
 
-  internal class GetPathsQueryHandler : IRequestHandler<GetPathListQuery, IEnumerable<PathDto>>
+  internal class GetPathsQueryHandler : IRequestHandler<GetPathListQuery, IEnumerable<Path>>
   {
     private readonly IApplicationDbContext _context;
     private readonly IMapper _mapper;
@@ -29,11 +29,11 @@ namespace DeveloperPath.Application.Paths.Queries.GetPaths
       _mapper = mapper;
     }
 
-    public async Task<IEnumerable<PathDto>> Handle(GetPathListQuery request, CancellationToken cancellationToken)
+    public async Task<IEnumerable<Path>> Handle(GetPathListQuery request, CancellationToken cancellationToken)
     {
       return await _context.Paths
         .OrderBy(t => t.Title)
-        .ProjectTo<PathDto>(_mapper.ConfigurationProvider)
+        .ProjectTo<Path>(_mapper.ConfigurationProvider)
         .ToListAsync(cancellationToken);
     }
   }

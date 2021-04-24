@@ -1,12 +1,11 @@
 ﻿using DeveloperPath.Application.Common.Mappings;
-using DeveloperPath.Domain.Entities;
 
 namespace DeveloperPath.Application.Common.Models
 {
   /// <summary>
   /// Module title
   /// </summary>
-  public class ModuleTitle : IMapFrom<Module>
+  public class ModuleTitle : IMapFrom<Domain.Entities.Module>
   {
     /// <summary>
     /// Module ID

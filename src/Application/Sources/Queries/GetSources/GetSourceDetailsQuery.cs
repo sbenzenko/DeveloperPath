@@ -14,7 +14,7 @@ namespace DeveloperPath.Application.Sources.Queries.GetSources
   /// <summary>
   /// Get source details parameters
   /// </summary>
-  public class GetSourceDetailsQuery : IRequest<SourceViewModel>
+  public class GetSourceDetailsQuery : IRequest<SourceDetails>
   {
     /// <summary>
     /// Source Id
@@ -38,7 +38,7 @@ namespace DeveloperPath.Application.Sources.Queries.GetSources
     public int ThemeId { get; init; }
   }
 
-  internal class GetSourceDetailsQueryHandler : IRequestHandler<GetSourceDetailsQuery, SourceViewModel>
+  internal class GetSourceDetailsQueryHandler : IRequestHandler<GetSourceDetailsQuery, SourceDetails>
   {
     private readonly IApplicationDbContext _context;
     private readonly IMapper _mapper;
@@ -49,7 +49,7 @@ namespace DeveloperPath.Application.Sources.Queries.GetSources
       _mapper = mapper;
     }
 
-    public async Task<SourceViewModel> Handle(GetSourceDetailsQuery request, CancellationToken cancellationToken)
+    public async Task<SourceDetails> Handle(GetSourceDetailsQuery request, CancellationToken cancellationToken)
     {
       //TODO: check if requested module is in requested path (???)
       var path = await _context.Paths.FindAsync(new object[] { request.PathId }, cancellationToken);
@@ -71,7 +71,7 @@ namespace DeveloperPath.Application.Sources.Queries.GetSources
         throw new NotFoundException(nameof(Source), request.Id);
 
       //TODO: is there another way to map single item?
-      return _mapper.Map<SourceViewModel>(result);
+      return _mapper.Map<SourceDetails>(result);
     }
   }
 }

@@ -2,7 +2,6 @@
 using DeveloperPath.Application.Common.Exceptions;
 using DeveloperPath.Application.Common.Interfaces;
 using DeveloperPath.Application.Common.Models;
-using DeveloperPath.Domain.Entities;
 using DeveloperPath.Domain.Enums;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -17,7 +16,7 @@ namespace DeveloperPath.Application.Sources.Commands.CreateSource
   /// <summary>
   /// Source to create
   /// </summary>
-  public record CreateSourceCommand : IRequest<SourceDto>
+  public record CreateSource : IRequest<Source>
   {
     /// <summary>
     /// Path Id
@@ -64,18 +63,18 @@ namespace DeveloperPath.Application.Sources.Commands.CreateSource
     /// <summary>
     /// Whether the resource Free | Requires registration | Paid only
     /// </summary>
-    public AvailabilityLevel Availability { get; init; }
+    public Availability Availability { get; init; }
     /// <summary>
     /// Whether inforation is Not applicable (default) | Up-to-date | Somewhat up-to-date | Outdated
     /// </summary>
-    public RelevanceLevel Relevance { get; init; }
+    public Relevance Relevance { get; init; }
     /// <summary>
     /// List of tags related to theme
     /// </summary>
     public IList<string> Tags { get; init; }
   }
 
-  internal class CreateSourceCommandHandler : IRequestHandler<CreateSourceCommand, SourceDto>
+  internal class CreateSourceCommandHandler : IRequestHandler<CreateSource, Source>
   {
     private readonly IApplicationDbContext _context;
     private readonly IMapper _mapper;
@@ -86,7 +85,7 @@ namespace DeveloperPath.Application.Sources.Commands.CreateSource
       _mapper = mapper;
     }
 
-    public async Task<SourceDto> Handle(CreateSourceCommand request, CancellationToken cancellationToken)
+    public async Task<Source> Handle(CreateSource request, CancellationToken cancellationToken)
     {
       //TODO: check if requested module is in requested path (???)
       var path = await _context.Paths.FindAsync(new object[] { request.PathId }, cancellationToken);
@@ -99,7 +98,7 @@ namespace DeveloperPath.Application.Sources.Commands.CreateSource
       if (theme == null)
         throw new NotFoundException(nameof(Theme), request.ThemeId);
 
-      var entity = new Source
+      var entity = new Domain.Entities.Source
       {
         Title = request.Title,
         Description = request.Description,
@@ -115,7 +114,7 @@ namespace DeveloperPath.Application.Sources.Commands.CreateSource
 
       await _context.SaveChangesAsync(cancellationToken);
 
-      return _mapper.Map<SourceDto>(entity);
+      return _mapper.Map<Source>(entity);
     }
   }
 }

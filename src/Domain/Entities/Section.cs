@@ -33,7 +33,7 @@ namespace DeveloperPath.Domain.Entities
     /// <summary>
     /// Necessity level
     /// </summary>
-    public NecessityLevel Necessity { get; set; }
+    public Necessity Necessity { get; set; }
 
     /// <summary>
     /// Position of section in module (0-based). 

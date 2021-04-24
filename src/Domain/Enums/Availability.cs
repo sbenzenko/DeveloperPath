@@ -1,6 +1,9 @@
 ﻿namespace DeveloperPath.Domain.Enums
 {
-  public enum AvailabilityLevel
+  /// <summary>
+  /// Availability of the resource
+  /// </summary>
+  public enum Availability
   {
     /// <summary>
     /// Available free (default)

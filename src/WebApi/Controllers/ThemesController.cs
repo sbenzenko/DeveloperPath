@@ -28,9 +28,9 @@ namespace DeveloperPath.WebApi.Controllers
     /// <response code="200">Returns a list of themes in the module</response>
     [HttpGet]
     [HttpHead]
-    public async Task<ActionResult<IEnumerable<ThemeDto>>> Get(int pathId, int moduleId)
+    public async Task<ActionResult<IEnumerable<Theme>>> Get(int pathId, int moduleId)
     {
-      IEnumerable<ThemeDto> themes = await Mediator.Send(
+      IEnumerable<Theme> themes = await Mediator.Send(
          new GetThemeListQuery { PathId = pathId, ModuleId = moduleId });
 
       return Ok(themes);
@@ -46,9 +46,9 @@ namespace DeveloperPath.WebApi.Controllers
     /// <response code="200">Returns requested theme</response>
     [HttpGet("{themeId}", Name = "GetTheme")]
     [HttpHead("{themeId}")]
-    public async Task<ActionResult<ThemeDto>> Get(int pathId, int moduleId, int themeId)
+    public async Task<ActionResult<Theme>> Get(int pathId, int moduleId, int themeId)
     {
-      ThemeDto model = await Mediator.Send(
+      Theme model = await Mediator.Send(
         new GetThemeQuery { PathId = pathId, ModuleId = moduleId, Id = themeId });
 
       return Ok(model);
@@ -86,13 +86,13 @@ namespace DeveloperPath.WebApi.Controllers
     /// <response code="422">Unprocessible entity provided</response>
     [HttpPost]
     [Consumes("application/json")]
-    public async Task<ActionResult<ThemeDto>> Create(int pathId, int moduleId,
-      [FromBody] CreateThemeCommand command)
+    public async Task<ActionResult<Theme>> Create(int pathId, int moduleId,
+      [FromBody] CreateTheme command)
     {
       if (pathId != command.PathId || moduleId != command.ModuleId)
         return BadRequest();
 
-      ThemeDto model = await Mediator.Send(command);
+      Theme model = await Mediator.Send(command);
 
       return CreatedAtRoute("GetTheme", 
         new { pathId = command.PathId, moduleId = model.ModuleId, themeId = model.Id }, model);
@@ -112,8 +112,8 @@ namespace DeveloperPath.WebApi.Controllers
     /// <response code="422">Unprocessible entity provided</response>
     [HttpPut("{themeId}")]
     [Consumes("application/json")]
-    public async Task<ActionResult<ThemeDto>> Update(int pathId, int moduleId, int themeId,
-      [FromBody] UpdateThemeCommand command)
+    public async Task<ActionResult<Theme>> Update(int pathId, int moduleId, int themeId,
+      [FromBody] UpdateTheme command)
     {
       if (pathId != command.PathId || moduleId != command.ModuleId || themeId != command.Id)
         return BadRequest();
@@ -134,7 +134,7 @@ namespace DeveloperPath.WebApi.Controllers
     [HttpDelete("{themeId}")]
     public async Task<ActionResult> Delete(int pathId, int moduleId, int themeId)
     {
-      await Mediator.Send(new DeleteThemeCommand { PathId = pathId, ModuleId = moduleId, Id = themeId });
+      await Mediator.Send(new DeleteTheme { PathId = pathId, ModuleId = moduleId, Id = themeId });
 
       return NoContent();
     }

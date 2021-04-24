@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc.ApiExplorer;
 
 namespace DeveloperPath.WebApi.Extensions
 {
+  [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0060:Remove unused parameter", Justification = "This is a conventions class")]
   internal static class ApiCustomConventions
   {
     [ProducesResponseType(StatusCodes.Status200OK)]

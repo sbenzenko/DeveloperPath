@@ -15,7 +15,7 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
     [Test]
     public void ShouldRequireValidPathId()
     {
-      var command = new DeletePathCommand { Id = 99 };
+      var command = new DeletePath { Id = 99 };
 
       FluentActions.Invoking(() =>
           SendAsync(command)).Should().Throw<NotFoundException>();
@@ -24,7 +24,7 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
     [Test]
     public async Task ShouldDeletePath()
     {
-      var path = await SendAsync(new CreatePathCommand
+      var path = await SendAsync(new CreatePath
       {
         Title = "New Path",
         Description = "New Path Description"
@@ -32,7 +32,7 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
 
       var pathAdded = await FindAsync<Path>(path.Id);
 
-      await SendAsync(new DeletePathCommand
+      await SendAsync(new DeletePath
       {
         Id = path.Id
       });

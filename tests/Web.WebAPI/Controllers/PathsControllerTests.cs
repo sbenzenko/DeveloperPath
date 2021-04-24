@@ -20,16 +20,16 @@ namespace DeveloperPath.Web.WebAPI.Controllers
   public class PathsControllerTests : TestBase
   {
     private readonly Mock<IMediator> moqMediator;
-    private readonly PathDto samplePath;
-    private readonly IEnumerable<PathDto> paths;
+    private readonly Path samplePath;
+    private readonly IEnumerable<Path> paths;
 
     public PathsControllerTests()
     {
-      samplePath = new PathDto { Id = 1, Title = "Path1", Description = "Description1" };
-      paths = new List<PathDto>
+      samplePath = new Path { Id = 1, Title = "Path1", Description = "Description1" };
+      paths = new List<Path>
       {
         samplePath,
-        new PathDto { Id = 2, Title = "Path2", Description = "Description2" }
+        new Path { Id = 2, Title = "Path2", Description = "Description2" }
       };
 
       moqMediator = new Mock<IMediator>();
@@ -47,15 +47,15 @@ namespace DeveloperPath.Web.WebAPI.Controllers
           .ReturnsAsync(samplePath);
       // Create
       moqMediator
-        .Setup(m => m.Send(It.IsAny<CreatePathCommand>(), It.IsAny<CancellationToken>()))
+        .Setup(m => m.Send(It.IsAny<CreatePath>(), It.IsAny<CancellationToken>()))
           .ReturnsAsync(samplePath);
       // Update
       moqMediator
-        .Setup(m => m.Send(It.IsAny<UpdatePathCommand>(), It.IsAny<CancellationToken>()))
+        .Setup(m => m.Send(It.IsAny<UpdatePath>(), It.IsAny<CancellationToken>()))
           .ReturnsAsync(samplePath);
       // Delete
       moqMediator
-        .Setup(m => m.Send(It.IsAny<DeletePathCommand>(), It.IsAny<CancellationToken>()));
+        .Setup(m => m.Send(It.IsAny<DeletePath>(), It.IsAny<CancellationToken>()));
     }
 
     [Test]
@@ -64,7 +64,7 @@ namespace DeveloperPath.Web.WebAPI.Controllers
       var controller = new PathsController(moqMediator.Object);
 
       var result = await controller.Get();
-      var content = GetObjectResultContent<IEnumerable<PathDto>>(result.Result);
+      var content = GetObjectResultContent<IEnumerable<Path>>(result.Result);
 
       Assert.IsInstanceOf(typeof(OkObjectResult), result.Result);
       Assert.IsNotNull(content);
@@ -77,7 +77,7 @@ namespace DeveloperPath.Web.WebAPI.Controllers
       var controller = new PathsController(moqMediator.Object);
 
       var result = await controller.Get(1);
-      var content = GetObjectResultContent<PathDto>(result.Result);
+      var content = GetObjectResultContent<Path>(result.Result);
 
       Assert.IsInstanceOf(typeof(OkObjectResult), result.Result);
       Assert.IsNotNull(content);
@@ -91,7 +91,7 @@ namespace DeveloperPath.Web.WebAPI.Controllers
 
       var result = await controller.Get(null);
       var contentResult = (OkObjectResult)result.Result;
-      var value = contentResult.Value as IEnumerable<PathDto>;
+      var value = contentResult.Value as IEnumerable<Path>;
 
       Assert.IsInstanceOf<OkObjectResult>(result.Result);
       Assert.IsNotNull(contentResult);
@@ -109,7 +109,7 @@ namespace DeveloperPath.Web.WebAPI.Controllers
       });
 
       var contentResult = (OkObjectResult)result.Result;
-      var value = contentResult.Value as IEnumerable<PathDto>;
+      var value = contentResult.Value as IEnumerable<Path>;
 
       Assert.IsInstanceOf(typeof(OkObjectResult), result.Result);
       Assert.IsNotNull(contentResult);
@@ -121,7 +121,7 @@ namespace DeveloperPath.Web.WebAPI.Controllers
       var controller = new PathsController(moqMediator.Object);
       var result = await controller.Get(new RequestParams() { PageNumber = -1, PageSize = -1 });
       var contentResult = (BadRequestObjectResult)result.Result;
-      var value = contentResult.Value as IEnumerable<PathDto>;
+      var value = contentResult.Value as IEnumerable<Path>;
 
       Assert.IsInstanceOf<BadRequestObjectResult>(result.Result);
       Assert.IsNotNull(contentResult);
@@ -131,11 +131,11 @@ namespace DeveloperPath.Web.WebAPI.Controllers
     [Test]
     public async Task Create_ReturnsCreatedAtRoute()
     {
-      var createCommand = new CreatePathCommand { Title = "Create title", Description = "Create Description" };
+      var createCommand = new CreatePath { Title = "Create title", Description = "Create Description" };
       var controller = new PathsController(moqMediator.Object);
 
       var result = await controller.Create(createCommand);
-      var content = GetObjectResultContent<PathDto>(result.Result);
+      var content = GetObjectResultContent<Path>(result.Result);
 
       Assert.IsInstanceOf(typeof(CreatedAtRouteResult), result.Result);
       Assert.AreEqual("GetPath", ((CreatedAtRouteResult)result.Result).RouteName);
@@ -146,11 +146,11 @@ namespace DeveloperPath.Web.WebAPI.Controllers
     [Test]
     public async Task Update_ReturnsUpdatedPath_WhenRequestedIdMatchesCommandId()
     {
-      var updateCommand = new UpdatePathCommand { Id = 1, Title = "Update title", Description = "Update Description" };
+      var updateCommand = new UpdatePath { Id = 1, Title = "Update title", Description = "Update Description" };
       var controller = new PathsController(moqMediator.Object);
 
       var result = await controller.Update(1, updateCommand);
-      var content = GetObjectResultContent<PathDto>(result.Result);
+      var content = GetObjectResultContent<Path>(result.Result);
 
       Assert.IsInstanceOf(typeof(OkObjectResult), result.Result);
       Assert.IsNotNull(content);
@@ -160,7 +160,7 @@ namespace DeveloperPath.Web.WebAPI.Controllers
     [Test]
     public async Task Update_ReturnsBadRequest_WhenRequestedIdDoesNotMatchCommandId()
     {
-      var updateCommand = new UpdatePathCommand { Id = 2, Title = "Update title", Description = "Update Description" };
+      var updateCommand = new UpdatePath { Id = 2, Title = "Update title", Description = "Update Description" };
       var controller = new PathsController(moqMediator.Object);
 
       var result = await controller.Update(1, updateCommand);

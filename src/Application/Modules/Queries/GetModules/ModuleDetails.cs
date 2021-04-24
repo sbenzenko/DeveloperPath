@@ -1,14 +1,14 @@
 ﻿using System.Collections.Generic;
 using DeveloperPath.Application.Common.Mappings;
-using DeveloperPath.Domain.Entities;
+using DeveloperPath.Application.Common.Models;
 using DeveloperPath.Domain.Enums;
 
-namespace DeveloperPath.Application.Common.Models
+namespace DeveloperPath.Application.Modules.Queries.GetModules
 {
   /// <summary>
-  /// Represents module (skill) of the path, e.g. Programming language, Databases, CI/CD. etc.
+  /// Detailed information about the module
   /// </summary>
-  public class ModuleDto : IMapFrom<Module>
+  public class ModuleDetails : IMapFrom<Domain.Entities.Module>
   {
     /// <summary>
     /// Module ID
@@ -18,12 +18,12 @@ namespace DeveloperPath.Application.Common.Models
     /// <summary>
     /// Module title
     /// </summary>
-    public string Title { get; init; }
+    public string Title { get; set; }
 
     /// <summary>
     /// Module short summary
     /// </summary>
-    public string Description { get; init; }
+    public string Description { get; set; }
 
     /// <summary>
     /// Paths module attached to
@@ -33,7 +33,17 @@ namespace DeveloperPath.Application.Common.Models
     /// <summary>
     /// Necessity level (Other (default) | Possibilities | Interesting | Good to know | Must know)
     /// </summary>
-    public NecessityLevel Necessity { get; init; }
+    public Necessity Necessity { get; set; }
+
+    /// <summary>
+    /// Sections that module consists of (may be empty)
+    /// </summary>
+    public ICollection<Section> Sections { get; init; }
+
+    /// <summary>
+    /// Themes that module consists of
+    /// </summary>
+    public ICollection<Theme> Themes { get; init; }
 
     /// <summary>
     /// Modules required to know before studying this module
@@ -41,7 +51,7 @@ namespace DeveloperPath.Application.Common.Models
     public ICollection<ModuleTitle> Prerequisites { get; init; }
 
     /// <summary>
-    /// List of tags related to the module
+    /// List of tags related to module
     /// </summary>
     public ICollection<string> Tags { get; set; }
   }

@@ -6,7 +6,6 @@ using AutoMapper;
 using DeveloperPath.Application.Common.Exceptions;
 using DeveloperPath.Application.Common.Interfaces;
 using DeveloperPath.Application.Common.Models;
-using DeveloperPath.Domain.Entities;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
@@ -15,7 +14,7 @@ namespace DeveloperPath.Application.Paths.Queries.GetPaths
   /// <summary>
   /// Get path parameters
   /// </summary>
-  public class GetPathQuery : IRequest<PathDto>
+  public class GetPathQuery : IRequest<Path>
   {
     /// <summary>
     /// Path id
@@ -24,7 +23,7 @@ namespace DeveloperPath.Application.Paths.Queries.GetPaths
     public int Id { get; init; }
   }
 
-  internal class GetPathQueryHandler : IRequestHandler<GetPathQuery, PathDto>
+  internal class GetPathQueryHandler : IRequestHandler<GetPathQuery, Path>
   {
     private readonly IApplicationDbContext _context;
     private readonly IMapper _mapper;
@@ -35,7 +34,7 @@ namespace DeveloperPath.Application.Paths.Queries.GetPaths
       _mapper = mapper;
     }
 
-    public async Task<PathDto> Handle(GetPathQuery request, CancellationToken cancellationToken)
+    public async Task<Path> Handle(GetPathQuery request, CancellationToken cancellationToken)
     {
       var result = await _context.Paths
         .Where(c => c.Id == request.Id)
@@ -45,7 +44,7 @@ namespace DeveloperPath.Application.Paths.Queries.GetPaths
         throw new NotFoundException(nameof(Path), request.Id);
 
       //TODO: is there another way to map single item?
-      return _mapper.Map<PathDto>(result);
+      return _mapper.Map<Path>(result);
     }
   }
 }

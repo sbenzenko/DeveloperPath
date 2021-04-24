@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using DeveloperPath.Application.Common.Interfaces;
 using DeveloperPath.Application.Common.Models;
-using DeveloperPath.Domain.Entities;
 using MediatR;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -13,7 +12,7 @@ namespace DeveloperPath.Application.Paths.Commands.CreatePath
   /// <summary>
   /// Path to create
   /// </summary>
-  public record CreatePathCommand : IRequest<PathDto>
+  public record CreatePath : IRequest<Path>
   {
     /// <summary>
     /// Path title
@@ -33,7 +32,7 @@ namespace DeveloperPath.Application.Paths.Commands.CreatePath
     public IList<string> Tags { get; init; }
   }
 
-  internal class CreatePathCommandHandler : IRequestHandler<CreatePathCommand, PathDto>
+  internal class CreatePathCommandHandler : IRequestHandler<CreatePath, Path>
   {
     private readonly IApplicationDbContext _context;
     private readonly IMapper _mapper;
@@ -44,9 +43,9 @@ namespace DeveloperPath.Application.Paths.Commands.CreatePath
       _mapper = mapper;
     }
 
-    public async Task<PathDto> Handle(CreatePathCommand request, CancellationToken cancellationToken)
+    public async Task<Path> Handle(CreatePath request, CancellationToken cancellationToken)
     {
-      var entity = new Path
+      var entity = new Domain.Entities.Path
       {
         Title = request.Title,
         Description = request.Description,
@@ -57,7 +56,7 @@ namespace DeveloperPath.Application.Paths.Commands.CreatePath
 
       await _context.SaveChangesAsync(cancellationToken);
 
-      return _mapper.Map<PathDto>(entity);
+      return _mapper.Map<Path>(entity);
     }
   }
 }

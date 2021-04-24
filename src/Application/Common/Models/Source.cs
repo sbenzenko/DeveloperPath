@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using DeveloperPath.Application.Common.Mappings;
-using DeveloperPath.Domain.Entities;
 using DeveloperPath.Domain.Enums;
 
 namespace DeveloperPath.Application.Common.Models
@@ -8,7 +7,7 @@ namespace DeveloperPath.Application.Common.Models
   /// <summary>
   /// Source of information (book, article, blog post, course)
   /// </summary>
-  public class SourceDto : IMapFrom<Source>
+  public class Source : IMapFrom<Domain.Entities.Source>
   {
     /// <summary>
     /// Source ID
@@ -38,7 +37,7 @@ namespace DeveloperPath.Application.Common.Models
     /// <summary>
     /// Theme that the source is for
     /// </summary>
-    public ThemeDto Theme { get; init; }
+    public Theme Theme { get; init; }
 
     /// <summary>
     /// Position of source in theme (0-based).
@@ -53,12 +52,12 @@ namespace DeveloperPath.Application.Common.Models
     /// <summary>
     /// Whether the resource Free | Requires registration | Paid only
     /// </summary>
-    public AvailabilityLevel Availability { get; set; }
+    public Availability Availability { get; set; }
 
     /// <summary>
     /// Whether inforation is Not applicable (default) | Up-to-date | Somewhat up-to-date | Outdated
     /// </summary>
-    public RelevanceLevel Relevance { get; set; }
+    public Relevance Relevance { get; set; }
 
     /// <summary>
     /// List of tags related to theme

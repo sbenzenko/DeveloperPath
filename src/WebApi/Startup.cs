@@ -41,7 +41,12 @@ namespace DeveloperPath.WebApi
         options.Filters.Add(
           new ProducesAttribute("application/json", "application/xml"));
       })
-        .AddXmlDataContractSerializerFormatters();
+        .AddXmlDataContractSerializerFormatters()
+        .AddJsonOptions(options =>
+        {
+          // serialize enums as strings
+          options.JsonSerializerOptions.Converters.Add(new System.Text.Json.Serialization.JsonStringEnumConverter());
+        });
 
       services.AddHealthChecks()
               .AddDbContextCheck<ApplicationDbContext>();

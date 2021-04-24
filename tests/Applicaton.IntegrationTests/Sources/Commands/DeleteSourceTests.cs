@@ -16,7 +16,7 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
     [Test]
     public void ShouldRequireValidPathId()
     {
-      var command = new DeleteSourceCommand { PathId = 999999, ModuleId = 1, ThemeId = 1, Id = 1 };
+      var command = new DeleteSource { PathId = 999999, ModuleId = 1, ThemeId = 1, Id = 1 };
 
       FluentActions.Invoking(() =>
           SendAsync(command)).Should().Throw<NotFoundException>();
@@ -24,7 +24,7 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
     [Test]
     public void ShouldRequireValidModuleId()
     {
-      var command = new DeleteSourceCommand { PathId = 1, ModuleId = 999999, ThemeId = 1, Id = 1 };
+      var command = new DeleteSource { PathId = 1, ModuleId = 999999, ThemeId = 1, Id = 1 };
 
       FluentActions.Invoking(() =>
           SendAsync(command)).Should().Throw<NotFoundException>();
@@ -32,7 +32,7 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
     [Test]
     public void ShouldRequireValidThemeId()
     {
-      var command = new DeleteSourceCommand { PathId = 1, ModuleId = 1, ThemeId = 999999, Id = 1 };
+      var command = new DeleteSource { PathId = 1, ModuleId = 1, ThemeId = 999999, Id = 1 };
 
       FluentActions.Invoking(() =>
           SendAsync(command)).Should().Throw<NotFoundException>();
@@ -41,7 +41,7 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
     [Test]
     public void ShouldRequireValidSourceId()
     {
-      var command = new DeleteSourceCommand { PathId = 1, ModuleId = 1, ThemeId = 1, Id = 999999 };
+      var command = new DeleteSource { PathId = 1, ModuleId = 1, ThemeId = 1, Id = 999999 };
 
       FluentActions.Invoking(() =>
           SendAsync(command)).Should().Throw<NotFoundException>();
@@ -56,7 +56,7 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
         Description = "Some Path Description"
       });
 
-      var module = await SendAsync(new CreateModuleCommand
+      var module = await SendAsync(new CreateModule
       {
         PathId = path.Id,
         Title = "Module Title",
@@ -79,14 +79,14 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
         Url = "https://source1.com",
         Order = 0,
         Type = Domain.Enums.SourceType.Documentation,
-        Availability = Domain.Enums.AvailabilityLevel.Free,
-        Relevance = Domain.Enums.RelevanceLevel.Relevant,
+        Availability = Domain.Enums.Availability.Free,
+        Relevance = Domain.Enums.Relevance.Relevant,
         Tags = new List<string> { "Tag1", "Tag2", "Tag3" }
       });
 
       var sourceAdded = await FindAsync<Source>(source.Id);
 
-      await SendAsync(new DeleteSourceCommand
+      await SendAsync(new DeleteSource
       {
         PathId = path.Id,
         ModuleId = module.Id,

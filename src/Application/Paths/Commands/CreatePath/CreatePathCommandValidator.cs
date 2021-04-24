@@ -9,7 +9,7 @@ namespace DeveloperPath.Application.Paths.Commands.CreatePath
   /// <summary>
   /// Validation rules for creating path
   /// </summary>
-  public class CreatePathCommandValidator : AbstractValidator<CreatePathCommand>
+  public class CreatePathCommandValidator : AbstractValidator<CreatePath>
   {
     private readonly IApplicationDbContext _context;
 

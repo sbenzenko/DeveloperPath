@@ -16,7 +16,7 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
     [Test]
     public void ShouldRequireMinimumFields()
     {
-      var command = new CreateSourceCommand();
+      var command = new CreateSource();
 
       FluentActions.Invoking(() =>
           SendAsync(command)).Should().Throw<ValidationException>();
@@ -25,7 +25,7 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
     [Test]
     public void ShouldRequireModuleId()
     {
-      var command = new CreateSourceCommand
+      var command = new CreateSource
       {
         ThemeId = 1,
         Title = "Source Title",
@@ -42,7 +42,7 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
     [Test]
     public void ShouldRequireThemeId()
     {
-      var command = new CreateSourceCommand
+      var command = new CreateSource
       {
         ModuleId = 1,
         Title = "Source Title",
@@ -59,7 +59,7 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
     [Test]
     public void ShouldReturnNotFoundForNonExistingModule()
     {
-      var command = new CreateSourceCommand
+      var command = new CreateSource
       {
         ModuleId = 999,
         ThemeId = 1,
@@ -75,7 +75,7 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
     [Test]
     public void ShouldReturnNotFoundForNonExistingTheme()
     {
-      var command = new CreateSourceCommand
+      var command = new CreateSource
       {
         ModuleId = 1,
         ThemeId = 999,
@@ -91,7 +91,7 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
     [Test]
     public void ShouldRequireTitle()
     {
-      var command = new CreateSourceCommand
+      var command = new CreateSource
       {
         ModuleId = 1,
         ThemeId = 1,
@@ -108,7 +108,7 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
     [Test]
     public void ShouldDisallowLongTitle()
     {
-      var command = new CreateSourceCommand
+      var command = new CreateSource
       {
         ModuleId = 1,
         ThemeId = 1,
@@ -126,7 +126,7 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
     [Test]
     public void ShouldRequireUrl()
     {
-      var command = new CreateSourceCommand
+      var command = new CreateSource
       {
         ModuleId = 1,
         ThemeId = 1,
@@ -143,7 +143,7 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
     [Test]
     public void ShouldCheckUrlFormat()
     {
-      var command = new CreateSourceCommand
+      var command = new CreateSource
       {
         ModuleId = 1,
         ThemeId = 1,
@@ -169,7 +169,7 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
         Description = "Some Path Description"
       });
 
-      var module = await SendAsync(new CreateModuleCommand
+      var module = await SendAsync(new CreateModule
       {
         PathId = path.Id,
         Title = "Module Title",
@@ -181,12 +181,12 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
         Title = "New Theme",
         ModuleId = module.Id,
         Description = "New Theme Description",
-        Necessity = Domain.Enums.NecessityLevel.MustKnow,
-        Complexity = Domain.Enums.ComplexityLevel.Beginner,
+        Necessity = Domain.Enums.Necessity.MustKnow,
+        Complexity = Domain.Enums.Complexity.Beginner,
         Order = 2
       });
 
-      var command = new CreateSourceCommand
+      var command = new CreateSource
       {
         PathId = path.Id,
         ModuleId = module.Id,
@@ -195,8 +195,8 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
         Description = "New Theme Description",
         Url = "https://www.test.com",
         Type = Domain.Enums.SourceType.Book,
-        Availability = Domain.Enums.AvailabilityLevel.RequiresRegistration,
-        Relevance = Domain.Enums.RelevanceLevel.Relevant,
+        Availability = Domain.Enums.Availability.RequiresRegistration,
+        Relevance = Domain.Enums.Relevance.Relevant,
         Order = 1
       };
 

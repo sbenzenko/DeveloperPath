@@ -1,14 +1,12 @@
 ﻿using System.Collections.Generic;
 using DeveloperPath.Application.Common.Mappings;
-using DeveloperPath.Application.Common.Models;
-using DeveloperPath.Domain.Entities;
 
 namespace DeveloperPath.Application.Paths.Queries.GetPaths
 {
   /// <summary>
   /// Detailed information about the path
   /// </summary>
-  public class PathViewModel : IMapFrom<Path>
+  public class PathDetails : IMapFrom<Domain.Entities.Path>
   {
     /// <summary>
     /// Path ID
@@ -28,7 +26,7 @@ namespace DeveloperPath.Application.Paths.Queries.GetPaths
     /// <summary>
     /// Modules that path consists of
     /// </summary>
-    public IList<ModuleDto> Modules { get; init; }
+    public IList<Common.Models.Module> Modules { get; init; }
 
     /// <summary>
     /// List of tags related to path.

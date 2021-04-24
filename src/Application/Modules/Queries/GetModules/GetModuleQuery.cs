@@ -6,7 +6,6 @@ using AutoMapper;
 using DeveloperPath.Application.Common.Exceptions;
 using DeveloperPath.Application.Common.Interfaces;
 using DeveloperPath.Application.Common.Models;
-using DeveloperPath.Domain.Entities;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
@@ -15,7 +14,7 @@ namespace DeveloperPath.Application.Modules.Queries.GetModules
   /// <summary>
   /// Get module parameters
   /// </summary>
-  public class GetModuleQuery : IRequest<ModuleDto>
+  public class GetModuleQuery : IRequest<Module>
   {
     /// <summary>
     /// Module Id
@@ -29,7 +28,7 @@ namespace DeveloperPath.Application.Modules.Queries.GetModules
     public int PathId { get; init; }
   }
 
-  internal class GetModuleQueryHandler : IRequestHandler<GetModuleQuery, ModuleDto>
+  internal class GetModuleQueryHandler : IRequestHandler<GetModuleQuery, Module>
   {
     private readonly IApplicationDbContext _context;
     private readonly IMapper _mapper;
@@ -40,7 +39,7 @@ namespace DeveloperPath.Application.Modules.Queries.GetModules
       _mapper = mapper;
     }
 
-    public async Task<ModuleDto> Handle(GetModuleQuery request, CancellationToken cancellationToken)
+    public async Task<Module> Handle(GetModuleQuery request, CancellationToken cancellationToken)
     {
       var result = await _context.Modules
         .Include(m => m.Paths)
@@ -52,7 +51,7 @@ namespace DeveloperPath.Application.Modules.Queries.GetModules
         throw new NotFoundException(nameof(Module), request.Id);
 
       //TODO: is there another way to map single item?
-      return _mapper.Map<ModuleDto>(result);
+      return _mapper.Map<Module>(result);
     }
   }
 }

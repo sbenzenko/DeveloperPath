@@ -1,6 +1,9 @@
 ﻿namespace DeveloperPath.Domain.Enums
 {
-  public enum RelevanceLevel
+  /// <summary>
+  /// Relevance of the resource
+  /// </summary>
+  public enum Relevance
   {
     /// <summary>
     /// Not applicable

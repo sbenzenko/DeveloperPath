@@ -14,7 +14,7 @@ namespace DeveloperPath.Application.Modules.Queries.GetModules
   /// <summary>
   /// Get module details parameters
   /// </summary>
-  public class GetModuleDetailsQuery : IRequest<ModuleViewModel>
+  public class GetModuleDetailsQuery : IRequest<ModuleDetails>
   {
     /// <summary>
     /// Module Id
@@ -28,7 +28,7 @@ namespace DeveloperPath.Application.Modules.Queries.GetModules
     public int PathId { get; init; }
   }
 
-  internal class GetModuleDetailsHandler : IRequestHandler<GetModuleDetailsQuery, ModuleViewModel>
+  internal class GetModuleDetailsHandler : IRequestHandler<GetModuleDetailsQuery, ModuleDetails>
   {
     private readonly IApplicationDbContext _context;
     private readonly IMapper _mapper;
@@ -39,7 +39,7 @@ namespace DeveloperPath.Application.Modules.Queries.GetModules
       _mapper = mapper;
     }
 
-    public async Task<ModuleViewModel> Handle(GetModuleDetailsQuery request, CancellationToken cancellationToken)
+    public async Task<ModuleDetails> Handle(GetModuleDetailsQuery request, CancellationToken cancellationToken)
     {
       var result = await _context.Modules
         .Include(m => m.Paths)
@@ -53,7 +53,7 @@ namespace DeveloperPath.Application.Modules.Queries.GetModules
         throw new NotFoundException(nameof(Module), request.Id);
 
       //TODO: is there another way to map single item?
-      return _mapper.Map<ModuleViewModel>(result);
+      return _mapper.Map<ModuleDetails>(result);
     }
   }
 }

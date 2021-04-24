@@ -21,12 +21,12 @@ namespace DeveloperPath.Application.IntegrationTests.Queries
       var path = await AddAsync(
         new Path { Title = "Some Path", Description = "Some Path Description" });
 
-      var module = await SendAsync(new CreateModuleCommand
+      var module = await SendAsync(new CreateModule
       {
         PathId = path.Id,
         Title = "New Other Module",
         Description = "New Other Module Description",
-        Necessity = Domain.Enums.NecessityLevel.MustKnow,
+        Necessity = Domain.Enums.Necessity.MustKnow,
         Tags = new List<string> { "Tag1", "Tag2", "Tag3" }
       });
       var theme = await AddAsync(new Theme
@@ -34,8 +34,8 @@ namespace DeveloperPath.Application.IntegrationTests.Queries
         Title = "New Theme1",
         ModuleId = module.Id,
         Description = "New Theme1 Description",
-        Necessity = Domain.Enums.NecessityLevel.MustKnow,
-        Complexity = Domain.Enums.ComplexityLevel.Beginner,
+        Necessity = Domain.Enums.Necessity.MustKnow,
+        Complexity = Domain.Enums.Complexity.Beginner,
         Tags = new List<string> { "Theme1", "ThemeTag2", "Tag3" },
         Order = 1
       });
@@ -46,8 +46,8 @@ namespace DeveloperPath.Application.IntegrationTests.Queries
         Url = "https://source1.com",
         Order = 0,
         Type = Domain.Enums.SourceType.Documentation,
-        Availability = Domain.Enums.AvailabilityLevel.Free,
-        Relevance = Domain.Enums.RelevanceLevel.Relevant
+        Availability = Domain.Enums.Availability.Free,
+        Relevance = Domain.Enums.Relevance.Relevant
       });
       await AddAsync(new Source
       {
@@ -56,8 +56,8 @@ namespace DeveloperPath.Application.IntegrationTests.Queries
         Url = "https://source2.com",
         Order = 1,
         Type = Domain.Enums.SourceType.Documentation,
-        Availability = Domain.Enums.AvailabilityLevel.Free,
-        Relevance = Domain.Enums.RelevanceLevel.Relevant
+        Availability = Domain.Enums.Availability.Free,
+        Relevance = Domain.Enums.Relevance.Relevant
       });
       await AddAsync(new Source
       {
@@ -66,8 +66,8 @@ namespace DeveloperPath.Application.IntegrationTests.Queries
         Url = "https://source3.com",
         Order = 2,
         Type = Domain.Enums.SourceType.Blog,
-        Availability = Domain.Enums.AvailabilityLevel.Free,
-        Relevance = Domain.Enums.RelevanceLevel.Relevant
+        Availability = Domain.Enums.Availability.Free,
+        Relevance = Domain.Enums.Relevance.Relevant
       });
 
       var query = new GetSourceListQuery { PathId = path.Id, ModuleId = module.Id, ThemeId = theme.Id };
@@ -85,12 +85,12 @@ namespace DeveloperPath.Application.IntegrationTests.Queries
       var path = await AddAsync(
         new Path { Title = "Some Path", Description = "Some Path Description" });
 
-      var module = await SendAsync(new CreateModuleCommand
+      var module = await SendAsync(new CreateModule
       {
         PathId = path.Id,
         Title = "New Module Module",
         Description = "New Module Description",
-        Necessity = Domain.Enums.NecessityLevel.MustKnow
+        Necessity = Domain.Enums.Necessity.MustKnow
       });
 
       var theme = await AddAsync(new Theme
@@ -98,8 +98,8 @@ namespace DeveloperPath.Application.IntegrationTests.Queries
         Title = "New Theme",
         ModuleId = module.Id,
         Description = "New Theme Description",
-        Necessity = Domain.Enums.NecessityLevel.MustKnow,
-        Complexity = Domain.Enums.ComplexityLevel.Beginner,
+        Necessity = Domain.Enums.Necessity.MustKnow,
+        Complexity = Domain.Enums.Complexity.Beginner,
         Order = 2
       });
 
@@ -111,8 +111,8 @@ namespace DeveloperPath.Application.IntegrationTests.Queries
         Url = "https://source1.com",
         Order = 0,
         Type = Domain.Enums.SourceType.Documentation,
-        Availability = Domain.Enums.AvailabilityLevel.Free,
-        Relevance = Domain.Enums.RelevanceLevel.Relevant,
+        Availability = Domain.Enums.Availability.Free,
+        Relevance = Domain.Enums.Relevance.Relevant,
         Tags = new List<string> { "Tag1", "Tag2", "Tag3" }
       });
 
@@ -135,12 +135,12 @@ namespace DeveloperPath.Application.IntegrationTests.Queries
       var path = await AddAsync(
         new Path { Title = "Some Path", Description = "Some Path Description" });
 
-      var module = await SendAsync(new CreateModuleCommand
+      var module = await SendAsync(new CreateModule
       {
         PathId = path.Id,
         Title = "New Module Module",
         Description = "New Module Description",
-        Necessity = Domain.Enums.NecessityLevel.MustKnow
+        Necessity = Domain.Enums.Necessity.MustKnow
       });
 
       var theme = await AddAsync(new Theme
@@ -148,8 +148,8 @@ namespace DeveloperPath.Application.IntegrationTests.Queries
         Title = "New Theme",
         ModuleId = module.Id,
         Description = "New Theme Description",
-        Necessity = Domain.Enums.NecessityLevel.MustKnow,
-        Complexity = Domain.Enums.ComplexityLevel.Beginner,
+        Necessity = Domain.Enums.Necessity.MustKnow,
+        Complexity = Domain.Enums.Complexity.Beginner,
         Order = 2
       });
 
@@ -161,8 +161,8 @@ namespace DeveloperPath.Application.IntegrationTests.Queries
         Url = "https://source1.com",
         Order = 0,
         Type = Domain.Enums.SourceType.Documentation,
-        Availability = Domain.Enums.AvailabilityLevel.Free,
-        Relevance = Domain.Enums.RelevanceLevel.Relevant,
+        Availability = Domain.Enums.Availability.Free,
+        Relevance = Domain.Enums.Relevance.Relevant,
         Tags = new List<string> { "Tag1", "Tag2", "Tag3" }
       });
 

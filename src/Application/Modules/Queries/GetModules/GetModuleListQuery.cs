@@ -1,5 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.IO;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -16,7 +16,7 @@ namespace DeveloperPath.Application.Modules.Queries.GetModules
   /// <summary>
   /// Get module parameters
   /// </summary>
-  public class GetModuleListQuery : IRequest<System.Collections.Generic.IEnumerable<ModuleDto>>
+  public class GetModuleListQuery : IRequest<IEnumerable<Module>>
   {
     /// <summary>
     /// Path id
@@ -25,7 +25,7 @@ namespace DeveloperPath.Application.Modules.Queries.GetModules
     public int PathId { get; init; }
   }
 
-  internal class GetModulesQueryHandler : IRequestHandler<GetModuleListQuery, System.Collections.Generic.IEnumerable<ModuleDto>>
+  internal class GetModulesQueryHandler : IRequestHandler<GetModuleListQuery, IEnumerable<Module>>
   {
     private readonly IApplicationDbContext _context;
     private readonly IMapper _mapper;
@@ -36,7 +36,7 @@ namespace DeveloperPath.Application.Modules.Queries.GetModules
       _mapper = mapper;
     }
 
-    public async Task<System.Collections.Generic.IEnumerable<ModuleDto>> Handle(GetModuleListQuery request, CancellationToken cancellationToken)
+    public async Task<IEnumerable<Module>> Handle(GetModuleListQuery request, CancellationToken cancellationToken)
     {
       //TODO: check if requested module is in requested path (???)
       var path = await _context.Paths.FindAsync(new object[] { request.PathId }, cancellationToken);
@@ -49,7 +49,7 @@ namespace DeveloperPath.Application.Modules.Queries.GetModules
         .SelectMany(p => p.Modules)
         .Include(m => m.Paths)
         .Include(m => m.Prerequisites)
-        .ProjectTo<ModuleDto>(_mapper.ConfigurationProvider)
+        .ProjectTo<Module>(_mapper.ConfigurationProvider)
         .ToListAsync(cancellationToken);
     }
   }

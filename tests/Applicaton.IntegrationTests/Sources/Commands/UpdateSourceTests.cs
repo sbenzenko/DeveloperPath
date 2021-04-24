@@ -17,7 +17,7 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
     [Test]
     public void ShouldRequireValidSourceId()
     {
-      var command = new UpdateSourceCommand
+      var command = new UpdateSource
       {
         Id = 99999,
         ModuleId = 1,
@@ -33,7 +33,7 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
     [Test]
     public void ShouldRequireValidModuleId()
     {
-      var command = new UpdateSourceCommand
+      var command = new UpdateSource
       {
         Id = 1,
         ModuleId = 99999,
@@ -49,7 +49,7 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
     [Test]
     public void ShouldRequireValidThemeId()
     {
-      var command = new UpdateSourceCommand
+      var command = new UpdateSource
       {
         Id = 1,
         ModuleId = 1,
@@ -93,12 +93,12 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
         Url = "https://source1.com",
         Order = 0,
         Type = Domain.Enums.SourceType.Documentation,
-        Availability = Domain.Enums.AvailabilityLevel.Free,
-        Relevance = Domain.Enums.RelevanceLevel.Relevant,
+        Availability = Domain.Enums.Availability.Free,
+        Relevance = Domain.Enums.Relevance.Relevant,
         Tags = new List<string> { "Tag1", "Tag2", "Tag3" }
       });
 
-      var command = new UpdateSourceCommand
+      var command = new UpdateSource
       {
         Id = source.Id,
         ModuleId = module.Id,
@@ -144,12 +144,12 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
         Url = "https://source1.com",
         Order = 0,
         Type = Domain.Enums.SourceType.Documentation,
-        Availability = Domain.Enums.AvailabilityLevel.Free,
-        Relevance = Domain.Enums.RelevanceLevel.Relevant,
+        Availability = Domain.Enums.Availability.Free,
+        Relevance = Domain.Enums.Relevance.Relevant,
         Tags = new List<string> { "Tag1", "Tag2", "Tag3" }
       });
 
-      var command = new UpdateSourceCommand
+      var command = new UpdateSource
       {
         Id = source.Id,
         ModuleId = module.Id,
@@ -195,12 +195,12 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
         Url = "https://source1.com",
         Order = 0,
         Type = Domain.Enums.SourceType.Documentation,
-        Availability = Domain.Enums.AvailabilityLevel.Free,
-        Relevance = Domain.Enums.RelevanceLevel.Relevant,
+        Availability = Domain.Enums.Availability.Free,
+        Relevance = Domain.Enums.Relevance.Relevant,
         Tags = new List<string> { "Tag1", "Tag2", "Tag3" }
       });
 
-      var command = new UpdateSourceCommand
+      var command = new UpdateSource
       {
         Id = source.Id,
         ModuleId = module.Id,
@@ -245,12 +245,12 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
         Url = "https://source1.com",
         Order = 0,
         Type = Domain.Enums.SourceType.Documentation,
-        Availability = Domain.Enums.AvailabilityLevel.Free,
-        Relevance = Domain.Enums.RelevanceLevel.Relevant,
+        Availability = Domain.Enums.Availability.Free,
+        Relevance = Domain.Enums.Relevance.Relevant,
         Tags = new List<string> { "Tag1", "Tag2", "Tag3" }
       });
 
-      var command = new UpdateSourceCommand
+      var command = new UpdateSource
       {
         Id = source.Id,
         ModuleId = module.Id,
@@ -276,7 +276,7 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
         Description = "Some Path Description"
       });
 
-      var module = await SendAsync(new CreateModuleCommand
+      var module = await SendAsync(new CreateModule
       {
         PathId = path.Id,
         Title = "Module Title",
@@ -298,12 +298,12 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
         Url = "https://source1.com",
         Order = 0,
         Type = Domain.Enums.SourceType.Documentation,
-        Availability = Domain.Enums.AvailabilityLevel.Free,
-        Relevance = Domain.Enums.RelevanceLevel.Relevant,
+        Availability = Domain.Enums.Availability.Free,
+        Relevance = Domain.Enums.Relevance.Relevant,
         Tags = new List<string> { "Tag1", "Tag2", "Tag3" }
       });
 
-      var command = new UpdateSourceCommand
+      var command = new UpdateSource
       {
         PathId = path.Id,
         ModuleId = module.Id,

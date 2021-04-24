@@ -16,7 +16,7 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
     [Test]
     public void ShouldRequireMinimumFields()
     {
-      var command = new CreatePathCommand();
+      var command = new CreatePath();
 
       FluentActions.Invoking(() =>
           SendAsync(command)).Should().Throw<ValidationException>();
@@ -25,7 +25,7 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
     [Test]
     public void ShouldRequireTitle()
     {
-      var command = new CreatePathCommand
+      var command = new CreatePath
       {
         Title = "",
         Description = "Learn how to design modern web applications using ASP.NET"
@@ -40,7 +40,7 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
     [Test]
     public void ShouldDisallowLongTitle()
     {
-      var command = new CreatePathCommand
+      var command = new CreatePath
       {
         Title = "This path title is too long and exceeds one hundred characters allowed for path titles by CreatePathCommandValidator",
         Description = "Learn how to design modern web applications using ASP.NET"
@@ -55,7 +55,7 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
     [Test]
     public void ShouldRequireDescription()
     {
-      var command = new CreatePathCommand
+      var command = new CreatePath
       {
         Title = "ASP.NET Developer"
       };
@@ -69,7 +69,7 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
     [Test]
     public async Task ShouldRequireUniqueTitle()
     {
-      await SendAsync(new CreatePathCommand
+      await SendAsync(new CreatePath
       {
         Title = "ASP.NET Developer",
         Description = "Learn how to design modern web applications using ASP.NET",
@@ -79,7 +79,7 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
           }
       });
 
-      var command = new CreatePathCommand
+      var command = new CreatePath
       {
         Title = "ASP.NET Developer",
         Description = "Learn how to design modern web applications using ASP.NET"
@@ -96,7 +96,7 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
     {
       var userId = await RunAsDefaultUserAsync();
 
-      var command = new CreatePathCommand
+      var command = new CreatePath
       {
         Title = "Some title",
         Description = "Some description"
