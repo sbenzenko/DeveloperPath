@@ -5,6 +5,7 @@ using DeveloperPath.Application.Common.Models;
 using DeveloperPath.Domain.Entities;
 using MediatR;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -18,14 +19,19 @@ namespace DeveloperPath.Application.Paths.Commands.UpdatePath
     /// <summary>
     /// Id of the path to update
     /// </summary>
+    [Required]
     public int Id { get; init; }
     /// <summary>
     /// Path title
     /// </summary>
+    [Required]
+    [MaxLength(100)]
     public string Title { get; init; }
     /// <summary>
     /// Path short summary
     /// </summary>
+    [Required]
+    [MaxLength(3000)]
     public string Description { get; init; }
     /// <summary>
     /// List of tags related to path

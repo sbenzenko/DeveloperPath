@@ -7,6 +7,7 @@ using DeveloperPath.Domain.Enums;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -21,26 +22,36 @@ namespace DeveloperPath.Application.Sources.Commands.CreateSource
     /// <summary>
     /// Path Id
     /// </summary>
+    [Required]
     public int PathId { get; init; }
     /// <summary>
     /// Module Id
     /// </summary>
+    [Required]
     public int ModuleId { get; init; }
     /// <summary>
     /// Theme id that the source is for
     /// </summary>
+    [Required]
     public int ThemeId { get; init; }
     /// <summary>
     /// Source title
     /// </summary>
+    [Required]
+    [MaxLength(200)]
     public string Title { get; init; }
     /// <summary>
     /// Source short summary
     /// </summary>
+    [Required]
+    [MaxLength(10000)]
     public string Description { get; init; }
     /// <summary>
     /// Source Url
     /// </summary>
+    [Required]
+    [MaxLength(500)]
+    [RegularExpression(@"https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,4}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)")]
     public string Url { get; init; }
     /// <summary>
     /// Position of source in theme (0-based).

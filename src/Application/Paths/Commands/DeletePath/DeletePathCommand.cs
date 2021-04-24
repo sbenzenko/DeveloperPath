@@ -2,6 +2,7 @@
 using DeveloperPath.Application.Common.Interfaces;
 using DeveloperPath.Domain.Entities;
 using MediatR;
+using System.ComponentModel.DataAnnotations;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -15,6 +16,7 @@ namespace DeveloperPath.Application.Paths.Commands.DeletePath
     /// <summary>
     /// Path ID
     /// </summary>
+    [Required]
     public int Id { get; init; }
   }
 

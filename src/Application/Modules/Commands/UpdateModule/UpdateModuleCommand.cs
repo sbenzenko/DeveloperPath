@@ -6,6 +6,7 @@ using DeveloperPath.Domain.Entities;
 using DeveloperPath.Domain.Enums;
 using MediatR;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -20,14 +21,19 @@ namespace DeveloperPath.Application.Modules.Commands.UpdateModule
     /// <summary>
     /// Module Id
     /// </summary>
+    [Required]
     public int Id { get; init; }
     /// <summary>
     /// Module title
     /// </summary>
+    [Required]
+    [MaxLength(100)]
     public string Title { get; init; }
     /// <summary>
     /// Module short summary
     /// </summary>
+    [Required]
+    [MaxLength(3000)]
     public string Description { get; init; }
     /// <summary>
     /// Necessity level (Other (default) | Possibilities | Interesting | Good to know | Must know)

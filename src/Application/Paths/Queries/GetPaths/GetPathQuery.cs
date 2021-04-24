@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -19,6 +20,7 @@ namespace DeveloperPath.Application.Paths.Queries.GetPaths
     /// <summary>
     /// Path id
     /// </summary>
+    [Required]
     public int Id { get; init; }
   }
 

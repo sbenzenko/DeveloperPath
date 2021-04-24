@@ -7,7 +7,7 @@ using DeveloperPath.Domain.Enums;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
-
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -23,14 +23,19 @@ namespace DeveloperPath.Application.Modules.Commands.CreateModule
     /// <summary>
     /// Id of path the module is in
     /// </summary>
+    [Required]
     public int PathId { get; init; }
     /// <summary>
     /// Module title
     /// </summary>
+    [Required]
+    [MaxLength(100)]
     public string Title { get; init; }
     /// <summary>
     /// Path short summary
     /// </summary>
+    [Required]
+    [MaxLength(3000)]
     public string Description { get; init; }
     /// <summary>
     /// Necessity level (Other (default) | Possibilities | Interesting | Good to know | Must know)

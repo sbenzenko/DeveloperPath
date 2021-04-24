@@ -3,6 +3,7 @@ using DeveloperPath.Application.Common.Interfaces;
 using DeveloperPath.Domain.Entities;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -17,14 +18,17 @@ namespace DeveloperPath.Application.Themes.Commands.DeleteTheme
     /// <summary>
     /// Theme id
     /// </summary>
+    [Required]
     public int Id { get; init; }
     /// <summary>
     /// Path id
     /// </summary>
+    [Required]
     public int PathId { get; init; }
     /// <summary>
     /// Module id
     /// </summary>
+    [Required]
     public int ModuleId { get; init; }
   }
 

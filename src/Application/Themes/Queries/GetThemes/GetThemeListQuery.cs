@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -21,10 +22,12 @@ namespace DeveloperPath.Application.Themes.Queries.GetThemes
     /// <summary>
     /// Path Id
     /// </summary>
+    [Required]
     public int PathId { get; init; }
     /// <summary>
     /// Module Id
     /// </summary>
+    [Required]
     public int ModuleId { get; init; }
   }
 

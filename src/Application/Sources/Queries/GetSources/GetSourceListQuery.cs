@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -21,14 +22,17 @@ namespace DeveloperPath.Application.Sources.Queries.GetSources
     /// <summary>
     /// Path id
     /// </summary>
+    [Required]
     public int PathId { get; init; }
     /// <summary>
     /// Module Id
     /// </summary>
+    [Required]
     public int ModuleId { get; init; }
     /// <summary>
     /// Theme Id
     /// </summary>
+    [Required]
     public int ThemeId { get; init; }
   }
 

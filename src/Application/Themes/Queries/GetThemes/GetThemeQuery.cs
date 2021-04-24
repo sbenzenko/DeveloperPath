@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -19,14 +20,17 @@ namespace DeveloperPath.Application.Themes.Queries.GetThemes
     /// <summary>
     /// Theme Id
     /// </summary>
+    [Required]
     public int Id { get; init; }
     /// <summary>
     /// Path Id
     /// </summary>
+    [Required]
     public int PathId { get; init; }
     /// <summary>
     /// Module Id
     /// </summary>
+    [Required]
     public int ModuleId { get; init; }
   }
 

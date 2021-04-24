@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.IO;
 using System.Linq;
 using System.Threading;
@@ -22,6 +23,7 @@ namespace DeveloperPath.Application.Modules.Queries.GetModules
     /// <summary>
     /// Path id
     /// </summary>
+    [Required]
     public int PathId { get; init; }
     /// <summary>
     /// Page number

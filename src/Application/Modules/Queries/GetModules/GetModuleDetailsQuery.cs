@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -18,10 +19,12 @@ namespace DeveloperPath.Application.Modules.Queries.GetModules
     /// <summary>
     /// Module Id
     /// </summary>
+    [Required]
     public int Id { get; init; }
     /// <summary>
     /// Path Id
     /// </summary>
+    [Required]
     public int PathId { get; init; }
   }
 

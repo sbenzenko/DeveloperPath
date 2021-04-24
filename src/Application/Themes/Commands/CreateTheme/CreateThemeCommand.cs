@@ -7,6 +7,7 @@ using DeveloperPath.Domain.Enums;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -21,18 +22,24 @@ namespace DeveloperPath.Application.Themes.Commands.CreateTheme
     /// <summary>
     /// Path id
     /// </summary>
+    [Required]
     public int PathId { get; init; }
     /// <summary>
     /// Module Id
     /// </summary>
+    [Required]
     public int ModuleId { get; init; }
     /// <summary>
     /// Theme title
     /// </summary>
+    [Required]
+    [MaxLength(200)]
     public string Title { get; init; }
     /// <summary>
     /// Theme short summary
     /// </summary>
+    [Required]
+    [MaxLength(3000)]
     public string Description { get; init; }
     /// <summary>
     /// Theme section id (can be null)
