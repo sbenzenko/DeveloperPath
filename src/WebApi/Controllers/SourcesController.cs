@@ -26,6 +26,7 @@ namespace DeveloperPath.WebApi.Controllers
     /// <param name="moduleId">An id of the module</param>
     /// <param name="themeId">An id of the theme</param>
     /// <returns>A collection of sources with summary information</returns>
+    /// <response code="200">Returns a list of sources in the theme</response>
     [HttpGet]
     [HttpHead]
     public async Task<ActionResult<IEnumerable<SourceDto>>> Get(int pathId, int moduleId, int themeId)
@@ -44,6 +45,7 @@ namespace DeveloperPath.WebApi.Controllers
     /// <param name="themeId">An id of the theme</param>
     /// <param name="sourceId">An id of the source</param>
     /// <returns>Detailed information of the source with sources included</returns>
+    /// <response code="200">Returns requested source</response>
     [HttpGet("{sourceId}", Name = "GetSource")]
     [HttpHead("{sourceId}")]
     public async Task<ActionResult<SourceDto>> Get(int pathId, int moduleId, int themeId, int sourceId)
@@ -82,7 +84,13 @@ namespace DeveloperPath.WebApi.Controllers
     /// <param name="themeId">An id of the theme</param>
     /// <param name="command">Command object</param>
     /// <returns>Created source</returns>
+    /// <response code="201">Source created successfully</response>
+    /// <response code="404">Theme not found</response>
+    /// <response code="406">Not acceptable entity provided</response>
+    /// <response code="415">Unsupported media type provided</response>
+    /// <response code="422">Unprocessible entity provided</response>
     [HttpPost]
+    [Consumes("application/json")]
     public async Task<ActionResult<SourceDto>> Create(int pathId, int moduleId, int themeId,
       [FromBody] CreateSourceCommand command)
     {
@@ -103,8 +111,13 @@ namespace DeveloperPath.WebApi.Controllers
     /// <param name="themeId">An id of the theme</param>
     /// <param name="sourceId">An id of the source</param>
     /// <param name="command">Updated source object</param>
-    /// <returns>Updated spurce</returns>
+    /// <returns>Updated source</returns>
+    /// <response code="200">Source updated successfully</response>
+    /// <response code="406">Not acceptable entity provided</response>
+    /// <response code="415">Unsupported media type provided</response>
+    /// <response code="422">Unprocessible entity provided</response>
     [HttpPut("{sourceId}")]
+    [Consumes("application/json")]
     public async Task<ActionResult<SourceDto>> Update(int pathId, int moduleId, int themeId, int sourceId, 
       [FromBody] UpdateSourceCommand command)
     {
@@ -125,6 +138,7 @@ namespace DeveloperPath.WebApi.Controllers
     /// <param name="themeId">And id of the theme</param>
     /// <param name="sourceId">An id of the source</param>
     /// <returns></returns>
+    /// <response code="204">Source deleted successfully</response>
     [HttpDelete("{sourceId}")]
     public async Task<ActionResult> Delete(int pathId, int moduleId, int themeId, int sourceId)
     {

@@ -25,6 +25,7 @@ namespace DeveloperPath.WebApi.Controllers
     /// <param name="pathId">An id of the path</param>
     /// <param name="moduleId">An id of the module</param>
     /// <returns>A collection of themes with summary information</returns>
+    /// <response code="200">Returns a list of themes in the module</response>
     [HttpGet]
     [HttpHead]
     public async Task<ActionResult<IEnumerable<ThemeDto>>> Get(int pathId, int moduleId)
@@ -42,6 +43,7 @@ namespace DeveloperPath.WebApi.Controllers
     /// <param name="moduleId">An id of the module</param>
     /// <param name="themeId">An id of the theme</param>
     /// <returns>Information about the theme</returns>
+    /// <response code="200">Returns requested theme</response>
     [HttpGet("{themeId}", Name = "GetTheme")]
     [HttpHead("{themeId}")]
     public async Task<ActionResult<ThemeDto>> Get(int pathId, int moduleId, int themeId)
@@ -77,7 +79,13 @@ namespace DeveloperPath.WebApi.Controllers
     /// <param name="moduleId">An id of the module</param>
     /// <param name="command">Theme object</param>
     /// <returns>Created theme</returns>
+    /// <response code="201">Theme created successfully</response>
+    /// <response code="404">Module not found</response>
+    /// <response code="406">Not acceptable entity provided</response>
+    /// <response code="415">Unsupported media type provided</response>
+    /// <response code="422">Unprocessible entity provided</response>
     [HttpPost]
+    [Consumes("application/json")]
     public async Task<ActionResult<ThemeDto>> Create(int pathId, int moduleId,
       [FromBody] CreateThemeCommand command)
     {
@@ -98,7 +106,12 @@ namespace DeveloperPath.WebApi.Controllers
     /// <param name="themeId">An id of the theme</param>
     /// <param name="command">Updated theme object</param>
     /// <returns>Upated theme</returns>
+    /// <response code="200">Theme updated successfully</response>
+    /// <response code="406">Not acceptable entity provided</response>
+    /// <response code="415">Unsupported media type provided</response>
+    /// <response code="422">Unprocessible entity provided</response>
     [HttpPut("{themeId}")]
+    [Consumes("application/json")]
     public async Task<ActionResult<ThemeDto>> Update(int pathId, int moduleId, int themeId,
       [FromBody] UpdateThemeCommand command)
     {
@@ -117,6 +130,7 @@ namespace DeveloperPath.WebApi.Controllers
     /// <param name="moduleId">And id of the module the theme is in</param>
     /// <param name="themeId">An id of the theme</param>
     /// <returns></returns>
+    /// <response code="204">Theme deleted successfully</response>
     [HttpDelete("{themeId}")]
     public async Task<ActionResult> Delete(int pathId, int moduleId, int themeId)
     {

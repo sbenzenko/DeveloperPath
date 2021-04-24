@@ -27,6 +27,7 @@ namespace DeveloperPath.WebApi.Controllers
     /// <param name="pathId">An id of the path</param>
     /// <param name="requestParams">Request parameters</param>
     /// <returns>A collection of modules with summary information</returns>
+    /// <response code="200">Returns a list of modules in the path</response>
     [HttpGet]
     [HttpHead]
     public async Task<ActionResult<IEnumerable<ModuleDto>>> Get(int pathId, [FromQuery] RequestParams requestParams = null)
@@ -43,6 +44,7 @@ namespace DeveloperPath.WebApi.Controllers
     /// <param name="pathId">An id of the path</param>
     /// <param name="moduleId">An id of the module</param>
     /// <returns>Information about the module</returns>
+    /// <response code="200">Returns requested module</response>
     [HttpGet("{moduleId}", Name = "GetModule")]
     [HttpHead("{moduleId}")]
     public async Task<ActionResult<ModuleDto>> Get(int pathId, int moduleId)
@@ -74,7 +76,13 @@ namespace DeveloperPath.WebApi.Controllers
     /// <param name="pathId">An id of the path</param>
     /// <param name="command">Module object</param>
     /// <returns>Created module</returns>
+    /// <response code="201">Module created successfully</response>
+    /// <response code="404">Path not found</response>
+    /// <response code="406">Not acceptable entity provided</response>
+    /// <response code="415">Unsupported media type provided</response>
+    /// <response code="422">Unprocessible entity provided</response>
     [HttpPost]
+    [Consumes("application/json")]
     public async Task<ActionResult<ModuleDto>> Create(int pathId,
       [FromBody] CreateModuleCommand command)
     {
@@ -93,7 +101,12 @@ namespace DeveloperPath.WebApi.Controllers
     /// <param name="moduleId">An id of the module</param>
     /// <param name="command">Updated module object</param>
     /// <returns>Updated module</returns>
+    /// <response code="200">Module updated successfully</response>
+    /// <response code="406">Not acceptable entity provided</response>
+    /// <response code="415">Unsupported media type provided</response>
+    /// <response code="422">Unprocessible entity provided</response>
     [HttpPut("{moduleId}")]
+    [Consumes("application/json")]
     public async Task<ActionResult<ModuleDto>> Update(int pathId, int moduleId,
       [FromBody] UpdateModuleCommand command)
     {
@@ -111,6 +124,7 @@ namespace DeveloperPath.WebApi.Controllers
     /// <param name="pathId">An id of the path</param>
     /// <param name="moduleId">An id of the module</param>
     /// <returns></returns>
+    /// <response code="204">Module deleted successfully</response>
     [HttpDelete("{moduleId}")]
     public async Task<ActionResult> Delete(int pathId, int moduleId)
     {

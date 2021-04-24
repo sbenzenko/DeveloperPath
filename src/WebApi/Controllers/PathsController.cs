@@ -25,6 +25,7 @@ namespace DeveloperPath.WebApi.Controllers
     /// Get all available paths
     /// </summary>
     /// <returns>A collection of paths with summary information</returns>
+    /// <response code="200">Returns a list of paths</response>
     [HttpGet]
     [HttpHead]
     public async Task<ActionResult<IEnumerable<PathDto>>> Get([FromQuery] RequestParams requestParams = null)
@@ -40,6 +41,7 @@ namespace DeveloperPath.WebApi.Controllers
     /// </summary>
     /// <param name="pathId">An id of the path</param>
     /// <returns>Information of the path with modules included</returns>
+    /// /// <response code="200">Returns requested path</response>
     [HttpGet("{pathId}", Name = "GetPath")]
     [HttpHead("{pathId}")]
     public async Task<ActionResult<PathDto>> Get(int pathId)
@@ -69,7 +71,13 @@ namespace DeveloperPath.WebApi.Controllers
     /// </summary>
     /// <param name="command">Path object</param>
     /// <returns>Created path</returns>
+    /// <response code="201">Path created successfully</response>
+    /// <response code="406">Not acceptable entity provided</response>
+    /// <response code="415">Unsupported media type provided</response>
+    /// <response code="422">Unprocessible entity provided</response>
     [HttpPost]
+    //TODO: adding "application/xml" causes "An error occurred while deserializing input data." error for some reason
+    [Consumes("application/json")]
     public async Task<ActionResult<PathDto>> Create([FromBody] CreatePathCommand command)
     {
       PathDto model = await Mediator.Send(command);
@@ -82,8 +90,13 @@ namespace DeveloperPath.WebApi.Controllers
     /// </summary>
     /// <param name="pathId">An id of the path</param>
     /// <param name="command">Updated path</param>
-    /// <returns></returns>
+    /// <returns>Updated path</returns>
+    /// <response code="200">Path updated successfully</response>
+    /// <response code="406">Not acceptable entity provided</response>
+    /// <response code="415">Unsupported media type provided</response>
+    /// <response code="422">Unprocessible entity provided</response>
     [HttpPut("{pathId}")]
+    [Consumes("application/json")]
     public async Task<ActionResult<PathDto>> Update(int pathId,
       [FromBody] UpdatePathCommand command)
     {
@@ -100,6 +113,7 @@ namespace DeveloperPath.WebApi.Controllers
     /// </summary>
     /// <param name="pathId">An id of the path</param>
     /// <returns></returns>
+    /// <response code="204">Path deleted successfully</response>
     [HttpDelete("{pathId}")]
     public async Task<IActionResult> Delete(int pathId)
     {
