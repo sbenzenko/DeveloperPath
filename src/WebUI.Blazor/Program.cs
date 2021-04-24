@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 using WebUI.Blazor.Security;
 using MatBlazor;
 using WebUI.Blazor.Extensions;
+using WebUI.Blazor.Services;
 
 namespace WebUI.Blazor
 {
@@ -18,12 +19,13 @@ namespace WebUI.Blazor
             builder.RootComponents.Add<App>("#app");
 
             // We register a named HttpClient here for the API
-            builder.Services.AddHttpClient("pathapi")
+
+            builder.Services.AddHttpClient("pathapi", client => client.BaseAddress = new System.Uri(builder.Configuration["PathApiBaseUri"]))
                 .AddHttpMessageHandler(sp =>
                 {
                     var handler = sp.GetService<AuthorizationMessageHandler>()
                         .ConfigureHandler(
-                            authorizedUrls: new[] { "https://localhost:7001" },  //API URL
+                            authorizedUrls: new[] { builder.Configuration["oidc:Authority"] },  //API URL
                             scopes: new[] { "pathapi" });
                     return handler;
                 });
@@ -34,7 +36,6 @@ namespace WebUI.Blazor
                 .CreateClient("pathapi"));
 
             builder.Services.AddMatBlazor();
-             
             builder.Services
                 .AddOidcAuthentication(options =>
                 {
@@ -42,6 +43,10 @@ namespace WebUI.Blazor
                     options.UserOptions.RoleClaim = "role";
                 })
                 .AddAccountClaimsPrincipalFactory<ArrayClaimsPrincipalFactory<RemoteUserAccount>>();
+
+            //register services
+            builder.Services.AddTransient<PathService>();
+            builder.Services.AddScoped<HttpService>();
 
             var host = builder.Build();
             await host.SetDefaultCulture();

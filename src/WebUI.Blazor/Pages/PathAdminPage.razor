@@ -1,0 +1,64 @@
+﻿@page "/administration/paths"
+@inject IStringLocalizer<LanguageResources> localizer
+
+<AuthorizeView>
+    <Authorized>
+        @if (Paths == null)
+        {
+            <MatProgressBar Indeterminate="true"></MatProgressBar>
+        }
+        else
+        {
+            int position = 0;
+            @while (true)
+            {
+                //render 3 elements per row
+                var renderItems = Paths.Skip(position * 3).Take(3);
+                position++;
+                if (!renderItems.Any())
+                {
+                    break;
+                }
+                <div class="mat-layout-grid">
+                    <div class="mat-layout-grid-inner">
+                        @foreach (var item in renderItems)
+                        {
+                            <div class="mat-layout-grid-cell">
+                                <MatCard Class="mat-card">
+                                    <MatCardContent>
+                                        <div class="mat-card-content">
+                                            <MatHeadline6 class="mat-card-clean-margin">
+                                                @item.Title
+                                            </MatHeadline6>
+                                            <MatSubtitle2 class="mat-card-clean-margin">
+                                                <MatChipSet>
+                                                    @foreach (var tag in item.Tags)
+                                                    {
+                                                        <MatChip Label="@tag"></MatChip>
+                                                    }
+                                                </MatChipSet>
+                                            </MatSubtitle2>
+                                            <div class="mat-body1" style="margin: 5px"> @($"{item.Description.Substring(0, item.Description.Length > 70 ? 70 : item.Description.Length)}...")</div>
+                                        </div>
+                                    </MatCardContent>
+                                    <MatCardActions>
+                                        <MatCardActionButtons>
+                                            <MatButton>@localizer["Edit"]</MatButton>
+                                            <MatButton>@localizer["Delete"]</MatButton>
+                                        </MatCardActionButtons>
+                                        <MatCardActionIcons>
+                                        </MatCardActionIcons>
+                                    </MatCardActions>
+                                </MatCard>
+                            </div>
+                        }
+                    </div>
+                </div>
+            }
+
+        }
+    </Authorized>
+    <NotAuthorized>
+        <p>Forbid</p>
+    </NotAuthorized>
+</AuthorizeView>
