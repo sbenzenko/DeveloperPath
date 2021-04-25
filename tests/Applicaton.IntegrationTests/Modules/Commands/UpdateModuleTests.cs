@@ -1,7 +1,7 @@
 ﻿using DeveloperPath.Application.Common.Exceptions;
-using DeveloperPath.Application.Modules.Commands.CreateModule;
-using DeveloperPath.Application.Modules.Commands.UpdateModule;
-using DeveloperPath.Application.Paths.Commands.CreatePath;
+using DeveloperPath.Application.CQRS.Modules.Commands.CreateModule;
+using DeveloperPath.Application.CQRS.Modules.Commands.UpdateModule;
+using DeveloperPath.Application.CQRS.Paths.Commands.CreatePath;
 using DeveloperPath.Domain.Entities;
 using FluentAssertions;
 using NUnit.Framework;

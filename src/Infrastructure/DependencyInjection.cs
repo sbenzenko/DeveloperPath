@@ -21,8 +21,7 @@ namespace DeveloperPath.Infrastructure
       else
       {
         services.AddDbContext<ApplicationDbContext>(options =>
-            options.UseSqlServer(
-                configuration.GetConnectionString("DefaultConnection"),
+            options.UseSqlServer(configuration["DeveloperPathSqlConnectionString"],
                 b => b.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName)));
       }
 

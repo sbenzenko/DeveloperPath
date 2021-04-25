@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using DeveloperPath.Application.Common.Exceptions;
-using DeveloperPath.Application.Modules.Commands.CreateModule;
+using DeveloperPath.Application.CQRS.Modules.Commands.CreateModule;
 using DeveloperPath.Domain.Entities;
+using DeveloperPath.Domain.Shared.Enums;
 using FluentAssertions;
 using NUnit.Framework;
 
@@ -144,7 +145,7 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
         PathId = path.Id,
         Title = "New Module",
         Description = "New Module Description",
-        Necessity = Domain.Enums.Necessity.Other,
+        Necessity = Necessity.Other,
         Tags = new List<string> { "Tag1", "Tag2", "Tag3" }
       };
 

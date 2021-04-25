@@ -1,10 +1,12 @@
 using System;
 using System.Threading.Tasks;
+using Azure.Identity;
 using DeveloperPath.Infrastructure.Identity;
 using DeveloperPath.Infrastructure.Persistence;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -51,8 +53,29 @@ namespace DeveloperPath.WebApi
     public static IHostBuilder CreateHostBuilder(string[] args) =>
         Host.CreateDefaultBuilder(args)
             .ConfigureWebHostDefaults(webBuilder =>
-            {
-              webBuilder.UseStartup<Startup>();
-            });
-  }
+                webBuilder.ConfigureAppConfiguration((hostingContext, config) =>
+                {
+                    if (hostingContext.HostingEnvironment.IsProduction())
+                    {
+                        var settings = config.Build();
+
+                        if (hostingContext.HostingEnvironment.IsDevelopment())
+                        {
+
+                        }
+
+                        if (hostingContext.HostingEnvironment.IsProduction())
+                        {
+                            config.AddAzureAppConfiguration(options =>
+                            {
+                                options.Connect(settings["ConnectionStrings:AppConfig"])
+                                    .ConfigureKeyVault(kv =>
+                                    {
+                                        kv.SetCredential(new DefaultAzureCredential());
+                                    });
+                            });
+                        }
+                    }
+                }).UseStartup<Startup>());
+    }
 }

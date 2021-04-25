@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Threading.Tasks;
-using DeveloperPath.Application.Common.Exceptions;
-using DeveloperPath.Application.Modules.Commands.CreateModule;
-using DeveloperPath.Application.Themes.Commands.CreateTheme;
-using DeveloperPath.Domain.Entities;
 using FluentAssertions;
 using NUnit.Framework;
+using DeveloperPath.Application.Common.Exceptions;
+using DeveloperPath.Application.CQRS.Modules.Commands.CreateModule;
+using DeveloperPath.Application.CQRS.Themes.Commands.CreateTheme;
+using DeveloperPath.Domain.Entities;
+using DeveloperPath.Domain.Shared.Enums;
 
 namespace DeveloperPath.Application.IntegrationTests.Commands
 {
@@ -160,8 +161,8 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
         ModuleId = module.Id,
         Title = "New Theme",
         Description = "New Theme Description",
-        Necessity = Domain.Enums.Necessity.Other,
-        Complexity = Domain.Enums.Complexity.Beginner,
+        Necessity = Necessity.Other,
+        Complexity = Complexity.Beginner,
         Order = 1
       };
 
@@ -207,8 +208,8 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
         ModuleId = module.Id,
         Title = "New Theme",
         Description = "New Theme Description",
-        Necessity = Domain.Enums.Necessity.Other,
-        Complexity = Domain.Enums.Complexity.Beginner,
+        Necessity = Necessity.Other,
+        Complexity = Complexity.Beginner,
         Order = 1,
         SectionId = sect.Id
       };
@@ -249,8 +250,8 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
         ModuleId = module.Id,
         Title = "New Theme",
         Description = "New Theme Description",
-        Necessity = Domain.Enums.Necessity.Other,
-        Complexity = Domain.Enums.Complexity.Beginner,
+        Necessity = Necessity.Other,
+        Complexity = Complexity.Beginner,
         Order = 1,
         SectionId = 999
       };

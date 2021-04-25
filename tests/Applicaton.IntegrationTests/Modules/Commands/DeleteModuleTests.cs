@@ -2,8 +2,8 @@
 using System.Linq;
 using System.Threading.Tasks;
 using DeveloperPath.Application.Common.Exceptions;
-using DeveloperPath.Application.Modules.Commands.DeleteModule;
-using DeveloperPath.Application.Modules.Queries.GetModules;
+using DeveloperPath.Application.CQRS.Modules.Commands.DeleteModule;
+using DeveloperPath.Application.CQRS.Modules.Queries.GetModules;
 using DeveloperPath.Domain.Entities;
 using FluentAssertions;
 using NUnit.Framework;

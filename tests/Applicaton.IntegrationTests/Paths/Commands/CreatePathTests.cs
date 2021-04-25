@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using DeveloperPath.Application.Common.Exceptions;
-using DeveloperPath.Application.Paths.Commands.CreatePath;
+using DeveloperPath.Application.CQRS.Paths.Commands.CreatePath;
 using DeveloperPath.Domain.Entities;
 using FluentAssertions;
 using NUnit.Framework;

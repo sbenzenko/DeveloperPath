@@ -2,16 +2,16 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using DeveloperPath.Application.Common.Models;
-using DeveloperPath.Application.Themes.Commands.CreateTheme;
-using DeveloperPath.Application.Themes.Commands.DeleteTheme;
-using DeveloperPath.Application.Themes.Commands.UpdateTheme;
-using DeveloperPath.Application.Themes.Queries.GetThemes;
-using DeveloperPath.WebApi.Controllers;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using NUnit.Framework;
+using DeveloperPath.Application.CQRS.Themes.Commands.CreateTheme;
+using DeveloperPath.Application.CQRS.Themes.Commands.DeleteTheme;
+using DeveloperPath.Application.CQRS.Themes.Commands.UpdateTheme;
+using DeveloperPath.Application.CQRS.Themes.Queries.GetThemes;
+using DeveloperPath.Domain.Shared.ClientModels;
+using DeveloperPath.WebApi.Controllers;
 
 namespace DeveloperPath.Web.WebAPI.Controllers
 {

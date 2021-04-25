@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using DeveloperPath.Application.Common.Exceptions;
-using DeveloperPath.Application.Modules.Commands.CreateModule;
-using DeveloperPath.Application.Themes.Commands.DeleteTheme;
+using DeveloperPath.Application.CQRS.Modules.Commands.CreateModule;
+using DeveloperPath.Application.CQRS.Themes.Commands.DeleteTheme;
 using DeveloperPath.Domain.Entities;
 using FluentAssertions;
 using NUnit.Framework;

@@ -1,6 +1,6 @@
-﻿using DeveloperPath.Application.Common.Models;
+﻿using System.Linq;
 using Microsoft.AspNetCore.Identity;
-using System.Linq;
+using DeveloperPath.Application.Common.Models;
 
 namespace DeveloperPath.Infrastructure.Identity
 {

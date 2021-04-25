@@ -1,12 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using DeveloperPath.Application.Common.Exceptions;
-using DeveloperPath.Application.Modules.Commands.CreateModule;
-using DeveloperPath.Application.Sources.Queries.GetSources;
-using DeveloperPath.Domain.Entities;
 using FluentAssertions;
 using NUnit.Framework;
+using DeveloperPath.Application.Common.Exceptions;
+using DeveloperPath.Application.CQRS.Modules.Commands.CreateModule;
+using DeveloperPath.Application.CQRS.Sources.Queries.GetSources;
+using DeveloperPath.Domain.Entities;
+using DeveloperPath.Domain.Shared.Enums;
 
 namespace DeveloperPath.Application.IntegrationTests.Queries
 {
@@ -26,7 +27,7 @@ namespace DeveloperPath.Application.IntegrationTests.Queries
         PathId = path.Id,
         Title = "New Other Module",
         Description = "New Other Module Description",
-        Necessity = Domain.Enums.Necessity.MustKnow,
+        Necessity = Necessity.MustKnow,
         Tags = new List<string> { "Tag1", "Tag2", "Tag3" }
       });
       var theme = await AddAsync(new Theme
@@ -34,8 +35,8 @@ namespace DeveloperPath.Application.IntegrationTests.Queries
         Title = "New Theme1",
         ModuleId = module.Id,
         Description = "New Theme1 Description",
-        Necessity = Domain.Enums.Necessity.MustKnow,
-        Complexity = Domain.Enums.Complexity.Beginner,
+        Necessity = Necessity.MustKnow,
+        Complexity = Complexity.Beginner,
         Tags = new List<string> { "Theme1", "ThemeTag2", "Tag3" },
         Order = 1
       });
@@ -45,9 +46,9 @@ namespace DeveloperPath.Application.IntegrationTests.Queries
         Title = "Source 1",
         Url = "https://source1.com",
         Order = 0,
-        Type = Domain.Enums.SourceType.Documentation,
-        Availability = Domain.Enums.Availability.Free,
-        Relevance = Domain.Enums.Relevance.Relevant
+        Type = SourceType.Documentation,
+        Availability = Availability.Free,
+        Relevance = Relevance.Relevant
       });
       await AddAsync(new Source
       {
@@ -55,9 +56,9 @@ namespace DeveloperPath.Application.IntegrationTests.Queries
         Title = "Source 2",
         Url = "https://source2.com",
         Order = 1,
-        Type = Domain.Enums.SourceType.Documentation,
-        Availability = Domain.Enums.Availability.Free,
-        Relevance = Domain.Enums.Relevance.Relevant
+        Type = SourceType.Documentation,
+        Availability = Availability.Free,
+        Relevance = Relevance.Relevant
       });
       await AddAsync(new Source
       {
@@ -65,9 +66,9 @@ namespace DeveloperPath.Application.IntegrationTests.Queries
         Title = "Source 3",
         Url = "https://source3.com",
         Order = 2,
-        Type = Domain.Enums.SourceType.Blog,
-        Availability = Domain.Enums.Availability.Free,
-        Relevance = Domain.Enums.Relevance.Relevant
+        Type = SourceType.Blog,
+        Availability = Availability.Free,
+        Relevance = Relevance.Relevant
       });
 
       var query = new GetSourceListQuery { PathId = path.Id, ModuleId = module.Id, ThemeId = theme.Id };
@@ -90,7 +91,7 @@ namespace DeveloperPath.Application.IntegrationTests.Queries
         PathId = path.Id,
         Title = "New Module Module",
         Description = "New Module Description",
-        Necessity = Domain.Enums.Necessity.MustKnow
+        Necessity = Necessity.MustKnow
       });
 
       var theme = await AddAsync(new Theme
@@ -98,8 +99,8 @@ namespace DeveloperPath.Application.IntegrationTests.Queries
         Title = "New Theme",
         ModuleId = module.Id,
         Description = "New Theme Description",
-        Necessity = Domain.Enums.Necessity.MustKnow,
-        Complexity = Domain.Enums.Complexity.Beginner,
+        Necessity = Necessity.MustKnow,
+        Complexity = Complexity.Beginner,
         Order = 2
       });
 
@@ -110,9 +111,9 @@ namespace DeveloperPath.Application.IntegrationTests.Queries
         Description = "Some description",
         Url = "https://source1.com",
         Order = 0,
-        Type = Domain.Enums.SourceType.Documentation,
-        Availability = Domain.Enums.Availability.Free,
-        Relevance = Domain.Enums.Relevance.Relevant,
+        Type = SourceType.Documentation,
+        Availability = Availability.Free,
+        Relevance = Relevance.Relevant,
         Tags = new List<string> { "Tag1", "Tag2", "Tag3" }
       });
 
@@ -124,7 +125,7 @@ namespace DeveloperPath.Application.IntegrationTests.Queries
       createdSource.Title.Should().Be("Source 1");
       createdSource.Description.Should().Be("Some description");
       createdSource.Url.Should().Be("https://source1.com");
-      createdSource.Type.Should().Be(Domain.Enums.SourceType.Documentation);
+      createdSource.Type.Should().Be(SourceType.Documentation);
       createdSource.ThemeId.Should().Be(theme.Id);
       createdSource.Tags.Should().HaveCount(3);
     }
@@ -140,7 +141,7 @@ namespace DeveloperPath.Application.IntegrationTests.Queries
         PathId = path.Id,
         Title = "New Module Module",
         Description = "New Module Description",
-        Necessity = Domain.Enums.Necessity.MustKnow
+        Necessity = Necessity.MustKnow
       });
 
       var theme = await AddAsync(new Theme
@@ -148,8 +149,8 @@ namespace DeveloperPath.Application.IntegrationTests.Queries
         Title = "New Theme",
         ModuleId = module.Id,
         Description = "New Theme Description",
-        Necessity = Domain.Enums.Necessity.MustKnow,
-        Complexity = Domain.Enums.Complexity.Beginner,
+        Necessity = Necessity.MustKnow,
+        Complexity = Complexity.Beginner,
         Order = 2
       });
 
@@ -160,9 +161,9 @@ namespace DeveloperPath.Application.IntegrationTests.Queries
         Description = "Some description",
         Url = "https://source1.com",
         Order = 0,
-        Type = Domain.Enums.SourceType.Documentation,
-        Availability = Domain.Enums.Availability.Free,
-        Relevance = Domain.Enums.Relevance.Relevant,
+        Type = SourceType.Documentation,
+        Availability = Availability.Free,
+        Relevance = Relevance.Relevant,
         Tags = new List<string> { "Tag1", "Tag2", "Tag3" }
       });
 
@@ -174,7 +175,7 @@ namespace DeveloperPath.Application.IntegrationTests.Queries
       createdSource.Title.Should().Be("Source 1");
       createdSource.Description.Should().Be("Some description");
       createdSource.Url.Should().Be("https://source1.com");
-      createdSource.Type.Should().Be(Domain.Enums.SourceType.Documentation);
+      createdSource.Type.Should().Be(SourceType.Documentation);
       createdSource.ThemeId.Should().Be(theme.Id);
       createdSource.Tags.Should().HaveCount(3);
     }

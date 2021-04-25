@@ -1,13 +1,13 @@
-﻿using DeveloperPath.Application.Common.Models;
-using DeveloperPath.Application.Sources.Commands.CreateSource;
-using DeveloperPath.Application.Sources.Commands.DeleteSource;
-using DeveloperPath.Application.Sources.Commands.UpdateSource;
-using DeveloperPath.Application.Sources.Queries.GetSources;
-using MediatR;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
+using MediatR;
+using DeveloperPath.Domain.Shared.ClientModels;
+using DeveloperPath.Application.CQRS.Sources.Commands.CreateSource;
+using DeveloperPath.Application.CQRS.Sources.Commands.DeleteSource;
+using DeveloperPath.Application.CQRS.Sources.Commands.UpdateSource;
+using DeveloperPath.Application.CQRS.Sources.Queries.GetSources;
 
 namespace DeveloperPath.WebApi.Controllers
 {

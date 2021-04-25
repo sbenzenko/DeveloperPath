@@ -1,5 +1,30 @@
 ﻿@import url('open-iconic/font/css/open-iconic-bootstrap.min.css');
 
+.mat-card {
+    max-width: 400px;
+}
+.mat-card-content {
+    padding: 1rem;
+}
+
+.mat-card-clean-margin {
+    margin: 0px;
+}
+
+.drawer-logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 64px;
+    color: #fff;
+}
+
+.drawer-logo a {
+    color: #fff;
+}
+
+.drawer-header {
+}
 
 .flex-container {
 	display: -webkit-box;

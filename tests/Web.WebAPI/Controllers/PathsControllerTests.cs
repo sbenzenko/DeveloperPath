@@ -2,12 +2,12 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using DeveloperPath.Application.CQRS.Paths.Commands.CreatePath;
+using DeveloperPath.Application.CQRS.Paths.Commands.DeletePath;
+using DeveloperPath.Application.CQRS.Paths.Commands.UpdatePath;
+using DeveloperPath.Application.CQRS.Paths.Queries.GetPaths;
 using DeveloperPath.Application.Common.Models;
-using DeveloperPath.Application.Paging;
-using DeveloperPath.Application.Paths.Commands.CreatePath;
-using DeveloperPath.Application.Paths.Commands.DeletePath;
-using DeveloperPath.Application.Paths.Commands.UpdatePath;
-using DeveloperPath.Application.Paths.Queries.GetPaths;
+using DeveloperPath.Domain.Shared.ClientModels;
 using DeveloperPath.WebApi.Controllers;
 using DeveloperPath.WebApi.Models;
 using MediatR;

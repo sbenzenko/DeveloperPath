@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Threading.Tasks;
-using DeveloperPath.Application.Common.Exceptions;
-using DeveloperPath.Application.Modules.Commands.CreateModule;
-using DeveloperPath.Application.Sources.Commands.CreateSource;
-using DeveloperPath.Domain.Entities;
 using FluentAssertions;
 using NUnit.Framework;
+using DeveloperPath.Application.Common.Exceptions;
+using DeveloperPath.Application.CQRS.Modules.Commands.CreateModule;
+using DeveloperPath.Application.CQRS.Sources.Commands.CreateSource;
+using DeveloperPath.Domain.Entities;
+using DeveloperPath.Domain.Shared.Enums;
 
 namespace DeveloperPath.Application.IntegrationTests.Commands
 {
@@ -181,8 +182,8 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
         Title = "New Theme",
         ModuleId = module.Id,
         Description = "New Theme Description",
-        Necessity = Domain.Enums.Necessity.MustKnow,
-        Complexity = Domain.Enums.Complexity.Beginner,
+        Necessity = Necessity.MustKnow,
+        Complexity = Complexity.Beginner,
         Order = 2
       });
 
@@ -194,9 +195,9 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
         Title = "New Theme",
         Description = "New Theme Description",
         Url = "https://www.test.com",
-        Type = Domain.Enums.SourceType.Book,
-        Availability = Domain.Enums.Availability.RequiresRegistration,
-        Relevance = Domain.Enums.Relevance.Relevant,
+        Type = SourceType.Book,
+        Availability = Availability.RequiresRegistration,
+        Relevance = Relevance.Relevant,
         Order = 1
       };
 

@@ -1,5 +1,5 @@
-﻿using DeveloperPath.Application.Common.Models;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using DeveloperPath.Application.Common.Models;
 
 namespace DeveloperPath.Application.Common.Interfaces
 {

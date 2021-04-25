@@ -1,11 +1,11 @@
-﻿using DeveloperPath.Application.Common.Behaviours;
-using DeveloperPath.Application.Common.Interfaces;
-using DeveloperPath.Application.Paths.Commands.CreatePath;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Logging;
 using Moq;
 using NUnit.Framework;
 using System.Threading;
 using System.Threading.Tasks;
+using DeveloperPath.Application.Common.Behaviours;
+using DeveloperPath.Application.Common.Interfaces;
+using DeveloperPath.Application.CQRS.Paths.Commands.CreatePath;
 
 namespace DeveloperPath.Application.UnitTests.Common.Behaviours
 {

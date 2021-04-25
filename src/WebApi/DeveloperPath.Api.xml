@@ -23,7 +23,7 @@
             <returns>Information about the module</returns>
             <response code="200">Returns requested module</response>
         </member>
-        <member name="M:DeveloperPath.WebApi.Controllers.ModulesController.Create(System.Int32,DeveloperPath.Application.Modules.Commands.CreateModule.CreateModule)">
+        <member name="M:DeveloperPath.WebApi.Controllers.ModulesController.Create(System.Int32,DeveloperPath.Application.CQRS.Modules.Commands.CreateModule.CreateModule)">
             <summary>
             Create a module
             </summary>
@@ -36,7 +36,7 @@
             <response code="415">Unsupported media type provided</response>
             <response code="422">Unprocessible entity provided</response>
         </member>
-        <member name="M:DeveloperPath.WebApi.Controllers.ModulesController.Update(System.Int32,System.Int32,DeveloperPath.Application.Modules.Commands.UpdateModule.UpdateModule)">
+        <member name="M:DeveloperPath.WebApi.Controllers.ModulesController.Update(System.Int32,System.Int32,DeveloperPath.Application.CQRS.Modules.Commands.UpdateModule.UpdateModule)">
             <summary>
             Update the module with given Id
             </summary>
@@ -73,7 +73,7 @@
             <returns>Information of the path with modules included</returns>
             /// <response code="200">Returns requested path</response>
         </member>
-        <member name="M:DeveloperPath.WebApi.Controllers.PathsController.Create(DeveloperPath.Application.Paths.Commands.CreatePath.CreatePath)">
+        <member name="M:DeveloperPath.WebApi.Controllers.PathsController.Create(DeveloperPath.Application.CQRS.Paths.Commands.CreatePath.CreatePath)">
             <summary>
             Create a path
             </summary>
@@ -84,7 +84,7 @@
             <response code="415">Unsupported media type provided</response>
             <response code="422">Unprocessible entity provided</response>
         </member>
-        <member name="M:DeveloperPath.WebApi.Controllers.PathsController.Update(System.Int32,DeveloperPath.Application.Paths.Commands.UpdatePath.UpdatePath)">
+        <member name="M:DeveloperPath.WebApi.Controllers.PathsController.Update(System.Int32,DeveloperPath.Application.CQRS.Paths.Commands.UpdatePath.UpdatePath)">
             <summary>
             Update the path with given Id
             </summary>
@@ -126,7 +126,7 @@
             <returns>Detailed information of the source with sources included</returns>
             <response code="200">Returns requested source</response>
         </member>
-        <member name="M:DeveloperPath.WebApi.Controllers.SourcesController.Create(System.Int32,System.Int32,System.Int32,DeveloperPath.Application.Sources.Commands.CreateSource.CreateSource)">
+        <member name="M:DeveloperPath.WebApi.Controllers.SourcesController.Create(System.Int32,System.Int32,System.Int32,DeveloperPath.Application.CQRS.Sources.Commands.CreateSource.CreateSource)">
             <summary>
             Create a source
             </summary>
@@ -141,7 +141,7 @@
             <response code="415">Unsupported media type provided</response>
             <response code="422">Unprocessible entity provided</response>
         </member>
-        <member name="M:DeveloperPath.WebApi.Controllers.SourcesController.Update(System.Int32,System.Int32,System.Int32,System.Int32,DeveloperPath.Application.Sources.Commands.UpdateSource.UpdateSource)">
+        <member name="M:DeveloperPath.WebApi.Controllers.SourcesController.Update(System.Int32,System.Int32,System.Int32,System.Int32,DeveloperPath.Application.CQRS.Sources.Commands.UpdateSource.UpdateSource)">
             <summary>
             Update the source with given Id
             </summary>
@@ -187,7 +187,7 @@
             <returns>Information about the theme</returns>
             <response code="200">Returns requested theme</response>
         </member>
-        <member name="M:DeveloperPath.WebApi.Controllers.ThemesController.Create(System.Int32,System.Int32,DeveloperPath.Application.Themes.Commands.CreateTheme.CreateTheme)">
+        <member name="M:DeveloperPath.WebApi.Controllers.ThemesController.Create(System.Int32,System.Int32,DeveloperPath.Application.CQRS.Themes.Commands.CreateTheme.CreateTheme)">
             <summary>
             Create a theme
             </summary>
@@ -201,7 +201,7 @@
             <response code="415">Unsupported media type provided</response>
             <response code="422">Unprocessible entity provided</response>
         </member>
-        <member name="M:DeveloperPath.WebApi.Controllers.ThemesController.Update(System.Int32,System.Int32,System.Int32,DeveloperPath.Application.Themes.Commands.UpdateTheme.UpdateTheme)">
+        <member name="M:DeveloperPath.WebApi.Controllers.ThemesController.Update(System.Int32,System.Int32,System.Int32,DeveloperPath.Application.CQRS.Themes.Commands.UpdateTheme.UpdateTheme)">
             <summary>
             Update the theme with given Id
             </summary>

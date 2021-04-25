@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using DeveloperPath.Domain.Common;
-using DeveloperPath.Domain.Enums;
+using DeveloperPath.Domain.Shared.Enums;
 
 namespace DeveloperPath.Domain.Entities
 {

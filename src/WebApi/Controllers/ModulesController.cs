@@ -1,10 +1,10 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using DeveloperPath.Application.Common.Models;
-using DeveloperPath.Application.Modules.Commands.CreateModule;
-using DeveloperPath.Application.Modules.Commands.DeleteModule;
-using DeveloperPath.Application.Modules.Commands.UpdateModule;
-using DeveloperPath.Application.Modules.Queries.GetModules;
+using DeveloperPath.Domain.Shared.ClientModels;
+using DeveloperPath.Application.CQRS.Modules.Commands.CreateModule;
+using DeveloperPath.Application.CQRS.Modules.Commands.DeleteModule;
+using DeveloperPath.Application.CQRS.Modules.Commands.UpdateModule;
+using DeveloperPath.Application.CQRS.Modules.Queries.GetModules;
 using DeveloperPath.WebApi.Extensions;
 using DeveloperPath.WebApi.Models;
 using MediatR;

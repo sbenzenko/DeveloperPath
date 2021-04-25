@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using DeveloperPath.Domain.Entities;
-using DeveloperPath.Domain.Enums;
-using DeveloperPath.Infrastructure.Identity;
 using Microsoft.AspNetCore.Identity;
+using DeveloperPath.Domain.Entities;
+using DeveloperPath.Infrastructure.Identity;
+using DeveloperPath.Domain.Shared.Enums;
 
 namespace DeveloperPath.Infrastructure.Persistence
 {
