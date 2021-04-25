@@ -322,37 +322,167 @@
             Applies mapping profiles from the executing assembly
             </summary>
         </member>
-        <member name="T:DeveloperPath.Application.CQRS.Modules.Commands.CreateModule.CreateModuleCommand">
+        <member name="T:DeveloperPath.Application.Common.Mappings.Profiles.ModuleProfile">
+            <summary>
+            AutoMapper mapping profile
+            </summary>
+        </member>
+        <member name="M:DeveloperPath.Application.Common.Mappings.Profiles.ModuleProfile.#ctor">
+            <summary>
+            AutoMapper mapping for module
+            </summary>
+        </member>
+        <member name="T:DeveloperPath.Application.Common.Mappings.Profiles.PathProfile">
+            <summary>
+            AutoMapper prorfile class
+            </summary>
+        </member>
+        <member name="M:DeveloperPath.Application.Common.Mappings.Profiles.PathProfile.#ctor">
+            <summary>
+            AutoMapper mapping for path
+            </summary>
+        </member>
+        <member name="T:DeveloperPath.Application.Common.Mappings.Profiles.SectionProfile">
+            <summary>
+            AutoMapper profile class
+            </summary>
+        </member>
+        <member name="M:DeveloperPath.Application.Common.Mappings.Profiles.SectionProfile.#ctor">
+            <summary>
+            AutoMapper mapping for section
+            </summary>
+        </member>
+        <member name="T:DeveloperPath.Application.Common.Mappings.Profiles.SourceProfile">
+            <summary>
+            AutoMapper profile class
+            </summary>
+        </member>
+        <member name="M:DeveloperPath.Application.Common.Mappings.Profiles.SourceProfile.#ctor">
+            <summary>
+            AutoMapper mapping for module
+            </summary>
+        </member>
+        <member name="T:DeveloperPath.Application.Common.Mappings.Profiles.ThemeProfile">
+            <summary>
+            AutoMapper profile class
+            </summary>
+        </member>
+        <member name="M:DeveloperPath.Application.Common.Mappings.Profiles.ThemeProfile.#ctor">
+            <summary>
+            AutoMapper mapping for theme
+            </summary>
+        </member>
+        <member name="T:DeveloperPath.Application.Common.Models.PaginationData">
+            <summary>
+            Class for adding pagination data to output headers
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Common.Models.PaginationData.PageNumber">
+            <summary>
+            Page number
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Common.Models.PaginationData.PageSize">
+            <summary>
+            Items per page
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Common.Models.PaginationData.FirstPage">
+            <summary>
+            Link to first page
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Common.Models.PaginationData.NextPage">
+            <summary>
+            Link to next page
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Common.Models.PaginationData.PreviousPage">
+            <summary>
+            Link to previous page
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Common.Models.PaginationData.LastPage">
+            <summary>
+            Link to last page
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Common.Models.PaginationData.TotalPages">
+            <summary>
+            Total number of pages
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Common.Models.PaginationData.TotalRecords">
+            <summary>
+            Total number of items
+            </summary>
+        </member>
+        <member name="M:DeveloperPath.Application.Common.Models.PaginationData.#ctor(System.Int32,System.Int32)">
+            <summary>
+            Creates simple pagination object
+            </summary>
+            <param name="pageNumber"></param>
+            <param name="pageSize"></param>
+        </member>
+        <member name="T:DeveloperPath.Application.Common.Models.Result">
+            <summary>
+            Identity service common result
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Common.Models.Result.Succeeded">
+            <summary>
+            Success status
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Common.Models.Result.Errors">
+            <summary>
+            List of errors
+            </summary>
+        </member>
+        <member name="M:DeveloperPath.Application.Common.Models.Result.Success">
+            <summary>
+            Result success
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:DeveloperPath.Application.Common.Models.Result.Failure(System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            Result failure
+            </summary>
+            <param name="errors"></param>
+            <returns></returns>
+        </member>
+        <member name="T:DeveloperPath.Application.CQRS.Modules.Commands.CreateModule.CreateModule">
             <summary>
             A module to create
             </summary>
         </member>
-        <member name="P:DeveloperPath.Application.CQRS.Modules.Commands.CreateModule.CreateModuleCommand.PathId">
+        <member name="P:DeveloperPath.Application.CQRS.Modules.Commands.CreateModule.CreateModule.PathId">
             <summary>
             Id of path the module is in
             </summary>
         </member>
-        <member name="P:DeveloperPath.Application.CQRS.Modules.Commands.CreateModule.CreateModuleCommand.Title">
+        <member name="P:DeveloperPath.Application.CQRS.Modules.Commands.CreateModule.CreateModule.Title">
             <summary>
             Module title
             </summary>
         </member>
-        <member name="P:DeveloperPath.Application.CQRS.Modules.Commands.CreateModule.CreateModuleCommand.Description">
+        <member name="P:DeveloperPath.Application.CQRS.Modules.Commands.CreateModule.CreateModule.Description">
             <summary>
-            Path short summary
+            Module short summary
             </summary>
         </member>
-        <member name="P:DeveloperPath.Application.CQRS.Modules.Commands.CreateModule.CreateModuleCommand.Necessity">
+        <member name="P:DeveloperPath.Application.CQRS.Modules.Commands.CreateModule.CreateModule.Necessity">
             <summary>
             Necessity level (Other (default) | Possibilities | Interesting | Good to know | Must know)
             </summary>
         </member>
-        <member name="P:DeveloperPath.Application.CQRS.Modules.Commands.CreateModule.CreateModuleCommand.Order">
+        <member name="P:DeveloperPath.Application.CQRS.Modules.Commands.CreateModule.CreateModule.Order">
             <summary>
             Position of module in path (0-based)
             </summary>
         </member>
-        <member name="P:DeveloperPath.Application.CQRS.Modules.Commands.CreateModule.CreateModuleCommand.Tags">
+        <member name="P:DeveloperPath.Application.CQRS.Modules.Commands.CreateModule.CreateModule.Tags">
             <summary>
             List of tags related to the module
             </summary>
@@ -367,7 +497,7 @@
             </summary>
             <param name="context"></param>
         </member>
-        <member name="M:DeveloperPath.Application.CQRS.Modules.Commands.CreateModule.CreateModuleCommandValidator.BeUniqueTitle(DeveloperPath.Application.CQRS.Modules.Commands.CreateModule.CreateModuleCommand,System.String,System.Threading.CancellationToken)">
+        <member name="M:DeveloperPath.Application.CQRS.Modules.Commands.CreateModule.CreateModuleCommandValidator.BeUniqueTitle(DeveloperPath.Application.CQRS.Modules.Commands.CreateModule.CreateModule,System.String,System.Threading.CancellationToken)">
             <summary>
             Request to context to check for unique title
             </summary>
@@ -376,52 +506,52 @@
             <param name="cancellationToken"></param>
             <returns></returns>
         </member>
-        <member name="T:DeveloperPath.Application.CQRS.Modules.Commands.DeleteModule.DeleteModuleCommand">
+        <member name="T:DeveloperPath.Application.CQRS.Modules.Commands.DeleteModule.DeleteModule">
             <summary>
             Delete module parameters
             </summary>
         </member>
-        <member name="P:DeveloperPath.Application.CQRS.Modules.Commands.DeleteModule.DeleteModuleCommand.Id">
+        <member name="P:DeveloperPath.Application.CQRS.Modules.Commands.DeleteModule.DeleteModule.Id">
             <summary>
             Module Id
             </summary>
         </member>
-        <member name="P:DeveloperPath.Application.CQRS.Modules.Commands.DeleteModule.DeleteModuleCommand.PathId">
+        <member name="P:DeveloperPath.Application.CQRS.Modules.Commands.DeleteModule.DeleteModule.PathId">
             <summary>
             Path id
             </summary>
         </member>
-        <member name="T:DeveloperPath.Application.CQRS.Modules.Commands.UpdateModule.UpdateModuleCommand">
+        <member name="T:DeveloperPath.Application.CQRS.Modules.Commands.UpdateModule.UpdateModule">
             <summary>
             Module to update
             </summary>
         </member>
-        <member name="P:DeveloperPath.Application.CQRS.Modules.Commands.UpdateModule.UpdateModuleCommand.Id">
+        <member name="P:DeveloperPath.Application.CQRS.Modules.Commands.UpdateModule.UpdateModule.Id">
             <summary>
             Module Id
             </summary>
         </member>
-        <member name="P:DeveloperPath.Application.CQRS.Modules.Commands.UpdateModule.UpdateModuleCommand.Title">
+        <member name="P:DeveloperPath.Application.CQRS.Modules.Commands.UpdateModule.UpdateModule.Title">
             <summary>
             Module title
             </summary>
         </member>
-        <member name="P:DeveloperPath.Application.CQRS.Modules.Commands.UpdateModule.UpdateModuleCommand.Description">
+        <member name="P:DeveloperPath.Application.CQRS.Modules.Commands.UpdateModule.UpdateModule.Description">
             <summary>
             Module short summary
             </summary>
         </member>
-        <member name="P:DeveloperPath.Application.CQRS.Modules.Commands.UpdateModule.UpdateModuleCommand.Necessity">
+        <member name="P:DeveloperPath.Application.CQRS.Modules.Commands.UpdateModule.UpdateModule.Necessity">
             <summary>
             Necessity level (Other (default) | Possibilities | Interesting | Good to know | Must know)
             </summary>
         </member>
-        <member name="P:DeveloperPath.Application.CQRS.Modules.Commands.UpdateModule.UpdateModuleCommand.Order">
+        <member name="P:DeveloperPath.Application.CQRS.Modules.Commands.UpdateModule.UpdateModule.Order">
             <summary>
             Order of module in path (0-based)
             </summary>
         </member>
-        <member name="P:DeveloperPath.Application.CQRS.Modules.Commands.UpdateModule.UpdateModuleCommand.Tags">
+        <member name="P:DeveloperPath.Application.CQRS.Modules.Commands.UpdateModule.UpdateModule.Tags">
             <summary>
             List of tags related to the module
             </summary>
@@ -436,7 +566,7 @@
             </summary>
             <param name="context"></param>
         </member>
-        <member name="M:DeveloperPath.Application.CQRS.Modules.Commands.UpdateModule.UpdateModuleCommandValidator.BeUniqueTitle(DeveloperPath.Application.CQRS.Modules.Commands.UpdateModule.UpdateModuleCommand,System.String,System.Threading.CancellationToken)">
+        <member name="M:DeveloperPath.Application.CQRS.Modules.Commands.UpdateModule.UpdateModuleCommandValidator.BeUniqueTitle(DeveloperPath.Application.CQRS.Modules.Commands.UpdateModule.UpdateModule,System.String,System.Threading.CancellationToken)">
             <summary>
             Request to context to check for unique title
             </summary>
@@ -505,72 +635,22 @@
             Path Id
             </summary>
         </member>
-        <member name="T:DeveloperPath.Application.CQRS.Modules.Queries.GetModules.ModuleViewModel">
-            <summary>
-            Detailed information about the module
-            </summary>
-        </member>
-        <member name="P:DeveloperPath.Application.CQRS.Modules.Queries.GetModules.ModuleViewModel.Id">
-            <summary>
-            Module ID
-            </summary>
-        </member>
-        <member name="P:DeveloperPath.Application.CQRS.Modules.Queries.GetModules.ModuleViewModel.Title">
-            <summary>
-            Module title
-            </summary>
-        </member>
-        <member name="P:DeveloperPath.Application.CQRS.Modules.Queries.GetModules.ModuleViewModel.Description">
-            <summary>
-            Module short summary
-            </summary>
-        </member>
-        <member name="P:DeveloperPath.Application.CQRS.Modules.Queries.GetModules.ModuleViewModel.Paths">
-            <summary>
-            Paths module attached to
-            </summary>
-        </member>
-        <member name="P:DeveloperPath.Application.CQRS.Modules.Queries.GetModules.ModuleViewModel.Necessity">
-            <summary>
-            Necessity level (Other (default) | Possibilities | Interesting | Good to know | Must know)
-            </summary>
-        </member>
-        <member name="P:DeveloperPath.Application.CQRS.Modules.Queries.GetModules.ModuleViewModel.Sections">
-            <summary>
-            Sections that module consists of (may be empty)
-            </summary>
-        </member>
-        <member name="P:DeveloperPath.Application.CQRS.Modules.Queries.GetModules.ModuleViewModel.Themes">
-            <summary>
-            Themes that module consists of
-            </summary>
-        </member>
-        <member name="P:DeveloperPath.Application.CQRS.Modules.Queries.GetModules.ModuleViewModel.Prerequisites">
-            <summary>
-            Modules required to know before studying this module
-            </summary>
-        </member>
-        <member name="P:DeveloperPath.Application.CQRS.Modules.Queries.GetModules.ModuleViewModel.Tags">
-            <summary>
-            List of tags related to module
-            </summary>
-        </member>
-        <member name="T:DeveloperPath.Application.CQRS.Paths.Commands.CreatePath.CreatePathCommand">
+        <member name="T:DeveloperPath.Application.CQRS.Paths.Commands.CreatePath.CreatePath">
             <summary>
             Path to create
             </summary>
         </member>
-        <member name="P:DeveloperPath.Application.CQRS.Paths.Commands.CreatePath.CreatePathCommand.Title">
+        <member name="P:DeveloperPath.Application.CQRS.Paths.Commands.CreatePath.CreatePath.Title">
             <summary>
             Path title
             </summary>
         </member>
-        <member name="P:DeveloperPath.Application.CQRS.Paths.Commands.CreatePath.CreatePathCommand.Description">
+        <member name="P:DeveloperPath.Application.CQRS.Paths.Commands.CreatePath.CreatePath.Description">
             <summary>
             Path short summary
             </summary>
         </member>
-        <member name="P:DeveloperPath.Application.CQRS.Paths.Commands.CreatePath.CreatePathCommand.Tags">
+        <member name="P:DeveloperPath.Application.CQRS.Paths.Commands.CreatePath.CreatePath.Tags">
             <summary>
             List of tags related to path
             </summary>
@@ -593,37 +673,37 @@
             <param name="cancellationToken"></param>
             <returns></returns>
         </member>
-        <member name="T:DeveloperPath.Application.CQRS.Paths.Commands.DeletePath.DeletePathCommand">
+        <member name="T:DeveloperPath.Application.CQRS.Paths.Commands.DeletePath.DeletePath">
             <summary>
             Delete path parameters
             </summary>
         </member>
-        <member name="P:DeveloperPath.Application.CQRS.Paths.Commands.DeletePath.DeletePathCommand.Id">
+        <member name="P:DeveloperPath.Application.CQRS.Paths.Commands.DeletePath.DeletePath.Id">
             <summary>
             Path ID
             </summary>
         </member>
-        <member name="T:DeveloperPath.Application.CQRS.Paths.Commands.UpdatePath.UpdatePathCommand">
+        <member name="T:DeveloperPath.Application.CQRS.Paths.Commands.UpdatePath.UpdatePath">
             <summary>
             Path to update
             </summary>
         </member>
-        <member name="P:DeveloperPath.Application.CQRS.Paths.Commands.UpdatePath.UpdatePathCommand.Id">
+        <member name="P:DeveloperPath.Application.CQRS.Paths.Commands.UpdatePath.UpdatePath.Id">
             <summary>
             Id of the path to update
             </summary>
         </member>
-        <member name="P:DeveloperPath.Application.CQRS.Paths.Commands.UpdatePath.UpdatePathCommand.Title">
+        <member name="P:DeveloperPath.Application.CQRS.Paths.Commands.UpdatePath.UpdatePath.Title">
             <summary>
             Path title
             </summary>
         </member>
-        <member name="P:DeveloperPath.Application.CQRS.Paths.Commands.UpdatePath.UpdatePathCommand.Description">
+        <member name="P:DeveloperPath.Application.CQRS.Paths.Commands.UpdatePath.UpdatePath.Description">
             <summary>
             Path short summary
             </summary>
         </member>
-        <member name="P:DeveloperPath.Application.CQRS.Paths.Commands.UpdatePath.UpdatePathCommand.Tags">
+        <member name="P:DeveloperPath.Application.CQRS.Paths.Commands.UpdatePath.UpdatePath.Tags">
             <summary>
             List of tags related to path
             </summary>
@@ -638,7 +718,7 @@
             </summary>
             <param name="context"></param>
         </member>
-        <member name="M:DeveloperPath.Application.CQRS.Paths.Commands.UpdatePath.UpdatePathCommandValidator.BeUniqueTitle(DeveloperPath.Application.CQRS.Paths.Commands.UpdatePath.UpdatePathCommand,System.String,System.Threading.CancellationToken)">
+        <member name="M:DeveloperPath.Application.CQRS.Paths.Commands.UpdatePath.UpdatePathCommandValidator.BeUniqueTitle(DeveloperPath.Application.CQRS.Paths.Commands.UpdatePath.UpdatePath,System.String,System.Threading.CancellationToken)">
             <summary>
             Request to context to check for unique title
             </summary>
@@ -687,95 +767,62 @@
             Path id
             </summary>
         </member>
-        <member name="T:DeveloperPath.Application.CQRS.Paths.Queries.GetPaths.PathViewModel">
-            <summary>
-            Detailed information about the path
-            </summary>
-        </member>
-        <member name="P:DeveloperPath.Application.CQRS.Paths.Queries.GetPaths.PathViewModel.Id">
-            <summary>
-            Path ID
-            </summary>
-        </member>
-        <member name="P:DeveloperPath.Application.CQRS.Paths.Queries.GetPaths.PathViewModel.Title">
-            <summary>
-            Path name
-            </summary>
-        </member>
-        <member name="P:DeveloperPath.Application.CQRS.Paths.Queries.GetPaths.PathViewModel.Description">
-            <summary>
-            Path short summary
-            </summary>
-        </member>
-        <member name="P:DeveloperPath.Application.CQRS.Paths.Queries.GetPaths.PathViewModel.Modules">
-            <summary>
-            Modules that path consists of
-            </summary>
-        </member>
-        <member name="P:DeveloperPath.Application.CQRS.Paths.Queries.GetPaths.PathViewModel.Tags">
-            <summary>
-            List of tags related to path.
-            Use generalized tags, e.g.:
-             - Path ASP.NET - Tags: #Development #Web
-             - Path Unity - Tags: #Development #Games
-            </summary>
-        </member>
-        <member name="T:DeveloperPath.Application.CQRS.Sources.Commands.CreateSource.CreateSourceCommand">
+        <member name="T:DeveloperPath.Application.CQRS.Sources.Commands.CreateSource.CreateSource">
             <summary>
             Source to create
             </summary>
         </member>
-        <member name="P:DeveloperPath.Application.CQRS.Sources.Commands.CreateSource.CreateSourceCommand.PathId">
+        <member name="P:DeveloperPath.Application.CQRS.Sources.Commands.CreateSource.CreateSource.PathId">
             <summary>
             Path Id
             </summary>
         </member>
-        <member name="P:DeveloperPath.Application.CQRS.Sources.Commands.CreateSource.CreateSourceCommand.ModuleId">
+        <member name="P:DeveloperPath.Application.CQRS.Sources.Commands.CreateSource.CreateSource.ModuleId">
             <summary>
             Module Id
             </summary>
         </member>
-        <member name="P:DeveloperPath.Application.CQRS.Sources.Commands.CreateSource.CreateSourceCommand.ThemeId">
+        <member name="P:DeveloperPath.Application.CQRS.Sources.Commands.CreateSource.CreateSource.ThemeId">
             <summary>
             Theme id that the source is for
             </summary>
         </member>
-        <member name="P:DeveloperPath.Application.CQRS.Sources.Commands.CreateSource.CreateSourceCommand.Title">
+        <member name="P:DeveloperPath.Application.CQRS.Sources.Commands.CreateSource.CreateSource.Title">
             <summary>
             Source title
             </summary>
         </member>
-        <member name="P:DeveloperPath.Application.CQRS.Sources.Commands.CreateSource.CreateSourceCommand.Description">
+        <member name="P:DeveloperPath.Application.CQRS.Sources.Commands.CreateSource.CreateSource.Description">
             <summary>
             Source short summary
             </summary>
         </member>
-        <member name="P:DeveloperPath.Application.CQRS.Sources.Commands.CreateSource.CreateSourceCommand.Url">
+        <member name="P:DeveloperPath.Application.CQRS.Sources.Commands.CreateSource.CreateSource.Url">
             <summary>
             Source Url
             </summary>
         </member>
-        <member name="P:DeveloperPath.Application.CQRS.Sources.Commands.CreateSource.CreateSourceCommand.Order">
+        <member name="P:DeveloperPath.Application.CQRS.Sources.Commands.CreateSource.CreateSource.Order">
             <summary>
             Position of source in theme (0-based).
             </summary>
         </member>
-        <member name="P:DeveloperPath.Application.CQRS.Sources.Commands.CreateSource.CreateSourceCommand.Type">
+        <member name="P:DeveloperPath.Application.CQRS.Sources.Commands.CreateSource.CreateSource.Type">
             <summary>
             Type of source (None | Book | Blog | Course | Documentation | QandA | Video)
             </summary>
         </member>
-        <member name="P:DeveloperPath.Application.CQRS.Sources.Commands.CreateSource.CreateSourceCommand.Availability">
+        <member name="P:DeveloperPath.Application.CQRS.Sources.Commands.CreateSource.CreateSource.Availability">
             <summary>
             Whether the resource Free | Requires registration | Paid only
             </summary>
         </member>
-        <member name="P:DeveloperPath.Application.CQRS.Sources.Commands.CreateSource.CreateSourceCommand.Relevance">
+        <member name="P:DeveloperPath.Application.CQRS.Sources.Commands.CreateSource.CreateSource.Relevance">
             <summary>
             Whether inforation is Not applicable (default) | Up-to-date | Somewhat up-to-date | Outdated
             </summary>
         </member>
-        <member name="P:DeveloperPath.Application.CQRS.Sources.Commands.CreateSource.CreateSourceCommand.Tags">
+        <member name="P:DeveloperPath.Application.CQRS.Sources.Commands.CreateSource.CreateSource.Tags">
             <summary>
             List of tags related to theme
             </summary>
@@ -789,92 +836,92 @@
             <summary>
             </summary>
         </member>
-        <member name="T:DeveloperPath.Application.CQRS.Sources.Commands.DeleteSource.DeleteSourceCommand">
+        <member name="T:DeveloperPath.Application.CQRS.Sources.Commands.DeleteSource.DeleteSource">
             <summary>
             Delete source parameters
             </summary>
         </member>
-        <member name="P:DeveloperPath.Application.CQRS.Sources.Commands.DeleteSource.DeleteSourceCommand.Id">
+        <member name="P:DeveloperPath.Application.CQRS.Sources.Commands.DeleteSource.DeleteSource.Id">
             <summary>
             Source Id
             </summary>
         </member>
-        <member name="P:DeveloperPath.Application.CQRS.Sources.Commands.DeleteSource.DeleteSourceCommand.PathId">
+        <member name="P:DeveloperPath.Application.CQRS.Sources.Commands.DeleteSource.DeleteSource.PathId">
             <summary>
             Path Id
             </summary>
         </member>
-        <member name="P:DeveloperPath.Application.CQRS.Sources.Commands.DeleteSource.DeleteSourceCommand.ModuleId">
+        <member name="P:DeveloperPath.Application.CQRS.Sources.Commands.DeleteSource.DeleteSource.ModuleId">
             <summary>
             Module Id
             </summary>
         </member>
-        <member name="P:DeveloperPath.Application.CQRS.Sources.Commands.DeleteSource.DeleteSourceCommand.ThemeId">
+        <member name="P:DeveloperPath.Application.CQRS.Sources.Commands.DeleteSource.DeleteSource.ThemeId">
             <summary>
             Theme Id
             </summary>
         </member>
-        <member name="T:DeveloperPath.Application.CQRS.Sources.Commands.UpdateSource.UpdateSourceCommand">
+        <member name="T:DeveloperPath.Application.CQRS.Sources.Commands.UpdateSource.UpdateSource">
             <summary>
             Source to update
             </summary>
         </member>
-        <member name="P:DeveloperPath.Application.CQRS.Sources.Commands.UpdateSource.UpdateSourceCommand.Id">
+        <member name="P:DeveloperPath.Application.CQRS.Sources.Commands.UpdateSource.UpdateSource.Id">
             <summary>
             Source Id
             </summary>
         </member>
-        <member name="P:DeveloperPath.Application.CQRS.Sources.Commands.UpdateSource.UpdateSourceCommand.PathId">
+        <member name="P:DeveloperPath.Application.CQRS.Sources.Commands.UpdateSource.UpdateSource.PathId">
             <summary>
             Path Id
             </summary>
         </member>
-        <member name="P:DeveloperPath.Application.CQRS.Sources.Commands.UpdateSource.UpdateSourceCommand.ModuleId">
+        <member name="P:DeveloperPath.Application.CQRS.Sources.Commands.UpdateSource.UpdateSource.ModuleId">
             <summary>
             Module Id
             </summary>
         </member>
-        <member name="P:DeveloperPath.Application.CQRS.Sources.Commands.UpdateSource.UpdateSourceCommand.ThemeId">
+        <member name="P:DeveloperPath.Application.CQRS.Sources.Commands.UpdateSource.UpdateSource.ThemeId">
             <summary>
             Theme id that the source is for
             </summary>
         </member>
-        <member name="P:DeveloperPath.Application.CQRS.Sources.Commands.UpdateSource.UpdateSourceCommand.Title">
+        <member name="P:DeveloperPath.Application.CQRS.Sources.Commands.UpdateSource.UpdateSource.Title">
             <summary>
             Source title
             </summary>
         </member>
-        <member name="P:DeveloperPath.Application.CQRS.Sources.Commands.UpdateSource.UpdateSourceCommand.Description">
+        <member name="P:DeveloperPath.Application.CQRS.Sources.Commands.UpdateSource.UpdateSource.Description">
             <summary>
             Source short summary
             </summary>
         </member>
-        <member name="P:DeveloperPath.Application.CQRS.Sources.Commands.UpdateSource.UpdateSourceCommand.Url">
+        <member name="P:DeveloperPath.Application.CQRS.Sources.Commands.UpdateSource.UpdateSource.Url">
             <summary>
             Source Url
             </summary>
         </member>
-        <member name="P:DeveloperPath.Application.CQRS.Sources.Commands.UpdateSource.UpdateSourceCommand.Order">
+        <member name="P:DeveloperPath.Application.CQRS.Sources.Commands.UpdateSource.UpdateSource.Order">
             <summary>
             Position of source in theme (0-based).
             </summary>
         </member>
-        <member name="P:DeveloperPath.Application.CQRS.Sources.Commands.UpdateSource.UpdateSourceCommand.Type">
+        <member name="P:DeveloperPath.Application.CQRS.Sources.Commands.UpdateSource.UpdateSource.Type">
             <summary>
             Type of source (None | Book | Blog | Course | Documentation | QandA | Video)
             </summary>
         </member>
-        <member name="P:DeveloperPath.Application.CQRS.Sources.Commands.UpdateSource.UpdateSourceCommand.Availability">
+        <member name="P:DeveloperPath.Application.CQRS.Sources.Commands.UpdateSource.UpdateSource.Availability">
             <summary>
             Whether the resource Free | Requires registration | Paid only
             </summary>
         </member>
-        <member name="P:DeveloperPath.Application.CQRS.Sources.Commands.UpdateSource.UpdateSourceCommand.Relevance">
+        <member name="P:DeveloperPath.Application.CQRS.Sources.Commands.UpdateSource.UpdateSource.Relevance">
             <summary>
             Whether inforation is Not applicable (default) | Up-to-date | Somewhat up-to-date | Outdated
             </summary>
         </member>
-        <member name="P:DeveloperPath.Application.CQRS.Sources.Commands.UpdateSource.UpdateSourceCommand.Tags">
+        <member name="P:DeveloperPath.Application.CQRS.Sources.Commands.UpdateSource.UpdateSource.Tags">
             <summary>
             List of tags related to theme
             </summary>
@@ -958,112 +1005,52 @@
             Theme Id
             </summary>
         </member>
-        <member name="T:DeveloperPath.Application.CQRS.Sources.Queries.GetSources.SourceViewModel">
-            <summary>
-            Detailed information about the source
-            </summary>
-        </member>
-        <member name="P:DeveloperPath.Application.CQRS.Sources.Queries.GetSources.SourceViewModel.Id">
-            <summary>
-            Source ID
-            </summary>
-        </member>
-        <member name="P:DeveloperPath.Application.CQRS.Sources.Queries.GetSources.SourceViewModel.Title">
-            <summary>
-            Source Title
-            </summary>
-        </member>
-        <member name="P:DeveloperPath.Application.CQRS.Sources.Queries.GetSources.SourceViewModel.Description">
-            <summary>
-            Souce Description
-            </summary>
-        </member>
-        <member name="P:DeveloperPath.Application.CQRS.Sources.Queries.GetSources.SourceViewModel.Url">
-            <summary>
-            Souce URL
-            </summary>
-        </member>
-        <member name="P:DeveloperPath.Application.CQRS.Sources.Queries.GetSources.SourceViewModel.ThemeId">
-            <summary>
-            Theme id that the source is for
-            </summary>
-        </member>
-        <member name="P:DeveloperPath.Application.CQRS.Sources.Queries.GetSources.SourceViewModel.Theme">
-            <summary>
-            Theme that the source is for
-            </summary>
-        </member>
-        <member name="P:DeveloperPath.Application.CQRS.Sources.Queries.GetSources.SourceViewModel.Order">
-            <summary>
-            Position of source in theme (0-based).
-            </summary>
-        </member>
-        <member name="P:DeveloperPath.Application.CQRS.Sources.Queries.GetSources.SourceViewModel.Type">
-            <summary>
-            Type of source (book, video, blog, etc.)
-            </summary>
-        </member>
-        <member name="P:DeveloperPath.Application.CQRS.Sources.Queries.GetSources.SourceViewModel.Availability">
-            <summary>
-            Whether the resource is available free or paid
-            </summary>
-        </member>
-        <member name="P:DeveloperPath.Application.CQRS.Sources.Queries.GetSources.SourceViewModel.Relevance">
-            <summary>
-            Whether inforation if up-to-date
-            </summary>
-        </member>
-        <member name="P:DeveloperPath.Application.CQRS.Sources.Queries.GetSources.SourceViewModel.Tags">
-            <summary>
-            List of tags related to theme
-            </summary>
-        </member>
-        <member name="T:DeveloperPath.Application.CQRS.Themes.Commands.CreateTheme.CreateThemeCommand">
+        <member name="T:DeveloperPath.Application.CQRS.Themes.Commands.CreateTheme.CreateTheme">
             <summary>
             Theme to create
             </summary>
         </member>
-        <member name="P:DeveloperPath.Application.CQRS.Themes.Commands.CreateTheme.CreateThemeCommand.PathId">
+        <member name="P:DeveloperPath.Application.CQRS.Themes.Commands.CreateTheme.CreateTheme.PathId">
             <summary>
             Path id
             </summary>
         </member>
-        <member name="P:DeveloperPath.Application.CQRS.Themes.Commands.CreateTheme.CreateThemeCommand.ModuleId">
+        <member name="P:DeveloperPath.Application.CQRS.Themes.Commands.CreateTheme.CreateTheme.ModuleId">
             <summary>
             Module Id
             </summary>
         </member>
-        <member name="P:DeveloperPath.Application.CQRS.Themes.Commands.CreateTheme.CreateThemeCommand.Title">
+        <member name="P:DeveloperPath.Application.CQRS.Themes.Commands.CreateTheme.CreateTheme.Title">
             <summary>
             Theme title
             </summary>
         </member>
-        <member name="P:DeveloperPath.Application.CQRS.Themes.Commands.CreateTheme.CreateThemeCommand.Description">
+        <member name="P:DeveloperPath.Application.CQRS.Themes.Commands.CreateTheme.CreateTheme.Description">
             <summary>
             Theme short summary
             </summary>
         </member>
-        <member name="P:DeveloperPath.Application.CQRS.Themes.Commands.CreateTheme.CreateThemeCommand.SectionId">
+        <member name="P:DeveloperPath.Application.CQRS.Themes.Commands.CreateTheme.CreateTheme.SectionId">
             <summary>
             Theme section id (can be null)
             </summary>
         </member>
-        <member name="P:DeveloperPath.Application.CQRS.Themes.Commands.CreateTheme.CreateThemeCommand.Complexity">
+        <member name="P:DeveloperPath.Application.CQRS.Themes.Commands.CreateTheme.CreateTheme.Complexity">
             <summary>
             Complexity level (Beginner | Intermediate | Advanced)
             </summary>
         </member>
-        <member name="P:DeveloperPath.Application.CQRS.Themes.Commands.CreateTheme.CreateThemeCommand.Necessity">
+        <member name="P:DeveloperPath.Application.CQRS.Themes.Commands.CreateTheme.CreateTheme.Necessity">
             <summary>
             Necessity level (Other | Possibilities | Interesting | Good to know | Must know)
             </summary>
         </member>
-        <member name="P:DeveloperPath.Application.CQRS.Themes.Commands.CreateTheme.CreateThemeCommand.Order">
+        <member name="P:DeveloperPath.Application.CQRS.Themes.Commands.CreateTheme.CreateTheme.Order">
             <summary>
             Position of the theme in module (0-based)
             </summary>
         </member>
-        <member name="P:DeveloperPath.Application.CQRS.Themes.Commands.CreateTheme.CreateThemeCommand.Tags">
+        <member name="P:DeveloperPath.Application.CQRS.Themes.Commands.CreateTheme.CreateTheme.Tags">
             <summary>
             List of tags related to the theme
             </summary>
@@ -1078,7 +1065,7 @@
             </summary>
             <param name="context"></param>
         </member>
-        <member name="M:DeveloperPath.Application.CQRS.Themes.Commands.CreateTheme.CreateThemeCommandValidator.BeUniqueTitle(DeveloperPath.Application.CQRS.Themes.Commands.CreateTheme.CreateThemeCommand,System.String,System.Threading.CancellationToken)">
+        <member name="M:DeveloperPath.Application.CQRS.Themes.Commands.CreateTheme.CreateThemeCommandValidator.BeUniqueTitle(DeveloperPath.Application.CQRS.Themes.Commands.CreateTheme.CreateTheme,System.String,System.Threading.CancellationToken)">
             <summary>
             Request to context to check for unique title
             </summary>
@@ -1087,77 +1074,77 @@
             <param name="cancellationToken"></param>
             <returns></returns>
         </member>
-        <member name="T:DeveloperPath.Application.CQRS.Themes.Commands.DeleteTheme.DeleteThemeCommand">
+        <member name="T:DeveloperPath.Application.CQRS.Themes.Commands.DeleteTheme.DeleteTheme">
             <summary>
             Delete theme parameters
             </summary>
         </member>
-        <member name="P:DeveloperPath.Application.CQRS.Themes.Commands.DeleteTheme.DeleteThemeCommand.Id">
+        <member name="P:DeveloperPath.Application.CQRS.Themes.Commands.DeleteTheme.DeleteTheme.Id">
             <summary>
             Theme id
             </summary>
         </member>
-        <member name="P:DeveloperPath.Application.CQRS.Themes.Commands.DeleteTheme.DeleteThemeCommand.PathId">
+        <member name="P:DeveloperPath.Application.CQRS.Themes.Commands.DeleteTheme.DeleteTheme.PathId">
             <summary>
             Path id
             </summary>
         </member>
-        <member name="P:DeveloperPath.Application.CQRS.Themes.Commands.DeleteTheme.DeleteThemeCommand.ModuleId">
+        <member name="P:DeveloperPath.Application.CQRS.Themes.Commands.DeleteTheme.DeleteTheme.ModuleId">
             <summary>
             Module id
             </summary>
         </member>
-        <member name="T:DeveloperPath.Application.CQRS.Themes.Commands.UpdateTheme.UpdateThemeCommand">
+        <member name="T:DeveloperPath.Application.CQRS.Themes.Commands.UpdateTheme.UpdateTheme">
             <summary>
             Theme to update
             </summary>
         </member>
-        <member name="P:DeveloperPath.Application.CQRS.Themes.Commands.UpdateTheme.UpdateThemeCommand.Id">
+        <member name="P:DeveloperPath.Application.CQRS.Themes.Commands.UpdateTheme.UpdateTheme.Id">
             <summary>
             Theme id
             </summary>
         </member>
-        <member name="P:DeveloperPath.Application.CQRS.Themes.Commands.UpdateTheme.UpdateThemeCommand.PathId">
+        <member name="P:DeveloperPath.Application.CQRS.Themes.Commands.UpdateTheme.UpdateTheme.PathId">
             <summary>
             Path id
             </summary>
         </member>
-        <member name="P:DeveloperPath.Application.CQRS.Themes.Commands.UpdateTheme.UpdateThemeCommand.ModuleId">
+        <member name="P:DeveloperPath.Application.CQRS.Themes.Commands.UpdateTheme.UpdateTheme.ModuleId">
             <summary>
             Module Id
             </summary>
         </member>
-        <member name="P:DeveloperPath.Application.CQRS.Themes.Commands.UpdateTheme.UpdateThemeCommand.Title">
+        <member name="P:DeveloperPath.Application.CQRS.Themes.Commands.UpdateTheme.UpdateTheme.Title">
             <summary>
             Theme title
             </summary>
         </member>
-        <member name="P:DeveloperPath.Application.CQRS.Themes.Commands.UpdateTheme.UpdateThemeCommand.Description">
+        <member name="P:DeveloperPath.Application.CQRS.Themes.Commands.UpdateTheme.UpdateTheme.Description">
             <summary>
             Theme short summary
             </summary>
         </member>
-        <member name="P:DeveloperPath.Application.CQRS.Themes.Commands.UpdateTheme.UpdateThemeCommand.SectionId">
+        <member name="P:DeveloperPath.Application.CQRS.Themes.Commands.UpdateTheme.UpdateTheme.SectionId">
             <summary>
             Theme section id (can be null)
             </summary>
         </member>
-        <member name="P:DeveloperPath.Application.CQRS.Themes.Commands.UpdateTheme.UpdateThemeCommand.Complexity">
+        <member name="P:DeveloperPath.Application.CQRS.Themes.Commands.UpdateTheme.UpdateTheme.Complexity">
             <summary>
             Complexity level (Beginner | Intermediate | Advanced)
             </summary>
         </member>
-        <member name="P:DeveloperPath.Application.CQRS.Themes.Commands.UpdateTheme.UpdateThemeCommand.Necessity">
+        <member name="P:DeveloperPath.Application.CQRS.Themes.Commands.UpdateTheme.UpdateTheme.Necessity">
             <summary>
             Necessity level (Other | Possibilities | Interesting | Good to know | Must know)
             </summary>
         </member>
-        <member name="P:DeveloperPath.Application.CQRS.Themes.Commands.UpdateTheme.UpdateThemeCommand.Order">
+        <member name="P:DeveloperPath.Application.CQRS.Themes.Commands.UpdateTheme.UpdateTheme.Order">
             <summary>
             Position of the theme in module (0-based)
             </summary>
         </member>
-        <member name="P:DeveloperPath.Application.CQRS.Themes.Commands.UpdateTheme.UpdateThemeCommand.Tags">
+        <member name="P:DeveloperPath.Application.CQRS.Themes.Commands.UpdateTheme.UpdateTheme.Tags">
             <summary>
             List of tags related to the theme
             </summary>
@@ -1172,7 +1159,7 @@
             </summary>
             <param name="context"></param>
         </member>
-        <member name="M:DeveloperPath.Application.CQRS.Themes.Commands.UpdateTheme.UpdateThemeCommandValidator.BeUniqueTitle(DeveloperPath.Application.CQRS.Themes.Commands.UpdateTheme.UpdateThemeCommand,System.String,System.Threading.CancellationToken)">
+        <member name="M:DeveloperPath.Application.CQRS.Themes.Commands.UpdateTheme.UpdateThemeCommandValidator.BeUniqueTitle(DeveloperPath.Application.CQRS.Themes.Commands.UpdateTheme.UpdateTheme,System.String,System.Threading.CancellationToken)">
             <summary>
             Request to context to check for unique title
             </summary>
@@ -1236,87 +1223,6 @@
             Module Id
             </summary>
         </member>
-        <member name="T:DeveloperPath.Application.CQRS.Themes.Queries.GetThemes.ThemeTitle">
-            <summary>
-            Theme title
-            </summary>
-        </member>
-        <member name="P:DeveloperPath.Application.CQRS.Themes.Queries.GetThemes.ThemeTitle.Id">
-            <summary>
-            Theme id
-            </summary>
-        </member>
-        <member name="P:DeveloperPath.Application.CQRS.Themes.Queries.GetThemes.ThemeTitle.Title">
-            <summary>
-            Theme title
-            </summary>
-        </member>
-        <member name="T:DeveloperPath.Application.CQRS.Themes.Queries.GetThemes.ThemeViewModel">
-            <summary>
-            Detailed information about the theme
-            </summary>
-        </member>
-        <member name="P:DeveloperPath.Application.CQRS.Themes.Queries.GetThemes.ThemeViewModel.Id">
-            <summary>
-            Theme ID
-            </summary>
-        </member>
-        <member name="P:DeveloperPath.Application.CQRS.Themes.Queries.GetThemes.ThemeViewModel.Title">
-            <summary>
-            Theme Title
-            </summary>
-        </member>
-        <member name="P:DeveloperPath.Application.CQRS.Themes.Queries.GetThemes.ThemeViewModel.Description">
-            <summary>
-            Theme short summary
-            </summary>
-        </member>
-        <member name="P:DeveloperPath.Application.CQRS.Themes.Queries.GetThemes.ThemeViewModel.Module">
-            <summary>
-            Module that theme is in
-            </summary>
-        </member>
-        <member name="P:DeveloperPath.Application.CQRS.Themes.Queries.GetThemes.ThemeViewModel.Section">
-            <summary>
-            Section that theme is in (can be null)
-            </summary>
-        </member>
-        <member name="P:DeveloperPath.Application.CQRS.Themes.Queries.GetThemes.ThemeViewModel.Complexity">
-            <summary>
-            Complexity level
-            </summary>
-        </member>
-        <member name="P:DeveloperPath.Application.CQRS.Themes.Queries.GetThemes.ThemeViewModel.Necessity">
-            <summary>
-            Necessity level
-            </summary>
-        </member>
-        <member name="P:DeveloperPath.Application.CQRS.Themes.Queries.GetThemes.ThemeViewModel.Order">
-            <summary>
-            Position of theme in module (0-based). 
-            Multiple themes can have same order number (meaning they can be studied simultaneously)
-            </summary>
-        </member>
-        <member name="P:DeveloperPath.Application.CQRS.Themes.Queries.GetThemes.ThemeViewModel.Sources">
-            <summary>
-            Sources fo this theme
-            </summary>
-        </member>
-        <member name="P:DeveloperPath.Application.CQRS.Themes.Queries.GetThemes.ThemeViewModel.Prerequisites">
-            <summary>
-            Themes required to know before studying this theme
-            </summary>
-        </member>
-        <member name="P:DeveloperPath.Application.CQRS.Themes.Queries.GetThemes.ThemeViewModel.Related">
-            <summary>
-            Related themes ("See also" section)
-            </summary>
-        </member>
-        <member name="P:DeveloperPath.Application.CQRS.Themes.Queries.GetThemes.ThemeViewModel.Tags">
-            <summary>
-            List of tags related to theme
-            </summary>
-        </member>
         <member name="T:DeveloperPath.Application.DependencyInjection">
             <summary>
             </summary>
@@ -1327,58 +1233,6 @@
             </summary>
             <param name="services"></param>
             <returns></returns>
-        </member>
-        <member name="T:DeveloperPath.Application.Paging.PaginationData">
-            <summary>
-            Class for adding pagination data to output headers
-            </summary>
-        </member>
-        <member name="P:DeveloperPath.Application.Paging.PaginationData.PageNumber">
-            <summary>
-            Page number
-            </summary>
-        </member>
-        <member name="P:DeveloperPath.Application.Paging.PaginationData.PageSize">
-            <summary>
-            Items per page
-            </summary>
-        </member>
-        <member name="P:DeveloperPath.Application.Paging.PaginationData.FirstPage">
-            <summary>
-            Link to first page
-            </summary>
-        </member>
-        <member name="P:DeveloperPath.Application.Paging.PaginationData.NextPage">
-            <summary>
-            Link to next page
-            </summary>
-        </member>
-        <member name="P:DeveloperPath.Application.Paging.PaginationData.PreviousPage">
-            <summary>
-            Link to previous page
-            </summary>
-        </member>
-        <member name="P:DeveloperPath.Application.Paging.PaginationData.LastPage">
-            <summary>
-            Link to last page
-            </summary>
-        </member>
-        <member name="P:DeveloperPath.Application.Paging.PaginationData.TotalPages">
-            <summary>
-            Total number of pages
-            </summary>
-        </member>
-        <member name="P:DeveloperPath.Application.Paging.PaginationData.TotalRecords">
-            <summary>
-            Total number of items
-            </summary>
-        </member>
-        <member name="M:DeveloperPath.Application.Paging.PaginationData.#ctor(System.Int32,System.Int32)">
-            <summary>
-            Creates simple pagination object
-            </summary>
-            <param name="pageNumber"></param>
-            <param name="pageSize"></param>
         </member>
     </members>
 </doc>

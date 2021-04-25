@@ -1,13 +1,13 @@
 ﻿using System.Collections.Generic;
 using DeveloperPath.Domain.Common;
-using Domain.Shared.Enums;
+using DeveloperPath.Domain.Shared.Enums;
 
 namespace DeveloperPath.Domain.Entities
 {
-    /// <summary>
-    /// Represents module (skill) of the path, e.g. Programming language, Databases, CI/CD. etc.
-    /// </summary>
-    public record Module : AuditableEntity
+  /// <summary>
+  /// Represents module (skill) of the path, e.g. Programming language, Databases, CI/CD. etc.
+  /// </summary>
+  public record Module : AuditableEntity
   {
     /// <summary>
     /// Module ID
@@ -34,7 +34,7 @@ namespace DeveloperPath.Domain.Entities
     /// <summary>
     /// Necessity level
     /// </summary>
-    public NecessityLevel Necessity { get; set; }
+    public Necessity Necessity { get; set; }
 
     /// <summary>
     /// Sections that module consists of (may be empty)

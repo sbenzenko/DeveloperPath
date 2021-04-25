@@ -1,14 +1,14 @@
 ﻿using System.Collections.Generic;
 using DeveloperPath.Domain.Common;
-using Domain.Shared.Enums;
+using DeveloperPath.Domain.Shared.Enums;
 
 namespace DeveloperPath.Domain.Entities
 {
-    /// <summary>
-    /// Represents a section in module (logical group of themes, like a book chapter).
-    /// May or may not exist in a module
-    /// </summary>
-    public record Section : AuditableEntity
+  /// <summary>
+  /// Represents a section in module (logical group of themes, like a book chapter).
+  /// May or may not exist in a module
+  /// </summary>
+  public record Section : AuditableEntity
   {
     /// <summary>
     /// Section ID
@@ -33,7 +33,7 @@ namespace DeveloperPath.Domain.Entities
     /// <summary>
     /// Necessity level
     /// </summary>
-    public NecessityLevel Necessity { get; set; }
+    public Necessity Necessity { get; set; }
 
     /// <summary>
     /// Position of section in module (0-based). 

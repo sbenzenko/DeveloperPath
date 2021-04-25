@@ -2,39 +2,39 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Application.Shared.Dtos.Models;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using DeveloperPath.Application.Common.Interfaces;
+using DeveloperPath.Domain.Shared.ClientModels;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
 namespace DeveloperPath.Application.CQRS.Paths.Queries.GetPaths
 {
-    /// <summary>
-    /// Get path
-    /// </summary>
-    public class GetPathListQuery : IRequest<IEnumerable<PathDto>>
+  /// <summary>
+  /// Get path
+  /// </summary>
+  public class GetPathListQuery : IRequest<IEnumerable<Path>>
+  {
+  }
+
+  internal class GetPathsQueryHandler : IRequestHandler<GetPathListQuery, IEnumerable<Path>>
+  {
+    private readonly IApplicationDbContext _context;
+    private readonly IMapper _mapper;
+
+    public GetPathsQueryHandler(IApplicationDbContext context, IMapper mapper)
     {
+      _context = context;
+      _mapper = mapper;
     }
 
-    internal class GetPathsQueryHandler : IRequestHandler<GetPathListQuery, IEnumerable<PathDto>>
+    public async Task<IEnumerable<Path>> Handle(GetPathListQuery request, CancellationToken cancellationToken)
     {
-        private readonly IApplicationDbContext _context;
-        private readonly IMapper _mapper;
-
-        public GetPathsQueryHandler(IApplicationDbContext context, IMapper mapper)
-        {
-            _context = context;
-            _mapper = mapper;
-        }
-
-        public async Task<IEnumerable<PathDto>> Handle(GetPathListQuery request, CancellationToken cancellationToken)
-        {
-            return await _context.Paths
-              .OrderBy(t => t.Title)
-              .ProjectTo<PathDto>(_mapper.ConfigurationProvider)
-              .ToListAsync(cancellationToken);
-        }
+      return await _context.Paths
+        .OrderBy(t => t.Title)
+        .ProjectTo<Path>(_mapper.ConfigurationProvider)
+        .ToListAsync(cancellationToken);
     }
+  }
 }

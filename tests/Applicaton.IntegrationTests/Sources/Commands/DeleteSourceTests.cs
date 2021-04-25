@@ -1,23 +1,23 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using FluentAssertions;
+using NUnit.Framework;
 using DeveloperPath.Application.Common.Exceptions;
 using DeveloperPath.Application.CQRS.Modules.Commands.CreateModule;
 using DeveloperPath.Application.CQRS.Sources.Commands.DeleteSource;
 using DeveloperPath.Domain.Entities;
-using Domain.Shared.Enums;
-using FluentAssertions;
-using NUnit.Framework;
+using DeveloperPath.Domain.Shared.Enums;
 
 namespace DeveloperPath.Application.IntegrationTests.Commands
 {
-    using static Testing;
+  using static Testing;
 
-    public class DeleteSourceTests : TestBase
+  public class DeleteSourceTests : TestBase
   {
     [Test]
     public void ShouldRequireValidPathId()
     {
-      var command = new DeleteSourceCommand { PathId = 999999, ModuleId = 1, ThemeId = 1, Id = 1 };
+      var command = new DeleteSource { PathId = 999999, ModuleId = 1, ThemeId = 1, Id = 1 };
 
       FluentActions.Invoking(() =>
           SendAsync(command)).Should().Throw<NotFoundException>();
@@ -25,7 +25,7 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
     [Test]
     public void ShouldRequireValidModuleId()
     {
-      var command = new DeleteSourceCommand { PathId = 1, ModuleId = 999999, ThemeId = 1, Id = 1 };
+      var command = new DeleteSource { PathId = 1, ModuleId = 999999, ThemeId = 1, Id = 1 };
 
       FluentActions.Invoking(() =>
           SendAsync(command)).Should().Throw<NotFoundException>();
@@ -33,7 +33,7 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
     [Test]
     public void ShouldRequireValidThemeId()
     {
-      var command = new DeleteSourceCommand { PathId = 1, ModuleId = 1, ThemeId = 999999, Id = 1 };
+      var command = new DeleteSource { PathId = 1, ModuleId = 1, ThemeId = 999999, Id = 1 };
 
       FluentActions.Invoking(() =>
           SendAsync(command)).Should().Throw<NotFoundException>();
@@ -42,7 +42,7 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
     [Test]
     public void ShouldRequireValidSourceId()
     {
-      var command = new DeleteSourceCommand { PathId = 1, ModuleId = 1, ThemeId = 1, Id = 999999 };
+      var command = new DeleteSource { PathId = 1, ModuleId = 1, ThemeId = 1, Id = 999999 };
 
       FluentActions.Invoking(() =>
           SendAsync(command)).Should().Throw<NotFoundException>();
@@ -57,7 +57,7 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
         Description = "Some Path Description"
       });
 
-      var module = await SendAsync(new CreateModuleCommand
+      var module = await SendAsync(new CreateModule
       {
         PathId = path.Id,
         Title = "Module Title",
@@ -80,14 +80,14 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
         Url = "https://source1.com",
         Order = 0,
         Type = SourceType.Documentation,
-        Availability =  AvailabilityLevel.Free,
-        Relevance =  RelevanceLevel.Relevant,
+        Availability = Availability.Free,
+        Relevance = Relevance.Relevant,
         Tags = new List<string> { "Tag1", "Tag2", "Tag3" }
       });
 
       var sourceAdded = await FindAsync<Source>(source.Id);
 
-      await SendAsync(new DeleteSourceCommand
+      await SendAsync(new DeleteSource
       {
         PathId = path.Id,
         ModuleId = module.Id,

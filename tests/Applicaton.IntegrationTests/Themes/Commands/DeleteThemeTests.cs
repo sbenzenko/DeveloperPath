@@ -16,7 +16,7 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
     [Test]
     public void ShouldRequireValidPathId()
     {
-      var command = new DeleteThemeCommand { PathId = 999999, ModuleId = 1, Id = 1 };
+      var command = new DeleteTheme { PathId = 999999, ModuleId = 1, Id = 1 };
 
       FluentActions.Invoking(() =>
           SendAsync(command)).Should().Throw<NotFoundException>();
@@ -24,7 +24,7 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
     [Test]
     public void ShouldRequireValidModuleId()
     {
-      var command = new DeleteThemeCommand { PathId = 1, ModuleId = 999999, Id = 1 };
+      var command = new DeleteTheme { PathId = 1, ModuleId = 999999, Id = 1 };
 
       FluentActions.Invoking(() =>
           SendAsync(command)).Should().Throw<NotFoundException>();
@@ -32,7 +32,7 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
     [Test]
     public void ShouldRequireValidThemeId()
     {
-      var command = new DeleteThemeCommand { PathId = 1, ModuleId = 1, Id = 999999 };
+      var command = new DeleteTheme { PathId = 1, ModuleId = 1, Id = 999999 };
 
       FluentActions.Invoking(() =>
           SendAsync(command)).Should().Throw<NotFoundException>();
@@ -47,7 +47,7 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
         Description = "Some Path Description"
       });
 
-      var module = await SendAsync(new CreateModuleCommand
+      var module = await SendAsync(new CreateModule
       {
         PathId = path.Id,
         Title = "Module Title",
@@ -64,7 +64,7 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
 
       var themeAdded = await FindAsync<Theme>(theme.Id);
 
-      await SendAsync(new DeleteThemeCommand
+      await SendAsync(new DeleteTheme
       {
         PathId = path.Id,
         ModuleId = module.Id,

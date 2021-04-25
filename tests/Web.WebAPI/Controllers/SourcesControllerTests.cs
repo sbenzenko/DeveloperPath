@@ -2,36 +2,36 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Application.Shared.Dtos.Models;
-using DeveloperPath.Application.CQRS.Sources.Commands.CreateSource;
-using DeveloperPath.Application.CQRS.Sources.Commands.DeleteSource;
-using DeveloperPath.Application.CQRS.Sources.Commands.UpdateSource;
-using DeveloperPath.Application.CQRS.Sources.Queries.GetSources;
-using DeveloperPath.WebApi.Controllers;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using NUnit.Framework;
+using DeveloperPath.Application.CQRS.Sources.Commands.CreateSource;
+using DeveloperPath.Application.CQRS.Sources.Commands.DeleteSource;
+using DeveloperPath.Application.CQRS.Sources.Commands.UpdateSource;
+using DeveloperPath.Application.CQRS.Sources.Queries.GetSources;
+using DeveloperPath.Domain.Shared.ClientModels;
+using DeveloperPath.WebApi.Controllers;
 
 namespace DeveloperPath.Web.WebAPI.Controllers
 {
-    public class SourcesControllerTests : TestBase
+  public class SourcesControllerTests : TestBase
   {
     private readonly Mock<IMediator> moqMediator;
-    private readonly SourceDto sampleSource;
-    private readonly IEnumerable<SourceDto> Sources;
-    private readonly UpdateSourceCommand updateCommand;
+    private readonly Source sampleSource;
+    private readonly IEnumerable<Source> Sources;
+    private readonly UpdateSource updateCommand;
 
     public SourcesControllerTests()
     {
-      sampleSource = new SourceDto { Id = 1, ThemeId = 1, Title = "Source1", Description = "Description1", Url = "https://www.test1.com" };
-      Sources = new List<SourceDto>
+      sampleSource = new Source { Id = 1, ThemeId = 1, Title = "Source1", Description = "Description1", Url = "https://www.test1.com" };
+      Sources = new List<Source>
       {
         sampleSource,
-        new SourceDto { Id = 2, ThemeId = 1, Title = "Source2", Description = "Description2", Url = "https://www.test1.com" }
+        new Source { Id = 2, ThemeId = 1, Title = "Source2", Description = "Description2", Url = "https://www.test1.com" }
       };
 
-      updateCommand = new UpdateSourceCommand { Id = 1, PathId = 1, ModuleId = 1, ThemeId = 1, 
+      updateCommand = new UpdateSource { Id = 1, PathId = 1, ModuleId = 1, ThemeId = 1, 
         Order = 0, Title = "Create title", Description = "Create Description", Url = "http://www.ww.ww" };
 
       moqMediator = new Mock<IMediator>();
@@ -45,15 +45,15 @@ namespace DeveloperPath.Web.WebAPI.Controllers
           .ReturnsAsync(sampleSource);
       // Create
       moqMediator
-        .Setup(m => m.Send(It.IsAny<CreateSourceCommand>(), It.IsAny<CancellationToken>()))
+        .Setup(m => m.Send(It.IsAny<CreateSource>(), It.IsAny<CancellationToken>()))
           .ReturnsAsync(sampleSource);
       // Update
       moqMediator
-        .Setup(m => m.Send(It.IsAny<UpdateSourceCommand>(), It.IsAny<CancellationToken>()))
+        .Setup(m => m.Send(It.IsAny<UpdateSource>(), It.IsAny<CancellationToken>()))
           .ReturnsAsync(sampleSource);
       // Delete
       moqMediator
-        .Setup(m => m.Send(It.IsAny<DeleteSourceCommand>(), It.IsAny<CancellationToken>()));
+        .Setup(m => m.Send(It.IsAny<DeleteSource>(), It.IsAny<CancellationToken>()));
     }
 
     [Test]
@@ -62,7 +62,7 @@ namespace DeveloperPath.Web.WebAPI.Controllers
       var controller = new SourcesController(moqMediator.Object);
       
       var result = await controller.Get(1, 1, 1);
-      var content = GetObjectResultContent<IEnumerable<SourceDto>>(result.Result);
+      var content = GetObjectResultContent<IEnumerable<Source>>(result.Result);
 
       Assert.IsInstanceOf(typeof(OkObjectResult), result.Result);
       Assert.IsNotNull(content);
@@ -75,7 +75,7 @@ namespace DeveloperPath.Web.WebAPI.Controllers
       var controller = new SourcesController(moqMediator.Object);
       
       var result = await controller.Get(1, 1, 1, 1);
-      var content = GetObjectResultContent<SourceDto>(result.Result);
+      var content = GetObjectResultContent<Source>(result.Result);
 
       Assert.IsInstanceOf(typeof(OkObjectResult), result.Result);
       Assert.IsNotNull(content);
@@ -85,12 +85,12 @@ namespace DeveloperPath.Web.WebAPI.Controllers
     [Test]
     public async Task Create_ReturnsCreatedAtRoute()
     {
-      var createCommand = new CreateSourceCommand { PathId = 1, ModuleId = 1, ThemeId = 1, 
+      var createCommand = new CreateSource { PathId = 1, ModuleId = 1, ThemeId = 1, 
         Order = 0, Title = "Create title", Description = "Create Description", Url = "http://www.ww.ww" };
       var controller = new SourcesController(moqMediator.Object);
       
       var result = await controller.Create(1, 1, 1, createCommand);
-      var content = GetObjectResultContent<SourceDto>(result.Result);
+      var content = GetObjectResultContent<Source>(result.Result);
 
       Assert.IsInstanceOf(typeof(CreatedAtRouteResult), result.Result);
       Assert.AreEqual("GetSource", ((CreatedAtRouteResult)result.Result).RouteName);
@@ -101,12 +101,12 @@ namespace DeveloperPath.Web.WebAPI.Controllers
     [Test]
     public async Task Update_ReturnsUpdatedSource_WhenRequestedIdMatchesCommandId()
     {
-      var updateCommand = new UpdateSourceCommand { Id = 1, PathId = 1, ModuleId = 1, ThemeId = 1, 
+      var updateCommand = new UpdateSource { Id = 1, PathId = 1, ModuleId = 1, ThemeId = 1, 
         Order = 0, Title = "Create title", Description = "Create Description", Url = "http://www.ww.ww" };
       var controller = new SourcesController(moqMediator.Object);
       
       var result = await controller.Update(1, 1, 1, 1, updateCommand);
-      var content = GetObjectResultContent<SourceDto>(result.Result);
+      var content = GetObjectResultContent<Source>(result.Result);
 
       Assert.IsInstanceOf(typeof(OkObjectResult), result.Result);
       Assert.IsNotNull(content);

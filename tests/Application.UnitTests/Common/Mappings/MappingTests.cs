@@ -1,9 +1,7 @@
 ﻿using AutoMapper;
 using DeveloperPath.Application.Common.Mappings.Interfaces;
 using DeveloperPath.Application.Common.Mappings.Profiles;
-using DeveloperPath.Application.CQRS.Modules.Queries.GetModules;
-using DeveloperPath.Application.CQRS.Paths.Queries.GetPaths;
-using DeveloperPath.Domain.Entities;
+using DeveloperPath.Domain.Shared.ClientModels;
 using NUnit.Framework;
 using System;
 
@@ -19,11 +17,11 @@ namespace DeveloperPath.Application.UnitTests.Common.Mappings
             _configuration = new MapperConfiguration(cfg =>
             {
                 cfg.AddProfile<MappingProfile>();
-                cfg.AddProfile<ModuleProfile>();
                 cfg.AddProfile<PathProfile>();
+                cfg.AddProfile<ModuleProfile>();
                 cfg.AddProfile<SectionProfile>();
-                cfg.AddProfile<SourceProfile>();
                 cfg.AddProfile<ThemeProfile>();
+                cfg.AddProfile<SourceProfile>();
             });
 
             _mapper = _configuration.CreateMapper();
@@ -36,8 +34,18 @@ namespace DeveloperPath.Application.UnitTests.Common.Mappings
         }
         
         [Test]
-        [TestCase(typeof(Path), typeof(PathViewModel))]
-        [TestCase(typeof(Module), typeof(ModuleViewModel))]
+        [TestCase(typeof(Domain.Entities.Path), typeof(Path))]
+        [TestCase(typeof(Domain.Entities.Path), typeof(PathDetails))]
+        [TestCase(typeof(Domain.Entities.Path), typeof(PathTitle))]
+        [TestCase(typeof(Domain.Entities.Module), typeof(Module))]
+        [TestCase(typeof(Domain.Entities.Module), typeof(ModuleDetails))]
+        [TestCase(typeof(Domain.Entities.Module), typeof(ModuleTitle))]
+        [TestCase(typeof(Domain.Entities.Section), typeof(Section))]
+        [TestCase(typeof(Domain.Entities.Theme), typeof(Theme))]
+        [TestCase(typeof(Domain.Entities.Theme), typeof(ThemeDetails))]
+        [TestCase(typeof(Domain.Entities.Theme), typeof(ThemeTitle))]
+        [TestCase(typeof(Domain.Entities.Source), typeof(Source))]
+        [TestCase(typeof(Domain.Entities.Source), typeof(SourceDetails))]
         public void ShouldSupportMappingFromSourceToDestination(Type source, Type destination)
         {
             var instance = Activator.CreateInstance(source);

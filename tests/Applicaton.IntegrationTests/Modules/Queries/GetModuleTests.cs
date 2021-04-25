@@ -4,15 +4,15 @@ using DeveloperPath.Application.Common.Exceptions;
 using DeveloperPath.Application.CQRS.Modules.Commands.CreateModule;
 using DeveloperPath.Application.CQRS.Modules.Queries.GetModules;
 using DeveloperPath.Domain.Entities;
-using Domain.Shared.Enums;
+using DeveloperPath.Domain.Shared.Enums;
 using FluentAssertions;
 using NUnit.Framework;
 
 namespace DeveloperPath.Application.IntegrationTests.Queries
 {
-    using static Testing;
+  using static Testing;
 
-    public class GetModuleTests : TestBase
+  public class GetModuleTests : TestBase
   {
     [Test]
     public async Task ShouldReturnModuleList()
@@ -20,19 +20,19 @@ namespace DeveloperPath.Application.IntegrationTests.Queries
       var path = await AddAsync(
         new Path { Title = "Some Path", Description = "Some Path Description" });
 
-      _ = await SendAsync(new CreateModuleCommand
+      _ = await SendAsync(new CreateModule
       {
         PathId = path.Id,
         Title = "New Module1",
         Description = "New Module1 Description"
       });
-      _ = await SendAsync(new CreateModuleCommand
+      _ = await SendAsync(new CreateModule
       {
         PathId = path.Id,
         Title = "New Module2",
         Description = "New Module2 Description"
       });
-      _ = await SendAsync(new CreateModuleCommand
+      _ = await SendAsync(new CreateModule
       {
         PathId = path.Id,
         Title = "New Module3",
@@ -51,12 +51,12 @@ namespace DeveloperPath.Application.IntegrationTests.Queries
       var path = await AddAsync(
         new Path { Title = "Some Other Path", Description = "Some Path Description" });
 
-      var module = await SendAsync(new CreateModuleCommand
+      var module = await SendAsync(new CreateModule
       {
         PathId = path.Id,
         Title = "New Module",
         Description = "New Module Description",
-        Necessity =  NecessityLevel.MustKnow,
+        Necessity = Necessity.MustKnow,
         Tags = new List<string> { "Tag1", "Tag2", "Tag3" }
       });
 
@@ -75,12 +75,12 @@ namespace DeveloperPath.Application.IntegrationTests.Queries
       var path = await AddAsync(
         new Path { Title = "Some Another Path", Description = "Path Description" });
 
-      var module = await SendAsync(new CreateModuleCommand
+      var module = await SendAsync(new CreateModule
       {
         PathId = path.Id,
         Title = "New Other Module",
         Description = "New Other Module Description",
-        Necessity =  NecessityLevel.MustKnow,
+        Necessity = Necessity.MustKnow,
         Tags = new List<string> { "Tag1", "Tag2", "Tag3" }
       });
       await AddAsync(new Theme
@@ -88,8 +88,8 @@ namespace DeveloperPath.Application.IntegrationTests.Queries
         Title = "New Theme1",
         ModuleId = module.Id,
         Description = "New Theme1 Description",
-        Necessity =  NecessityLevel.MustKnow,
-        Complexity =  ComplexityLevel.Beginner,
+        Necessity = Necessity.MustKnow,
+        Complexity = Complexity.Beginner,
         Tags = new List<string> { "Theme1", "ThemeTag2", "Tag3" },
         Order = 1
       });
@@ -98,8 +98,8 @@ namespace DeveloperPath.Application.IntegrationTests.Queries
         Title = "New Theme2",
         ModuleId = module.Id,
         Description = "New Theme2 Description",
-        Necessity =  NecessityLevel.MustKnow,
-        Complexity =  ComplexityLevel.Beginner,
+        Necessity = Necessity.MustKnow,
+        Complexity = Complexity.Beginner,
         Tags = new List<string> { "Theme2", "ThemeTag2", "Tag3" },
         Order = 2
       });

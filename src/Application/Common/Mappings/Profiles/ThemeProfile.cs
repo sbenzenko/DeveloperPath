@@ -1,16 +1,21 @@
-﻿using Application.Shared.Dtos.Models;
-using AutoMapper;
-using DeveloperPath.Application.CQRS.Themes.Queries.GetThemes;
-using DeveloperPath.Domain.Entities;
+﻿using AutoMapper;
+using DeveloperPath.Domain.Shared.ClientModels;
 
 namespace DeveloperPath.Application.Common.Mappings.Profiles
 {
-    public class ThemeProfile: SourceProfile
+  /// <summary>
+  /// AutoMapper profile class
+  /// </summary>
+  public class ThemeProfile : Profile
+  {
+    /// <summary>
+    /// AutoMapper mapping for theme
+    /// </summary>
+    public ThemeProfile()
     {
-        public ThemeProfile()
-        {
-            CreateMap<Theme, ThemeDto>();
-            CreateMap<Theme, ThemeTitle>();
-        }
+      CreateMap<Domain.Entities.Theme, Theme>();
+      CreateMap<Domain.Entities.Theme, ThemeDetails>();
+      CreateMap<Domain.Entities.Theme, ThemeTitle>();
     }
+  }
 }

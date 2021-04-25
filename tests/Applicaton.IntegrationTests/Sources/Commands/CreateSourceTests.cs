@@ -1,23 +1,23 @@
 ﻿using System;
 using System.Threading.Tasks;
+using FluentAssertions;
+using NUnit.Framework;
 using DeveloperPath.Application.Common.Exceptions;
 using DeveloperPath.Application.CQRS.Modules.Commands.CreateModule;
 using DeveloperPath.Application.CQRS.Sources.Commands.CreateSource;
 using DeveloperPath.Domain.Entities;
-using Domain.Shared.Enums;
-using FluentAssertions;
-using NUnit.Framework;
+using DeveloperPath.Domain.Shared.Enums;
 
 namespace DeveloperPath.Application.IntegrationTests.Commands
 {
-    using static Testing;
+  using static Testing;
 
-    public class CreateSourceTests : TestBase
+  public class CreateSourceTests : TestBase
   {
     [Test]
     public void ShouldRequireMinimumFields()
     {
-      var command = new CreateSourceCommand();
+      var command = new CreateSource();
 
       FluentActions.Invoking(() =>
           SendAsync(command)).Should().Throw<ValidationException>();
@@ -26,7 +26,7 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
     [Test]
     public void ShouldRequireModuleId()
     {
-      var command = new CreateSourceCommand
+      var command = new CreateSource
       {
         ThemeId = 1,
         Title = "Source Title",
@@ -43,7 +43,7 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
     [Test]
     public void ShouldRequireThemeId()
     {
-      var command = new CreateSourceCommand
+      var command = new CreateSource
       {
         ModuleId = 1,
         Title = "Source Title",
@@ -60,7 +60,7 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
     [Test]
     public void ShouldReturnNotFoundForNonExistingModule()
     {
-      var command = new CreateSourceCommand
+      var command = new CreateSource
       {
         ModuleId = 999,
         ThemeId = 1,
@@ -76,7 +76,7 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
     [Test]
     public void ShouldReturnNotFoundForNonExistingTheme()
     {
-      var command = new CreateSourceCommand
+      var command = new CreateSource
       {
         ModuleId = 1,
         ThemeId = 999,
@@ -92,7 +92,7 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
     [Test]
     public void ShouldRequireTitle()
     {
-      var command = new CreateSourceCommand
+      var command = new CreateSource
       {
         ModuleId = 1,
         ThemeId = 1,
@@ -109,7 +109,7 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
     [Test]
     public void ShouldDisallowLongTitle()
     {
-      var command = new CreateSourceCommand
+      var command = new CreateSource
       {
         ModuleId = 1,
         ThemeId = 1,
@@ -127,7 +127,7 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
     [Test]
     public void ShouldRequireUrl()
     {
-      var command = new CreateSourceCommand
+      var command = new CreateSource
       {
         ModuleId = 1,
         ThemeId = 1,
@@ -144,7 +144,7 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
     [Test]
     public void ShouldCheckUrlFormat()
     {
-      var command = new CreateSourceCommand
+      var command = new CreateSource
       {
         ModuleId = 1,
         ThemeId = 1,
@@ -170,7 +170,7 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
         Description = "Some Path Description"
       });
 
-      var module = await SendAsync(new CreateModuleCommand
+      var module = await SendAsync(new CreateModule
       {
         PathId = path.Id,
         Title = "Module Title",
@@ -182,12 +182,12 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
         Title = "New Theme",
         ModuleId = module.Id,
         Description = "New Theme Description",
-        Necessity =  NecessityLevel.MustKnow,
-        Complexity =  ComplexityLevel.Beginner,
+        Necessity = Necessity.MustKnow,
+        Complexity = Complexity.Beginner,
         Order = 2
       });
 
-      var command = new CreateSourceCommand
+      var command = new CreateSource
       {
         PathId = path.Id,
         ModuleId = module.Id,
@@ -196,8 +196,8 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
         Description = "New Theme Description",
         Url = "https://www.test.com",
         Type = SourceType.Book,
-        Availability =  AvailabilityLevel.RequiresRegistration,
-        Relevance =  RelevanceLevel.Relevant,
+        Availability = Availability.RequiresRegistration,
+        Relevance = Relevance.Relevant,
         Order = 1
       };
 

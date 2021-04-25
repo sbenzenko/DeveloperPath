@@ -16,7 +16,7 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
     [Test]
     public void ShouldRequireValidPathId()
     {
-      var command = new UpdatePathCommand
+      var command = new UpdatePath
       {
         Id = 99,
         Title = "New Title",
@@ -31,13 +31,13 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
     [Test]
     public async Task ShouldRequireTitle()
     {
-      var path = await SendAsync(new CreatePathCommand
+      var path = await SendAsync(new CreatePath
       {
         Title = "New Path",
         Description = "New Path Description"
       });
 
-      var command = new UpdatePathCommand
+      var command = new UpdatePath
       {
         Id = path.Id,
         Title = "",
@@ -53,13 +53,13 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
     [Test]
     public async Task ShouldDisallowLongTitle()
     {
-      var path = await SendAsync(new CreatePathCommand
+      var path = await SendAsync(new CreatePath
       {
         Title = "New Path",
         Description = "New Path Description"
       });
 
-      var command = new UpdatePathCommand
+      var command = new UpdatePath
       {
         Id = path.Id,
         Title = "This path title is too long and exceeds one hundred characters allowed for path titles by UpdatePathCommandValidator",
@@ -75,19 +75,19 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
     [Test]
     public async Task ShouldRequireUniqueTitle()
     {
-      var path = await SendAsync(new CreatePathCommand
+      var path = await SendAsync(new CreatePath
       {
         Title = "New Path",
         Description = "New Path Description"
       });
 
-      await SendAsync(new CreatePathCommand
+      await SendAsync(new CreatePath
       {
         Title = "Other New Path",
         Description = "New Other Path Description"
       });
 
-      var command = new UpdatePathCommand
+      var command = new UpdatePath
       {
         Id = path.Id,
         Title = "Other New Path",
@@ -105,13 +105,13 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
     {
       var userId = await RunAsDefaultUserAsync();
 
-      var path = await SendAsync(new CreatePathCommand
+      var path = await SendAsync(new CreatePath
       {
         Title = "New Path",
         Description = "New Path Description"
       });
 
-      var command = new UpdatePathCommand
+      var command = new UpdatePath
       {
         Id = path.Id,
         Title = "Updated Path Title",

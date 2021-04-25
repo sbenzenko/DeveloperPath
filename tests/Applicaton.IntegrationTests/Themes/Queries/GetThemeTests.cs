@@ -1,19 +1,19 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using FluentAssertions;
+using NUnit.Framework;
 using DeveloperPath.Application.Common.Exceptions;
 using DeveloperPath.Application.CQRS.Modules.Commands.CreateModule;
 using DeveloperPath.Application.CQRS.Themes.Queries.GetThemes;
 using DeveloperPath.Domain.Entities;
-using Domain.Shared.Enums;
-using FluentAssertions;
-using NUnit.Framework;
+using DeveloperPath.Domain.Shared.Enums;
 
 namespace DeveloperPath.Application.IntegrationTests.Queries
 {
-    using static Testing;
+  using static Testing;
 
-    public class GetThemeTests : TestBase
+  public class GetThemeTests : TestBase
   {
 
     [Test]
@@ -22,12 +22,12 @@ namespace DeveloperPath.Application.IntegrationTests.Queries
       var path = await AddAsync(
         new Path { Title = "Some Path", Description = "Some Path Description" });
 
-      var module = await SendAsync(new CreateModuleCommand
+      var module = await SendAsync(new CreateModule
       {
         PathId = path.Id,
         Title = "New Other Module",
         Description = "New Other Module Description",
-        Necessity =  NecessityLevel.MustKnow,
+        Necessity = Necessity.MustKnow,
         Tags = new List<string> { "Tag1", "Tag2", "Tag3" }
       });
       await AddAsync(new Theme
@@ -35,8 +35,8 @@ namespace DeveloperPath.Application.IntegrationTests.Queries
         Title = "New Theme1",
         ModuleId = module.Id,
         Description = "New Theme1 Description",
-        Necessity =  NecessityLevel.MustKnow,
-        Complexity =  ComplexityLevel.Beginner,
+        Necessity = Necessity.MustKnow,
+        Complexity = Complexity.Beginner,
         Tags = new List<string> { "Theme1", "ThemeTag2", "Tag3" },
         Order = 1
       });
@@ -45,8 +45,8 @@ namespace DeveloperPath.Application.IntegrationTests.Queries
         Title = "New Theme2",
         ModuleId = module.Id,
         Description = "New Theme2 Description",
-        Necessity =  NecessityLevel.MustKnow,
-        Complexity =  ComplexityLevel.Beginner,
+        Necessity = Necessity.MustKnow,
+        Complexity = Complexity.Beginner,
         Tags = new List<string> { "Theme2", "ThemeTag2", "Tag3" },
         Order = 2
       });
@@ -55,8 +55,8 @@ namespace DeveloperPath.Application.IntegrationTests.Queries
         Title = "New Theme3",
         ModuleId = module.Id,
         Description = "New Theme3 Description",
-        Necessity =  NecessityLevel.MustKnow,
-        Complexity =  ComplexityLevel.Beginner,
+        Necessity = Necessity.MustKnow,
+        Complexity = Complexity.Beginner,
         Tags = new List<string> { "Theme2", "ThemeTag2", "Tag3" },
         Order = 3
       });
@@ -75,12 +75,12 @@ namespace DeveloperPath.Application.IntegrationTests.Queries
       var path = await AddAsync(
         new Path { Title = "Some Path", Description = "Some Path Description" });
 
-      var module = await SendAsync(new CreateModuleCommand
+      var module = await SendAsync(new CreateModule
       {
         PathId = path.Id,
         Title = "New Module Module",
         Description = "New Module Description",
-        Necessity =  NecessityLevel.MustKnow,
+        Necessity = Necessity.MustKnow,
         Tags = new List<string> { "Tag1", "Tag2", "Tag3" }
       });
 
@@ -89,8 +89,8 @@ namespace DeveloperPath.Application.IntegrationTests.Queries
         Title = "New Theme",
         ModuleId = module.Id,
         Description = "New Theme Description",
-        Necessity =  NecessityLevel.MustKnow,
-        Complexity =  ComplexityLevel.Beginner,
+        Necessity = Necessity.MustKnow,
+        Complexity = Complexity.Beginner,
         Tags = new List<string> { "Theme1", "ThemeTag2", "Tag3" },
         Order = 2,
         Section = new Section
@@ -118,12 +118,12 @@ namespace DeveloperPath.Application.IntegrationTests.Queries
       var path = await AddAsync(
         new Path { Title = "Some Path", Description = "Some Path Description" });
 
-      var module = await SendAsync(new CreateModuleCommand
+      var module = await SendAsync(new CreateModule
       {
         PathId = path.Id,
         Title = "New Module Module",
         Description = "New Module Description",
-        Necessity =  NecessityLevel.MustKnow,
+        Necessity = Necessity.MustKnow,
         Tags = new List<string> { "Tag1", "Tag2", "Tag3" }
       });
 
@@ -132,8 +132,8 @@ namespace DeveloperPath.Application.IntegrationTests.Queries
         Title = "New Other Theme",
         ModuleId = module.Id,
         Description = "New Other Theme Description",
-        Necessity =  NecessityLevel.MustKnow,
-        Complexity =  ComplexityLevel.Beginner,
+        Necessity = Necessity.MustKnow,
+        Complexity = Complexity.Beginner,
         Tags = new List<string> { "Theme1", "ThemeTag2", "Tag3" },
         Order = 2,
         Sources = new List<Source>
@@ -142,12 +142,12 @@ namespace DeveloperPath.Application.IntegrationTests.Queries
               Title = "Source1",
               Type =  SourceType.Blog,
               Url = "https://www.google.com",
-              Availability =  AvailabilityLevel.Free },
+              Availability = Availability.Free },
           new Source {
               Title = "Source2",
               Type = SourceType.Blog,
               Url = "https://www.microsoft.com",
-              Availability =  AvailabilityLevel.RequiresRegistration }
+              Availability = Availability.RequiresRegistration }
         },
         Section = new Section
         {

@@ -1,9 +1,9 @@
-﻿using Application.Shared.Dtos.Models;
-using DeveloperPath.Application.Common.Interfaces;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using System.Linq;
-using System.Threading.Tasks;
+using DeveloperPath.Application.Common.Interfaces;
+using DeveloperPath.Application.Common.Models;
 
 namespace DeveloperPath.Infrastructure.Identity
 {

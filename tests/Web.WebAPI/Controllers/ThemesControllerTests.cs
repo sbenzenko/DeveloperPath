@@ -2,32 +2,32 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Application.Shared.Dtos.Models;
-using DeveloperPath.Application.CQRS.Themes.Commands.CreateTheme;
-using DeveloperPath.Application.CQRS.Themes.Commands.DeleteTheme;
-using DeveloperPath.Application.CQRS.Themes.Commands.UpdateTheme;
-using DeveloperPath.Application.CQRS.Themes.Queries.GetThemes;
-using DeveloperPath.WebApi.Controllers;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using NUnit.Framework;
+using DeveloperPath.Application.CQRS.Themes.Commands.CreateTheme;
+using DeveloperPath.Application.CQRS.Themes.Commands.DeleteTheme;
+using DeveloperPath.Application.CQRS.Themes.Commands.UpdateTheme;
+using DeveloperPath.Application.CQRS.Themes.Queries.GetThemes;
+using DeveloperPath.Domain.Shared.ClientModels;
+using DeveloperPath.WebApi.Controllers;
 
 namespace DeveloperPath.Web.WebAPI.Controllers
 {
-    public class ThemesControllerTests : TestBase
+  public class ThemesControllerTests : TestBase
   {
     private readonly Mock<IMediator> moqMediator;
-    private readonly ThemeDto sampleTheme;
-    private readonly IEnumerable<ThemeDto> Themes;
+    private readonly Theme sampleTheme;
+    private readonly IEnumerable<Theme> Themes;
 
     public ThemesControllerTests()
     {
-      sampleTheme = new ThemeDto { Id = 1, ModuleId = 1, Title = "Theme1", Description = "Description1" };
-      Themes = new List<ThemeDto>
+      sampleTheme = new Theme { Id = 1, ModuleId = 1, Title = "Theme1", Description = "Description1" };
+      Themes = new List<Theme>
       {
         sampleTheme,
-        new ThemeDto { Id = 2, ModuleId = 1, Title = "Theme2", Description = "Description2" }
+        new Theme { Id = 2, ModuleId = 1, Title = "Theme2", Description = "Description2" }
       };
 
       moqMediator = new Mock<IMediator>();
@@ -41,15 +41,15 @@ namespace DeveloperPath.Web.WebAPI.Controllers
           .ReturnsAsync(sampleTheme);
       // Create
       moqMediator
-        .Setup(m => m.Send(It.IsAny<CreateThemeCommand>(), It.IsAny<CancellationToken>()))
+        .Setup(m => m.Send(It.IsAny<CreateTheme>(), It.IsAny<CancellationToken>()))
           .ReturnsAsync(sampleTheme);
       // Update
       moqMediator
-        .Setup(m => m.Send(It.IsAny<UpdateThemeCommand>(), It.IsAny<CancellationToken>()))
+        .Setup(m => m.Send(It.IsAny<UpdateTheme>(), It.IsAny<CancellationToken>()))
           .ReturnsAsync(sampleTheme);
       // Delete
       moqMediator
-        .Setup(m => m.Send(It.IsAny<DeleteThemeCommand>(), It.IsAny<CancellationToken>()));
+        .Setup(m => m.Send(It.IsAny<DeleteTheme>(), It.IsAny<CancellationToken>()));
     }
 
     [Test]
@@ -58,7 +58,7 @@ namespace DeveloperPath.Web.WebAPI.Controllers
       var controller = new ThemesController(moqMediator.Object);
       
       var result = await controller.Get(1, 1);
-      var content = GetObjectResultContent<IEnumerable<ThemeDto>>(result.Result);
+      var content = GetObjectResultContent<IEnumerable<Theme>>(result.Result);
 
       Assert.IsInstanceOf(typeof(OkObjectResult), result.Result);
       Assert.IsNotNull(content);
@@ -71,7 +71,7 @@ namespace DeveloperPath.Web.WebAPI.Controllers
       var controller = new ThemesController(moqMediator.Object);
       
       var result = await controller.Get(1, 1, 1);
-      var content = GetObjectResultContent<ThemeDto>(result.Result);
+      var content = GetObjectResultContent<Theme>(result.Result);
 
       Assert.IsInstanceOf(typeof(OkObjectResult), result.Result);
       Assert.IsNotNull(content);
@@ -81,11 +81,11 @@ namespace DeveloperPath.Web.WebAPI.Controllers
     [Test]
     public async Task Create_ReturnsCreatedAtRoute()
     {
-      var createCommand = new CreateThemeCommand { PathId = 1, ModuleId = 1, Order = 0, Title = "Create title", Description = "Create Description" };
+      var createCommand = new CreateTheme { PathId = 1, ModuleId = 1, Order = 0, Title = "Create title", Description = "Create Description" };
       var controller = new ThemesController(moqMediator.Object);
       
       var result = await controller.Create(1, 1, createCommand);
-      var content = GetObjectResultContent<ThemeDto>(result.Result);
+      var content = GetObjectResultContent<Theme>(result.Result);
 
       Assert.IsInstanceOf(typeof(CreatedAtRouteResult), result.Result);
       Assert.AreEqual("GetTheme", ((CreatedAtRouteResult)result.Result).RouteName);
@@ -96,11 +96,11 @@ namespace DeveloperPath.Web.WebAPI.Controllers
     [Test]
     public async Task Update_ReturnsUpdatedTheme_WhenRequestedIdMatchesCommandId()
     {
-      var updateCommand = new UpdateThemeCommand { Id = 1, PathId = 1, ModuleId = 1, Order = 0, Title = "Update title", Description = "Update Description" };
+      var updateCommand = new UpdateTheme { Id = 1, PathId = 1, ModuleId = 1, Order = 0, Title = "Update title", Description = "Update Description" };
       var controller = new ThemesController(moqMediator.Object);
       
       var result = await controller.Update(1, 1, 1, updateCommand);
-      var content = GetObjectResultContent<ThemeDto>(result.Result);
+      var content = GetObjectResultContent<Theme>(result.Result);
 
       Assert.IsInstanceOf(typeof(OkObjectResult), result.Result);
       Assert.IsNotNull(content);
@@ -110,7 +110,7 @@ namespace DeveloperPath.Web.WebAPI.Controllers
     [Test]
     public async Task Update_ReturnsBadRequest_WhenRequestedPathIdDoesNotMatchCommandId()
     {
-      var updateCommand = new UpdateThemeCommand { Id = 1, PathId = 1, ModuleId = 1, Order = 0, Title = "Update title", Description = "Update Description" };
+      var updateCommand = new UpdateTheme { Id = 1, PathId = 1, ModuleId = 1, Order = 0, Title = "Update title", Description = "Update Description" };
       var controller = new ThemesController(moqMediator.Object);
       
       var result = await controller.Update(2, 1, 1, updateCommand);
@@ -121,7 +121,7 @@ namespace DeveloperPath.Web.WebAPI.Controllers
     [Test]
     public async Task Update_ReturnsBadRequest_WhenRequestedModuleIdDoesNotMatchCommandId()
     {
-      var updateCommand = new UpdateThemeCommand { Id = 1, PathId = 1, ModuleId = 1, Order = 0, Title = "Update title", Description = "Update Description" };
+      var updateCommand = new UpdateTheme { Id = 1, PathId = 1, ModuleId = 1, Order = 0, Title = "Update title", Description = "Update Description" };
       var controller = new ThemesController(moqMediator.Object);
       
       var result = await controller.Update(1, 2, 1, updateCommand);
@@ -132,7 +132,7 @@ namespace DeveloperPath.Web.WebAPI.Controllers
     [Test]
     public async Task Update_ReturnsBadRequest_WhenRequestedIdDoesNotMatchCommandId()
     {
-      var updateCommand = new UpdateThemeCommand { Id = 1, PathId = 1, ModuleId = 1, Order = 0, Title = "Update title", Description = "Update Description" };
+      var updateCommand = new UpdateTheme { Id = 1, PathId = 1, ModuleId = 1, Order = 0, Title = "Update title", Description = "Update Description" };
       var controller = new ThemesController(moqMediator.Object);
       
       var result = await controller.Update(1, 1, 2, updateCommand);

@@ -1,14 +1,19 @@
-﻿using Application.Shared.Dtos.Models;
-using AutoMapper;
-using DeveloperPath.Domain.Entities;
+﻿using AutoMapper;
+using DeveloperPath.Domain.Shared.ClientModels;
 
 namespace DeveloperPath.Application.Common.Mappings.Profiles
 {
-    public class SectionProfile:Profile
+  /// <summary>
+  /// AutoMapper profile class
+  /// </summary>
+  public class SectionProfile : Profile
+  {
+    /// <summary>
+    /// AutoMapper mapping for section
+    /// </summary>
+    public SectionProfile()
     {
-        public SectionProfile()
-        {
-            CreateMap<Section, SectionDto>();
-        }
+      CreateMap<Domain.Entities.Section, Section>();
     }
+  }
 }

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using Application.Shared.Dtos.Models;
+using DeveloperPath.Domain.Shared.ClientModels;
 
 namespace WebUI.Blazor.Services
 {
@@ -15,9 +15,9 @@ namespace WebUI.Blazor.Services
             _httpService = httpService;
         }
 
-        public async Task<PathDto[]> GetListAsync()
+        public async Task<Path[]> GetListAsync()
         {
-            return await _httpService.GetListAsync<PathDto>(BaseResourceString);
+            return await _httpService.GetListAsync<Path>(BaseResourceString);
         }
     }
 }

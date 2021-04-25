@@ -1,16 +1,21 @@
-﻿using Application.Shared.Dtos.Models;
-using AutoMapper;
-using DeveloperPath.Domain.Entities;
-
+﻿using AutoMapper;
+using DeveloperPath.Domain.Shared.ClientModels;
 
 namespace DeveloperPath.Application.Common.Mappings.Profiles
 {
-    public class ModuleProfile : SourceProfile
+  /// <summary>
+  /// AutoMapper mapping profile
+  /// </summary>
+  public class ModuleProfile : Profile
+  {
+    /// <summary>
+    /// AutoMapper mapping for module
+    /// </summary>
+    public ModuleProfile()
     {
-        public ModuleProfile()
-        {
-            CreateMap<Module, ModuleDto>();
-            CreateMap<Module, ModuleTitle>();
-        }
+      CreateMap<Domain.Entities.Module, Module>();
+      CreateMap<Domain.Entities.Module, ModuleDetails>();
+      CreateMap<Domain.Entities.Module, ModuleTitle>();
     }
+  }
 }
