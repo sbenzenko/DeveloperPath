@@ -109,7 +109,7 @@ namespace DeveloperPath.Application.IntegrationTests
 
     public static async Task ResetState()
     {
-      await _checkpoint.Reset(_configuration.GetConnectionString("DefaultConnection"));
+      await _checkpoint.Reset(_configuration["DeveloperPathSqlConnectionString"]);
       _currentUserId = null;
     }
 
