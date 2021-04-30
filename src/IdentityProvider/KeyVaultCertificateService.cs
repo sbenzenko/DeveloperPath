@@ -49,6 +49,10 @@ namespace IdentityProvider
         private async Task<List<CertificateItem>> GetAllEnabledCertificateVersionsAsync(KeyVaultClient keyVaultClient)
         {
             // Get all the certificate versions (this will also get the currect active version
+
+            Console.WriteLine(_keyVaultEndpoint);
+            Console.WriteLine(_certificateName);
+
             var certificateVersions = await keyVaultClient.GetCertificateVersionsAsync(_keyVaultEndpoint, _certificateName);
 
             // Find all enabled versions of the certificate and sort them by creation date in decending order 

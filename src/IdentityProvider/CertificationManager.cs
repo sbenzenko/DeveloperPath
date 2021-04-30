@@ -36,6 +36,8 @@ namespace IdentityProvider
 
             if (certificateConfiguration.UseLocalCertStore)
             {
+                Console.WriteLine("certificateConfiguration.UseLocalCertStore");
+
                 using X509Store store = new X509Store(StoreName.My, StoreLocation.LocalMachine);
                 store.Open(OpenFlags.ReadOnly);
                 var storeCerts = store.Certificates.Find(
@@ -48,6 +50,8 @@ namespace IdentityProvider
             }
             else
             {
+                Console.WriteLine("certificateConfiguration.UseLocalCertStore = false");
+
                 if (!string.IsNullOrEmpty(certificateConfiguration.KeyVaultEndpoint))
                 {
                     var keyVaultCertificateService = new KeyVaultCertificateService(
