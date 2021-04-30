@@ -50,7 +50,6 @@ namespace DeveloperPath.WebApi
                     options.TokenValidationParameters = new TokenValidationParameters()
                     {
                         NameClaimType = "name",
-                         
                     };
                 });
         }

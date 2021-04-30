@@ -9,39 +9,34 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace DeveloperPath.Infrastructure
 {
-  public static class DependencyInjection
-  {
-    public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
+    public static class DependencyInjection
     {
-      if (configuration.GetValue<bool>("UseInMemoryDatabase"))
-      {
-        services.AddDbContext<ApplicationDbContext>(options =>
-            options.UseInMemoryDatabase("DeveloperPathDb"));
-      }
-      else
-      {
-        services.AddDbContext<ApplicationDbContext>(options =>
-            options.UseSqlServer(configuration["DeveloperPathSqlConnectionString"],
-                b => b.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName)));
-      }
+        public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
+        {
+            if (configuration.GetValue<bool>("UseInMemoryDatabase"))
+            {
+                services.AddDbContext<ApplicationDbContext>(options =>
+                    options.UseInMemoryDatabase("DeveloperPathDb"));
+            }
+            else
+            {
+                services.AddDbContext<ApplicationDbContext>(options =>
+                    options.UseSqlServer(configuration["DeveloperPathSqlConnectionString"],
+                        b => b.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName)));
+            }
 
-      services.AddDatabaseDeveloperPageExceptionFilter();
+            services.AddDatabaseDeveloperPageExceptionFilter();
 
-      services.AddScoped<IApplicationDbContext>(provider => provider.GetService<ApplicationDbContext>());
+            services.AddScoped<IApplicationDbContext>(provider => provider.GetService<ApplicationDbContext>());
 
-      services.AddDefaultIdentity<ApplicationUser>()
-          .AddEntityFrameworkStores<ApplicationDbContext>();
+            services.AddDefaultIdentity<ApplicationUser>()
+                .AddEntityFrameworkStores<ApplicationDbContext>();
 
-      services.AddIdentityServer()
-          .AddApiAuthorization<ApplicationUser, ApplicationDbContext>();
+            services.AddTransient<IDateTime, DateTimeService>();
+            services.AddTransient<IIdentityService, IdentityService>();
 
-      services.AddTransient<IDateTime, DateTimeService>();
-      services.AddTransient<IIdentityService, IdentityService>();
-
-      services.AddAuthentication()
-          .AddIdentityServerJwt();
-
-      return services;
+          
+            return services;
+        }
     }
-  }
 }
