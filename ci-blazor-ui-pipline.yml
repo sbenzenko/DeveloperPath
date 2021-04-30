@@ -1,0 +1,62 @@
+trigger:
+- main
+
+variables:
+    buildConfiguration: 'Release'
+    deployment_token: '67086dabeb7881b9814e74f38b3cab53e5fb4719ac2536951e7038c6a9644fb0-babda254-a2eb-422a-b901-2c2e310c7e4f00320803'
+
+steps:
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'build'
+    projects: '**/src/WebUI.Blazor/*.csproj'
+    arguments: '--configuration $(buildConfiguration)'
+
+- task: DotNetCoreCLI@2 
+  displayName: 'Publish'
+  inputs:
+    command: 'publish'
+    publishWebProjects: false
+    projects: '**/src/WebUI.Blazor/WebUI.Blazor.csproj'
+    arguments: '--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)'
+    zipAfterPublish: true
+
+- task: DotNetCoreCLI@2 
+  displayName: 'Publish'
+  inputs:
+    command: 'publish'
+    publishWebProjects: false
+    projects: '**/src/WebUI.Blazor/WebUI.Blazor.csproj'
+    arguments: '--configuration $(BuildConfiguration) --output data'
+    zipAfterPublish: true
+      
+- task: PowerShell@2
+  inputs:
+    targetType: 'inline'
+    script:
+      ls -R
+    errorActionPreference: 'continue'
+- task: ExtractFiles@1
+  inputs:
+    archiveFilePatterns: '**/data/WebUI.Blazor.zip'
+    destinationFolder: 'PublishData'
+    cleanDestinationFolder: true
+    overwriteExistingFiles: false
+
+- task: PowerShell@2
+  inputs:
+    targetType: 'inline'
+    script:
+      ls -R
+    errorActionPreference: 'continue'
+    
+- task: AzureStaticWebApp@0
+  inputs:
+    app_location: 'PublishData/wwwroot'
+    api_location: 'api'
+    output_location: "wwwroot"
+  env:
+    azure_static_web_apps_api_token: $(deployment_token)
+
+- task: PublishBuildArtifacts@1
+  displayName: 'Publish artifacts'
