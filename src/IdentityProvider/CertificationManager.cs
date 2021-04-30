@@ -11,6 +11,9 @@ namespace IdentityProvider
     {
         public static async Task<(X509Certificate2 ActiveCertificate, X509Certificate2 SecondaryCertificate)> GetCertificates(IWebHostEnvironment environment, IConfiguration configuration)
         {
+            Console.WriteLine($"USING {configuration["CertificateNameKeyVault"]}");
+            Console.WriteLine($"USING {configuration["AzureKeyVaultEndpoint"]}");
+
             var certificateConfiguration = new CertificateConfiguration
             {
                 // Use an Azure key vault
@@ -21,10 +24,6 @@ namespace IdentityProvider
                 DevelopmentCertificatePfx = Path.Combine(environment.ContentRootPath, "sts_dev_cert.pfx"),
                 DevelopmentCertificatePassword = "1234" //configuration["DevelopmentCertificatePassword"] 
             };
-
-            Console.WriteLine($"USING {configuration["CertificateNameKeyVault"]}");
-            Console.WriteLine($"USING {configuration["AzureKeyVaultEndpoint"]}");
-
 
             (X509Certificate2 ActiveCertificate, X509Certificate2 SecondaryCertificate)
                 certs = await GetCertificates(certificateConfiguration).ConfigureAwait(false);
