@@ -83,22 +83,15 @@ namespace IdentityProvider
                         {
                             var settings = config.Build();
 
-                            if (hostingContext.HostingEnvironment.IsDevelopment())
+                            config.AddAzureAppConfiguration(options =>
                             {
+                                options.Connect(settings["ConnectionStrings:AppConfig"])
+                                    .ConfigureKeyVault(kv =>
+                                    {
+                                        kv.SetCredential(new DefaultAzureCredential());
+                                    });
+                            });
 
-                            }
-
-                            if (hostingContext.HostingEnvironment.IsProduction())
-                            {
-                                config.AddAzureAppConfiguration(options =>
-                                {
-                                    options.Connect(settings["ConnectionStrings:AppConfig"])
-                                        .ConfigureKeyVault(kv =>
-                                        {
-                                            kv.SetCredential(new DefaultAzureCredential());
-                                        });
-                                });
-                            }
                         }
                     }).UseStartup<Startup>());
     }
