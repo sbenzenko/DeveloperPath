@@ -17,10 +17,12 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
+
 namespace IdentityProvider
 {
     public class Startup
     {
+        
         public IWebHostEnvironment Environment { get; }
         public IConfiguration Configuration { get; }
 

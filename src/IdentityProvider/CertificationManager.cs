@@ -4,6 +4,8 @@ using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
+using Serilog;
+
 
 namespace IdentityProvider
 {
@@ -11,8 +13,9 @@ namespace IdentityProvider
     {
         public static async Task<(X509Certificate2 ActiveCertificate, X509Certificate2 SecondaryCertificate)> GetCertificates(IWebHostEnvironment environment, IConfiguration configuration)
         {
-            Console.WriteLine($"USING {configuration["CertificateNameKeyVault"]}");
-            Console.WriteLine($"USING {configuration["AzureKeyVaultEndpoint"]}");
+             
+            Log.Warning($"USING {configuration["CertificateNameKeyVault"]}");
+            Log.Warning($"USING {configuration["AzureKeyVaultEndpoint"]}");
 
             var certificateConfiguration = new CertificateConfiguration
             {
@@ -36,7 +39,7 @@ namespace IdentityProvider
 
             if (certificateConfiguration.UseLocalCertStore)
             {
-                Console.WriteLine("certificateConfiguration.UseLocalCertStore");
+                Log.Warning("certificateConfiguration.UseLocalCertStore");
 
                 using X509Store store = new X509Store(StoreName.My, StoreLocation.LocalMachine);
                 store.Open(OpenFlags.ReadOnly);
@@ -50,7 +53,7 @@ namespace IdentityProvider
             }
             else
             {
-                Console.WriteLine("certificateConfiguration.UseLocalCertStore = false");
+                Log.Warning("certificateConfiguration.UseLocalCertStore = false");
 
                 if (!string.IsNullOrEmpty(certificateConfiguration.KeyVaultEndpoint))
                 {

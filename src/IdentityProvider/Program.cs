@@ -82,7 +82,6 @@ namespace IdentityProvider
                         if (hostingContext.HostingEnvironment.IsProduction())
                         {
                             var settings = config.Build();
-
                             config.AddAzureAppConfiguration(options =>
                             {
                                 options.Connect(settings["ConnectionStrings:AppConfig"])
@@ -91,7 +90,6 @@ namespace IdentityProvider
                                         kv.SetCredential(new DefaultAzureCredential());
                                     });
                             });
-
                         }
                     }).UseStartup<Startup>());
     }
