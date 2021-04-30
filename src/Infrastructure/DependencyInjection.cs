@@ -35,7 +35,6 @@ namespace DeveloperPath.Infrastructure
             services.AddTransient<IDateTime, DateTimeService>();
             services.AddTransient<IIdentityService, IdentityService>();
 
-          
             return services;
         }
     }
