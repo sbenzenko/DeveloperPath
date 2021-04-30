@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
@@ -20,6 +21,10 @@ namespace IdentityProvider
                 DevelopmentCertificatePfx = Path.Combine(environment.ContentRootPath, "sts_dev_cert.pfx"),
                 DevelopmentCertificatePassword = "1234" //configuration["DevelopmentCertificatePassword"] 
             };
+
+            Console.WriteLine($"USING {configuration["CertificateNameKeyVault"]}");
+            Console.WriteLine($"USING {configuration["AzureKeyVaultEndpoint"]}");
+
 
             (X509Certificate2 ActiveCertificate, X509Certificate2 SecondaryCertificate)
                 certs = await GetCertificates(certificateConfiguration).ConfigureAwait(false);
