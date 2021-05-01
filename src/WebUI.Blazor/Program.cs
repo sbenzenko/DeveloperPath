@@ -21,6 +21,7 @@ namespace WebUI.Blazor
 
             // We register a named HttpClient here for the API
             Console.WriteLine("API URI " + builder.Configuration["PathApiBaseUri"]);
+
             if (string.IsNullOrEmpty(builder.Configuration["PathApiBaseUri"]))
             {
                 throw new Exception("Path API base URL is null");
@@ -47,6 +48,7 @@ namespace WebUI.Blazor
                 {
                     builder.Configuration.Bind("oidc", options.ProviderOptions);
                     options.UserOptions.RoleClaim = "role";
+                    
                 })
                 .AddAccountClaimsPrincipalFactory<ArrayClaimsPrincipalFactory<RemoteUserAccount>>();
 

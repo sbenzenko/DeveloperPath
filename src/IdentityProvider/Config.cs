@@ -54,7 +54,7 @@ namespace IdentityProvider
                         "https://victorious-cliff-02bdab803.azurestaticapps.net" },
                     AllowedScopes = { "openid", "profile", "email", "pathapi" },
                     RedirectUris = {
-                        "https://www.developer-path.com/login-callback",
+                        "https://www.developer-path.com/authentication/login-callback",
                         "https://localhost:5005/authentication/login-callback",
                         "https://victorious-cliff-02bdab803.azurestaticapps.net/authentication/login-callback" },
                     PostLogoutRedirectUris = {
