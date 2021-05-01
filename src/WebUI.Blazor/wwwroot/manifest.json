@@ -1,6 +1,6 @@
 {
-  "name": "WebApplication2",
-  "short_name": "WebApplication2",
+  "name": "Developer Path",
+  "short_name": "Developer Path",
   "start_url": "./",
   "display": "standalone",
   "background_color": "#ffffff",
