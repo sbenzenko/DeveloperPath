@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
-//using DeveloperPath.Application.Common.Mappings;
 
-namespace DeveloperPath.Domain.Shared.ClientModels
+namespace Shared.ClientModels
 {
   /// <summary>
   /// Developer path information
@@ -17,11 +16,20 @@ namespace DeveloperPath.Domain.Shared.ClientModels
     /// Path title
     /// </summary>
     public string Title { get; init; }
-
+    
+    /// <summary>
+    /// URI key
+    /// </summary>
+    public string Key { get; init; }
     /// <summary>
     /// Path short summary
     /// </summary>
     public string Description { get; init; }
+    
+    /// <summary>
+    /// Make path visible for users
+    /// </summary>
+    public bool IsVisible { get; init; }
 
     /// <summary>
     /// List of tags related to path

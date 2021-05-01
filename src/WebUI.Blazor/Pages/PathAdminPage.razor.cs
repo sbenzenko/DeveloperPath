@@ -1,7 +1,7 @@
-﻿using System.Linq;
-using DeveloperPath.Domain.Shared.ClientModels;
+﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Components;
 using System.Threading.Tasks;
+using Shared.ClientModels;
 using WebUI.Blazor.Services;
 
 namespace WebUI.Blazor.Pages
@@ -11,7 +11,7 @@ namespace WebUI.Blazor.Pages
     {
         [Inject] public PathService PathService { get; set; }
 
-        public Path[] Paths { get; set; }
+        public List<Path> Paths { get; set; }
       
         protected override async Task OnInitializedAsync()
         {

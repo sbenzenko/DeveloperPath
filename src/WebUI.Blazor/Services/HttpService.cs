@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Net.Http;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace WebUI.Blazor.Services
@@ -14,10 +13,10 @@ namespace WebUI.Blazor.Services
             HttpClient = httpClient;
         }
 
-        public async Task<T[]> GetListAsync<T>(string resourceUri)
+        public async Task<List<T>> GetListAsync<T>(string resourceUri)
         {
             var responce = await HttpClient.GetStreamAsync(resourceUri);
-            return await JsonSerializer.DeserializeAsync<T[]>(responce, new JsonSerializerOptions() {PropertyNameCaseInsensitive = true});
+            return await JsonSerializer.DeserializeAsync<List<T>>(responce, new JsonSerializerOptions() {PropertyNameCaseInsensitive = true});
         }
     }
 }

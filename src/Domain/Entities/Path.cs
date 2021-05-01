@@ -13,8 +13,8 @@ namespace DeveloperPath.Domain.Entities
     /// </summary>
     //public int Id { get; init; }
 
-    //TODO: add unique moniker (e.g. stripped Title) to use in URL, e.g. api/paths/ASPNET
-
+    
+    public string Key { get; set; }
     /// <summary>
     /// Path title
     /// </summary>
@@ -24,6 +24,11 @@ namespace DeveloperPath.Domain.Entities
     /// Path short summary
     /// </summary>
     public string Description { get; set; }
+
+    /// <summary>
+    /// If flag is false the Pass will be visible only in admin zone
+    /// </summary>
+    public bool IsVisible { get; set; } 
 
     /// <summary>
     /// Modules that path consists of

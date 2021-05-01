@@ -1,6 +1,34 @@
-﻿<select class="form-control" @bind="Culture" style="width:300px; margin-left:10px;">
-    @foreach (var culture in cultures)
+﻿
+<MudMenu Icon="@Icons.Material.Outlined.Translate" Color="Color.Inherit" Direction="Direction.Bottom" OffsetY="true" Dense="true">
+    @foreach (var language in languages)
     {
-        <option value="@culture">@culture.DisplayName</option>
+        <MudMenuItem OnClick="(()=> ChangeLanguageAsync(language.Code))">@language.DisplayName</MudMenuItem>
     }
-</select>   
+</MudMenu>
+@code
+{
+    private async Task ChangeLanguageAsync(string languageCode)
+    {
+        var js = (IJSInProcessRuntime) JSRuntime;
+        js.InvokeVoid("cultureService.set", languageCode);
+        NavigationManager.NavigateTo(NavigationManager.Uri, forceLoad: true);
+    }
+    public class LanguageCodes
+    {
+        public string DisplayName { get; set; }
+        public string Code { get; set; }
+    }
+    private List<LanguageCodes> languages = new List<LanguageCodes>()
+    {
+        new LanguageCodes
+        {
+            Code = "en-US",
+            DisplayName= "English"
+        },
+        new LanguageCodes
+        {
+            Code = "ru-RU",
+            DisplayName = "Русский"
+        },
+    };
+}

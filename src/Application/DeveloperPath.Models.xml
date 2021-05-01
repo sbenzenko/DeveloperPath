@@ -676,6 +676,11 @@
             Path short summary
             </summary>
         </member>
+        <member name="P:DeveloperPath.Application.CQRS.Paths.Commands.UpdatePath.UpdatePath.IsVisible">
+            <summary>
+            Make Path visible for users
+            </summary>
+        </member>
         <member name="P:DeveloperPath.Application.CQRS.Paths.Commands.UpdatePath.UpdatePath.Tags">
             <summary>
             List of tags related to path

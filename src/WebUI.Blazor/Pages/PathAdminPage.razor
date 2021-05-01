@@ -1,64 +1,55 @@
 ﻿@page "/administration/paths"
 @inject IStringLocalizer<LanguageResources> localizer
 
-<AuthorizeView>
+<AuthorizeView Context="authorizeContext">
     <Authorized>
-        @if (Paths == null)
-        {
-            <MatProgressBar Indeterminate="true"></MatProgressBar>
-        }
-        else
-        {
-            int position = 0;
-            @while (true)
-            {
-                //render 3 elements per row
-                var renderItems = Paths.Skip(position * 3).Take(3);
-                position++;
-                if (!renderItems.Any())
-                {
-                    break;
-                }
-                <div class="mat-layout-grid">
-                    <div class="mat-layout-grid-inner">
-                        @foreach (var item in renderItems)
-                        {
-                            <div class="mat-layout-grid-cell">
-                                <MatCard Class="mat-card">
-                                    <MatCardContent>
-                                        <div class="mat-card-content">
-                                            <MatHeadline6 class="mat-card-clean-margin">
-                                                @item.Title
-                                            </MatHeadline6>
-                                            <MatSubtitle2 class="mat-card-clean-margin">
-                                                <MatChipSet>
-                                                    @foreach (var tag in item.Tags)
-                                                    {
-                                                        <MatChip Label="@tag"></MatChip>
-                                                    }
-                                                </MatChipSet>
-                                            </MatSubtitle2>
-                                            <div class="mat-body1" style="margin: 5px"> @($"{item.Description.Substring(0, item.Description.Length > 70 ? 70 : item.Description.Length)}...")</div>
-                                        </div>
-                                    </MatCardContent>
-                                    <MatCardActions>
-                                        <MatCardActionButtons>
-                                            <MatButton>@localizer["Edit"]</MatButton>
-                                            <MatButton>@localizer["Delete"]</MatButton>
-                                        </MatCardActionButtons>
-                                        <MatCardActionIcons>
-                                        </MatCardActionIcons>
-                                    </MatCardActions>
-                                </MatCard>
-                            </div>
-                        }
-                    </div>
-                </div>
-            }
-
-        }
+        <Condition Evaluation="Paths == null">
+            <Match>
+                <MudProgressLinear Indeterminate="true"></MudProgressLinear>
+            </Match>
+            <NotMatch>
+                <MudButton Style="margin-bottom: 20px" StartIcon="@Icons.Outlined.Add">@localizer["AddPath"]</MudButton>
+                <MudGrid>
+                    <Iterations Items="Paths" Context="pathItem">
+                        <MudItem xs="12" sm="6" md="4" lg="3" Class="px-1" Style="height: 350px;">
+                            <MudCard>
+                                <MudCardHeader>
+                                    <CardHeaderContent>
+                                        <MudText Typo="Typo.h6">@pathItem.Title</MudText>
+                                    </CardHeaderContent>
+                                </MudCardHeader>
+                                <MudCardContent>
+                                    <MudItem Class="px-1" Style="height: 60px;">
+                                        <Iterations Items="pathItem.Tags.ToList()" Context="tagItem">
+                                            <MudChip Size="Size.Small">@tagItem</MudChip>
+                                        </Iterations>
+                                    </MudItem>
+                                    <MudItem Class="px-1" Style="height: 100px;">
+                                        <MudText Typo="Typo.body1">
+                                            @(pathItem.Description.Length > 180 ? $"{pathItem.Description.Substring(0, 180)}.." : pathItem.Description)
+                                        </MudText>
+                                    </MudItem>
+                                </MudCardContent>
+                                <MudCardActions>
+                                    <MudButton Color="Color.Info">@localizer["Edit"]</MudButton>
+                                    <MudButton Color="Color.Info">@localizer["Delete"]</MudButton>
+                                    <Condition Evaluation="@pathItem.IsVisible">
+                                        <Match>
+                                            <MudIconButton Icon="@Icons.Outlined.Visibility"></MudIconButton>
+                                        </Match>
+                                        <NotMatch>
+                                            <MudIconButton Icon="@Icons.Outlined.VisibilityOff"></MudIconButton>
+                                        </NotMatch>
+                                    </Condition>
+                                </MudCardActions>
+                            </MudCard>
+                        </MudItem>
+                    </Iterations>
+                </MudGrid>
+            </NotMatch>
+        </Condition>
     </Authorized>
     <NotAuthorized>
-        <p>Forbid</p>
+        <p>@localizer["NotAuthorized"]</p>
     </NotAuthorized>
 </AuthorizeView>
