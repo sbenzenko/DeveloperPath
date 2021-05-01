@@ -1,3 +1,4 @@
+using System;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -19,6 +20,11 @@ namespace WebUI.Blazor
             builder.RootComponents.Add<App>("#app");
 
             // We register a named HttpClient here for the API
+            Console.WriteLine("API URI " + builder.Configuration["PathApiBaseUri"]);
+            if (string.IsNullOrEmpty(builder.Configuration["PathApiBaseUri"]))
+            {
+                throw new Exception("Path API base URL is null");
+            }
 
             builder.Services.AddHttpClient("pathapi", client => client.BaseAddress = new System.Uri(builder.Configuration["PathApiBaseUri"]))
                 .AddHttpMessageHandler(sp =>
