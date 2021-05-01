@@ -79,8 +79,11 @@ namespace IdentityProvider
                 .AddAspNetIdentity<ApplicationUser>();
 
             var rsa = new RsaKeyService(Environment, TimeSpan.FromDays(30));
+
             services.AddSingleton<RsaKeyService>(provider => rsa);
+
             builder.AddSigningCredential(rsa.GetKey(), IdentityServerConstants.RsaSigningAlgorithm.RS512);
+
             services.AddAuthentication();
         }
 
