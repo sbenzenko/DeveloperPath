@@ -1,6 +1,6 @@
 {
-  "name": "WebUI.Blazor",
-  "short_name": "WebUI.Blazor",
+  "name": "WebApplication2",
+  "short_name": "WebApplication2",
   "start_url": "./",
   "display": "standalone",
   "background_color": "#ffffff",
