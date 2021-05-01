@@ -15,6 +15,7 @@
     <PackageReference Include="Microsoft.Extensions.Http" Version="5.0.0" />
     <PackageReference Include="Microsoft.Extensions.Localization" Version="5.0.5" />
     <PackageReference Include="MudBlazor" Version="5.0.8" />
+    <PackageReference Include="PrettyBlazor" Version="1.1.0" />
     <PackageReference Include="System.Net.Http.Json" Version="5.0.0" />
   </ItemGroup>
 

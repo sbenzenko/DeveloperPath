@@ -16,7 +16,7 @@ namespace WebUI.Blazor.Services
             _httpService = httpService;
         }
 
-        public async Task<Path[]> GetListAsync()
+        public async Task<List<Path>> GetListAsync()
         {
             return await _httpService.GetListAsync<Path>(BaseResourceString);
         }

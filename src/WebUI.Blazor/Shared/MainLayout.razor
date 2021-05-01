@@ -4,11 +4,13 @@
 <MudLayout>
     <MudAppBar Elevation="4" Color="Color.Primary">
         <MudIcon Size="Size.Large" ViewBox="0 0 500 500" />
-        <MudText Typo="Typo.h6" Class="ml-4">
-            <div class="drawer-logo">
-                <a href="/">DEVELOPER PATH</a>
-            </div>
-        </MudText>
+        <MudHidden Breakpoint="Breakpoint.Xs">
+            <MudText Typo="Typo.h6" Class="ml-4">
+                <div class="drawer-logo">
+                    <a href="/">DEVELOPER PATH</a>
+                </div>
+            </MudText>
+        </MudHidden>
         <MudToolBar DisableGutters="true">
             <MudIconButton Icon="@Icons.Material.Outlined.Menu" Color="Color.Inherit" OnClick="@((e) => DrawerToggle())" Class="ml-3" />
         </MudToolBar>
@@ -17,7 +19,7 @@
         <LoginDisplay></LoginDisplay>
     </MudAppBar>
     <MudDrawer @bind-Open="DrawerOpened" Elevation="25" ClipMode="DrawerClipMode.Always">
-        <NavMenu/>
+        <NavMenu />
     </MudDrawer>
     <MudMainContent>
         <MudContainer MaxWidth="MaxWidth.False" Class="mt-4">

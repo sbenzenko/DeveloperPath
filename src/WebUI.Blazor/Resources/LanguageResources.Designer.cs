@@ -61,6 +61,15 @@ namespace WebUI.Blazor.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to New path.
+        /// </summary>
+        public static string AddPath {
+            get {
+                return ResourceManager.GetString("AddPath", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Administrator zone.
         /// </summary>
         public static string Administrator_zone {
