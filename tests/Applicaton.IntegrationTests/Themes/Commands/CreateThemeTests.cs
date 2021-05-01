@@ -181,7 +181,7 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
     [Test]
     public async Task ShouldCreateThemeWithExistingSection()
     {
-      var userId = await RunAsDefaultUserAsync();
+      //var userId = await RunAsDefaultUserAsync();
 
       var path = await AddAsync(new Path
         {
@@ -223,14 +223,14 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
       theme.Description.Should().Be(command.Description);
       theme.ModuleId.Should().Be(module.Id);
       theme.Necessity.Should().Be(command.Necessity);
-      theme.CreatedBy.Should().Be(userId);
+      //theme.CreatedBy.Should().Be(userId);
       theme.Created.Should().BeCloseTo(DateTime.Now, 10000);
     }
 
     [Test]
     public async Task ShouldReturnNotfoundForNonExistingSection()
     {
-      var userId = await RunAsDefaultUserAsync();
+      //var userId = await RunAsDefaultUserAsync();
 
       var path = await AddAsync(new Path
       {

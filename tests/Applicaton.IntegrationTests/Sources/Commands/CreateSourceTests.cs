@@ -162,7 +162,7 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
     [Test]
     public async Task ShouldCreateSource()
     {
-      var userId = await RunAsDefaultUserAsync();
+      //var userId = await RunAsDefaultUserAsync();
 
       var path = await AddAsync(new Path
       {
@@ -213,7 +213,7 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
       source.Type.Should().Be(command.Type);
       source.Availability.Should().Be(command.Availability);
       source.Relevance.Should().Be(command.Relevance);
-      source.CreatedBy.Should().Be(userId);
+     // source.CreatedBy.Should().Be(userId);
       source.Created.Should().BeCloseTo(DateTime.Now, 10000);
     }
   }

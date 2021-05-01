@@ -100,7 +100,7 @@ namespace DeveloperPath.Application.IntegrationTests
 
       var user = new ApplicationUser { UserName = userName, Email = userName };
 
-      var result = await userManager.CreateAsync(user, password);
+     // var result = await userManager?.CreateAsync(user, password);
 
       _currentUserId = user.Id;
 
