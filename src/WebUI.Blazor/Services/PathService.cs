@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using DeveloperPath.Domain.Shared.ClientModels;
+using Shared.ClientModels;
 
 namespace WebUI.Blazor.Services
 {

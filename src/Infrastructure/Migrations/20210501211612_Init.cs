@@ -1,46 +1,12 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace DeveloperPath.Infrastructure.Persistence.Migrations
+namespace DeveloperPath.Infrastructure.Migrations
 {
-    public partial class AddedDomainEntities : Migration
+    public partial class Init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<DateTime>(
-                name: "ConsumedTime",
-                table: "PersistedGrants",
-                type: "datetime2",
-                nullable: true);
-
-            migrationBuilder.AddColumn<string>(
-                name: "Description",
-                table: "PersistedGrants",
-                type: "nvarchar(200)",
-                maxLength: 200,
-                nullable: true);
-
-            migrationBuilder.AddColumn<string>(
-                name: "SessionId",
-                table: "PersistedGrants",
-                type: "nvarchar(100)",
-                maxLength: 100,
-                nullable: true);
-
-            migrationBuilder.AddColumn<string>(
-                name: "Description",
-                table: "DeviceCodes",
-                type: "nvarchar(200)",
-                maxLength: 200,
-                nullable: true);
-
-            migrationBuilder.AddColumn<string>(
-                name: "SessionId",
-                table: "DeviceCodes",
-                type: "nvarchar(100)",
-                maxLength: 100,
-                nullable: true);
-
             migrationBuilder.CreateTable(
                 name: "Modules",
                 columns: table => new
@@ -74,8 +40,10 @@ namespace DeveloperPath.Infrastructure.Persistence.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    Key = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Title = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Description = table.Column<string>(type: "nvarchar(3000)", maxLength: 3000, nullable: false),
+                    IsVisible = table.Column<bool>(type: "bit", nullable: false),
                     Tags = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Created = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -195,8 +163,8 @@ namespace DeveloperPath.Infrastructure.Persistence.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Title = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Url = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", maxLength: 10000, nullable: true),
+                    Url = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
                     ThemeId = table.Column<int>(type: "int", nullable: false),
                     Order = table.Column<int>(type: "int", nullable: false),
                     Type = table.Column<int>(type: "int", nullable: false),
@@ -242,11 +210,6 @@ namespace DeveloperPath.Infrastructure.Persistence.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_PersistedGrants_SubjectId_SessionId_Type",
-                table: "PersistedGrants",
-                columns: new[] { "SubjectId", "SessionId", "Type" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Modules_ModuleId",
@@ -309,30 +272,6 @@ namespace DeveloperPath.Infrastructure.Persistence.Migrations
 
             migrationBuilder.DropTable(
                 name: "Modules");
-
-            migrationBuilder.DropIndex(
-                name: "IX_PersistedGrants_SubjectId_SessionId_Type",
-                table: "PersistedGrants");
-
-            migrationBuilder.DropColumn(
-                name: "ConsumedTime",
-                table: "PersistedGrants");
-
-            migrationBuilder.DropColumn(
-                name: "Description",
-                table: "PersistedGrants");
-
-            migrationBuilder.DropColumn(
-                name: "SessionId",
-                table: "PersistedGrants");
-
-            migrationBuilder.DropColumn(
-                name: "Description",
-                table: "DeviceCodes");
-
-            migrationBuilder.DropColumn(
-                name: "SessionId",
-                table: "DeviceCodes");
         }
     }
 }

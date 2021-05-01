@@ -49,7 +49,7 @@ namespace DeveloperPath.WebApi
                     options.Audience = Configuration["Audience"] ?? throw new Exception("Value can't be null: Audience");
                     options.TokenValidationParameters = new TokenValidationParameters()
                     {
-                        NameClaimType = "name",
+                        NameClaimType = "name"
                     };
                 });
         }

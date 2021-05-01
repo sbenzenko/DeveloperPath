@@ -129,8 +129,20 @@
   <data name="Home" xml:space="preserve">
     <value>Home</value>
   </data>
+  <data name="LogIn" xml:space="preserve">
+    <value>Log In</value>
+  </data>
+  <data name="LoginFirst" xml:space="preserve">
+    <value>I'm sorry, I can't display anything until you log in</value>
+  </data>
   <data name="Menu" xml:space="preserve">
     <value>Menu</value>
+  </data>
+  <data name="NotAuthorized" xml:space="preserve">
+    <value>You are not authorized to access this resource.</value>
+  </data>
+  <data name="NotFound" xml:space="preserve">
+    <value>Sorry, there's nothing at this address.</value>
   </data>
   <data name="Paths" xml:space="preserve">
     <value>Paths</value>

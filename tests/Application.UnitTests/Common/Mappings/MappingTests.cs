@@ -4,6 +4,7 @@ using DeveloperPath.Application.Common.Mappings.Profiles;
 using DeveloperPath.Domain.Shared.ClientModels;
 using NUnit.Framework;
 using System;
+using Shared.ClientModels;
 
 namespace DeveloperPath.Application.UnitTests.Common.Mappings
 {

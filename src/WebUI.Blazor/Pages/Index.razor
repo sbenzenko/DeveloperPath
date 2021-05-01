@@ -1,5 +1,5 @@
 ﻿@page "/"
-
+@inject IStringLocalizer<LanguageResources> localizer
 
 <AuthorizeView>
     <Authorized>
@@ -15,8 +15,9 @@
         </ul>
     </Authorized>
     <NotAuthorized>
-        <p>I'm sorry, I can't display anything until you log in</p>
+        <p>
+            @localizer["LoginFirst"]
+        </p>
     </NotAuthorized>
 </AuthorizeView>
 
- 

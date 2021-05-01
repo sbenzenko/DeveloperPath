@@ -1,92 +1,40 @@
 ﻿@inherits LayoutComponentBase
 @inject IStringLocalizer<LanguageResources> localizer
 
-<CascadingValue Name="Theme" Value="@theme1">
-    <MatThemeProvider Theme="@theme1">
-        <MatDrawerContainer Style="width: 100vw; height: 100vh;">
-            <MatDrawer @bind-Opened="@DrawerOpened">
-                <header class="drawer-header">
-                    <div class="drawer-logo" style="background: @theme1.Primary">
-                        <MatAppBarTitle>
-
-                            <a href="/">DEVELOPER PATH</a>
-                        </MatAppBarTitle>
-                    </div>
-                </header>
-                <MatListGroup>
-                    <MatListGroupSubHeader>@localizer["Menu"]</MatListGroupSubHeader>
-                    <MatList>
-                        <MatListItem>
-                            <MatIcon Icon="home"></MatIcon>
-                            <div class="listitem">@localizer["Home"]</div>
-                        </MatListItem>
-                        <MatListItem>
-                            <MatIcon Icon="school"></MatIcon>
-                            <div class="listitem">@localizer["Paths"]</div>
-                        </MatListItem>
-                    </MatList>
-                </MatListGroup>
-                <AuthorizeView Roles="Administrator">
-                    <Authorized>
-                        <MatListGroupSubHeader>@localizer["Administrator zone"]</MatListGroupSubHeader>
-                        <MatList>
-                            <MatListItem Href="/administration/paths">
-                                <MatIcon Icon="merge_type"></MatIcon>
-                                <div class="listitem">@localizer["Paths"]</div>
-                            </MatListItem>
-                        </MatList>
-                    </Authorized>
-                </AuthorizeView>
-            </MatDrawer>
-            <MatDrawerContent>
-                <MatAppBarContainer Style="display: flex; flex-direction: column; min-height: 100vh;">
-                    <MatAppBar Fixed="true">
-                        <MatAppBarRow>
-                            <MatAppBarSection Align="@MatAppBarSectionAlign.Start">
-                                <MatIconButton Icon="menu" OnClick="ButtonClicked"></MatIconButton>
-                                @if (!DrawerOpened)
-                                {
-                                    <MatAppBarTitle>
-                                        <div class="drawer-logo">
-                                            <a href="/">DEVELOPER PATH</a>
-                                        </div>
-                                    </MatAppBarTitle>
-                                }
-                            </MatAppBarSection>
-                            <MatAppBarSection Align="@MatAppBarSectionAlign.End">
-                                <CultureSelector></CultureSelector>
-                                <LoginDisplay></LoginDisplay>
-                            </MatAppBarSection>
-                        </MatAppBarRow>
-                    </MatAppBar>
-                    <MatAppBarContent Style="flex: 1; display: flex; flex-direction: column;">
-                        <section class="container-fluid" style="flex: 1;">
-                            <div style="padding: 20px">
-                                @Body
-                            </div>
-                        </section>
-                    </MatAppBarContent>
-                </MatAppBarContainer>
-            </MatDrawerContent>
-        </MatDrawerContainer>
-    </MatThemeProvider>
-</CascadingValue>
+<MudLayout>
+    <MudAppBar Elevation="4" Color="Color.Primary">
+        <MudIcon Size="Size.Large" ViewBox="0 0 500 500" />
+        <MudText Typo="Typo.h6" Class="ml-4">
+            <div class="drawer-logo">
+                <a href="/">DEVELOPER PATH</a>
+            </div>
+        </MudText>
+        <MudToolBar DisableGutters="true">
+            <MudIconButton Icon="@Icons.Material.Outlined.Menu" Color="Color.Inherit" OnClick="@((e) => DrawerToggle())" Class="ml-3" />
+        </MudToolBar>
+        <MudAppBarSpacer />
+        <CultureSelector></CultureSelector>
+        <LoginDisplay></LoginDisplay>
+    </MudAppBar>
+    <MudDrawer @bind-Open="DrawerOpened" Elevation="25" ClipMode="DrawerClipMode.Always">
+        <NavMenu/>
+    </MudDrawer>
+    <MudMainContent>
+        <MudContainer MaxWidth="MaxWidth.False" Class="mt-4">
+            @Body
+        </MudContainer>
+    </MudMainContent>
+</MudLayout>
 
 
 @code
 {
     bool DrawerOpened = false;
-    bool IsOpened = false;
 
-    void ButtonClicked()
+
+    void DrawerToggle()
     {
         DrawerOpened = !DrawerOpened;
         StateHasChanged();
     }
-
-    MatTheme theme1 = new MatTheme()
-    {
-        Primary = "#0277bd",
-        Secondary = MatThemeColors.BlueGrey._500.Value
-    };
 }

@@ -126,8 +126,20 @@
   <data name="Home" xml:space="preserve">
     <value>Домой</value>
   </data>
+  <data name="LogIn" xml:space="preserve">
+    <value>Вход</value>
+  </data>
+  <data name="LoginFirst" xml:space="preserve">
+    <value>Вы не авторизованы</value>
+  </data>
   <data name="Menu" xml:space="preserve">
     <value>Меню</value>
+  </data>
+  <data name="NotAuthorized" xml:space="preserve">
+    <value>У вас нет доступа к данному рессурсу</value>
+  </data>
+  <data name="NotFound" xml:space="preserve">
+    <value>Ничего не найдено по данному адресу</value>
   </data>
   <data name="Paths" xml:space="preserve">
     <value>Пути развития</value>

@@ -1,10 +1,8 @@
 using System;
 using System.Threading.Tasks;
 using Azure.Identity;
-using DeveloperPath.Infrastructure.Identity;
 using DeveloperPath.Infrastructure.Persistence;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -32,9 +30,7 @@ namespace DeveloperPath.WebApi
             context.Database.Migrate();
           }
 
-          var userManager = services.GetRequiredService<UserManager<ApplicationUser>>();
-
-          await ApplicationDbContextSeed.SeedDefaultUserAsync(userManager);
+         
           await ApplicationDbContextSeed.SeedSampleDataAsync(context);
         }
         catch (Exception ex)

@@ -26,15 +26,8 @@ namespace DeveloperPath.Infrastructure
             }
 
             services.AddDatabaseDeveloperPageExceptionFilter();
-
             services.AddScoped<IApplicationDbContext>(provider => provider.GetService<ApplicationDbContext>());
-
-            services.AddDefaultIdentity<ApplicationUser>()
-                .AddEntityFrameworkStores<ApplicationDbContext>();
-
             services.AddTransient<IDateTime, DateTimeService>();
-            //services.AddTransient<IIdentityService, IdentityService>();
-
             return services;
         }
     }

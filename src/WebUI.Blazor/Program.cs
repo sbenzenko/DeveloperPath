@@ -6,7 +6,8 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 using WebUI.Blazor.Security;
-using MatBlazor;
+ 
+using MudBlazor.Services;
 using WebUI.Blazor.Extensions;
 using WebUI.Blazor.Services;
 
@@ -18,7 +19,7 @@ namespace WebUI.Blazor
         {
             var builder = WebAssemblyHostBuilder.CreateDefault(args);
             builder.RootComponents.Add<App>("#app");
-
+           
             // We register a named HttpClient here for the API
             Console.WriteLine("API URI " + builder.Configuration["PathApiBaseUri"]);
 
@@ -27,7 +28,7 @@ namespace WebUI.Blazor
                 throw new Exception("Path API base URL is null");
             }
 
-            builder.Services.AddHttpClient("pathapi", client => client.BaseAddress = new System.Uri(builder.Configuration["PathApiBaseUri"]))
+            builder.Services.AddHttpClient("pathapi", client => client.BaseAddress = new Uri(builder.Configuration["PathApiBaseUri"]))
                 .AddHttpMessageHandler(sp =>
                 {
                     var handler = sp.GetService<AuthorizationMessageHandler>()
@@ -42,7 +43,7 @@ namespace WebUI.Blazor
             builder.Services.AddScoped(sp => sp.GetService<IHttpClientFactory>()
                 .CreateClient("pathapi"));
 
-            builder.Services.AddMatBlazor();
+            builder.Services.AddMudServices();
             builder.Services
                 .AddOidcAuthentication(options =>
                 {
