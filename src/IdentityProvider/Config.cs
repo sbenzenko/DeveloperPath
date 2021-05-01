@@ -31,7 +31,7 @@ namespace IdentityProvider
                 }
             };
 
-        public static IEnumerable<ApiScope> Scopes => 
+        public static IEnumerable<ApiScope> Scopes =>
             new ApiScope[]
             {
                 new ApiScope("pathapi")
@@ -47,10 +47,16 @@ namespace IdentityProvider
                     AllowedGrantTypes = GrantTypes.Code,
                     RequirePkce = true,
                     RequireClientSecret = false,
-                    AllowedCorsOrigins = { "https://localhost:5005", "https://victorious-cliff-02bdab803.azurestaticapps.net" },
+                    AllowedCorsOrigins = { "https://www.developer-path.com/",
+                        "https://localhost:5005",
+                        "https://victorious-cliff-02bdab803.azurestaticapps.net" },
                     AllowedScopes = { "openid", "profile", "email", "pathapi" },
-                    RedirectUris = { "https://localhost:5005/authentication/login-callback", "https://victorious-cliff-02bdab803.azurestaticapps.net/authentication/login-callback" },
-                    PostLogoutRedirectUris = { "https://localhost:5005/", "https://victorious-cliff-02bdab803.azurestaticapps.net/" },
+                    RedirectUris = { "https://www.developer-path.com/login-callback",
+                        "https://localhost:5005/authentication/login-callback",
+                        "https://victorious-cliff-02bdab803.azurestaticapps.net/authentication/login-callback" },
+                    PostLogoutRedirectUris = { "https://www.developer-path.com/",
+                        "https://localhost:5005/",
+                        "https://victorious-cliff-02bdab803.azurestaticapps.net/" },
                     Enabled = true
                 }
             };
