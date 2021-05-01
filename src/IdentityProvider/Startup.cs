@@ -4,6 +4,9 @@
 
 using EmailSender.Implementations;
 using System;
+using Azure.Extensions.AspNetCore.Configuration.Secrets;
+using Azure.Identity;
+using Azure.Security.KeyVault.Secrets;
 using DeveloperPath.Application.Common.Interfaces;
 using DeveloperPath.Infrastructure.EmailSender;
 using IdentityServer4;
@@ -12,6 +15,7 @@ using IdentityProvider.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
+ 
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -34,10 +38,6 @@ namespace IdentityProvider
 
         public void ConfigureServices(IServiceCollection services)
         {
-            var x509Certificate2Certs =
-                CertificationManager.GetCertificates(Environment, Configuration)
-                    .GetAwaiter().GetResult();
-
             if (Environment.IsProduction())
             {
               services.AddApplicationInsightsTelemetry();
@@ -60,6 +60,10 @@ namespace IdentityProvider
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
+
+            var x509Certificate2Certs =
+                CertificationManager.GetCertificates(Environment, Configuration)
+                    .GetAwaiter().GetResult();
 
             var builder = services.AddIdentityServer(options =>
                 {

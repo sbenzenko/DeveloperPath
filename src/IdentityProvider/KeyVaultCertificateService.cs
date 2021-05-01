@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.Azure.KeyVault;
 using Microsoft.Azure.KeyVault.Models;
 using Microsoft.Azure.Services.AppAuthentication;
+using Serilog;
 
 namespace IdentityProvider
 {
@@ -48,13 +49,10 @@ namespace IdentityProvider
 
         private async Task<List<CertificateItem>> GetAllEnabledCertificateVersionsAsync(KeyVaultClient keyVaultClient)
         {
+            Log.Information("GetCertificateVersionsAsync");
             // Get all the certificate versions (this will also get the currect active version
-
-            Console.WriteLine(_keyVaultEndpoint);
-            Console.WriteLine(_certificateName);
-
             var certificateVersions = await keyVaultClient.GetCertificateVersionsAsync(_keyVaultEndpoint, _certificateName);
-
+            Log.Information("GetCertificateVersionsAsync_Finished");
             // Find all enabled versions of the certificate and sort them by creation date in decending order 
             return certificateVersions
               .Where(certVersion => certVersion.Attributes.Enabled.HasValue && certVersion.Attributes.Enabled.Value)

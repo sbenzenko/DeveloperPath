@@ -14,8 +14,8 @@ namespace IdentityProvider
         public static async Task<(X509Certificate2 ActiveCertificate, X509Certificate2 SecondaryCertificate)> GetCertificates(IWebHostEnvironment environment, IConfiguration configuration)
         {
              
-            Log.Warning($"USING {configuration["CertificateNameKeyVault"]}");
-            Log.Warning($"USING {configuration["AzureKeyVaultEndpoint"]}");
+            Log.Information($"USING {configuration["CertificateNameKeyVault"]}");
+            Log.Information($"USING {configuration["AzureKeyVaultEndpoint"]}");
 
             var certificateConfiguration = new CertificateConfiguration
             {
