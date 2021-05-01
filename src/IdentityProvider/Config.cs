@@ -52,7 +52,7 @@ namespace IdentityProvider
                     RedirectUris = { "https://localhost:5005/authentication/login-callback", "https://victorious-cliff-02bdab803.azurestaticapps.net/authentication/login-callback" },
                     PostLogoutRedirectUris = { "https://localhost:5005/", "https://victorious-cliff-02bdab803.azurestaticapps.net/" },
                     Enabled = true
-                },
+                }
             };
     }
 }
