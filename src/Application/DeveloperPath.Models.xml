@@ -10,7 +10,7 @@
             </summary>
             <typeparam name="TRequest"></typeparam>
         </member>
-        <member name="M:DeveloperPath.Application.Common.Behaviours.LoggingBehaviour`1.#ctor(Microsoft.Extensions.Logging.ILogger{`0},DeveloperPath.Application.Common.Interfaces.ICurrentUserService,DeveloperPath.Application.Common.Interfaces.IIdentityService)">
+        <member name="M:DeveloperPath.Application.Common.Behaviours.LoggingBehaviour`1.#ctor(Microsoft.Extensions.Logging.ILogger{`0},DeveloperPath.Application.Common.Interfaces.ICurrentUserService)">
             <summary>
             Ctor for injecting dependencies
             </summary>
@@ -33,7 +33,7 @@
             <typeparam name="TRequest"></typeparam>
             <typeparam name="TResponse"></typeparam>
         </member>
-        <member name="M:DeveloperPath.Application.Common.Behaviours.PerformanceBehaviour`2.#ctor(Microsoft.Extensions.Logging.ILogger{`0},DeveloperPath.Application.Common.Interfaces.ICurrentUserService,DeveloperPath.Application.Common.Interfaces.IIdentityService)">
+        <member name="M:DeveloperPath.Application.Common.Behaviours.PerformanceBehaviour`2.#ctor(Microsoft.Extensions.Logging.ILogger{`0},DeveloperPath.Application.Common.Interfaces.ICurrentUserService)">
             <summary>
             Ctor for injecting dependencies
             </summary>
@@ -272,33 +272,6 @@
             <summary>
             Sender name
             </summary>
-        </member>
-        <member name="T:DeveloperPath.Application.Common.Interfaces.IIdentityService">
-            <summary>
-            Identity service interface
-            </summary>
-        </member>
-        <member name="M:DeveloperPath.Application.Common.Interfaces.IIdentityService.GetUserNameAsync(System.String)">
-            <summary>
-            Get user name
-            </summary>
-            <param name="userId"></param>
-            <returns></returns>
-        </member>
-        <member name="M:DeveloperPath.Application.Common.Interfaces.IIdentityService.CreateUserAsync(System.String,System.String)">
-            <summary>
-            Create user
-            </summary>
-            <param name="userName"></param>
-            <param name="password"></param>
-            <returns></returns>
-        </member>
-        <member name="M:DeveloperPath.Application.Common.Interfaces.IIdentityService.DeleteUserAsync(System.String)">
-            <summary>
-            Delete user
-            </summary>
-            <param name="userId"></param>
-            <returns></returns>
         </member>
         <member name="T:DeveloperPath.Application.Common.Mappings.Interfaces.IMapFrom`1">
             <summary>

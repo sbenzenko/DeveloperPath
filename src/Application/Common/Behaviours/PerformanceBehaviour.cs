@@ -17,7 +17,7 @@ namespace DeveloperPath.Application.Common.Behaviours
     private readonly Stopwatch _timer;
     private readonly ILogger<TRequest> _logger;
     private readonly ICurrentUserService _currentUserService;
-    private readonly IIdentityService _identityService;
+    //private readonly IIdentityService _identityService;
 
     /// <summary>
     /// Ctor for injecting dependencies
@@ -27,14 +27,13 @@ namespace DeveloperPath.Application.Common.Behaviours
     /// <param name="identityService"></param>
     public PerformanceBehaviour(
         ILogger<TRequest> logger,
-        ICurrentUserService currentUserService,
-        IIdentityService identityService)
+        ICurrentUserService currentUserService)
     {
       _timer = new Stopwatch();
 
       _logger = logger;
       _currentUserService = currentUserService;
-      _identityService = identityService;
+     // _identityService = identityService;
     }
 
     /// <summary>
@@ -62,7 +61,7 @@ namespace DeveloperPath.Application.Common.Behaviours
 
         if (!string.IsNullOrEmpty(userId))
         {
-          userName = await _identityService.GetUserNameAsync(userId);
+         // userName = await _identityService.GetUserNameAsync(userId);
         }
 
         _logger.LogWarning("DeveloperPath Long Running Request: {Name} ({ElapsedMilliseconds} milliseconds) {@UserId} {@UserName} {@Request}",

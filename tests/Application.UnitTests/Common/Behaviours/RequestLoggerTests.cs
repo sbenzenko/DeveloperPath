@@ -13,7 +13,7 @@ namespace DeveloperPath.Application.UnitTests.Common.Behaviours
     {
         private readonly Mock<ILogger<CreatePath>> _logger;
         private readonly Mock<ICurrentUserService> _currentUserService;
-        private readonly Mock<IIdentityService> _identityService;
+        //private readonly Mock<IIdentityService> _identityService;
 
 
         public RequestLoggerTests()
@@ -22,7 +22,7 @@ namespace DeveloperPath.Application.UnitTests.Common.Behaviours
 
             _currentUserService = new Mock<ICurrentUserService>();
 
-            _identityService = new Mock<IIdentityService>();
+            // _identityService = new Mock<IIdentityService>();
         }
 
         [Test]
@@ -30,21 +30,21 @@ namespace DeveloperPath.Application.UnitTests.Common.Behaviours
         {
             _currentUserService.Setup(x => x.UserId).Returns("Administrator");
 
-            var requestLogger = new LoggingBehaviour<CreatePath>(_logger.Object, _currentUserService.Object, _identityService.Object);
+            var requestLogger = new LoggingBehaviour<CreatePath>(_logger.Object, _currentUserService.Object);
 
             await requestLogger.Process(new CreatePath { Title = "title", Description = "Description" }, new CancellationToken());
 
-            _identityService.Verify(i => i.GetUserNameAsync(It.IsAny<string>()), Times.Once);
+            //_identityService.Verify(i => i.GetUserNameAsync(It.IsAny<string>()), Times.Once);
         }
 
         [Test]
         public async Task ShouldNotCallGetUserNameAsyncOnceIfUnauthenticated()
         {
-            var requestLogger = new LoggingBehaviour<CreatePath>(_logger.Object, _currentUserService.Object, _identityService.Object);
+            var requestLogger = new LoggingBehaviour<CreatePath>(_logger.Object, _currentUserService.Object);
 
             await requestLogger.Process(new CreatePath { Title = "title", Description = "Description" }, new CancellationToken());
 
-            _identityService.Verify(i => i.GetUserNameAsync(null), Times.Never);
+           // _identityService.Verify(i => i.GetUserNameAsync(null), Times.Never);
         }
     }
 }
