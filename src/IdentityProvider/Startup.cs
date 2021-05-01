@@ -61,9 +61,9 @@ namespace IdentityProvider
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
-            var x509Certificate2Certs =
-                CertificationManager.GetCertificates(Environment, Configuration)
-                    .GetAwaiter().GetResult();
+            //var x509Certificate2Certs =
+            //    CertificationManager.GetCertificates(Environment, Configuration)
+            //        .GetAwaiter().GetResult();
 
             var builder = services.AddIdentityServer(options =>
                 {
@@ -72,19 +72,15 @@ namespace IdentityProvider
                     options.Events.RaiseFailureEvents = true;
                     options.Events.RaiseSuccessEvents = true;
                 })
-                .AddSigningCredential(x509Certificate2Certs.ActiveCertificate)
                 .AddInMemoryApiScopes(Config.Scopes)
                 .AddInMemoryIdentityResources(Config.Ids)
                 .AddInMemoryApiResources(Config.Apis)
                 .AddInMemoryClients(Config.Clients)
                 .AddAspNetIdentity<ApplicationUser>();
 
-
-            if (x509Certificate2Certs.SecondaryCertificate != null)
-            {
-                builder.AddValidationKey(x509Certificate2Certs.SecondaryCertificate);
-            }
-
+            var rsa = new RsaKeyService(Environment, TimeSpan.FromDays(30));
+            services.AddSingleton<RsaKeyService>(provider => rsa);
+            builder.AddSigningCredential(rsa.GetKey(), IdentityServerConstants.RsaSigningAlgorithm.RS512);
             services.AddAuthentication();
         }
 

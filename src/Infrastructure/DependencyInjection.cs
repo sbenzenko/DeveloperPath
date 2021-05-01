@@ -33,7 +33,7 @@ namespace DeveloperPath.Infrastructure
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddTransient<IDateTime, DateTimeService>();
-            services.AddTransient<IIdentityService, IdentityService>();
+            //services.AddTransient<IIdentityService, IdentityService>();
 
             return services;
         }
