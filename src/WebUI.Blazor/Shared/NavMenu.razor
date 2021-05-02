@@ -1,8 +1,9 @@
 ﻿@inject IStringLocalizer<LanguageResources> localizer
 
 <MudNavMenu>
-    <MudNavLink Href="/"  Icon="@Icons.Material.Outlined.Home">@localizer["Home"]</MudNavLink>
-    <MudNavLink Href="/notused"  Icon="@Icons.Material.Outlined.School">@localizer["Paths"]</MudNavLink>
+    <MudListSubheader Class="mt-2 mb-n2">@localizer["Menu"]</MudListSubheader>
+    <MudNavLink Href="/" Icon="@Icons.Material.Outlined.Home">@localizer["Home"]</MudNavLink>
+    <MudNavLink Href="/notused" Icon="@Icons.Material.Outlined.School">@localizer["Paths"]</MudNavLink>
     <MudListSubheader Class="mt-2 mb-n2">@localizer["Administrator zone"]</MudListSubheader>
-    <MudNavLink Href="/administration/paths"  Icon="@Icons.Material.Outlined.MergeType">@localizer["Paths"]</MudNavLink>
+    <MudNavLink Href="/administration/paths" Icon="@Icons.Material.Outlined.MergeType">@localizer["Paths"]</MudNavLink>
 </MudNavMenu>
