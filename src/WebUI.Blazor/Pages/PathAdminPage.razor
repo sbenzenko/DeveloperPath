@@ -1,11 +1,12 @@
 ﻿@page "/administration/paths"
 @inject IStringLocalizer<LanguageResources> localizer
 
+
 <AuthorizeView Context="authorizeContext">
     <Authorized>
         <Condition Evaluation="Paths == null">
             <Match>
-                <MudProgressLinear Indeterminate="true"></MudProgressLinear>
+                <MudProgressLinear Indeterminate="true" Color="Color.Primary"></MudProgressLinear>
             </Match>
             <NotMatch>
                 <MudButton Style="margin-bottom: 20px" StartIcon="@Icons.Outlined.Add">@localizer["AddPath"]</MudButton>

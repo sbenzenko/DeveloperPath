@@ -6,6 +6,10 @@
     <BlazorWebAssemblyLoadAllGlobalizationData>true</BlazorWebAssemblyLoadAllGlobalizationData>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Content Remove="C:\Users\seche\.nuget\packages\prettyblazor\1.1.0\contentFiles\any\net5.0\License.txt" />
+  </ItemGroup>
+
  
 
   <ItemGroup>
