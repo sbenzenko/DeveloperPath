@@ -90,6 +90,7 @@ namespace DeveloperPath.WebApi.Controllers
     /// <response code="406">Not acceptable entity provided</response>
     /// <response code="415">Unsupported media type provided</response>
     /// <response code="422">Unprocessible entity provided</response>
+    [Authorize]
     [HttpPost]
     [Consumes("application/json")]
     public async Task<ActionResult<Source>> Create(int pathId, int moduleId, int themeId,
@@ -117,6 +118,7 @@ namespace DeveloperPath.WebApi.Controllers
     /// <response code="406">Not acceptable entity provided</response>
     /// <response code="415">Unsupported media type provided</response>
     /// <response code="422">Unprocessible entity provided</response>
+    [Authorize]
     [HttpPut("{sourceId}")]
     [Consumes("application/json")]
     public async Task<ActionResult<Source>> Update(int pathId, int moduleId, int themeId, int sourceId, 
@@ -140,6 +142,7 @@ namespace DeveloperPath.WebApi.Controllers
     /// <param name="sourceId">An id of the source</param>
     /// <returns></returns>
     /// <response code="204">Source deleted successfully</response>
+    [Authorize]
     [HttpDelete("{sourceId}")]
     public async Task<ActionResult> Delete(int pathId, int moduleId, int themeId, int sourceId)
     {

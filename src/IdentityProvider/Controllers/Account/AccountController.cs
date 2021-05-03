@@ -141,7 +141,7 @@ namespace IdentityProvider.Controllers.Account
                 }
 
                 await _events.RaiseAsync(new UserLoginFailureEvent(model.Username, AccountOptions.InvalidCredentialsErrorMessage, clientId:context?.Client.ClientId));
-                ModelState.AddModelError(string.Empty, "Не верные имя пользователя или пароль");
+                ModelState.AddModelError(string.Empty, "Неверное имя пользователя или пароль");
             }
 
             // something went wrong, show form with error

@@ -1,10 +1,13 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Abstractions;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.OpenApi.Models;
 
 namespace DeveloperPath.WebApi.Extensions
 {
@@ -110,6 +113,29 @@ namespace DeveloperPath.WebApi.Extensions
                   }
                 });
         }
+
+        setupAction.AddSecurityDefinition("bearerAuth",
+          new OpenApiSecurityScheme()
+          {
+            Type = SecuritySchemeType.Http,
+            Scheme = JwtBearerDefaults.AuthenticationScheme,
+            Description = "Provide a JWT bearer token to access the API"
+          });
+
+        setupAction.AddSecurityRequirement(new OpenApiSecurityRequirement
+        {
+          {
+            new OpenApiSecurityScheme
+            {
+              Reference = new OpenApiReference
+              {
+                Type = ReferenceType.SecurityScheme,
+                Id = "bearerAuth"
+              }
+            },
+            new List<string>()
+          }
+        });
 
         // select swagger document based on selected API version
         setupAction.DocInclusionPredicate((documentName, apiDescription) =>

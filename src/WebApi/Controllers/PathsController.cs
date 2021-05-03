@@ -7,12 +7,12 @@ using DeveloperPath.Application.CQRS.Paths.Queries.GetPaths;
 using DeveloperPath.WebApi.Extensions;
 using DeveloperPath.WebApi.Models;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Shared.ClientModels;
 
 namespace DeveloperPath.WebApi.Controllers
 {
-    //[Authorize(Roles = "Administrator")]
     [Route("api/paths")]
     public class PathsController : ApiController
     {
@@ -75,6 +75,7 @@ namespace DeveloperPath.WebApi.Controllers
         /// <response code="406">Not acceptable entity provided</response>
         /// <response code="415">Unsupported media type provided</response>
         /// <response code="422">Unprocessible entity provided</response>
+        [Authorize(Roles = "Administrator")]
         [HttpPost]
         //TODO: adding "application/xml" causes "An error occurred while deserializing input data." error for some reason
         [Consumes("application/json")]
@@ -95,6 +96,7 @@ namespace DeveloperPath.WebApi.Controllers
         /// <response code="406">Not acceptable entity provided</response>
         /// <response code="415">Unsupported media type provided</response>
         /// <response code="422">Unprocessible entity provided</response>
+        [Authorize(Roles = "Administrator")]
         [HttpPut("{pathId}")]
         [Consumes("application/json")]
         public async Task<ActionResult<Path>> Update(int pathId,
@@ -114,6 +116,7 @@ namespace DeveloperPath.WebApi.Controllers
         /// <param name="pathId">An id of the path</param>
         /// <returns></returns>
         /// <response code="204">Path deleted successfully</response>
+        [Authorize(Roles = "Administrator")]
         [HttpDelete("{pathId}")]
         public async Task<IActionResult> Delete(int pathId)
         {

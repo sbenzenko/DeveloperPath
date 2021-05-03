@@ -9,10 +9,10 @@ using DeveloperPath.WebApi.Extensions;
 using DeveloperPath.WebApi.Models;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 namespace DeveloperPath.WebApi.Controllers
 {
-  //[Authorize]
   [Route("api/paths/{pathId}/modules")]
   public class ModulesController : ApiController
   {
@@ -82,6 +82,7 @@ namespace DeveloperPath.WebApi.Controllers
     /// <response code="406">Not acceptable entity provided</response>
     /// <response code="415">Unsupported media type provided</response>
     /// <response code="422">Unprocessible entity provided</response>
+    [Authorize]
     [HttpPost]
     [Consumes("application/json")]
     public async Task<ActionResult<Module>> Create(int pathId,
@@ -106,6 +107,7 @@ namespace DeveloperPath.WebApi.Controllers
     /// <response code="406">Not acceptable entity provided</response>
     /// <response code="415">Unsupported media type provided</response>
     /// <response code="422">Unprocessible entity provided</response>
+    [Authorize]
     [HttpPut("{moduleId}")]
     [Consumes("application/json")]
     public async Task<ActionResult<Module>> Update(int pathId, int moduleId,
@@ -126,6 +128,7 @@ namespace DeveloperPath.WebApi.Controllers
     /// <param name="moduleId">An id of the module</param>
     /// <returns></returns>
     /// <response code="204">Module deleted successfully</response>
+    [Authorize]
     [HttpDelete("{moduleId}")]
     public async Task<ActionResult> Delete(int pathId, int moduleId)
     {

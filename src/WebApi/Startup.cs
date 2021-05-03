@@ -37,11 +37,6 @@ namespace DeveloperPath.WebApi
 
             services.AddHttpContextAccessor();
 
-            services.AddApiConfiguration();
-
-            services.AddHealthChecks()
-                    .AddDbContextCheck<ApplicationDbContext>();
-
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
                 {
@@ -52,6 +47,11 @@ namespace DeveloperPath.WebApi
                         NameClaimType = "name"
                     };
                 });
+
+            services.AddApiConfiguration();
+
+            services.AddHealthChecks()
+                    .AddDbContextCheck<ApplicationDbContext>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

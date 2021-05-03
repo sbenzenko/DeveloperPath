@@ -7,10 +7,10 @@ using DeveloperPath.Application.CQRS.Themes.Commands.CreateTheme;
 using DeveloperPath.Application.CQRS.Themes.Commands.DeleteTheme;
 using DeveloperPath.Application.CQRS.Themes.Commands.UpdateTheme;
 using DeveloperPath.Application.CQRS.Themes.Queries.GetThemes;
+using Microsoft.AspNetCore.Authorization;
 
 namespace DeveloperPath.WebApi.Controllers
 {
-  //[Authorize]
   [Route("api/paths/{pathId}/modules/{moduleId}/themes")]
   public class ThemesController : ApiController
   {
@@ -85,6 +85,7 @@ namespace DeveloperPath.WebApi.Controllers
     /// <response code="406">Not acceptable entity provided</response>
     /// <response code="415">Unsupported media type provided</response>
     /// <response code="422">Unprocessible entity provided</response>
+    [Authorize]
     [HttpPost]
     [Consumes("application/json")]
     public async Task<ActionResult<Theme>> Create(int pathId, int moduleId,
@@ -111,6 +112,7 @@ namespace DeveloperPath.WebApi.Controllers
     /// <response code="406">Not acceptable entity provided</response>
     /// <response code="415">Unsupported media type provided</response>
     /// <response code="422">Unprocessible entity provided</response>
+    [Authorize]
     [HttpPut("{themeId}")]
     [Consumes("application/json")]
     public async Task<ActionResult<Theme>> Update(int pathId, int moduleId, int themeId,
@@ -132,6 +134,7 @@ namespace DeveloperPath.WebApi.Controllers
     /// <param name="themeId">An id of the theme</param>
     /// <returns></returns>
     /// <response code="204">Theme deleted successfully</response>
+    [Authorize]
     [HttpDelete("{themeId}")]
     public async Task<ActionResult> Delete(int pathId, int moduleId, int themeId)
     {
