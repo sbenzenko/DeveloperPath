@@ -1,5 +1,14 @@
 ﻿@import url('open-iconic/font/css/open-iconic-bootstrap.min.css');
 
+ul.cite {
+	margin-left: 20px;
+}
+ul.cite li {
+	font-style: italic;
+}
+a {
+	text-decoration: underline !important;
+}
 .mat-card {
     max-width: 400px;
 }

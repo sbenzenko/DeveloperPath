@@ -132,11 +132,20 @@
   <data name="Home" xml:space="preserve">
     <value>Home</value>
   </data>
+  <data name="HomeDescription" xml:space="preserve">
+    <value>People who a studying programming often ask questions like:
+&lt;ul class="cite"&gt;
+&lt;li&gt;"I learned the basics (read the book XXX or passed the course YYY), what do I learn next?"&lt;/li&gt;
+&lt;li&gt;"Does it make sense reading book A (passing course B)?"&lt;/li&gt;
+&lt;li&gt;"Why everyone hates website M?"&lt;/li&gt;
+&lt;/ul&gt;
+Developer Path project was created to answer these and many other questions.</value>
+  </data>
   <data name="LogIn" xml:space="preserve">
     <value>Log In</value>
   </data>
   <data name="LoginFirst" xml:space="preserve">
-    <value>I'm sorry, I can't display anything until you log in</value>
+    <value>You're not authorized</value>
   </data>
   <data name="Menu" xml:space="preserve">
     <value>Menu</value>
@@ -149,5 +158,11 @@
   </data>
   <data name="Paths" xml:space="preserve">
     <value>Paths</value>
+  </data>
+  <data name="ProjectReferences" xml:space="preserve">
+    <value>See project development status and contribute at &lt;a href="https://github.com/sbenzenko/DeveloperPath" target="_blank"&gt;Github&lt;/a&gt; and &lt;a href="https://dev.azure.com/sbenzenko/DeveloperPath" target="_blank"&gt;Azure DevOps&lt;/a&gt;.</value>
+  </data>
+  <data name="Welcome" xml:space="preserve">
+    <value>Welcome to Developer Path project!</value>
   </data>
 </root>

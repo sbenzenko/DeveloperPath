@@ -106,6 +106,21 @@ namespace WebUI.Blazor.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to People who a studying programming often ask questions like:
+        ///&lt;ul class=&quot;cite&quot;&gt;
+        ///&lt;li&gt;&quot;I learned the basics (read the book XXX or passed the course YYY), what do I learn next?&quot;&lt;/li&gt;
+        ///&lt;li&gt;&quot;Does it make sense reading book A (passing course B)?&quot;&lt;/li&gt;
+        ///&lt;li&gt;&quot;Why everyone hates website M?&quot;&lt;/li&gt;
+        ///&lt;/ul&gt;
+        ///Developer Path project was created to answer these and many other questions..
+        /// </summary>
+        public static string HomeDescription {
+            get {
+                return ResourceManager.GetString("HomeDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Log In.
         /// </summary>
         public static string LogIn {
@@ -115,7 +130,7 @@ namespace WebUI.Blazor.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to I&apos;m sorry, I can&apos;t display anything until you log in.
+        ///   Looks up a localized string similar to You&apos;re not authorized.
         /// </summary>
         public static string LoginFirst {
             get {
@@ -156,6 +171,24 @@ namespace WebUI.Blazor.Resources {
         public static string Paths {
             get {
                 return ResourceManager.GetString("Paths", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to See project development status and contribute at &lt;a href=&quot;https://github.com/sbenzenko/DeveloperPath&quot; target=&quot;_blank&quot;&gt;Github&lt;/a&gt; and &lt;a href=&quot;https://dev.azure.com/sbenzenko/DeveloperPath&quot; target=&quot;_blank&quot;&gt;Azure DevOps&lt;/a&gt;..
+        /// </summary>
+        public static string ProjectReferences {
+            get {
+                return ResourceManager.GetString("ProjectReferences", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Welcome to Developer Path project!.
+        /// </summary>
+        public static string Welcome {
+            get {
+                return ResourceManager.GetString("Welcome", resourceCulture);
             }
         }
     }

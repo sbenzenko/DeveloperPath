@@ -1,0 +1,36 @@
+﻿@page "/paths"
+@inject IStringLocalizer<LanguageResources> localizer
+
+
+<Condition Evaluation="Paths == null">
+	<Match>
+		<MudProgressLinear Indeterminate="true" Color="Color.Primary"></MudProgressLinear>
+	</Match>
+	<NotMatch>
+		<MudGrid>
+			<Iterations Items="Paths" Context="pathItem">
+				<MudItem xs="12" md="6" lg="4" Class="d-flex align-stretch" Style="height:350px;">
+					<MudCard Elevation="6" Class="pa-2 mx-2" Style="width:100%">
+						<MudCardHeader Class="pa-2 mx-2">
+							<CardHeaderContent>
+								<MudText Typo="Typo.h6">@pathItem.Title</MudText>
+							</CardHeaderContent>
+						</MudCardHeader>
+						<MudCardContent Class="py-1">
+							<MudItem>
+								<Iterations Items="pathItem.Tags.ToList()" Context="tagItem">
+									<MudChip Size="Size.Small">@tagItem</MudChip>
+								</Iterations>
+							</MudItem>
+							<MudItem Class="py-1" Style="height:200px;overflow:auto;">
+								<MudText Typo="Typo.body1">
+									@pathItem.Description
+								</MudText>
+							</MudItem>
+						</MudCardContent>
+					</MudCard>
+				</MudItem>
+			</Iterations>
+		</MudGrid>
+	</NotMatch>
+</Condition>
