@@ -14,6 +14,7 @@ using Shared.ClientModels;
 namespace DeveloperPath.WebApi.Controllers
 {
     [Route("api/paths")]
+    [Authorize]
     public class PathsController : ApiController
     {
         public PathsController(IMediator mediator)

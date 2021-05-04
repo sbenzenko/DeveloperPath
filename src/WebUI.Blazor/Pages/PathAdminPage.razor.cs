@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Microsoft.AspNetCore.Components;
 using System.Threading.Tasks;
 using Shared.ClientModels;
@@ -15,7 +16,15 @@ namespace WebUI.Blazor.Pages
       
         protected override async Task OnInitializedAsync()
         {
-            Paths = await PathService.GetListAsync();
+            ;
+            try
+            {
+                Paths = await PathService.GetListAsync();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
         }
     }
 }

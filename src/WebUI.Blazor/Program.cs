@@ -28,20 +28,21 @@ namespace WebUI.Blazor
                 throw new Exception("Path API base URL is null");
             }
 
-            builder.Services.AddHttpClient("pathapi", client => client.BaseAddress = new Uri(builder.Configuration["PathApiBaseUri"]))
+            builder.Services.AddHttpClient("api", client =>client.BaseAddress = new Uri(builder.Configuration["PathApiBaseUri"]))
                 .AddHttpMessageHandler(sp =>
                 {
                     var handler = sp.GetService<AuthorizationMessageHandler>()
                         .ConfigureHandler(
-                            authorizedUrls: new[] { builder.Configuration["oidc:Authority"] },  //API URL
+                            authorizedUrls: new[] { builder.Configuration["PathApiBaseUri"] },  //API URL
                             scopes: new[] { "pathapi" });
                     return handler;
                 });
 
             builder.Services.AddLocalization();
 
-            builder.Services.AddScoped(sp => sp.GetService<IHttpClientFactory>()
-                .CreateClient("pathapi"));
+            builder.Services
+                .AddScoped(sp => sp.GetService<IHttpClientFactory>()
+                .CreateClient("api"));
 
             builder.Services.AddMudServices();
             builder.Services
