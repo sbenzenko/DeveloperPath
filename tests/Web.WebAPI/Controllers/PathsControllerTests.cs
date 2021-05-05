@@ -100,6 +100,42 @@ namespace DeveloperPath.Web.WebAPI.Controllers
     }
 
     [Test]
+    public async Task Get_ReturnsAllPaths_WhenInvalidPageNumberProvided()
+    {
+      var controller = new PathsController(moqMediator.Object);
+
+      var result = await controller.Get(new RequestParams()
+      {
+        PageNumber = 0,
+        PageSize = 1
+      });
+      var contentResult = (OkObjectResult)result.Result;
+      var value = contentResult.Value as IEnumerable<Path>;
+
+      Assert.IsInstanceOf<OkObjectResult>(result.Result);
+      Assert.IsNotNull(contentResult);
+      Assert.AreEqual(2, value.Count());
+    }
+
+    [Test]
+    public async Task Get_ReturnsAllPaths_WhenInvalidPageSizeProvided()
+    {
+      var controller = new PathsController(moqMediator.Object);
+
+      var result = await controller.Get(new RequestParams()
+      {
+        PageNumber = 1,
+        PageSize = 0
+      });
+      var contentResult = (OkObjectResult)result.Result;
+      var value = contentResult.Value as IEnumerable<Path>;
+
+      Assert.IsInstanceOf<OkObjectResult>(result.Result);
+      Assert.IsNotNull(contentResult);
+      Assert.AreEqual(2, value.Count());
+    }
+
+    [Test]
     public async Task Get_ReturnsPathsPage_WhenPagingProvided()
     {
       var controller = new PathsController(moqMediator.Object);

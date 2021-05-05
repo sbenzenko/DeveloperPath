@@ -94,6 +94,28 @@ namespace DeveloperPath.Web.WebAPI.Controllers
     }
 
     [Test]
+    public async Task Create_ReturnsBadRequest_WhenRequestedPathIdDoesNotMatchCommandId()
+    {
+      var createCommand = new CreateTheme { PathId = 1, ModuleId = 1, Order = 0, Title = "Create title", Description = "Create Description" };
+      var controller = new ThemesController(moqMediator.Object);
+      
+      var result = await controller.Create(2, 1, createCommand);
+
+      Assert.IsInstanceOf(typeof(BadRequestResult), result.Result);
+    }
+
+    [Test]
+    public async Task Create_ReturnsBadRequest_WhenRequestedModuleIdDoesNotMatchCommandModuleId()
+    {
+      var createCommand = new CreateTheme { PathId = 1, ModuleId = 1, Order = 0, Title = "Create title", Description = "Create Description" };
+      var controller = new ThemesController(moqMediator.Object);
+      
+      var result = await controller.Create(1, 2, createCommand);
+
+      Assert.IsInstanceOf(typeof(BadRequestResult), result.Result);
+    }
+
+    [Test]
     public async Task Update_ReturnsUpdatedTheme_WhenRequestedIdMatchesCommandId()
     {
       var updateCommand = new UpdateTheme { Id = 1, PathId = 1, ModuleId = 1, Order = 0, Title = "Update title", Description = "Update Description" };
