@@ -35,7 +35,19 @@ Using CLI from `\src\IdentityProvider` run:
 ### Testing
 In integration tests Application.IntegrationTests real testing database is used. It's impossible to use in-memory database for testing. Testing database DeveloperPathTestDb is re-created based on real database structure when tests are executed.
 
-## 3. Troubleshooting
+## 3. Tools
+### [Stryker](https://stryker-mutator.io/)
+This is a tool for mutation testing.
+
+#### Setup
+Using CLI in the root of the solution run  `dotnet tool restore`, to restore the tool. It's already configured in `.config\dotnet-tools.json`.
+
+#### Usage
+Using CLI from each testing project folder run `dotnet stryker`. In some cases you will need to provide project name, ex. `-p Application.cproj`.  
+The tool will create `StrykerOutput` folder. Inside in `reports` folder is an HTML document with the report.  
+You can change the tool settings in each testing project folder in `stryker-config.json` file.
+
+## 4. Troubleshooting
 
 ### Testing
 If tests from Application.IntegrationTests don't run, delete database DeveloperPathTestDb. It will be re-created when testing starts.

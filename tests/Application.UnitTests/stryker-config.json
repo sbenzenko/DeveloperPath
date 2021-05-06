@@ -1,0 +1,22 @@
+{
+  "stryker-config": {
+    "reporters": [
+      "progress",
+      "html"
+    ],
+    "log-level": "warning",
+    "log-file": false,
+    "timeout-ms": 10000,
+    "max-concurrent-test-runners": 2,
+    "threshold-high": 80,
+    "threshold-low": 70,
+    "threshold-break": 60,
+    "mutation-level": "Standard",
+    "mutate": [
+      "!Program.cs",
+      "!Startup.cs"
+    ],
+    "excluded-mutations": [],
+    "ignore-methods": []
+  }
+}
