@@ -37,6 +37,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Web.WebAPI", "tests\Web.Web
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shared", "src\Shared\Shared.csproj", "{85A6E329-7DE8-450D-87A7-F94CB6D5362C}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{4DCCAD5A-F6F0-4E65-97F3-EA806207DF20}"
+	ProjectSection(SolutionItems) = preProject
+		SETUP.en.md = SETUP.en.md
+		SETUP.ru.md = SETUP.ru.md
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
