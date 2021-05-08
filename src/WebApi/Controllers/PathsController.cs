@@ -4,12 +4,13 @@ using DeveloperPath.Application.CQRS.Paths.Commands.CreatePath;
 using DeveloperPath.Application.CQRS.Paths.Commands.DeletePath;
 using DeveloperPath.Application.CQRS.Paths.Commands.UpdatePath;
 using DeveloperPath.Application.CQRS.Paths.Queries.GetPaths;
+using DeveloperPath.Domain.Shared.ClientModels;
 using DeveloperPath.WebApi.Extensions;
 using DeveloperPath.WebApi.Models;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Shared.ClientModels;
+ 
 
 namespace DeveloperPath.WebApi.Controllers
 {

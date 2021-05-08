@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Components;
 using System.Threading.Tasks;
-using Shared.ClientModels;
+using DeveloperPath.Domain.Shared.ClientModels;
 using WebUI.Blazor.Services;
 
 namespace WebUI.Blazor.Pages

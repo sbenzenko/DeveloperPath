@@ -10,7 +10,7 @@
     private async Task ChangeLanguageAsync(string languageCode)
     {
         var js = (IJSInProcessRuntime) JSRuntime;
-        js.InvokeVoid("cultureService.set", languageCode);
+        await js.InvokeVoidAsync("cultureService.set", languageCode);
         NavigationManager.NavigateTo(NavigationManager.Uri, forceLoad: true);
     }
     public class LanguageCodes

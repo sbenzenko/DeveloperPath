@@ -1,6 +1,4 @@
 ﻿@page "/administration/paths"
-@inject IStringLocalizer<LanguageResources> localizer
-
 
 <AuthorizeView Context="authorizeContext">
     <Authorized>
@@ -9,10 +7,10 @@
                 <MudProgressLinear Indeterminate="true" Color="Color.Primary"></MudProgressLinear>
             </Match>
             <NotMatch>
-                <MudButton Style="margin-bottom: 20px" StartIcon="@Icons.Outlined.Add">@localizer["AddPath"]</MudButton>
+                <MudButton Style="margin-bottom: 20px" StartIcon="@Icons.Outlined.Add" OnClick="ShowModalNewPath">@localizer["AddPath"]</MudButton>
                 <MudGrid>
                     <Iterations Items="Paths" Context="pathItem">
-                        <MudItem xs="12" sm="6" md="4" lg="3" Class="px-1" Style="height: 350px;">
+                        <MudItem xs="12" sm="6" md="6" lg="4" Class="px-1" Style="height: 350px;">
                             <MudCard>
                                 <MudCardHeader>
                                     <CardHeaderContent>
@@ -34,14 +32,9 @@
                                 <MudCardActions>
                                     <MudButton Color="Color.Info">@localizer["Edit"]</MudButton>
                                     <MudButton Color="Color.Info">@localizer["Delete"]</MudButton>
-                                    <Condition Evaluation="@pathItem.IsVisible">
-                                        <Match>
-                                            <MudIconButton Icon="@Icons.Outlined.Visibility"></MudIconButton>
-                                        </Match>
-                                        <NotMatch>
-                                            <MudIconButton Icon="@Icons.Outlined.VisibilityOff"></MudIconButton>
-                                        </NotMatch>
-                                    </Condition>
+                                    <MudToggleIconButton Toggled="@(pathItem.IsVisible)"
+                                                         Icon="@Icons.Material.Filled.VisibilityOff" 
+                                                         ToggledIcon="@Icons.Material.Filled.Visibility" ToggledColor="@Color.Success"/>
                                 </MudCardActions>
                             </MudCard>
                         </MudItem>

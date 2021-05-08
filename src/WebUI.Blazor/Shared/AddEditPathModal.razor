@@ -1,0 +1,56 @@
+﻿@using System.ComponentModel.DataAnnotations
+
+@inject IStringLocalizer<LanguageResources> localizer
+<div style="max-width: 500px;">
+    <MudForm @ref="_form">
+        <MudCard Style="padding: 20px; width: 500px">
+            <MudCardContent>
+                <MudTextField T="string"
+                              Label="@localizer["PathTitle"]"
+                              Required="true"
+                              @bind-Value="Path.Title"
+                              Validation="@(new MaxLengthAttribute(100) {ErrorMessage = localizer["PathTitleToLong"]})"
+                              RequiredError="@localizer["TitleIsRequired"]"></MudTextField>
+                <MudTextField T="string"
+                              Label="@localizer["UriKey"]"
+                              Required="true"
+                              @bind-Value="Path.Key"
+                              Validation="@(new MaxLengthAttribute(20) {ErrorMessage = localizer["UriToLong"]})"
+                              RequiredError="@localizer["UriKeyIsRequired"]"></MudTextField>
+                <MudItem Class="d-flex flex-row">
+
+                    <MudTextField T="string"
+                                  Label="@localizer["Tags"]"
+                                  Immediate="true"
+                                  @bind-Value="_newTag"
+                                  OnKeyPress="TagFieldKeyPressed"></MudTextField>
+                    <MudIconButton Icon="@Icons.Outlined.Add"
+                                   OnClick="AddTag"></MudIconButton>
+                </MudItem>
+                <MudChipSet AllClosable="true" OnClose="RemoveChip">
+                    <Iterations Items="@Path.Tags.ToList()" Context="pathTag">
+                        <MudChip Text="@pathTag"></MudChip>
+                    </Iterations>
+                </MudChipSet>
+                <MudTextField T="string"
+                              Label="@localizer["Description"]"
+                              Required="true"
+                              @bind-Value="Path.Description"
+                              Validation="@(new MaxLengthAttribute(3000) {ErrorMessage = localizer["DescriptionTooLong"]})"
+                              RequiredError="@localizer["DescriptionIsRequired"]"
+                              Lines="4"></MudTextField>
+
+            </MudCardContent>
+            <MudCardActions Class="d-flex justify-end">
+                <MudButton Variant="Variant.Text"
+                           Color="Color.Primary"
+                           OnClick="Save"
+                           Class="pa-2 mx-2">@localizer["Save"]</MudButton>
+                        <MudButton Variant="Variant.Text"
+                                   Color="Color.Primary"
+                                   OnClick="Cancel"
+                                   Class="pa-2 mx-2">@localizer["Cancel"]</MudButton>
+                            </MudCardActions>
+                        </MudCard>
+                    </MudForm>
+                </div>

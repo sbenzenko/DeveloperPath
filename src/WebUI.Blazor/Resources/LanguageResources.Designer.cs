@@ -79,11 +79,47 @@ namespace WebUI.Blazor.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        public static string Cancel {
+            get {
+                return ResourceManager.GetString("Cancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Delete.
         /// </summary>
         public static string Delete {
             get {
                 return ResourceManager.GetString("Delete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Description.
+        /// </summary>
+        public static string Description {
+            get {
+                return ResourceManager.GetString("Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Description is required.
+        /// </summary>
+        public static string DescriptionIsRequired {
+            get {
+                return ResourceManager.GetString("DescriptionIsRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Description must be shorter than 3000 characters.
+        /// </summary>
+        public static string DescriptionTooLong {
+            get {
+                return ResourceManager.GetString("DescriptionTooLong", resourceCulture);
             }
         }
         
@@ -148,6 +184,15 @@ namespace WebUI.Blazor.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to New Path.
+        /// </summary>
+        public static string NewPath {
+            get {
+                return ResourceManager.GetString("NewPath", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to You are not authorized to access this resource..
         /// </summary>
         public static string NotAuthorized {
@@ -175,11 +220,92 @@ namespace WebUI.Blazor.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Path title.
+        /// </summary>
+        public static string PathTitle {
+            get {
+                return ResourceManager.GetString("PathTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Path title must be shorter than 100 characters.
+        /// </summary>
+        public static string PathTitleToLong {
+            get {
+                return ResourceManager.GetString("PathTitleToLong", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to See project development status and contribute at &lt;a href=&quot;https://github.com/sbenzenko/DeveloperPath&quot; target=&quot;_blank&quot;&gt;Github&lt;/a&gt; and &lt;a href=&quot;https://dev.azure.com/sbenzenko/DeveloperPath&quot; target=&quot;_blank&quot;&gt;Azure DevOps&lt;/a&gt;..
         /// </summary>
         public static string ProjectReferences {
             get {
                 return ResourceManager.GetString("ProjectReferences", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save.
+        /// </summary>
+        public static string Save {
+            get {
+                return ResourceManager.GetString("Save", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tags.
+        /// </summary>
+        public static string Tags {
+            get {
+                return ResourceManager.GetString("Tags", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Title is required.
+        /// </summary>
+        public static string TitleIsRequired {
+            get {
+                return ResourceManager.GetString("TitleIsRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Uri Key.
+        /// </summary>
+        public static string UriKey {
+            get {
+                return ResourceManager.GetString("UriKey", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Uri key is required.
+        /// </summary>
+        public static string UriKeyIsRequired {
+            get {
+                return ResourceManager.GetString("UriKeyIsRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to URI key must be shorter than 20 characters.
+        /// </summary>
+        public static string UriTooLong {
+            get {
+                return ResourceManager.GetString("UriTooLong", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Visible.
+        /// </summary>
+        public static string Visible {
+            get {
+                return ResourceManager.GetString("Visible", resourceCulture);
             }
         }
         

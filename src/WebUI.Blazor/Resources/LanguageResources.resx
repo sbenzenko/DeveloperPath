@@ -123,8 +123,20 @@
   <data name="Administrator zone" xml:space="preserve">
     <value>Administrator zone</value>
   </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
   <data name="Delete" xml:space="preserve">
     <value>Delete</value>
+  </data>
+  <data name="Description" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="DescriptionIsRequired" xml:space="preserve">
+    <value>Description is required</value>
+  </data>
+  <data name="DescriptionTooLong" xml:space="preserve">
+    <value>Description must be shorter than 3000 characters</value>
   </data>
   <data name="Edit" xml:space="preserve">
     <value>Edit</value>
@@ -150,6 +162,9 @@ Developer Path project was created to answer these and many other questions.</va
   <data name="Menu" xml:space="preserve">
     <value>Menu</value>
   </data>
+  <data name="NewPath" xml:space="preserve">
+    <value>New Path</value>
+  </data>
   <data name="NotAuthorized" xml:space="preserve">
     <value>You are not authorized to access this resource.</value>
   </data>
@@ -159,8 +174,35 @@ Developer Path project was created to answer these and many other questions.</va
   <data name="Paths" xml:space="preserve">
     <value>Paths</value>
   </data>
+  <data name="PathTitle" xml:space="preserve">
+    <value>Path title</value>
+  </data>
+  <data name="PathTitleToLong" xml:space="preserve">
+    <value>Path title must be shorter than 100 characters</value>
+  </data>
   <data name="ProjectReferences" xml:space="preserve">
     <value>See project development status and contribute at &lt;a href="https://github.com/sbenzenko/DeveloperPath" target="_blank"&gt;Github&lt;/a&gt; and &lt;a href="https://dev.azure.com/sbenzenko/DeveloperPath" target="_blank"&gt;Azure DevOps&lt;/a&gt;.</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="Tags" xml:space="preserve">
+    <value>Tags</value>
+  </data>
+  <data name="TitleIsRequired" xml:space="preserve">
+    <value>Title is required</value>
+  </data>
+  <data name="UriKey" xml:space="preserve">
+    <value>Uri Key</value>
+  </data>
+  <data name="UriKeyIsRequired" xml:space="preserve">
+    <value>Uri key is required</value>
+  </data>
+  <data name="UriTooLong" xml:space="preserve">
+    <value>URI key must be shorter than 20 characters</value>
+  </data>
+  <data name="Visible" xml:space="preserve">
+    <value>Visible</value>
   </data>
   <data name="Welcome" xml:space="preserve">
     <value>Welcome to Developer Path project!</value>

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Shared.ClientModels
+namespace DeveloperPath.Domain.Shared.ClientModels
 {
   /// <summary>
   /// Developer path information
@@ -10,26 +10,26 @@ namespace Shared.ClientModels
     /// <summary>
     /// Path ID
     /// </summary>
-    public int Id { get; init; }
+    public int Id { get; set; }
 
     /// <summary>
     /// Path title
     /// </summary>
-    public string Title { get; init; }
+    public string Title { get; set; }
     
     /// <summary>
     /// URI key
     /// </summary>
-    public string Key { get; init; }
+    public string Key { get; set; }
     /// <summary>
     /// Path short summary
     /// </summary>
-    public string Description { get; init; }
+    public string Description { get; set; }
     
     /// <summary>
     /// Make path visible for users
     /// </summary>
-    public bool IsVisible { get; init; }
+    public bool IsVisible { get; set; }
 
     /// <summary>
     /// List of tags related to path

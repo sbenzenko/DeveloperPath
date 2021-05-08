@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using DeveloperPath.Application.CQRS.Paths.Commands.UpdatePath;
 using DeveloperPath.Domain.Shared.ClientModels;
-using Shared.ClientModels;
+ 
 
 namespace DeveloperPath.Application.Common.Mappings.Profiles
 {

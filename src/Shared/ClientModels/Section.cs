@@ -1,5 +1,4 @@
-﻿//using DeveloperPath.Application.Common.Mappings;
-using DeveloperPath.Domain.Shared.Enums;
+﻿using DeveloperPath.Domain.Shared.Enums;
 
 namespace DeveloperPath.Domain.Shared.ClientModels
 {

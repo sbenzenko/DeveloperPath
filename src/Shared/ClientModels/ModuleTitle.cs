@@ -1,6 +1,4 @@
-﻿//using DeveloperPath.Application.Common.Mappings;
-
-namespace DeveloperPath.Domain.Shared.ClientModels
+﻿namespace DeveloperPath.Domain.Shared.ClientModels
 {
   /// <summary>
   /// Module title

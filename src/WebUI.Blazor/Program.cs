@@ -4,9 +4,11 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Net.Http;
 using System.Threading.Tasks;
+using MatBlazor;
 using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
+using MudBlazor;
 using WebUI.Blazor.Security;
- 
+
 using MudBlazor.Services;
 using WebUI.Blazor.Extensions;
 using WebUI.Blazor.Services;
@@ -19,7 +21,7 @@ namespace WebUI.Blazor
         {
             var builder = WebAssemblyHostBuilder.CreateDefault(args);
             builder.RootComponents.Add<App>("#app");
-           
+
             // We register a named HttpClient here for the API
             Console.WriteLine("API URI " + builder.Configuration["PathApiBaseUri"]);
 
@@ -28,7 +30,7 @@ namespace WebUI.Blazor
                 throw new Exception("Path API base URL is null");
             }
 
-            builder.Services.AddHttpClient("api", client =>client.BaseAddress = new Uri(builder.Configuration["PathApiBaseUri"]))
+            builder.Services.AddHttpClient("api", client => client.BaseAddress = new Uri(builder.Configuration["PathApiBaseUri"]))
                 .AddHttpMessageHandler(sp =>
                 {
                     var handler = sp.GetService<AuthorizationMessageHandler>()
@@ -39,18 +41,21 @@ namespace WebUI.Blazor
                 });
 
             builder.Services.AddLocalization();
+            builder.Services.AddMatBlazor();
 
             builder.Services
                 .AddScoped(sp => sp.GetService<IHttpClientFactory>()
                 .CreateClient("api"));
 
-            builder.Services.AddMudServices();
+            builder.Services.AddMudServices(configuration =>
+                configuration.SnackbarConfiguration.SnackbarVariant = Variant.Filled);
+
             builder.Services
                 .AddOidcAuthentication(options =>
                 {
                     builder.Configuration.Bind("oidc", options.ProviderOptions);
                     options.UserOptions.RoleClaim = "role";
-                    
+
                 })
                 .AddAccountClaimsPrincipalFactory<ArrayClaimsPrincipalFactory<RemoteUserAccount>>();
 
