@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using DeveloperPath.WebApi.ProblemDetails;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Abstractions;
@@ -29,7 +30,6 @@ namespace DeveloperPath.WebApi.Extensions
       services.Configure<ApiBehaviorOptions>(options =>
       {
         //options.SuppressModelStateInvalidFilter = true;
-
         // in case of Model validation error return HTTP 422 instead of 401
         options.InvalidModelStateResponseFactory = actionContext =>
         {
@@ -41,8 +41,14 @@ namespace DeveloperPath.WebApi.Extensions
           if (actionContext.ModelState.ErrorCount > 0
               && actionExecutingContext?.ActionArguments.Count == actionContext.ActionDescriptor.Parameters.Count)
           {
-            return new UnprocessableEntityObjectResult(actionContext.ModelState);
-          }
+              return  ;
+              new UnprocessableEntityProblemDetails()
+              {
+                  Status = 422,
+                  Instance = actionContext.HttpContext.Request.Path,
+
+              };
+            }
 
           // if one of the keys wasn't correctly found / couldn't be parsed
           // we're dealing with null/unparsable input

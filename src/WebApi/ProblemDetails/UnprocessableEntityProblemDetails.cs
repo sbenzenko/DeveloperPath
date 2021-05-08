@@ -10,6 +10,6 @@ namespace DeveloperPath.WebApi.ProblemDetails
             Status = 422;
         }
 
-        public IDictionary<string, string> Errors = new Dictionary<string, string>();
+        public IDictionary<string, string[]> Errors = new Dictionary<string, string[]>();
     }
 }
