@@ -29,31 +29,31 @@ namespace DeveloperPath.WebApi.Extensions
             // Customise default API behaviour
             services.Configure<ApiBehaviorOptions>(options =>
             {
-          //options.SuppressModelStateInvalidFilter = true;
-          // in case of Model validation error return HTTP 422 instead of 401
-          options.InvalidModelStateResponseFactory = actionContext =>
-          {
-                  var actionExecutingContext =
-                          actionContext as Microsoft.AspNetCore.Mvc.Filters.ActionExecutingContext;
+                //options.SuppressModelStateInvalidFilter = true;
+                // in case of Model validation error return HTTP 422 instead of 401
+                options.InvalidModelStateResponseFactory = actionContext =>
+                {
+                    var actionExecutingContext =
+                      actionContext as Microsoft.AspNetCore.Mvc.Filters.ActionExecutingContext;
 
-            // if there are modelstate errors & all keys were correctly
-            // found/parsed we're dealing with validation errors
-            if (actionContext.ModelState.ErrorCount > 0
-                && actionExecutingContext?.ActionArguments.Count == actionContext.ActionDescriptor.Parameters.Count)
-                  {
-                      return;
-                      new UnprocessableEntityProblemDetails()
-                      {
-                          Status = 422,
-                          Instance = actionContext.HttpContext.Request.Path,
+                    // if there are modelstate errors & all keys were correctly
+                    // found/parsed we're dealing with validation errors
+                    if (actionContext.ModelState.ErrorCount > 0
+                        && actionExecutingContext?.ActionArguments.Count == actionContext.ActionDescriptor.Parameters.Count)
+                    {
+                        return;
+                        new UnprocessableEntityProblemDetails()
+                        {
+                            Status = 422,
+                            Instance = actionContext.HttpContext.Request.Path,
 
-                      };
-                  }
+                        };
+                    }
 
-            // if one of the keys wasn't correctly found / couldn't be parsed
-            // we're dealing with null/unparsable input
-            return new BadRequestObjectResult(actionContext.ModelState);
-              };
+                    // if one of the keys wasn't correctly found / couldn't be parsed
+                    // we're dealing with null/unparsable input
+                    return new BadRequestObjectResult(actionContext.ModelState);
+                };
             });
 
             return services;
@@ -71,8 +71,8 @@ namespace DeveloperPath.WebApi.Extensions
               .AddXmlDataContractSerializerFormatters()
               .AddJsonOptions(options =>
               {
-            // serialize enums as strings
-            options.JsonSerializerOptions.Converters.Add(new System.Text.Json.Serialization.JsonStringEnumConverter());
+                  // serialize enums as strings
+                  options.JsonSerializerOptions.Converters.Add(new System.Text.Json.Serialization.JsonStringEnumConverter());
               });
 
             return services;
@@ -103,31 +103,31 @@ namespace DeveloperPath.WebApi.Extensions
 
             services.AddSwaggerGen(setupAction =>
             {
-          // Add swagger documents for all avaliable api versions
-          foreach (var description in apiVersionDescriptionProvider.ApiVersionDescriptions)
+                // Add swagger documents for all avaliable api versions
+                foreach (var description in apiVersionDescriptionProvider.ApiVersionDescriptions)
                 {
                     setupAction.SwaggerDoc($"DeveloperPathAPISpecification{description.GroupName}",
                     new Microsoft.OpenApi.Models.OpenApiInfo()
-                      {
-                          Version = description.ApiVersion.ToString(),
-                          Title = "Developer Path API",
-                          Description = "Developer Path project Open API specification",
-                          Contact = new Microsoft.OpenApi.Models.OpenApiContact
-                          {
-                              Name = "Sergey Benzenko",
-                              Email = "sbenzenko@gmail.com",
-                              Url = new Uri("https://t.me/NetDeveloperDiary")
-                          }
-                      });
+                    {
+                        Version = description.ApiVersion.ToString(),
+                        Title = "Developer Path API",
+                        Description = "Developer Path project Open API specification",
+                        Contact = new Microsoft.OpenApi.Models.OpenApiContact
+                        {
+                            Name = "Sergey Benzenko",
+                            Email = "sbenzenko@gmail.com",
+                            Url = new Uri("https://t.me/NetDeveloperDiary")
+                        }
+                    });
                 }
 
                 setupAction.AddSecurityDefinition("bearerAuth",
             new OpenApiSecurityScheme()
-                {
-                    Type = SecuritySchemeType.Http,
-                    Scheme = JwtBearerDefaults.AuthenticationScheme,
-                    Description = "Provide a JWT bearer token to access the API"
-                });
+            {
+                Type = SecuritySchemeType.Http,
+                Scheme = JwtBearerDefaults.AuthenticationScheme,
+                Description = "Provide a JWT bearer token to access the API"
+            });
 
                 setupAction.AddSecurityRequirement(new OpenApiSecurityRequirement
               {
@@ -144,23 +144,23 @@ namespace DeveloperPath.WebApi.Extensions
           }
               });
 
-          // select swagger document based on selected API version
-          setupAction.DocInclusionPredicate((documentName, apiDescription) =>
-          {
-                  var actionApiVersionModel = apiDescription.ActionDescriptor
-              .GetApiVersionModel(ApiVersionMapping.Explicit | ApiVersionMapping.Implicit);
+                // select swagger document based on selected API version
+                setupAction.DocInclusionPredicate((documentName, apiDescription) =>
+                {
+                    var actionApiVersionModel = apiDescription.ActionDescriptor
+          .GetApiVersionModel(ApiVersionMapping.Explicit | ApiVersionMapping.Implicit);
 
-                  if (actionApiVersionModel is null)
-                      return true;
+                    if (actionApiVersionModel is null)
+                        return true;
 
-                  if (actionApiVersionModel.DeclaredApiVersions.Any())
-                  {
-                      return actionApiVersionModel.DeclaredApiVersions.Any(v =>
-                  $"DeveloperPathAPISpecificationv{v}" == documentName);
-                  }
-                  return actionApiVersionModel.ImplementedApiVersions.Any(v =>
-                $"DeveloperPathAPISpecificationv{v}" == documentName);
-              });
+                    if (actionApiVersionModel.DeclaredApiVersions.Any())
+                    {
+                        return actionApiVersionModel.DeclaredApiVersions.Any(v =>
+              $"DeveloperPathAPISpecificationv{v}" == documentName);
+                    }
+                    return actionApiVersionModel.ImplementedApiVersions.Any(v =>
+            $"DeveloperPathAPISpecificationv{v}" == documentName);
+                });
 
                 setupAction.IncludeXmlComments(System.IO.Path.Combine(AppContext.BaseDirectory, "DeveloperPath.Api.xml"));
                 setupAction.IncludeXmlComments(System.IO.Path.Combine(AppContext.BaseDirectory, "DeveloperPath.Models.xml"));
