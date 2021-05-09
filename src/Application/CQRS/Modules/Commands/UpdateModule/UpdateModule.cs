@@ -63,7 +63,7 @@ namespace DeveloperPath.Application.CQRS.Modules.Commands.UpdateModule
     {
       var entity = await _context.Modules.FindAsync(new object[] { request.Id }, cancellationToken);
       if (entity == null)
-        throw new NotFoundException(nameof(Module), request.Id);
+        throw new NotFoundException(nameof(Module), request.Id, NotFoundHelper.MODULE_NOT_FOUND);
 
       // TODO: is there a way to use init-only fields?
       entity.Title = request.Title;

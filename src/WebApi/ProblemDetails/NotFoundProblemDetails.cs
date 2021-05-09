@@ -1,8 +1,8 @@
 ﻿namespace DeveloperPath.WebApi.ProblemDetails
 {
-    public class NotFoundProblemDetails : ProblemDetailsBase
+    public class NotFoundProblemDetailsBase : ProblemDetails.ProblemDetailsBase
     {
-        public NotFoundProblemDetails()
+        public NotFoundProblemDetailsBase()
         {
             Title = "One or more errors occurred.";
             Status = 404;
@@ -11,7 +11,7 @@
         public string Error;
         public string ErrorKey;
 
-        public NotFoundProblemDetails(string message, string errorKey) : this()
+        public NotFoundProblemDetailsBase(string message, string errorKey) : this()
         {
             ErrorKey = errorKey;
             Error = message;

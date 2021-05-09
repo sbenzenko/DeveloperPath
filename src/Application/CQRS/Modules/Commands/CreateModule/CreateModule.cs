@@ -68,7 +68,7 @@ namespace DeveloperPath.Application.CQRS.Modules.Commands.CreateModule
         .FirstOrDefaultAsync(cancellationToken);
 
       if (path == null)
-        throw new NotFoundException(nameof(Path), request.PathId);
+        throw new NotFoundException(nameof(Path), request.PathId, NotFoundHelper.PATH_NOT_FOUND);
 
       var entity = new Domain.Entities.Module
       {

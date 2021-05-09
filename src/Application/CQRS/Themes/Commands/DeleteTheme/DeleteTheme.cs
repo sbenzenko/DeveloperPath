@@ -46,13 +46,13 @@ namespace DeveloperPath.Application.CQRS.Themes.Commands.DeleteTheme
       //TODO: check if requested module is in requested path (???)
       var path = await _context.Paths.FindAsync(new object[] { request.PathId }, cancellationToken);
       if (path == null)
-        throw new NotFoundException(nameof(Path), request.PathId);
+        throw new NotFoundException(nameof(Path), request.PathId, NotFoundHelper.PATH_NOT_FOUND);
 
       var entity = await _context.Themes
         .Where(t => t.Id == request.Id && t.ModuleId == request.ModuleId)
         .FirstOrDefaultAsync(cancellationToken);
       if (entity == null)
-        throw new NotFoundException(nameof(Theme), request.Id);
+        throw new NotFoundException(nameof(Theme), request.Id, NotFoundHelper.THEME_NOT_FOUND);
 
       _context.Themes.Remove(entity);
 

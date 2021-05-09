@@ -33,7 +33,7 @@ namespace DeveloperPath.WebApi.ProblemDetails
         {
             if (context.Exception is ConflictException exception)
             {
-                var details = new ConflictProblemDetails(exception.Message, exception.ErrorKey)
+                var details = new ConflictProblemDetailsBase(exception.Message, exception.ErrorKey)
                 {
                     Type = "https://tools.ietf.org/html/rfc7231#section-6.5.1",
                     Detail = "See the errors property for details",
@@ -54,7 +54,7 @@ namespace DeveloperPath.WebApi.ProblemDetails
         {
             if (context.Exception is NotFoundException exception)
             {
-                var details = new NotFoundProblemDetails(exception.Message, exception.ErrorKey)
+                var details = new NotFoundProblemDetailsBase(exception.Message, exception.ErrorKey)
                 {
                     Type = "https://tools.ietf.org/html/rfc7231#section-6.5.1",
                     Detail = "See the errors property for details",
@@ -100,7 +100,7 @@ namespace DeveloperPath.WebApi.ProblemDetails
         {
             if (context.Exception is ValidationException exception)
             {
-                var details = new UnprocessableEntityProblemDetails
+                var details = new UnprocessableEntityProblemDetailsBase
                 {
                     Type = "https://tools.ietf.org/html/rfc7231#section-6.5.1",
                     Detail = "See the errors property for details",
@@ -139,9 +139,9 @@ namespace DeveloperPath.WebApi.ProblemDetails
 
         private void HandleUnknownException(ExceptionContext context)
         {
-            Microsoft.AspNetCore.Mvc.ProblemDetails details = default;
+            ProblemDetails.ProblemDetailsBase details = default;
 
-            details = new Microsoft.AspNetCore.Mvc.ProblemDetails
+            details = new ProblemDetails.ProblemDetailsBase
             {
                 Status = StatusCodes.Status500InternalServerError,
                 Title = "An error occurred while processing your request.",

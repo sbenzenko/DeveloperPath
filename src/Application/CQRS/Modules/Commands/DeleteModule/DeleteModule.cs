@@ -44,7 +44,7 @@ namespace DeveloperPath.Application.CQRS.Modules.Commands.DeleteModule
         .FirstOrDefaultAsync(cancellationToken);
 
       if (entity == null)
-        throw new NotFoundException(nameof(Module), request.Id);
+        throw new NotFoundException(nameof(Module), request.Id, NotFoundHelper.MODULE_NOT_FOUND);
 
       if (entity.Paths.Any(p => p.Id == request.PathId))
       {
@@ -58,7 +58,7 @@ namespace DeveloperPath.Application.CQRS.Modules.Commands.DeleteModule
         await _context.SaveChangesAsync(cancellationToken);
       }
       else
-        throw new NotFoundException(nameof(Module), request.Id);
+        throw new NotFoundException(nameof(Module), request.Id, NotFoundHelper.MODULE_NOT_FOUND);
 
       return Unit.Value;
     }

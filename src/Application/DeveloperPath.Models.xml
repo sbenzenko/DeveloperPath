@@ -94,6 +94,23 @@
             <param name="next"></param>
             <returns></returns>
         </member>
+        <member name="T:DeveloperPath.Application.Common.Exceptions.ConflictException">
+            <summary>
+            Custom API exception for conflict errors
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Common.Exceptions.ConflictException.ErrorKey">
+            <summary>
+            Error key. E.g. PATH_NOT_FOUND
+            </summary>
+        </member>
+        <member name="M:DeveloperPath.Application.Common.Exceptions.ConflictException.#ctor(System.String,System.String)">
+            <summary>
+             Creates new Conflict exception
+            </summary>
+            <param name="message"></param>
+            <param name="key"></param>
+        </member>
         <member name="T:DeveloperPath.Application.Common.Exceptions.NotFoundException">
             <summary>
             Custom API exception for not found errors
@@ -101,6 +118,11 @@
         </member>
         <member name="M:DeveloperPath.Application.Common.Exceptions.NotFoundException.#ctor">
             <summary>
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Common.Exceptions.NotFoundException.ErrorKey">
+            <summary>
+            Error key
             </summary>
         </member>
         <member name="M:DeveloperPath.Application.Common.Exceptions.NotFoundException.#ctor(System.String)">
@@ -114,7 +136,7 @@
             <param name="message"></param>
             <param name="innerException"></param>
         </member>
-        <member name="M:DeveloperPath.Application.Common.Exceptions.NotFoundException.#ctor(System.String,System.Object)">
+        <member name="M:DeveloperPath.Application.Common.Exceptions.NotFoundException.#ctor(System.String,System.Object,System.String)">
             <summary>
             </summary>
             <param name="name"></param>

@@ -49,7 +49,7 @@ namespace DeveloperPath.Application.CQRS.Modules.Queries.GetModules
         .FirstOrDefaultAsync(cancellationToken);
 
       if (result == null || result.Paths.Where(p => p.Id == request.PathId) == null)
-        throw new NotFoundException(nameof(Module), request.Id);
+        throw new NotFoundException(nameof(Module), request.Id, NotFoundHelper.MODULE_NOT_FOUND);
 
       //TODO: is there another way to map single item?
       return _mapper.Map<Module>(result);

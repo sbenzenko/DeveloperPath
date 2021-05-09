@@ -47,7 +47,7 @@ namespace DeveloperPath.Application.CQRS.Themes.Queries.GetThemes
       //TODO: check if requested module is in requested path (???)
       var path = await _context.Paths.FindAsync(new object[] { request.PathId }, cancellationToken);
       if (path == null)
-        throw new NotFoundException(nameof(Path), request.PathId);
+        throw new NotFoundException(nameof(Path),  request.PathId, NotFoundHelper.PATH_NOT_FOUND);
 
       return await _context.Themes
         .Where(t => t.ModuleId == request.ModuleId)

@@ -61,7 +61,7 @@ namespace DeveloperPath.Application.CQRS.Paths.Commands.UpdatePath
 
             if (entity == null)
             {
-                throw new NotFoundException(nameof(Path), request.Id);
+                throw new NotFoundException(nameof(Path), request.Id, NotFoundHelper.PATH_NOT_FOUND);
             }
 
             _mapper.Map(request, entity);

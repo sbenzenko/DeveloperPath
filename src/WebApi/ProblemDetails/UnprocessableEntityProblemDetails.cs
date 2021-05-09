@@ -2,9 +2,9 @@
 
 namespace DeveloperPath.WebApi.ProblemDetails
 {
-    public class UnprocessableEntityProblemDetails: ProblemDetailsBase
+    public class UnprocessableEntityProblemDetailsBase: ProblemDetails.ProblemDetailsBase
     {
-        public UnprocessableEntityProblemDetails()
+        public UnprocessableEntityProblemDetailsBase()
         {
             Title = "One or more errors occurred.";
             Status = 422;

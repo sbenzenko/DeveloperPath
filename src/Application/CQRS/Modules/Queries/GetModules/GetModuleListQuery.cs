@@ -42,7 +42,7 @@ namespace DeveloperPath.Application.CQRS.Modules.Queries.GetModules
       //TODO: check if requested module is in requested path (???)
       var path = await _context.Paths.FindAsync(new object[] { request.PathId }, cancellationToken);
       if (path == null)
-        throw new NotFoundException(nameof(Path), request.PathId);
+        throw new NotFoundException(nameof(Path), request.PathId, NotFoundHelper.PATH_NOT_FOUND);
 
       // TODO: Order modules (from PathModules.Order)
       return await _context.Paths

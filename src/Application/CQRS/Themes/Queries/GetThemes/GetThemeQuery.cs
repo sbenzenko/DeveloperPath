@@ -49,7 +49,7 @@ namespace DeveloperPath.Application.CQRS.Themes.Queries.GetThemes
       //TODO: check if requested module is in requested path (???)
       var path = await _context.Paths.FindAsync(new object[] { request.PathId }, cancellationToken);
       if (path == null)
-        throw new NotFoundException(nameof(Path), request.PathId);
+        throw new NotFoundException(nameof(Path), request.PathId, NotFoundHelper.PATH_NOT_FOUND);
 
       var result = await _context.Themes
         .Include(t => t.Prerequisites)
@@ -59,7 +59,7 @@ namespace DeveloperPath.Application.CQRS.Themes.Queries.GetThemes
         .FirstOrDefaultAsync(cancellationToken);
 
       if (result == null)
-        throw new NotFoundException(nameof(Theme), request.Id);
+        throw new NotFoundException(nameof(Theme), request.Id, NotFoundHelper.THEME_NOT_FOUND);
 
       //TODO: is there another way to map single item?
       return _mapper.Map<Theme>(result);

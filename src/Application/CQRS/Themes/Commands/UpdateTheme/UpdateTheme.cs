@@ -84,13 +84,13 @@ namespace DeveloperPath.Application.CQRS.Themes.Commands.UpdateTheme
       //TODO: check if requested module is in requested path (???)
       var path = await _context.Paths.FindAsync(new object[] { request.PathId }, cancellationToken);
       if (path == null)
-        throw new NotFoundException(nameof(Path), request.PathId);
+        throw new NotFoundException(nameof(Path), request.PathId, NotFoundHelper.PATH_NOT_FOUND);
 
       var entity = await _context.Themes
         .Where(t => t.Id == request.Id && t.ModuleId == request.ModuleId)
         .FirstOrDefaultAsync(cancellationToken);
       if (entity == null)
-        throw new NotFoundException(nameof(Theme), request.Id);
+        throw new NotFoundException(nameof(Theme), request.Id, NotFoundHelper.THEME_NOT_FOUND);
 
       Domain.Entities.Section section = null;
       if (request.SectionId > 0)
@@ -99,7 +99,7 @@ namespace DeveloperPath.Application.CQRS.Themes.Commands.UpdateTheme
           .Where(s => s.Id == request.SectionId)
           .FirstOrDefaultAsync(cancellationToken);
         if (section == null)
-          throw new NotFoundException(nameof(Section), request.SectionId);
+          throw new NotFoundException(nameof(Section), request.SectionId, NotFoundHelper.SECTION_NOT_FOUND);
       }
 
       // TODO: is there a way to use init-only fields?

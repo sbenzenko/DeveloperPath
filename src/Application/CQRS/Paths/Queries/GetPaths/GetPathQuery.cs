@@ -42,7 +42,7 @@ namespace DeveloperPath.Application.CQRS.Paths.Queries.GetPaths
         .FirstOrDefaultAsync(cancellationToken);
 
       if (result == null)
-        throw new NotFoundException(nameof(Path), request.Id);
+        throw new NotFoundException(nameof(Path), request.Id, NotFoundHelper.PATH_NOT_FOUND);
 
       //TODO: is there another way to map single item?
       return _mapper.Map<Path>(result);

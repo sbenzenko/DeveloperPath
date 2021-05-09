@@ -1,6 +1,6 @@
 ﻿namespace DeveloperPath.WebApi.ProblemDetails
 {
-    public class ValidationProblemDetails: ProblemDetailsBase
+    public class ValidationProblemDetails: ProblemDetails.ProblemDetailsBase
     {
         public ValidationProblemDetails()
         {

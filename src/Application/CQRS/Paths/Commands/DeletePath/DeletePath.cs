@@ -33,7 +33,7 @@ namespace DeveloperPath.Application.CQRS.Paths.Commands.DeletePath
     {
       var entity = await _context.Paths.FindAsync(new object[] { request.Id }, cancellationToken);
       if (entity == null)
-        throw new NotFoundException(nameof(Path), request.Id);
+        throw new NotFoundException(nameof(Path), request.Id, NotFoundHelper.PATH_NOT_FOUND);
 
       _context.Paths.Remove(entity);
 

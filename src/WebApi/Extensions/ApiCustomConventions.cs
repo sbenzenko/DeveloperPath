@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using DeveloperPath.WebApi.ProblemDetails;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 
@@ -15,7 +16,7 @@ namespace DeveloperPath.WebApi.Extensions
     { }
 
     [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(NotFoundProblemDetailsBase), StatusCodes.Status404NotFound)]
     [ProducesDefaultResponseType]
     public static void Get(
       [ApiConventionNameMatch(ApiConventionNameMatchBehavior.Any)]
@@ -25,12 +26,12 @@ namespace DeveloperPath.WebApi.Extensions
     { }
 
     [ProducesResponseType(StatusCodes.Status201Created)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status401Unauthorized)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status406NotAcceptable)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status415UnsupportedMediaType)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status422UnprocessableEntity)]
+    [ProducesResponseType(typeof(ProblemDetails.ProblemDetailsBase), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(ProblemDetailsBase), StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(typeof(NotFoundProblemDetailsBase), StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(ProblemDetailsBase), StatusCodes.Status406NotAcceptable)]
+    [ProducesResponseType(typeof(ProblemDetailsBase), StatusCodes.Status415UnsupportedMediaType)]
+    [ProducesResponseType(typeof(ProblemDetailsBase), StatusCodes.Status422UnprocessableEntity)]
     [ProducesDefaultResponseType]
     public static void Create(
       [ApiConventionTypeMatch(ApiConventionTypeMatchBehavior.Any)]
@@ -38,12 +39,12 @@ namespace DeveloperPath.WebApi.Extensions
     { }
 
     [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status401Unauthorized)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status406NotAcceptable)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status415UnsupportedMediaType)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status422UnprocessableEntity)]
+    [ProducesResponseType(typeof(ProblemDetailsBase), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(ProblemDetailsBase), StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(typeof(ProblemDetailsBase), StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(ProblemDetailsBase), StatusCodes.Status406NotAcceptable)]
+    [ProducesResponseType(typeof(ProblemDetailsBase), StatusCodes.Status415UnsupportedMediaType)]
+    [ProducesResponseType(typeof(ProblemDetailsBase), StatusCodes.Status422UnprocessableEntity)]
     [ProducesDefaultResponseType]
     public static void Update(
       [ApiConventionNameMatch(ApiConventionNameMatchBehavior.Any)]
@@ -53,8 +54,8 @@ namespace DeveloperPath.WebApi.Extensions
     { }
 
     [ProducesResponseType(typeof(NoContentResult), StatusCodes.Status204NoContent)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status401Unauthorized)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(ProblemDetailsBase), StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(typeof(ProblemDetailsBase), StatusCodes.Status404NotFound)]
     [ProducesDefaultResponseType]
     public static void Delete(
       [ApiConventionTypeMatch(ApiConventionTypeMatchBehavior.Any)]

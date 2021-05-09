@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using DeveloperPath.Application.Common.Exceptions;
+using DeveloperPath.WebApi.ProblemDetails;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
+using ValidationProblemDetails = DeveloperPath.WebApi.ProblemDetails.ValidationProblemDetails;
 
 namespace DeveloperPath.WebApi.Filters
 {
@@ -43,7 +45,7 @@ namespace DeveloperPath.WebApi.Filters
 
         private void HandleUnknownException(ExceptionContext context)
         {
-            var details = new ProblemDetails
+            var details = new ProblemDetails.ProblemDetailsBase()
             {
                 Status = StatusCodes.Status500InternalServerError,
                 Title = "An error occurred while processing your request.",
@@ -62,7 +64,7 @@ namespace DeveloperPath.WebApi.Filters
         {
             var exception = context.Exception as ValidationException;
 
-            var details = new ValidationProblemDetails(exception.Errors)
+            var details = new ValidationProblemDetails(exception.Message)
             {
                 Type = "https://tools.ietf.org/html/rfc7231#section-6.5.1"
             };
@@ -76,7 +78,7 @@ namespace DeveloperPath.WebApi.Filters
         {
             var exception = context.Exception as NotFoundException;
 
-            var details = new ProblemDetails()
+            var details = new ProblemDetailsBase()
             {
                 Type = "https://tools.ietf.org/html/rfc7231#section-6.5.4",
                 Title = "The specified resource was not found.",

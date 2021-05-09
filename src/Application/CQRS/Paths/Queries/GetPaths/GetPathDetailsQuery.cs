@@ -44,7 +44,7 @@ namespace DeveloperPath.Application.CQRS.Paths.Queries.GetPaths
 
       if (result == null)
       {
-        throw new NotFoundException(nameof(Path), request.Id);
+        throw new NotFoundException(nameof(Path), request.Id, NotFoundHelper.PATH_NOT_FOUND);
       }
 
       //TODO: is there another way to map single item?

@@ -1,15 +1,15 @@
 ﻿namespace DeveloperPath.WebApi.ProblemDetails
 {
-    public class ConflictProblemDetails : ProblemDetailsBase
+    public class ConflictProblemDetailsBase : ProblemDetails.ProblemDetailsBase
     {
-        public ConflictProblemDetails()
+        public ConflictProblemDetailsBase()
         {
             Title = "One or more errors occurred.";
             Status = 409;
         }
         public string Error;
         public string ErrorKey;
-        public ConflictProblemDetails(string message, string errorKey) : this()
+        public ConflictProblemDetailsBase(string message, string errorKey) : this()
         {
             if (!string.IsNullOrEmpty(message))
             {

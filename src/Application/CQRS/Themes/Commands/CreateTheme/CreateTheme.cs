@@ -79,11 +79,11 @@ namespace DeveloperPath.Application.CQRS.Themes.Commands.CreateTheme
       //TODO: check if requested module is in requested path (???)
       var path = await _context.Paths.FindAsync(new object[] { request.PathId }, cancellationToken);
       if (path == null)
-        throw new NotFoundException(nameof(Path), request.PathId);
+        throw new NotFoundException(nameof(Path), request.PathId, NotFoundHelper.PATH_NOT_FOUND);
 
       var module = await _context.Modules.FindAsync(new object[] { request.ModuleId }, cancellationToken);
       if (module == null)
-        throw new NotFoundException(nameof(Module), request.ModuleId);
+        throw new NotFoundException(nameof(Module), request.ModuleId, NotFoundHelper.MODULE_NOT_FOUND);
 
       Domain.Entities.Section section = null;
       if (request.SectionId > 0)
@@ -93,7 +93,7 @@ namespace DeveloperPath.Application.CQRS.Themes.Commands.CreateTheme
           .FirstOrDefaultAsync(cancellationToken);
 
         if (section == null)
-          throw new NotFoundException(nameof(Section), request.SectionId);
+          throw new NotFoundException(nameof(Section), request.SectionId, NotFoundHelper.SECTION_NOT_FOUND);
       }
 
       var entity = new Domain.Entities.Theme
