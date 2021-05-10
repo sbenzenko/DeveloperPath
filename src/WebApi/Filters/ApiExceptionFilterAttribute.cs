@@ -6,8 +6,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Shared.ProblemDetails;
 
-namespace DeveloperPath.WebApi.ProblemDetails
+namespace DeveloperPath.WebApi.Filters
 {
     public class ApiExceptionFilterAttribute : ExceptionFilterAttribute
     {
@@ -25,7 +26,7 @@ namespace DeveloperPath.WebApi.ProblemDetails
             {
                 { typeof(ValidationException), HandleValidationException },
                 { typeof(NotFoundException), HandleNotFoundException },
-                {typeof(ConflictException),  HandleConflictException}
+                { typeof(ConflictException),  HandleConflictException}
             };
         }
 
@@ -100,7 +101,7 @@ namespace DeveloperPath.WebApi.ProblemDetails
         {
             if (context.Exception is ValidationException exception)
             {
-                var details = new UnprocessableEntityProblemDetailsBase
+                var details = new UnprocessableEntityProblemDetails
                 {
                     Type = "https://tools.ietf.org/html/rfc7231#section-6.5.1",
                     Detail = "See the errors property for details",
@@ -139,9 +140,9 @@ namespace DeveloperPath.WebApi.ProblemDetails
 
         private void HandleUnknownException(ExceptionContext context)
         {
-            ProblemDetails.ProblemDetailsBase details = default;
+            ProblemDetailsBase details = default;
 
-            details = new ProblemDetails.ProblemDetailsBase
+            details = new ProblemDetailsBase
             {
                 Status = StatusCodes.Status500InternalServerError,
                 Title = "An error occurred while processing your request.",

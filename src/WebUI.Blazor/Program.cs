@@ -8,7 +8,6 @@ using MatBlazor;
 using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 using MudBlazor;
 using WebUI.Blazor.Security;
-
 using MudBlazor.Services;
 using WebUI.Blazor.Extensions;
 using WebUI.Blazor.Services;
@@ -47,8 +46,19 @@ namespace WebUI.Blazor
                 .AddScoped(sp => sp.GetService<IHttpClientFactory>()
                 .CreateClient("api"));
 
-            builder.Services.AddMudServices(configuration =>
-                configuration.SnackbarConfiguration.SnackbarVariant = Variant.Filled);
+            builder.Services.AddMudServices(
+                configuration =>
+                {
+                    configuration.SnackbarConfiguration.SnackbarVariant = Variant.Filled;
+                    configuration.SnackbarConfiguration.HideTransitionDuration = 500;
+                    configuration.SnackbarConfiguration.ShowTransitionDuration = 500;
+                    configuration.SnackbarConfiguration.ShowCloseIcon = true;
+                    configuration.SnackbarConfiguration.PositionClass = "mud-snackbar-location-bottom-right";
+                    configuration.SnackbarConfiguration.PreventDuplicates = true;
+                    configuration.SnackbarConfiguration.BackgroundBlurred = true;
+                    configuration.SnackbarConfiguration.VisibleStateDuration = 2000;
+                }
+            );
 
             builder.Services
                 .AddOidcAuthentication(options =>

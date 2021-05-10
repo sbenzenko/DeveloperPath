@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
-namespace DeveloperPath.WebApi.ProblemDetails
+namespace Shared.ProblemDetails
 {
     public class ProblemDetailsBase
     {

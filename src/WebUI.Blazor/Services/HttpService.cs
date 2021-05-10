@@ -5,6 +5,7 @@ using System.Net.Http;
 using System.Net.Http.Json;
 using System.Text.Json;
 using System.Threading.Tasks;
+using Shared.ProblemDetails;
 
 namespace WebUI.Blazor.Services
 {
@@ -35,9 +36,10 @@ namespace WebUI.Blazor.Services
 
             if (response.StatusCode == HttpStatusCode.UnprocessableEntity)
             {
-                var unprocessableResult = await JsonSerializer.DeserializeAsync<UnprocessableEntityObjectResult>(
+                var unprocessableResult = await JsonSerializer.DeserializeAsync<UnprocessableEntityProblemDetails>(
                     await response.Content.ReadAsStreamAsync(),
                     new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
+                throw new ApiError(unprocessableResult);
             }
             if (response.StatusCode == HttpStatusCode.InternalServerError)
             {
@@ -49,9 +51,5 @@ namespace WebUI.Blazor.Services
             }
             throw new Exception("Server returned error");
         }
-    }
-
-    public class UnprocessableEntityObjectResult
-    {
     }
 }

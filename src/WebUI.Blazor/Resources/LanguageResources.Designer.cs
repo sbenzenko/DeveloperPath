@@ -211,6 +211,15 @@ namespace WebUI.Blazor.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Patch is created.
+        /// </summary>
+        public static string PathCreated {
+            get {
+                return ResourceManager.GetString("PathCreated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Paths.
         /// </summary>
         public static string Paths {

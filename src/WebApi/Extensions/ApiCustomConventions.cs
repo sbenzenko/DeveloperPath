@@ -1,7 +1,7 @@
-﻿using DeveloperPath.WebApi.ProblemDetails;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
+using Shared.ProblemDetails;
 
 namespace DeveloperPath.WebApi.Extensions
 {
@@ -26,7 +26,7 @@ namespace DeveloperPath.WebApi.Extensions
     { }
 
     [ProducesResponseType(StatusCodes.Status201Created)]
-    [ProducesResponseType(typeof(ProblemDetails.ProblemDetailsBase), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(ProblemDetailsBase), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(ProblemDetailsBase), StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(typeof(NotFoundProblemDetailsBase), StatusCodes.Status404NotFound)]
     [ProducesResponseType(typeof(ProblemDetailsBase), StatusCodes.Status406NotAcceptable)]

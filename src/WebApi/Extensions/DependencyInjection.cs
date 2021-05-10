@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
-using DeveloperPath.WebApi.ProblemDetails;
+using DeveloperPath.WebApi.Filters;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Abstractions;
@@ -9,6 +10,7 @@ using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
+using Shared.ProblemDetails;
 
 namespace DeveloperPath.WebApi.Extensions
 {
@@ -17,41 +19,48 @@ namespace DeveloperPath.WebApi.Extensions
         internal static IServiceCollection AddApiConfiguration(this IServiceCollection services)
         {
             services.AddApiControllers();
-            //services.ConfigureBehaviour();
+            services.ConfigureBehaviour();
             services.AddVersioning();
             services.AddSwaggerGenConfiguration();
 
             return services;
         }
 
-        //private static IServiceCollection ConfigureBehaviour(this IServiceCollection services)
-        //{
-        //    // Customise default API behaviour
-        //    services.Configure<ApiBehaviorOptions>(options =>
-        //    {
-        //        //options.SuppressModelStateInvalidFilter = true;
-        //        // in case of Model validation error return HTTP 422 instead of 401
-        //        options.InvalidModelStateResponseFactory = actionContext =>
-        //        {
-        //            var actionExecutingContext =
-        //              actionContext as Microsoft.AspNetCore.Mvc.Filters.ActionExecutingContext;
+        private static IServiceCollection ConfigureBehaviour(this IServiceCollection services)
+        {
+            // Customise default API behaviour
+            services.Configure<ApiBehaviorOptions>(options =>
+            {
+                //options.SuppressModelStateInvalidFilter = true;
+                // in case of Model validation error return HTTP 422 instead of 401
+                options.InvalidModelStateResponseFactory = actionContext =>
+                {
+                    var actionExecutingContext =
+                      actionContext as Microsoft.AspNetCore.Mvc.Filters.ActionExecutingContext;
 
-        //            // if there are modelstate errors & all keys were correctly
-        //            // found/parsed we're dealing with validation errors
-        //            if (actionContext.ModelState.ErrorCount > 0
-        //                && actionExecutingContext?.ActionArguments.Count == actionContext.ActionDescriptor.Parameters.Count)
-        //            {
-        //                return new UnauthorizedObjectResult(actionContext.ModelState);
-        //            }
+                    // if there are modelstate errors & all keys were correctly
+                    // found/parsed we're dealing with validation errors
+                    if (actionContext.ModelState.ErrorCount > 0
+                        && actionExecutingContext?.ActionArguments.Count == actionContext.ActionDescriptor.Parameters.Count)
+                    {
 
-        //            // if one of the keys wasn't correctly found / couldn't be parsed
-        //            // we're dealing with null/unparsable input
-        //            return new BadRequestObjectResult(actionContext.ModelState);
-        //        };
-        //    });
+                        return new UnprocessableEntityObjectResult(
+                            new UnprocessableEntityProblemDetails
+                            {
+                                Type = "https://tools.ietf.org/html/rfc7231#section-6.5.1",
+                                Detail = "See the errors property for details",
+                                Instance = actionExecutingContext.HttpContext.Request.Path,
+                                Errors = actionContext.ModelState.ToDictionary(x => x.Key, pair => pair.Value.Errors.Select(x => x.ErrorMessage).ToArray())
+                            });
+                    }
+                    // if one of the keys wasn't correctly found / couldn't be parsed
+                    // we're dealing with null/unparsable input
+                    return new BadRequestObjectResult(actionContext.ModelState);
+                };
+            });
 
-        //    return services;
-        //}
+            return services;
+        }
 
         private static IServiceCollection AddApiControllers(this IServiceCollection services)
         {

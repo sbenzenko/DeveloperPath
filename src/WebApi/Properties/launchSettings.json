@@ -9,6 +9,7 @@
   "profiles": {
     "WebApi": {
       "commandName": "Project",
+      "launchBrowser": true,
       "launchUrl": "https://localhost:7001/swagger/v1/swagger.json",
       "environmentVariables": {
         "AZURE_CLIENT_SECRET": "-Lm-bnob~h82J4jRqaDpd6.wc08lT9Pncz",
@@ -16,7 +17,10 @@
         "ASPNETCORE_ENVIRONMENT": "Development",
         "AZURE_TENANT_ID": "0ad185de-d1f6-426f-a89d-7f4620a13cec"
       },
-      "applicationUrl": "http://localhost:7000;https://localhost:7001"
+      "sqlDebugging": false,
+      "nativeDebugging": false,
+      "applicationUrl": "http://localhost:7000;https://localhost:7001",
+      "jsWebView2Debugging": false
     }
   }
 }

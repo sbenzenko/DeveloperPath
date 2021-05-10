@@ -1,6 +1,6 @@
-﻿namespace DeveloperPath.WebApi.ProblemDetails
+﻿namespace Shared.ProblemDetails
 {
-    public class NotFoundProblemDetailsBase : ProblemDetails.ProblemDetailsBase
+    public class NotFoundProblemDetailsBase : ProblemDetailsBase
     {
         public NotFoundProblemDetailsBase()
         {

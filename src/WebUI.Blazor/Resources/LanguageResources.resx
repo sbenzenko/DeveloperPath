@@ -171,6 +171,9 @@ Developer Path project was created to answer these and many other questions.</va
   <data name="NotFound" xml:space="preserve">
     <value>Sorry, there's nothing at this address.</value>
   </data>
+  <data name="PathCreated" xml:space="preserve">
+    <value>Patch is created</value>
+  </data>
   <data name="Paths" xml:space="preserve">
     <value>Paths</value>
   </data>
