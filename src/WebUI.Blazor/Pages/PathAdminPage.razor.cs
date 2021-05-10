@@ -81,7 +81,7 @@ namespace WebUI.Blazor.Pages
             StateHasChanged();
         }
 
-        private async Task ChangeVisible(Path pathItem)
+        private async Task ChangePathVisibilityAsync(Path pathItem)
         {
             
         }

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using Azure;
 using DeveloperPath.Application.CQRS.Paths.Commands.CreatePath;
 using DeveloperPath.Application.CQRS.Paths.Commands.DeletePath;
 using DeveloperPath.Application.CQRS.Paths.Commands.UpdatePath;
@@ -37,6 +38,8 @@ namespace DeveloperPath.WebApi.Controllers
               ? await GetPage(requestParams)
               : await GetAll();
         }
+
+        
 
         /// <summary>
         /// Get path information by its Id

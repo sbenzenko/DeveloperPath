@@ -32,8 +32,8 @@
                                 <MudCardActions>
                                     <MudButton Color="Color.Info">@localizer["Edit"]</MudButton>
                                     <MudButton Color="Color.Info">@localizer["Delete"]</MudButton>
-                                    <MudToggleIconButton Toggled="@(pathItem.IsVisible)"
-                                                         ToggledChanged="@()=>ChangeVisible(pathItem)"
+                                    <MudToggleIconButton @bind-Togled="@pathItem.IsVisible"
+                                                         ToggledChanged="@(()=>ChangePathVisibilityAsync(pathItem))"
                                                          Icon="@Icons.Material.Filled.VisibilityOff" 
                                                          ToggledIcon="@Icons.Material.Filled.Visibility" 
                                                          ToggledColor="@Color.Success"/>
