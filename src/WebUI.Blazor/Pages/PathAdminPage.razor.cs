@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using Microsoft.AspNetCore.Components;
 using System.Threading.Tasks;
@@ -82,10 +83,20 @@ namespace WebUI.Blazor.Pages
             StateHasChanged();
         }
 
-        private async Task<Path> ChangePathVisibilityAsync(Path pathItem)
+        private async Task  ChangePathVisibilityAsync(Path pathItem)
         {
-            var result = await PathService.ChangeVisibility(pathItem);
-            return result;
+            try
+            {
+                var result = await PathService.ChangeVisibility(pathItem);
+                var changed = Paths.FirstOrDefault(x => x.Id == pathItem.Id);
+                if (changed != null)
+                    changed.IsVisible = result.IsVisible;
+                StateHasChanged();
+            }
+            catch (Exception e)
+            {
+                Snackbar.Add(e.Message, Severity.Error);
+            }
         }
     }
 }

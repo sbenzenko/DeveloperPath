@@ -1,8 +1,8 @@
 ﻿namespace Shared.ProblemDetails
 {
-    public class NotFoundProblemDetailsBase : ProblemDetailsBase
+    public class NotFoundProblemDetails : ProblemDetailsBase
     {
-        public NotFoundProblemDetailsBase()
+        public NotFoundProblemDetails()
         {
             Title = "One or more errors occurred.";
             Status = 404;
@@ -11,7 +11,7 @@
         public string Error;
         public string ErrorKey;
 
-        public NotFoundProblemDetailsBase(string message, string errorKey) : this()
+        public NotFoundProblemDetails(string message, string errorKey) : this()
         {
             ErrorKey = errorKey;
             Error = message;

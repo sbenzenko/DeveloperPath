@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using DeveloperPath.Domain.Shared.ClientModels;
 using Microsoft.AspNetCore.JsonPatch;
+using Newtonsoft.Json.Serialization;
 
 namespace WebUI.Blazor.Services
 {
@@ -28,9 +29,10 @@ namespace WebUI.Blazor.Services
 
         public async Task<Path> ChangeVisibility(Path pathItem)
         {
-            JsonPatchDocument  patchDocument = new JsonPatchDocument ();
+            JsonPatchDocument  patchDocument = new JsonPatchDocument();
             patchDocument.Replace(nameof(pathItem.IsVisible), !pathItem.IsVisible);
-            return await _httpService.PatchAsync<Path>(BaseResourceString, patchDocument);
+           
+            return await _httpService.PatchAsync<Path>($"{BaseResourceString}/{pathItem.Id}", patchDocument);
         }
     }
 }

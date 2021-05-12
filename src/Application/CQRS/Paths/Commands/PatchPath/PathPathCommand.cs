@@ -60,7 +60,7 @@ namespace DeveloperPath.Application.CQRS.Paths.Commands.PatchPath
         /// <returns></returns>
         public async Task<Path> Handle(PathPathCommand request, CancellationToken cancellationToken)
         {
-            var path = _context.Paths.FirstOrDefaultAsync(x => x.Id == request.PathId, cancellationToken: cancellationToken);
+            var path = await _context.Paths.FirstOrDefaultAsync(x => x.Id == request.PathId, cancellationToken: cancellationToken);
             if (path == null)
                 throw new NotFoundException(nameof(Path), request.PathId, NotFoundHelper.PATH_NOT_FOUND); 
 

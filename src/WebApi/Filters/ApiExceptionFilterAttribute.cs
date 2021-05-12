@@ -55,7 +55,7 @@ namespace DeveloperPath.WebApi.Filters
         {
             if (context.Exception is NotFoundException exception)
             {
-                var details = new NotFoundProblemDetailsBase(exception.Message, exception.ErrorKey)
+                var details = new NotFoundProblemDetails(exception.Message, exception.ErrorKey)
                 {
                     Type = "https://tools.ietf.org/html/rfc7231#section-6.5.1",
                     Detail = "See the errors property for details",

@@ -56,14 +56,13 @@ namespace WebUI.Blazor.Services
             throw new Exception("Server returned error");
         }
 
-        public async Task<T> PatchAsync<T>(string resourceUri, JsonPatchDocument patchDocument)
+        public async Task<TModel> PatchAsync<TModel>(string resourceUri, JsonPatchDocument patchDocument)
         {
             var serializedItemToUpdate = JsonConvert.SerializeObject(patchDocument);
-            var response = await HttpClient.PatchAsync(resourceUri, new StringContent(serializedItemToUpdate,
-                System.Text.Encoding.Unicode, "application/json"));
+            var response = await HttpClient.PatchAsync(resourceUri, new StringContent(serializedItemToUpdate, null, "application/json"));
             if (response.IsSuccessStatusCode)
             {
-                var result = await JsonSerializer.DeserializeAsync<T>(await response.Content.ReadAsStreamAsync(),
+                var result = await JsonSerializer.DeserializeAsync<TModel>(await response.Content.ReadAsStreamAsync(),
                     new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
                 return result;
             }
