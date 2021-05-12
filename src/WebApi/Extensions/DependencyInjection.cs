@@ -70,7 +70,7 @@ namespace DeveloperPath.WebApi.Extensions
                 options.ReturnHttpNotAcceptable = true;
                 options.Filters.Add(
             new ProducesAttribute("application/json", "application/xml"));
-            })
+            }).AddNewtonsoftJson()
               .AddXmlDataContractSerializerFormatters()
               .AddJsonOptions(options =>
               {

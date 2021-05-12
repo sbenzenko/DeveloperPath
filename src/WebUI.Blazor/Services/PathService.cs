@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using DeveloperPath.Domain.Shared.ClientModels;
+using Microsoft.AspNetCore.JsonPatch;
 
 namespace WebUI.Blazor.Services
 {
@@ -23,6 +24,13 @@ namespace WebUI.Blazor.Services
         public async Task<Path> AddNewPathAsync(Path path)
         {
             return await _httpService.CreateAsync(BaseResourceString, path);
+        }
+
+        public async Task<Path> ChangeVisibility(Path pathItem)
+        {
+            JsonPatchDocument  patchDocument = new JsonPatchDocument ();
+            patchDocument.Replace(nameof(pathItem.IsVisible), !pathItem.IsVisible);
+            return await _httpService.PatchAsync<Path>(BaseResourceString, patchDocument);
         }
     }
 }

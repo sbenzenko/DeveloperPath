@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using Azure;
+ 
 using DeveloperPath.Application.CQRS.Paths.Commands.CreatePath;
 using DeveloperPath.Application.CQRS.Paths.Commands.DeletePath;
+using DeveloperPath.Application.CQRS.Paths.Commands.PatchPath;
 using DeveloperPath.Application.CQRS.Paths.Commands.UpdatePath;
 using DeveloperPath.Application.CQRS.Paths.Queries.GetPaths;
 using DeveloperPath.Domain.Shared.ClientModels;
@@ -10,6 +11,7 @@ using DeveloperPath.WebApi.Extensions;
 using DeveloperPath.WebApi.Models;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
  
 
@@ -113,7 +115,13 @@ namespace DeveloperPath.WebApi.Controllers
             return Ok(await Mediator.Send(command));
         }
 
-        // TODO: add PATCH
+        [HttpPatch("{pathId}")]
+        [Authorize(Roles = "Administrator")]
+        public async Task<ActionResult<Path>> Patch([FromBody] JsonPatchDocument patchDocument, [FromRoute] int pathId)
+        {
+            var pathPatchCommand = new PathPathCommand(pathId, patchDocument);
+            return Ok(await Mediator.Send(pathPatchCommand));
+        }
 
         /// <summary>
         /// Delete the path with given Id

@@ -4,6 +4,7 @@ using System.Text;
 using Microsoft.AspNetCore.Components;
 using System.Threading.Tasks;
 using DeveloperPath.Domain.Shared.ClientModels;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.Extensions.Localization;
 using MudBlazor;
 using Shared.ProblemDetails;
@@ -81,9 +82,10 @@ namespace WebUI.Blazor.Pages
             StateHasChanged();
         }
 
-        private async Task ChangePathVisibilityAsync(Path pathItem)
+        private async Task<Path> ChangePathVisibilityAsync(Path pathItem)
         {
-            
+            var result = await PathService.ChangeVisibility(pathItem);
+            return result;
         }
     }
 }

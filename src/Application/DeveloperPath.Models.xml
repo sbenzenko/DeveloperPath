@@ -678,6 +678,41 @@
             Path ID
             </summary>
         </member>
+        <member name="T:DeveloperPath.Application.CQRS.Paths.Commands.PatchPath.PathPathCommand">
+            <summary>
+            Patch command for updating the Path
+            </summary>
+        </member>
+        <member name="M:DeveloperPath.Application.CQRS.Paths.Commands.PatchPath.PathPathCommand.#ctor(System.Int32,Microsoft.AspNetCore.JsonPatch.JsonPatchDocument)">
+            <summary>
+            Creates the command
+            </summary>
+            <param name="pathId">Id of Path</param>
+            <param name="patchDocument">Json Patch document</param>
+        </member>
+        <member name="P:DeveloperPath.Application.CQRS.Paths.Commands.PatchPath.PathPathCommand.PathId">
+            <summary>
+            Id of Path
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.CQRS.Paths.Commands.PatchPath.PathPathCommand.PatchDocument">
+            <summary>
+            Special Json Document for Patch feature
+            </summary>
+        </member>
+        <member name="T:DeveloperPath.Application.CQRS.Paths.Commands.PatchPath.PatchPathCommandHandler">
+            <summary>
+            Patch path command handler
+            </summary>
+        </member>
+        <member name="M:DeveloperPath.Application.CQRS.Paths.Commands.PatchPath.PatchPathCommandHandler.Handle(DeveloperPath.Application.CQRS.Paths.Commands.PatchPath.PathPathCommand,System.Threading.CancellationToken)">
+            <summary>
+            Handle
+            </summary>
+            <param name="request"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
         <member name="T:DeveloperPath.Application.CQRS.Paths.Commands.UpdatePath.UpdatePath">
             <summary>
             Path to update

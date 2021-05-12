@@ -5,7 +5,11 @@ using System.Net.Http;
 using System.Net.Http.Json;
 using System.Text.Json;
 using System.Threading.Tasks;
+using DeveloperPath.Domain.Shared.ClientModels;
+using Microsoft.AspNetCore.JsonPatch;
+using Newtonsoft.Json;
 using Shared.ProblemDetails;
+using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace WebUI.Blazor.Services
 {
@@ -25,7 +29,7 @@ namespace WebUI.Blazor.Services
 
         public async Task<T> CreateAsync<T>(string baseResourceString, T resource)
         {
-            var response = await HttpClient.PostAsJsonAsync(baseResourceString, new{});
+            var response = await HttpClient.PostAsJsonAsync(baseResourceString, resource);
 
             if (response.IsSuccessStatusCode)
             {
@@ -41,6 +45,29 @@ namespace WebUI.Blazor.Services
                     new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
                 throw new ApiError(unprocessableResult);
             }
+            if (response.StatusCode == HttpStatusCode.InternalServerError)
+            {
+                throw new Exception("Server returned error");
+            }
+            if (response.StatusCode == HttpStatusCode.BadRequest)
+            {
+                throw new Exception("Server returned Bad Request error");
+            }
+            throw new Exception("Server returned error");
+        }
+
+        public async Task<T> PatchAsync<T>(string resourceUri, JsonPatchDocument patchDocument)
+        {
+            var serializedItemToUpdate = JsonConvert.SerializeObject(patchDocument);
+            var response = await HttpClient.PatchAsync(resourceUri, new StringContent(serializedItemToUpdate,
+                System.Text.Encoding.Unicode, "application/json"));
+            if (response.IsSuccessStatusCode)
+            {
+                var result = await JsonSerializer.DeserializeAsync<T>(await response.Content.ReadAsStreamAsync(),
+                    new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+                return result;
+            }
+
             if (response.StatusCode == HttpStatusCode.InternalServerError)
             {
                 throw new Exception("Server returned error");

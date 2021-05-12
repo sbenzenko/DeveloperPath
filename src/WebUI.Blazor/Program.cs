@@ -4,7 +4,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Net.Http;
 using System.Threading.Tasks;
-using MatBlazor;
 using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 using MudBlazor;
 using WebUI.Blazor.Security;
@@ -40,7 +39,6 @@ namespace WebUI.Blazor
                 });
 
             builder.Services.AddLocalization();
-            builder.Services.AddMatBlazor();
 
             builder.Services
                 .AddScoped(sp => sp.GetService<IHttpClientFactory>()
