@@ -20,7 +20,7 @@ namespace DeveloperPath.Application.IntegrationTests.Queries
     public async Task ShouldReturnSourcesList()
     {
       var path = await AddAsync(
-        new Path { Title = "Some Path", Description = "Some Path Description" });
+        new Path { Title = "Some Path", Key = "some-path", Description = "Some Path Description" });
 
       var module = await SendAsync(new CreateModule
       {
@@ -84,7 +84,7 @@ namespace DeveloperPath.Application.IntegrationTests.Queries
     public async Task ShouldReturnSource()
     {
       var path = await AddAsync(
-        new Path { Title = "Some Path", Description = "Some Path Description" });
+        new Path { Title = "Some Path", Key = "some-path", Description = "Some Path Description" });
 
       var module = await SendAsync(new CreateModule
       {
@@ -134,7 +134,7 @@ namespace DeveloperPath.Application.IntegrationTests.Queries
     public async Task ShouldReturnSourceDetails()
     {
       var path = await AddAsync(
-        new Path { Title = "Some Path", Description = "Some Path Description" });
+        new Path { Title = "Some Path", Key = "some-path", Description = "Some Path Description" });
 
       var module = await SendAsync(new CreateModule
       {
