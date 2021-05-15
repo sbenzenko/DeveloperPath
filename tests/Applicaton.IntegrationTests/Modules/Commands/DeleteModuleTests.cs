@@ -43,11 +43,13 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
         Paths = new List<Path> { new Path
           {
             Title = "Some Path1",
+            Key = "some-path1",
             Description = "Some Path Description"
           }, 
           new Path
           {
             Title = "Some Path2",
+            Key = "some-path2",
             Description = "Some Path Description"
           } 
         }
@@ -84,6 +86,7 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
         Paths = new List<Path> { new Path
         {
           Title = "Some Path1",
+          Key = "some-path1",
           Description = "Some Path Description"
         }}
       });

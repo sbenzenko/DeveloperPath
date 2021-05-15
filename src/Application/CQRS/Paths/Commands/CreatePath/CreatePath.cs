@@ -51,12 +51,7 @@ namespace DeveloperPath.Application.CQRS.Paths.Commands.CreatePath
 
         public async Task<Path> Handle(CreatePath request, CancellationToken cancellationToken)
         {
-            var entity = new Domain.Entities.Path
-            {
-                Title = request.Title,
-                Description = request.Description,
-                Tags = request.Tags
-            };
+            var entity = _mapper.Map<Domain.Entities.Path>(request);
 
             _context.Paths.Add(entity);
 

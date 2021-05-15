@@ -8,39 +8,40 @@ using NUnit.Framework;
 
 namespace DeveloperPath.Application.IntegrationTests.Commands
 {
-  using static Testing;
+    using static Testing;
 
-  public class DeletePathTests : TestBase
-  {
-    [Test]
-    public void ShouldRequireValidPathId()
+    public class DeletePathTests : TestBase
     {
-      var command = new DeletePath { Id = 99 };
+        [Test]
+        public void ShouldRequireValidPathId()
+        {
+            var command = new DeletePath { Id = 99 };
 
-      FluentActions.Invoking(() =>
-          SendAsync(command)).Should().Throw<NotFoundException>();
+            FluentActions.Invoking(() =>
+                SendAsync(command)).Should().Throw<NotFoundException>();
+        }
+
+        [Test]
+        public async Task ShouldDeletePath()
+        {
+            var path = await SendAsync(new CreatePath
+            {
+                Title = "New Path",
+                Key = "some-path",
+                Description = "New Path Description"
+            });
+
+            var pathAdded = await FindAsync<Path>(path.Id);
+
+            await SendAsync(new DeletePath
+            {
+                Id = path.Id
+            });
+
+            var pathDeleted = await FindAsync<Path>(path.Id);
+
+            pathAdded.Should().NotBeNull();
+            pathDeleted.Should().BeNull();
+        }
     }
-
-    [Test]
-    public async Task ShouldDeletePath()
-    {
-      var path = await SendAsync(new CreatePath
-      {
-        Title = "New Path",
-        Description = "New Path Description"
-      });
-
-      var pathAdded = await FindAsync<Path>(path.Id);
-
-      await SendAsync(new DeletePath
-      {
-        Id = path.Id
-      });
-
-      var pathDeleted = await FindAsync<Path>(path.Id);
-
-      pathAdded.Should().NotBeNull();
-      pathDeleted.Should().BeNull();
-    }
-  }
 }
