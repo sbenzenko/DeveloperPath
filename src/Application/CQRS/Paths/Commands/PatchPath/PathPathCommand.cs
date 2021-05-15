@@ -62,8 +62,7 @@ namespace DeveloperPath.Application.CQRS.Paths.Commands.PatchPath
         {
             var path = await _context.Paths.FirstOrDefaultAsync(x => x.Id == request.PathId, cancellationToken: cancellationToken);
             if (path == null)
-                throw new NotFoundException(nameof(Path), request.PathId, NotFoundHelper.PATH_NOT_FOUND); 
-
+                throw new NotFoundException(nameof(Path), request.PathId, NotFoundHelper.PATH_NOT_FOUND);
             request.PatchDocument.ApplyTo(path);
             await _context.SaveChangesAsync(cancellationToken);
             return _mapper.Map<Path>(path);

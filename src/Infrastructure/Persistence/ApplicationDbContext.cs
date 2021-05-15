@@ -103,7 +103,8 @@ namespace DeveloperPath.Infrastructure.Persistence
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
-
+            builder.Entity<Path>().HasIndex(x => x.Key).IsUnique();
+            builder.Entity<Path>().Property(x => x.Key).IsRequired().HasMaxLength(100);
             base.OnModelCreating(builder);
         }
     }

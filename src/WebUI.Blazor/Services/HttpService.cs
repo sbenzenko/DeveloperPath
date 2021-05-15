@@ -4,8 +4,8 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Text.Json;
+using System.Threading;
 using System.Threading.Tasks;
-using DeveloperPath.Domain.Shared.ClientModels;
 using Microsoft.AspNetCore.JsonPatch;
 using Newtonsoft.Json;
 using Shared.ProblemDetails;
@@ -27,9 +27,9 @@ namespace WebUI.Blazor.Services
             return await JsonSerializer.DeserializeAsync<List<T>>(response, new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
         }
 
-        public async Task<T> CreateAsync<T>(string baseResourceString, T resource)
+        public async Task<T> CreateAsync<T>(string resourceUri, T resource)
         {
-            var response = await HttpClient.PostAsJsonAsync(baseResourceString, resource);
+            var response = await HttpClient.PostAsJsonAsync(resourceUri, resource);
 
             if (response.IsSuccessStatusCode)
             {
@@ -38,6 +38,42 @@ namespace WebUI.Blazor.Services
                 return result;
             }
 
+            await ThrowException(response);
+            throw new Exception("Server returned error");
+        }
+
+        public async Task<TModel> PatchAsync<TModel>(string resourceUri, JsonPatchDocument patchDocument)
+        {
+            var serializedItemToUpdate = JsonConvert.SerializeObject(patchDocument);
+            var response = await HttpClient.PatchAsync(resourceUri, new StringContent(serializedItemToUpdate, null, "application/json"));
+            if (response.IsSuccessStatusCode)
+            {
+                var result = await JsonSerializer.DeserializeAsync<TModel>(await response.Content.ReadAsStreamAsync(),
+                    new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+                return result;
+            }
+
+            await ThrowException(response);
+            throw new Exception("Server returned error");
+        }
+
+        public async Task<T> PutAsync<T>(string resourceUri, T resource)
+        {
+            var serializedItemToUpdate = JsonConvert.SerializeObject(resource);
+            var response = await HttpClient.PutAsync(resourceUri,
+                new StringContent(serializedItemToUpdate, null, "application/json"), CancellationToken.None);
+            if (response.IsSuccessStatusCode)
+            {
+                var result = await JsonSerializer.DeserializeAsync<T>(await response.Content.ReadAsStreamAsync(),
+                    new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+                return result;
+            }
+            await ThrowException(response);
+            throw new Exception("Server returned error");
+        }
+
+        private async Task ThrowException(HttpResponseMessage response)
+        {
             if (response.StatusCode == HttpStatusCode.UnprocessableEntity)
             {
                 var unprocessableResult = await JsonSerializer.DeserializeAsync<UnprocessableEntityProblemDetails>(
@@ -53,29 +89,6 @@ namespace WebUI.Blazor.Services
             {
                 throw new Exception("Server returned Bad Request error");
             }
-            throw new Exception("Server returned error");
-        }
-
-        public async Task<TModel> PatchAsync<TModel>(string resourceUri, JsonPatchDocument patchDocument)
-        {
-            var serializedItemToUpdate = JsonConvert.SerializeObject(patchDocument);
-            var response = await HttpClient.PatchAsync(resourceUri, new StringContent(serializedItemToUpdate, null, "application/json"));
-            if (response.IsSuccessStatusCode)
-            {
-                var result = await JsonSerializer.DeserializeAsync<TModel>(await response.Content.ReadAsStreamAsync(),
-                    new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
-                return result;
-            }
-
-            if (response.StatusCode == HttpStatusCode.InternalServerError)
-            {
-                throw new Exception("Server returned error");
-            }
-            if (response.StatusCode == HttpStatusCode.BadRequest)
-            {
-                throw new Exception("Server returned Bad Request error");
-            }
-            throw new Exception("Server returned error");
         }
     }
 }

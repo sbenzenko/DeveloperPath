@@ -5,6 +5,7 @@ using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
+using DeveloperPath.Application.CQRS.Paths.Commands;
 
 namespace DeveloperPath.Application
 {
@@ -28,7 +29,7 @@ namespace DeveloperPath.Application
       services.AddTransient(typeof(IPipelineBehavior<,>), typeof(PerformanceBehaviour<,>));
       services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
       services.AddTransient(typeof(IPipelineBehavior<,>), typeof(UnhandledExceptionBehaviour<,>));
-
+      services.AddScoped<IBasePathValidation, BasePathValidation>();
       return services;
     }
   }

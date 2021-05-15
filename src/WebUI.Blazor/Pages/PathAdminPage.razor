@@ -30,7 +30,7 @@
                                     </MudItem>
                                 </MudCardContent>
                                 <MudCardActions>
-                                    <MudButton Color="Color.Info">@localizer["Edit"]</MudButton>
+                                    <MudButton Color="Color.Info" OnClick="(() => ShowModalEditingPath(pathItem))">@localizer["Edit"]</MudButton>
                                     <MudButton Color="Color.Info">@localizer["Delete"]</MudButton>
                                     <MudToggleIconButton Toggled="@pathItem.IsVisible"
                                                          ToggledChanged="@(()=>ChangePathVisibilityAsync(pathItem))"

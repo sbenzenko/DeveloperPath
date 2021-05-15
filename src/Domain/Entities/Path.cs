@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using DeveloperPath.Domain.Common;
 
 namespace DeveloperPath.Domain.Entities
@@ -13,7 +14,6 @@ namespace DeveloperPath.Domain.Entities
     /// </summary>
     //public int Id { get; init; }
 
-    
     public string Key { get; set; }
     /// <summary>
     /// Path title
