@@ -183,6 +183,9 @@ Developer Path project was created to answer these and many other questions.</va
   <data name="PathTitleToLong" xml:space="preserve">
     <value>Path title must be shorter than 100 characters</value>
   </data>
+  <data name="PathUpdated" xml:space="preserve">
+    <value>Path has been updated</value>
+  </data>
   <data name="ProjectReferences" xml:space="preserve">
     <value>See project development status and contribute at &lt;a href="https://github.com/sbenzenko/DeveloperPath" target="_blank"&gt;Github&lt;/a&gt; and &lt;a href="https://dev.azure.com/sbenzenko/DeveloperPath" target="_blank"&gt;Azure DevOps&lt;/a&gt;.</value>
   </data>

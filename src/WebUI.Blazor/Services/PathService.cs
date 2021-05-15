@@ -2,7 +2,6 @@
 using System.Threading.Tasks;
 using DeveloperPath.Domain.Shared.ClientModels;
 using Microsoft.AspNetCore.JsonPatch;
-using Newtonsoft.Json.Serialization;
 
 namespace WebUI.Blazor.Services
 {
@@ -31,8 +30,12 @@ namespace WebUI.Blazor.Services
         {
             JsonPatchDocument  patchDocument = new JsonPatchDocument();
             patchDocument.Replace(nameof(pathItem.IsVisible), !pathItem.IsVisible);
-           
             return await _httpService.PatchAsync<Path>($"{BaseResourceString}/{pathItem.Id}", patchDocument);
+        }
+
+        public async Task<Path> EditPathAsync(Path path)
+        {
+            return await _httpService.PutAsync<Path>($"{BaseResourceString}/{path.Id}", path);
         }
     }
 }
