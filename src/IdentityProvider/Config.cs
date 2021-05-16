@@ -74,6 +74,35 @@ namespace IdentityProvider
                         "https://victorious-cliff-02bdab803.azurestaticapps.net/"
                     },
                     Enabled = true
+                },
+                new Client
+                {
+                    ClientName = "Developer Path Administration",
+                    ClientId = "WebUI.Admin",
+                
+                    AllowedGrantTypes = GrantTypes.Code,
+                    RequirePkce = true,
+                    AllowedCorsOrigins = {
+                        "https://localhost:44317"
+                    },
+
+                    AllowedScopes = { 
+                      IdentityServerConstants.StandardScopes.OpenId,
+                      IdentityServerConstants.StandardScopes.Profile,
+                      IdentityServerConstants.StandardScopes.Email,
+                      "pathapi" 
+                    },
+                    RedirectUris = {
+                        "https://localhost:44317/signin-oidc"
+                    },
+                    ClientSecrets =
+                    {
+                        new Secret("DeveloperPathAdminSecret".Sha256())
+                    },
+                    PostLogoutRedirectUris = {
+                        "https://localhost:44317/"
+                    },
+                    Enabled = true
                 }
             };
     }
