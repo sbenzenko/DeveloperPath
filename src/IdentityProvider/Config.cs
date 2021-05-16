@@ -3,6 +3,7 @@
 
 
 using IdentityModel;
+using IdentityServer4;
 using IdentityServer4.Models;
 using System.Collections.Generic;
 
@@ -43,6 +44,7 @@ namespace IdentityProvider
             {
                 new Client
                 {
+                    ClientName = "Developer Path Blazor client",
                     ClientId = "WebUI.Blazor",
                 
                     AllowedGrantTypes = GrantTypes.Code,
@@ -51,18 +53,26 @@ namespace IdentityProvider
                     AllowedCorsOrigins = {
                         "https://www.developer-path.com",
                         "https://localhost:5005",
-                        "https://victorious-cliff-02bdab803.azurestaticapps.net" },
+                        "https://victorious-cliff-02bdab803.azurestaticapps.net"
+                    },
 
-                    AllowedScopes = { "openid", "profile", "email", "pathapi" },
+                    AllowedScopes = { 
+                      IdentityServerConstants.StandardScopes.OpenId,
+                      IdentityServerConstants.StandardScopes.Profile,
+                      IdentityServerConstants.StandardScopes.Email,
+                      "pathapi" 
+                    },
                     RedirectUris = {
                         "https://www.developer-path.com/authentication/login-callback",
                         "https://localhost:5005/authentication/login-callback",
-                        "https://victorious-cliff-02bdab803.azurestaticapps.net/authentication/login-callback" },
+                        "https://victorious-cliff-02bdab803.azurestaticapps.net/authentication/login-callback"
+                    },
 
                     PostLogoutRedirectUris = {
                         "https://www.developer-path.com/",
                         "https://localhost:5005/",
-                        "https://victorious-cliff-02bdab803.azurestaticapps.net/" },
+                        "https://victorious-cliff-02bdab803.azurestaticapps.net/"
+                    },
                     Enabled = true
                 }
             };
