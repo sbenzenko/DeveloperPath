@@ -37,5 +37,10 @@ namespace WebUI.Blazor.Services
         {
             return await _httpService.PutAsync<Path>($"{BaseResourceString}/{path.Id}", path);
         }
+
+        public async Task<bool> DeletePath(Path path)
+        {
+            return await _httpService.DeleteAsync($"{BaseResourceString}/{path.Id}");
+        }
     }
 }

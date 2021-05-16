@@ -90,5 +90,14 @@ namespace WebUI.Blazor.Services
                 throw new Exception("Server returned Bad Request error");
             }
         }
+
+        public async Task<bool> DeleteAsync(string resourceUri)
+        {
+            var response = await HttpClient.DeleteAsync(resourceUri);
+            if (response.IsSuccessStatusCode)
+                return true;
+            await ThrowException(response);
+            throw new Exception("Server returned error");
+        }
     }
 }

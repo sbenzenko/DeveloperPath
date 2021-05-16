@@ -1,12 +1,16 @@
-﻿using DeveloperPath.Application.Common.Interfaces;
+﻿using System;
+using DeveloperPath.Application.Common.Interfaces;
 using DeveloperPath.Domain.Common;
 using DeveloperPath.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 using System.Data;
+using System.Linq;
+using System.Linq.Expressions;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore.Query;
 
 namespace DeveloperPath.Infrastructure.Persistence
 {
@@ -44,6 +48,17 @@ namespace DeveloperPath.Infrastructure.Persistence
                     case EntityState.Modified:
                         entry.Entity.LastModifiedBy = _currentUserService.UserId;
                         entry.Entity.LastModified = _dateTime.Now;
+                        break;
+                }
+            }
+
+            foreach (var entry in ChangeTracker.Entries<IAllowSoftDeletion>())
+            {
+                switch (entry.State)
+                {
+                    case EntityState.Deleted:
+                        entry.Entity.Deleted = DateTime.UtcNow;
+                        entry.State = EntityState.Modified;
                         break;
                 }
             }
@@ -103,8 +118,20 @@ namespace DeveloperPath.Infrastructure.Persistence
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
-            builder.Entity<Path>().HasIndex(x => x.Key).IsUnique();
-            builder.Entity<Path>().Property(x => x.Key).IsRequired().HasMaxLength(100);
+            var entities = builder.Model
+                .GetEntityTypes()
+                .Where(e => e.ClrType.GetInterface(typeof(IAllowSoftDeletion).Name) != null)
+                .Select(e => e.ClrType);
+            
+            Expression<Func<IAllowSoftDeletion, bool>> expression = deletion => deletion.Deleted == null;
+
+            foreach (var entity in entities)
+            {
+                var newParam = Expression.Parameter(entity);
+                var newbody = ReplacingExpressionVisitor.Replace(expression.Parameters.Single(), newParam, expression.Body);
+                builder.Entity(entity).HasQueryFilter(Expression.Lambda(newbody, newParam));
+            }
+
             base.OnModelCreating(builder);
         }
     }

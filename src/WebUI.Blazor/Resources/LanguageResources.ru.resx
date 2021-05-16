@@ -171,6 +171,9 @@
   <data name="PathCreated" xml:space="preserve">
     <value>Путь добавлен</value>
   </data>
+  <data name="PathDeleted" xml:space="preserve">
+    <value>Путь удален</value>
+  </data>
   <data name="Paths" xml:space="preserve">
     <value>Пути развития</value>
   </data>

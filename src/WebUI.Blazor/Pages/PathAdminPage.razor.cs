@@ -134,6 +134,25 @@ namespace WebUI.Blazor.Pages
                 var changed = Paths.FirstOrDefault(x => x.Id == pathItem.Id);
                 if (changed != null)
                     changed.IsVisible = result.IsVisible;
+                
+                StateHasChanged();
+            }
+            catch (Exception e)
+            {
+                Snackbar.Add(e.Message, Severity.Error);
+            }
+        }
+
+        private async Task DeletePath(Path pathItem)
+        {
+            try
+            {
+                var result = await PathService.DeletePath(pathItem);
+                if (result)
+                {
+                    Paths.Remove(pathItem);
+                    Snackbar.Add(localizer["PathDeleted"], Severity.Warning);
+                }
                 StateHasChanged();
             }
             catch (Exception e)

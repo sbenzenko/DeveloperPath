@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using DeveloperPath.Domain.Entities;
 using DeveloperPath.Domain.Shared.Enums;
+using Microsoft.EntityFrameworkCore;
 
 namespace DeveloperPath.Infrastructure.Persistence
 {
@@ -12,7 +13,7 @@ namespace DeveloperPath.Infrastructure.Persistence
     public static async Task SeedSampleDataAsync(ApplicationDbContext context)
     {
       // Seed, if necessary
-      if (!context.Paths.Any())
+      if (!context.Paths.IgnoreQueryFilters().Any())
       {
         // Sources 
         var primitivesSrc = new Source
