@@ -220,6 +220,15 @@ namespace WebUI.Blazor.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The Path has been deleted.
+        /// </summary>
+        public static string PathDeleted {
+            get {
+                return ResourceManager.GetString("PathDeleted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Paths.
         /// </summary>
         public static string Paths {
@@ -243,6 +252,15 @@ namespace WebUI.Blazor.Resources {
         public static string PathTitleToLong {
             get {
                 return ResourceManager.GetString("PathTitleToLong", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Path has been updated.
+        /// </summary>
+        public static string PathUpdated {
+            get {
+                return ResourceManager.GetString("PathUpdated", resourceCulture);
             }
         }
         

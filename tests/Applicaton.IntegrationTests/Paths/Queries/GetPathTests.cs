@@ -9,60 +9,62 @@ using DeveloperPath.Domain.Shared.Enums;
 
 namespace DeveloperPath.Application.IntegrationTests.Queries
 {
-  using static Testing;
+    using static Testing;
 
-  public class GetPathTests : TestBase
-  {
-    [Test]
-    public async Task ShouldReturnPathList()
+    public class GetPathTests : TestBase
     {
-      await AddAsync(new Path { Title = "Path1", Description = "Description 1" });
-      await AddAsync(new Path { Title = "Path2", Description = "Description 2" });
-      await AddAsync(new Path { Title = "Path3", Description = "Description 3" });
-      await AddAsync(new Path { Title = "Path4", Description = "Description 4" });
+        [Test]
+        public async Task ShouldReturnPathList()
+        {
+            await AddAsync(new Path { Title = "Path1", Key = "some-path1",Description = "Description 1" });
+            await AddAsync(new Path { Title = "Path2", Key = "some-path2",Description = "Description 2" });
+            await AddAsync(new Path { Title = "Path3", Key = "some-path3",Description = "Description 3" });
+            await AddAsync(new Path { Title = "Path4", Key = "some-path4", Description = "Description 4" });
 
-      var query = new GetPathListQuery();
+            var query = new GetPathListQuery();
 
-      var result = await SendAsync(query);
+            var result = await SendAsync(query);
 
-      result.Should().HaveCount(4);
-    }
+            result.Should().HaveCount(4);
+        }
 
-    [Test]
-    public async Task ShouldReturnPath()
-    {
-      var path = await AddAsync(new Path
-      {
-        Title = "Some Path",
-        Description = "Some Path Description",
-        Tags = new List<string> { "Tag1", "Tag2", "Tag3" }
-      });
+        [Test]
+        public async Task ShouldReturnPath()
+        {
+            var path = await AddAsync(new Path
+            {
+                Title = "Some Path",
+                Key = "some-path",
+                Description = "Some Path Description",
+                Tags = new List<string> { "Tag1", "Tag2", "Tag3" }
+            });
 
-      var query = new GetPathQuery() { Id = path.Id };
+            var query = new GetPathQuery() { Id = path.Id };
 
-      var result = await SendAsync(query);
+            var result = await SendAsync(query);
 
-      result.Title.Should().NotBeEmpty();
-      result.Tags.Should().HaveCount(3);
-    }
+            result.Title.Should().NotBeEmpty();
+            result.Tags.Should().HaveCount(3);
+        }
 
-    [Test]
-    public void ShouldReturnNotFound_WhenIdNotFound()
-    {
-      var query = new GetPathQuery() { Id = 99999 };
+        [Test]
+        public void ShouldReturnNotFound_WhenIdNotFound()
+        {
+            var query = new GetPathQuery() { Id = 99999 };
 
-      FluentActions.Invoking(() =>
-          SendAsync(query)).Should().Throw<NotFoundException>();
-    }
+            FluentActions.Invoking(() =>
+                SendAsync(query)).Should().Throw<NotFoundException>();
+        }
 
-    [Test]
-    public async Task ShouldReturnPathWithModules()
-    {
-      var path = await AddAsync(new Path
-      {
-        Title = "Some Other Path",
-        Description = "Some Other Path Description",
-        Modules = new List<Module>
+        [Test]
+        public async Task ShouldReturnPathWithModules()
+        {
+            var path = await AddAsync(new Path
+            {
+                Title = "Some Other Path",
+                Key = "some-path",
+                Description = "Some Other Path Description",
+                Modules = new List<Module>
           {
             new Module { Title = "Module1", Description = "Module 1 Description", Necessity = Necessity.Other },
             new Module { Title = "Module2", Description = "Module 2 Description", Necessity = Necessity.GoodToKnow },
@@ -70,25 +72,25 @@ namespace DeveloperPath.Application.IntegrationTests.Queries
             new Module { Title = "Module4", Description = "Module 4 Description", Necessity = Necessity.MustKnow },
             new Module { Title = "Module5", Description = "Module 5 Description", Necessity = Necessity.Possibility }
           },
-        Tags = new List<string> { "Tag1", "Tag2", "Tag3" }
-      });
+                Tags = new List<string> { "Tag1", "Tag2", "Tag3" }
+            });
 
-      var query = new GetPathDetailsQuery() { Id = path.Id };
+            var query = new GetPathDetailsQuery() { Id = path.Id };
 
-      var result = await SendAsync(query);
+            var result = await SendAsync(query);
 
-      result.Title.Should().NotBeEmpty();
-      result.Modules.Should().HaveCount(5);
-      result.Tags.Should().HaveCount(3);
+            result.Title.Should().NotBeEmpty();
+            result.Modules.Should().HaveCount(5);
+            result.Tags.Should().HaveCount(3);
+        }
+
+        [Test]
+        public void DetailsShouldReturnNotFound_WhenIdNotFound()
+        {
+            var query = new GetPathDetailsQuery() { Id = 99999 };
+
+            FluentActions.Invoking(() =>
+                SendAsync(query)).Should().Throw<NotFoundException>();
+        }
     }
-
-    [Test]
-    public void DetailsShouldReturnNotFound_WhenIdNotFound()
-    {
-      var query = new GetPathDetailsQuery() { Id = 99999 };
-
-      FluentActions.Invoking(() =>
-          SendAsync(query)).Should().Throw<NotFoundException>();
-    }
-  }
 }

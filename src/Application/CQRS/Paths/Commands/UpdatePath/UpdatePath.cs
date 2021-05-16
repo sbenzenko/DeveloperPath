@@ -27,6 +27,14 @@ namespace DeveloperPath.Application.CQRS.Paths.Commands.UpdatePath
         [Required]
         [MaxLength(100)]
         public string Title { get; init; }
+
+        /// <summary>
+        /// URI Key
+        /// </summary>
+        [Required]
+        [MaxLength(100)]
+        public string Key { get; init; }
+
         /// <summary>
         /// Path short summary
         /// </summary>

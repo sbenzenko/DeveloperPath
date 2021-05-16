@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using DeveloperPath.Domain.Entities;
 using DeveloperPath.Domain.Shared.Enums;
+using Microsoft.EntityFrameworkCore;
 
 namespace DeveloperPath.Infrastructure.Persistence
 {
@@ -12,7 +13,7 @@ namespace DeveloperPath.Infrastructure.Persistence
     public static async Task SeedSampleDataAsync(ApplicationDbContext context)
     {
       // Seed, if necessary
-      if (!context.Paths.Any())
+      if (!context.Paths.IgnoreQueryFilters().Any())
       {
         // Sources 
         var primitivesSrc = new Source
@@ -148,7 +149,8 @@ namespace DeveloperPath.Infrastructure.Persistence
         context.Paths.Add(new Path
         {
           Title = "ASP.NET Developer",
-          Description = "Learn how to design modern web applications using ASP.NET",
+          Key = "asp-net-developer",
+            Description = "Learn how to design modern web applications using ASP.NET",
           Tags =
                 new List<string>() {
                   "Web", "Development", "Programming"
@@ -159,6 +161,7 @@ namespace DeveloperPath.Infrastructure.Persistence
         context.Paths.Add(new Path
         {
           Title = "Game Developer",
+          Key = "game-developer",
           Description = "Intelligent game design is important to the success of a shipped game. " +
               "This skill path will help you take your game idea and really flesh out the world and mechanics and then document them in your game design document. " +
               "Once you have everything documented you will prototype levels and mechanics to make sure you find maximum fun. " +

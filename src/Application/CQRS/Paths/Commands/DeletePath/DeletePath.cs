@@ -20,7 +20,7 @@ namespace DeveloperPath.Application.CQRS.Paths.Commands.DeletePath
     public int Id { get; init; }
   }
 
-  internal class DeletePathCommandHandler : IRequestHandler<DeletePath>
+  public class DeletePathCommandHandler : IRequestHandler<DeletePath>
   {
     private readonly IApplicationDbContext _context;
 
@@ -38,7 +38,6 @@ namespace DeveloperPath.Application.CQRS.Paths.Commands.DeletePath
       _context.Paths.Remove(entity);
 
       await _context.SaveChangesAsync(cancellationToken);
-
       return Unit.Value;
     }
   }

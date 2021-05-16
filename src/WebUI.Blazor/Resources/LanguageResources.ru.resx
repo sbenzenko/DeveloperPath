@@ -171,6 +171,9 @@
   <data name="PathCreated" xml:space="preserve">
     <value>Путь добавлен</value>
   </data>
+  <data name="PathDeleted" xml:space="preserve">
+    <value>Путь удален</value>
+  </data>
   <data name="Paths" xml:space="preserve">
     <value>Пути развития</value>
   </data>
@@ -179,6 +182,9 @@
   </data>
   <data name="PathTitleToLong" xml:space="preserve">
     <value>Название должно быть короче 100 символов</value>
+  </data>
+  <data name="PathUpdated" xml:space="preserve">
+    <value>Путь обновлен</value>
   </data>
   <data name="ProjectReferences" xml:space="preserve">
     <value>Наблюдать за развитием проекта и поучаствовать в нём можно на &lt;a href="https://github.com/sbenzenko/DeveloperPath" target="_blank"&gt;Github&lt;/a&gt; и &lt;a href="https://dev.azure.com/sbenzenko/DeveloperPath" target="_blank"&gt;Azure DevOps&lt;/a&gt;.</value>

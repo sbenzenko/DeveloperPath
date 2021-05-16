@@ -106,6 +106,7 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
       var path = await AddAsync(new Path
       {
         Title = "Some Path",
+        Key = "some-path",
         Description = "Some Path Description"
       });
 
@@ -137,6 +138,7 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
       var path = await AddAsync(new Path
       {
         Title = "Some Path",
+        Key = "some-path",
         Description = "Some Path Description"
       });
 
