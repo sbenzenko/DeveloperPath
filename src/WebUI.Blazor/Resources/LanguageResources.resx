@@ -129,6 +129,12 @@
   <data name="Delete" xml:space="preserve">
     <value>Delete</value>
   </data>
+  <data name="Deleted" xml:space="preserve">
+    <value>Deleted</value>
+  </data>
+  <data name="DeletedPaths" xml:space="preserve">
+    <value>Deleted Paths</value>
+  </data>
   <data name="Description" xml:space="preserve">
     <value>Description</value>
   </data>

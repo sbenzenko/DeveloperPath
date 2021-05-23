@@ -14,7 +14,8 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using NUnit.Framework;
- 
+using Shared.ClientModels;
+
 
 namespace DeveloperPath.Web.WebAPI.Controllers
 {

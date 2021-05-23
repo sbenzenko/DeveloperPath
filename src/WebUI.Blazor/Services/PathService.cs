@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using DeveloperPath.Domain.Shared.ClientModels;
 using Microsoft.AspNetCore.JsonPatch;
+using Shared.ClientModels;
 
 namespace WebUI.Blazor.Services
 {
@@ -41,6 +41,16 @@ namespace WebUI.Blazor.Services
         public async Task<bool> DeletePath(Path path)
         {
             return await _httpService.DeleteAsync($"{BaseResourceString}/{path.Id}");
+        }
+
+        public async Task<List<Path>> GetListAnonymousAsync()
+        {
+            return  await _httpService.GetListAnonymousAsync<Path>(BaseResourceString);
+        }
+
+        public async Task<List<DeletedPath>> GetDeletedListAsync()
+        {
+            return await _httpService.GetListAsync<DeletedPath>($"{BaseResourceString}/deleted");
         }
     }
 }

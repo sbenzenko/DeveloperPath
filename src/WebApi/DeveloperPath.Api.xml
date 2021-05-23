@@ -65,6 +65,13 @@
             <returns>A collection of paths with summary information</returns>
             <response code="200">Returns a list of paths</response>
         </member>
+        <member name="M:DeveloperPath.WebApi.Controllers.PathsController.GetDeleted(DeveloperPath.WebApi.Models.RequestParams)">
+            <summary>
+            Get all deleted paths
+            </summary>
+            <returns>A collection of paths with summary information</returns>
+            <response code="200">Returns a list of paths</response>
+        </member>
         <member name="M:DeveloperPath.WebApi.Controllers.PathsController.Get(System.Int32)">
             <summary>
             Get path information by its Id

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Json;
@@ -15,10 +16,15 @@ namespace WebUI.Blazor.Services
 {
     public class HttpService
     {
+        private readonly IHttpClientFactory _clientFactory;
         public HttpClient HttpClient { get; }
-        public HttpService(HttpClient httpClient)
+        public HttpClient AnonymousHttpClient { get; }
+
+        public HttpService(IHttpClientFactory clientFactory)
         {
-            HttpClient = httpClient;
+            _clientFactory = clientFactory;
+            HttpClient = _clientFactory.CreateClient("api");
+            AnonymousHttpClient = _clientFactory.CreateClient("api-anonymous");
         }
 
         public async Task<List<T>> GetListAsync<T>(string resourceUri)
@@ -98,6 +104,12 @@ namespace WebUI.Blazor.Services
                 return true;
             await ThrowException(response);
             throw new Exception("Server returned error");
+        }
+
+        public async Task<List<T>> GetListAnonymousAsync<T>(string resourceUri)
+        {
+            var response = await AnonymousHttpClient.GetStreamAsync(resourceUri);
+            return await JsonSerializer.DeserializeAsync<List<T>>(response, new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
         }
     }
 }

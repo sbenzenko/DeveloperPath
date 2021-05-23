@@ -7,6 +7,7 @@ using DeveloperPath.Domain.Shared.ClientModels;
 using MediatR;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.EntityFrameworkCore;
+using Shared.ClientModels;
 
 namespace DeveloperPath.Application.CQRS.Paths.Commands.PatchPath
 {

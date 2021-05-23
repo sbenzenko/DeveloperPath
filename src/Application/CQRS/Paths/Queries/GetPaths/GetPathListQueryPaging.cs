@@ -9,7 +9,8 @@ using DeveloperPath.Application.Common.Models;
 using DeveloperPath.Domain.Shared.ClientModels;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
- 
+using Shared.ClientModels;
+
 
 namespace DeveloperPath.Application.CQRS.Paths.Queries.GetPaths
 {

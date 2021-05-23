@@ -1,24 +1,22 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
- 
 using DeveloperPath.Application.CQRS.Paths.Commands.CreatePath;
 using DeveloperPath.Application.CQRS.Paths.Commands.DeletePath;
 using DeveloperPath.Application.CQRS.Paths.Commands.PatchPath;
 using DeveloperPath.Application.CQRS.Paths.Commands.UpdatePath;
 using DeveloperPath.Application.CQRS.Paths.Queries.GetPaths;
-using DeveloperPath.Domain.Shared.ClientModels;
 using DeveloperPath.WebApi.Extensions;
 using DeveloperPath.WebApi.Models;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
- 
+using Shared.ClientModels;
+
 
 namespace DeveloperPath.WebApi.Controllers
 {
     [Route("api/paths")]
-    [Authorize]
     public class PathsController : ApiController
     {
         public PathsController(IMediator mediator)
@@ -33,6 +31,7 @@ namespace DeveloperPath.WebApi.Controllers
         /// <response code="200">Returns a list of paths</response>
         [HttpGet]
         [HttpHead]
+        [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<Path>>> Get([FromQuery] RequestParams requestParams = null)
         {
             //TODO: consider adding default page size and show 1st page instead of all
@@ -41,7 +40,23 @@ namespace DeveloperPath.WebApi.Controllers
               : await GetAll();
         }
 
-        
+
+        /// <summary>
+        /// Get all deleted paths
+        /// </summary>
+        /// <returns>A collection of paths with summary information</returns>
+        /// <response code="200">Returns a list of paths</response>
+        [HttpGet("deleted")]
+        [HttpHead]
+        [AllowAnonymous]
+        public async Task<ActionResult<IEnumerable<DeletedPath>>> GetDeleted([FromQuery] RequestParams requestParams = null)
+        {
+            return requestParams is not null && requestParams.UsePaging()
+                ? await GetDeletedPage(requestParams)
+                : await GetAllDeleted();
+        }
+
+
 
         /// <summary>
         /// Get path information by its Id
@@ -144,6 +159,12 @@ namespace DeveloperPath.WebApi.Controllers
             return Ok(model);
         }
 
+        private async Task<ActionResult<IEnumerable<DeletedPath>>> GetAllDeleted()
+        {
+            IEnumerable<DeletedPath> model = await Mediator.Send(new GetDeletedPathListQuery());
+            return Ok(model);
+        }
+
         private async Task<ActionResult<IEnumerable<Path>>> GetPage(RequestParams filter)
         {
             var (paginationData, result) = await Mediator.Send(
@@ -155,6 +176,21 @@ namespace DeveloperPath.WebApi.Controllers
 
             Response?.Headers?.Add("X-Pagination", System.Text.Json.JsonSerializer.Serialize(paginationData));
             return Ok(result);
+        }
+
+        private Task<ActionResult<IEnumerable<DeletedPath>>> GetDeletedPage(RequestParams filter)
+        {
+            //var (paginationData, result) = await Mediator.Send(
+            //    new GetDeletedPathListQuery()
+            //    {
+            //        PageNumber = filter.PageNumber,
+            //        PageSize = filter.PageSize
+            //    });
+
+            //Response?.Headers?.Add("X-Pagination", System.Text.Json.JsonSerializer.Serialize(paginationData));
+            // return Ok(result);
+
+            return null;
         }
     }
 }

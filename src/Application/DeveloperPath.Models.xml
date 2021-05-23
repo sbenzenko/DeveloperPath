@@ -796,6 +796,11 @@
             Validation rules for updating path
             </summary>
         </member>
+        <member name="T:DeveloperPath.Application.CQRS.Paths.Queries.GetPaths.GetDeletedPathListQuery">
+            <summary>
+            Get deleted paths
+            </summary>
+        </member>
         <member name="T:DeveloperPath.Application.CQRS.Paths.Queries.GetPaths.GetPathDetailsQuery">
             <summary>
             Get path details parameters

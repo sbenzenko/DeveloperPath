@@ -2,7 +2,8 @@
 using DeveloperPath.Application.CQRS.Paths.Commands.CreatePath;
 using DeveloperPath.Application.CQRS.Paths.Commands.UpdatePath;
 using DeveloperPath.Domain.Shared.ClientModels;
- 
+using Shared.ClientModels;
+
 
 namespace DeveloperPath.Application.Common.Mappings.Profiles
 {
@@ -18,6 +19,7 @@ namespace DeveloperPath.Application.Common.Mappings.Profiles
         {
             CreateMap<Domain.Entities.Path, Path>();
             CreateMap<Domain.Entities.Path, Path>();
+            CreateMap<Domain.Entities.Path, DeletedPath>();
             CreateMap<Domain.Entities.Path, PathDetails>();
             CreateMap<Domain.Entities.Path, PathTitle>();
             CreateMap<CreatePath, Domain.Entities.Path > ();

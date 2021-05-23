@@ -141,7 +141,7 @@ namespace DeveloperPath.WebApi.Filters
         private void HandleUnknownException(ExceptionContext context)
         {
             ProblemDetailsBase details = default;
-
+            
             details = new ProblemDetailsBase
             {
                 Status = StatusCodes.Status500InternalServerError,

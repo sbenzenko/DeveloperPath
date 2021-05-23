@@ -5,10 +5,10 @@ using System.Threading.Tasks;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using DeveloperPath.Application.Common.Interfaces;
-using DeveloperPath.Domain.Shared.ClientModels;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
- 
+using Shared.ClientModels;
+
 
 namespace DeveloperPath.Application.CQRS.Paths.Queries.GetPaths
 {
