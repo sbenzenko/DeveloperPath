@@ -726,12 +726,13 @@
             Patch command for updating the Path
             </summary>
         </member>
-        <member name="M:DeveloperPath.Application.CQRS.Paths.Commands.PatchPath.PathPathCommand.#ctor(System.Int32,Microsoft.AspNetCore.JsonPatch.JsonPatchDocument)">
+        <member name="M:DeveloperPath.Application.CQRS.Paths.Commands.PatchPath.PathPathCommand.#ctor(System.Int32,Microsoft.AspNetCore.JsonPatch.JsonPatchDocument,System.Boolean)">
             <summary>
             Creates the command
             </summary>
             <param name="pathId">Id of Path</param>
             <param name="patchDocument">Json Patch document</param>
+            <param name="shouldIgnoreDeletedItems">The flag allows to get deleted items while ignoring the query filters</param>
         </member>
         <member name="P:DeveloperPath.Application.CQRS.Paths.Commands.PatchPath.PathPathCommand.PathId">
             <summary>
@@ -741,6 +742,11 @@
         <member name="P:DeveloperPath.Application.CQRS.Paths.Commands.PatchPath.PathPathCommand.PatchDocument">
             <summary>
             Special Json Document for Patch feature
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.CQRS.Paths.Commands.PatchPath.PathPathCommand.ShouldIgnoreDeletedItems">
+            <summary>
+            The flag allows to get deleted items while ignoring the query filters
             </summary>
         </member>
         <member name="T:DeveloperPath.Application.CQRS.Paths.Commands.PatchPath.PatchPathCommandHandler">

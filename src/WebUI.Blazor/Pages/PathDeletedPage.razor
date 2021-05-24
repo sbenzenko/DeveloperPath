@@ -13,12 +13,17 @@
                 <MudTh>@localizer["PathTitle"]</MudTh>
                 <MudTh>@localizer["UriKey"]</MudTh>
                 <MudTh>@localizer["Deleted"]</MudTh>
+                <MudTh>@localizer["Actions"]</MudTh>
             </HeaderContent>
             <RowTemplate>
                 <MudTd DataLabel="Id">@context.Id</MudTd>
                 <MudTd DataLabel="@localizer["PathTitle"]">@context.Title</MudTd>
                 <MudTd DataLabel="@localizer["UriKey"]">@context.Key</MudTd>
                 <MudTd DataLabel="@localizer["Deleted"]">@context.Deleted</MudTd>
+                <MudTd DataLabel="@localizer["Actions"]">
+                    <MudIconButton Icon="@Icons.Outlined.RestoreFromTrash"
+                                   OnClick="()=>RestoreDeletedPath(context)"></MudIconButton>
+                </MudTd>
             </RowTemplate>
         </MudTable>
     </Match>

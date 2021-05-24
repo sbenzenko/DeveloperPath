@@ -52,5 +52,12 @@ namespace WebUI.Blazor.Services
         {
             return await _httpService.GetListAsync<DeletedPath>($"{BaseResourceString}/deleted");
         }
+
+        public async Task<Path> RestoreDeletedPathAsync(DeletedPath deletedPath)
+        {
+            JsonPatchDocument patchDocument = new JsonPatchDocument();
+            patchDocument.Replace(nameof(deletedPath.Deleted), null);
+            return await _httpService.PatchAsync<Path>($"{BaseResourceString}/deleted/{deletedPath.Id}", patchDocument);
+        }
     }
 }

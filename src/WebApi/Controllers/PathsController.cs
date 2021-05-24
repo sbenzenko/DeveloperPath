@@ -17,6 +17,7 @@ using Shared.ClientModels;
 namespace DeveloperPath.WebApi.Controllers
 {
     [Route("api/paths")]
+    [Authorize]
     public class PathsController : ApiController
     {
         public PathsController(IMediator mediator)
@@ -47,8 +48,8 @@ namespace DeveloperPath.WebApi.Controllers
         /// <returns>A collection of paths with summary information</returns>
         /// <response code="200">Returns a list of paths</response>
         [HttpGet("deleted")]
-        [HttpHead]
-        [AllowAnonymous]
+        [HttpHead("deleted")]
+        [Authorize(Roles = "Administrator")]
         public async Task<ActionResult<IEnumerable<DeletedPath>>> GetDeleted([FromQuery] RequestParams requestParams = null)
         {
             return requestParams is not null && requestParams.UsePaging()
@@ -66,27 +67,12 @@ namespace DeveloperPath.WebApi.Controllers
         /// /// <response code="200">Returns requested path</response>
         [HttpGet("{pathId}", Name = "GetPath")]
         [HttpHead("{pathId}")]
+        [AllowAnonymous]
         public async Task<ActionResult<Path>> Get(int pathId)
         {
             Path model = await Mediator.Send(new GetPathQuery { Id = pathId });
-
             return Ok(model);
         }
-
-        ///// <summary>
-        ///// Get detailed path information by its Id
-        ///// </summary>
-        ///// <param name="pathId">An id of the path</param>
-        ///// <returns>Detailed information of the path with modules included</returns>
-        //[Route("api/pathdetails")]
-        //[HttpGet("{pathId}", Name = "GetPathDetails")]
-        //[HttpHead("{pathId}")]
-        //public async Task<ActionResult<PathViewModel>> GetDetails(int pathId)
-        //{
-        //  PathViewModel model = await Mediator.Send(new GetPathDetailsQuery { Id = pathId });
-
-        //  return Ok(model);
-        //}
 
         /// <summary>
         /// Create a path
@@ -100,7 +86,6 @@ namespace DeveloperPath.WebApi.Controllers
         [Authorize(Roles = "Administrator")]
         [HttpPost]
         //TODO: adding "application/xml" causes "An error occurred while deserializing input data." error for some reason
-        [Consumes("application/json")]
         public async Task<ActionResult<Path>> Create([FromBody] CreatePath command)
         {
             Path model = await Mediator.Send(command);
@@ -120,7 +105,6 @@ namespace DeveloperPath.WebApi.Controllers
         /// <response code="422">Unprocessible entity provided</response>
         [Authorize(Roles = "Administrator")]
         [HttpPut("{pathId}")]
-        [Consumes("application/json")]
         public async Task<ActionResult<Path>> Update(int pathId,
           [FromBody] UpdatePath command)
         {
@@ -130,9 +114,39 @@ namespace DeveloperPath.WebApi.Controllers
             return Ok(await Mediator.Send(command));
         }
 
+        /// <summary>
+        /// Update the part of path with given Id
+        /// </summary>
+        /// <param name="patchDocument"></param>
+        /// <param name="pathId">An id of the path</param>
+        /// <returns>Updated path</returns>
+        /// <response code="200">Path updated successfully</response>
+        /// <response code="406">Not acceptable entity provided</response>
+        /// <response code="415">Unsupported media type provided</response>
+        /// <response code="422">Unprocessible entity provided</response>
+        
         [HttpPatch("{pathId}")]
         [Authorize(Roles = "Administrator")]
         public async Task<ActionResult<Path>> Patch([FromBody] JsonPatchDocument patchDocument, [FromRoute] int pathId)
+        {
+            var pathPatchCommand = new PathPathCommand(pathId, patchDocument);
+            return Ok(await Mediator.Send(pathPatchCommand));
+        }
+
+        /// <summary>
+        /// Update the part of deleted path with given Id. Common case is restoring deleted Path
+        /// </summary>
+        /// <param name="patchDocument"></param>
+        /// <param name="pathId">An id of the path</param>
+        /// <returns>Updated path</returns>
+        /// <response code="200">Path updated successfully</response>
+        /// <response code="406">Not acceptable entity provided</response>
+        /// <response code="415">Unsupported media type provided</response>
+        /// <response code="422">Unprocessible entity provided</response>
+        
+        [HttpPatch("deleted/{pathId}")]
+        [Authorize(Roles = "Administrator")]
+        public async Task<ActionResult<Path>> PatchDeleted([FromBody] JsonPatchDocument patchDocument, [FromRoute] int pathId)
         {
             var pathPatchCommand = new PathPathCommand(pathId, patchDocument);
             return Ok(await Mediator.Send(pathPatchCommand));
