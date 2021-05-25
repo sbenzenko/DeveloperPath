@@ -1,10 +1,9 @@
-﻿using AutoMapper;
+﻿using System;
+using AutoMapper;
+using NUnit.Framework;
 using DeveloperPath.Application.Common.Mappings.Interfaces;
 using DeveloperPath.Application.Common.Mappings.Profiles;
 using DeveloperPath.Domain.Shared.ClientModels;
-using NUnit.Framework;
-using System;
- 
 
 namespace DeveloperPath.Application.UnitTests.Common.Mappings
 {

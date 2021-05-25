@@ -20,7 +20,7 @@ namespace DeveloperPath.Application.CQRS.Paths.Commands.DeletePath
     public int Id { get; init; }
   }
 
-  public class DeletePathCommandHandler : IRequestHandler<DeletePath>
+  internal class DeletePathCommandHandler : IRequestHandler<DeletePath>
   {
     private readonly IApplicationDbContext _context;
 

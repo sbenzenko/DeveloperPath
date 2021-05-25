@@ -28,7 +28,8 @@ namespace WebUI.Blazor
                 throw new Exception("Path API base URL is null");
             }
 
-            builder.Services.AddHttpClient("api", client => client.BaseAddress = new Uri(builder.Configuration["PathApiBaseUri"]))
+            builder.Services.AddHttpClient("api", 
+                    client => client.BaseAddress = new Uri(builder.Configuration["PathApiBaseUri"]))
                 .AddHttpMessageHandler(sp =>
                 {
                     var handler = sp.GetService<AuthorizationMessageHandler>()
@@ -38,6 +39,9 @@ namespace WebUI.Blazor
                     return handler;
                 });
 
+            builder.Services.AddHttpClient("api-anonymous", 
+                client => client.BaseAddress = new Uri(builder.Configuration["PathApiBaseUri"]));
+           
             builder.Services.AddLocalization();
 
             builder.Services

@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using Shared.ProblemDetails;
+using DeveloperPath.Domain.Shared.ProblemDetails;
 
 namespace DeveloperPath.WebApi.Filters
 {
@@ -163,7 +163,9 @@ namespace DeveloperPath.WebApi.Filters
 
         private void HandleUnknownException(ExceptionContext context)
         {
-            var details = new ProblemDetailsBase
+            ProblemDetailsBase details = default;
+            
+            details = new ProblemDetailsBase
             {
                 Status = StatusCodes.Status500InternalServerError,
                 Title = "An error occurred while processing your request.",

@@ -2,6 +2,10 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using MediatR;
+using Microsoft.AspNetCore.Mvc;
+using Moq;
+using NUnit.Framework;
 using DeveloperPath.Application.CQRS.Paths.Commands.CreatePath;
 using DeveloperPath.Application.CQRS.Paths.Commands.DeletePath;
 using DeveloperPath.Application.CQRS.Paths.Commands.UpdatePath;
@@ -10,11 +14,6 @@ using DeveloperPath.Application.Common.Models;
 using DeveloperPath.Domain.Shared.ClientModels;
 using DeveloperPath.WebApi.Controllers;
 using DeveloperPath.WebApi.Models;
-using MediatR;
-using Microsoft.AspNetCore.Mvc;
-using Moq;
-using NUnit.Framework;
- 
 
 namespace DeveloperPath.Web.WebAPI.Controllers
 {

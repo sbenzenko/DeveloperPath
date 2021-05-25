@@ -11,7 +11,6 @@ using DeveloperPath.Application.Common.Exceptions;
 using DeveloperPath.Application.Common.Interfaces;
 using DeveloperPath.Application.Common.Models;
 using DeveloperPath.Domain.Shared.ClientModels;
- 
 
 namespace DeveloperPath.Application.CQRS.Modules.Queries.GetModules
 {

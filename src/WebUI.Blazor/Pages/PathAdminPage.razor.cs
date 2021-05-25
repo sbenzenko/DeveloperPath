@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using Microsoft.AspNetCore.Components;
 using System.Threading.Tasks;
-using DeveloperPath.Domain.Shared.ClientModels;
-using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.Extensions.Localization;
 using MudBlazor;
-using Shared.ProblemDetails;
+
+using DeveloperPath.Domain.Shared.ClientModels;
+using DeveloperPath.Domain.Shared.ProblemDetails;
 using WebUI.Blazor.Resources;
 using WebUI.Blazor.Services;
 using WebUI.Blazor.Shared;
@@ -23,6 +23,7 @@ namespace WebUI.Blazor.Pages
         [Inject] public IStringLocalizer<LanguageResources> localizer { get; set; }
         [Inject] public IStringLocalizer<ErrorResources> errorLocalizer { get; set; }
         [Inject] public ISnackbar Snackbar { get; set; }
+        [Inject] public NavigationManager NavigationManager { get; set; }
 
         private Path _editablePath;
 
@@ -69,7 +70,7 @@ namespace WebUI.Blazor.Pages
             {
                 var result = await PathService.EditPathAsync(path);
                 var item = Paths.FirstOrDefault(x => x.Id == result.Id);
-                if (item!=null)
+                if (item != null)
                 {
                     item = result;
                 }
@@ -126,7 +127,7 @@ namespace WebUI.Blazor.Pages
             }
         }
 
-        private async Task  ChangePathVisibilityAsync(Path pathItem)
+        private async Task ChangePathVisibilityAsync(Path pathItem)
         {
             try
             {
@@ -134,7 +135,7 @@ namespace WebUI.Blazor.Pages
                 var changed = Paths.FirstOrDefault(x => x.Id == pathItem.Id);
                 if (changed != null)
                     changed.IsVisible = result.IsVisible;
-                
+
                 StateHasChanged();
             }
             catch (Exception e)
@@ -159,6 +160,11 @@ namespace WebUI.Blazor.Pages
             {
                 Snackbar.Add(e.Message, Severity.Error);
             }
+        }
+
+        private void GoToDeleted()
+        {
+            NavigationManager.NavigateTo("/administration/paths/deleted");
         }
     }
 }

@@ -2,13 +2,12 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
+using MediatR;
 using DeveloperPath.Application.Common.Interfaces;
 using DeveloperPath.Domain.Shared.ClientModels;
-using MediatR;
-using Microsoft.EntityFrameworkCore;
- 
 
 namespace DeveloperPath.Application.CQRS.Paths.Queries.GetPaths
 {

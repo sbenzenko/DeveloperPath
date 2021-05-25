@@ -68,6 +68,13 @@
             <returns>A collection of paths with summary information</returns>
             <response code="200">Returns a list of paths</response>
         </member>
+        <member name="M:DeveloperPath.WebApi.Controllers.PathsController.GetDeleted(DeveloperPath.WebApi.Models.RequestParams)">
+            <summary>
+            Get all deleted paths
+            </summary>
+            <returns>A collection of paths with summary information</returns>
+            <response code="200">Returns a list of paths</response>
+        </member>
         <member name="M:DeveloperPath.WebApi.Controllers.PathsController.Get(System.Int32,System.Threading.CancellationToken)">
             <summary>
             Get path information by its Id
@@ -94,6 +101,30 @@
             </summary>
             <param name="pathId">An id of the path</param>
             <param name="command">Updated path</param>
+            <returns>Updated path</returns>
+            <response code="200">Path updated successfully</response>
+            <response code="406">Not acceptable entity provided</response>
+            <response code="415">Unsupported media type provided</response>
+            <response code="422">Unprocessible entity provided</response>
+        </member>
+        <member name="M:DeveloperPath.WebApi.Controllers.PathsController.Patch(Microsoft.AspNetCore.JsonPatch.JsonPatchDocument,System.Int32)">
+            <summary>
+            Update the part of path with given Id
+            </summary>
+            <param name="patchDocument"></param>
+            <param name="pathId">An id of the path</param>
+            <returns>Updated path</returns>
+            <response code="200">Path updated successfully</response>
+            <response code="406">Not acceptable entity provided</response>
+            <response code="415">Unsupported media type provided</response>
+            <response code="422">Unprocessible entity provided</response>
+        </member>
+        <member name="M:DeveloperPath.WebApi.Controllers.PathsController.PatchDeleted(Microsoft.AspNetCore.JsonPatch.JsonPatchDocument,System.Int32)">
+            <summary>
+            Update the part of deleted path with given Id. Common case is restoring deleted Path
+            </summary>
+            <param name="patchDocument"></param>
+            <param name="pathId">An id of the path</param>
             <returns>Updated path</returns>
             <response code="200">Path updated successfully</response>
             <response code="406">Not acceptable entity provided</response>

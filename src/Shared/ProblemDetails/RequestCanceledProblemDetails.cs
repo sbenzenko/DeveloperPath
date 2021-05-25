@@ -1,4 +1,4 @@
-﻿namespace Shared.ProblemDetails
+﻿namespace DeveloperPath.Domain.Shared.ProblemDetails
 {
     public class RequestCanceledProblemDetails : ProblemDetailsBase
     {

@@ -13,7 +13,6 @@ using DeveloperPath.Application.CQRS.Paths.Queries.GetPaths;
 using DeveloperPath.Domain.Shared.ClientModels;
 using DeveloperPath.WebApi.Extensions;
 using DeveloperPath.WebApi.Models;
- 
 
 namespace DeveloperPath.WebApi.Controllers
 {
@@ -33,6 +32,7 @@ namespace DeveloperPath.WebApi.Controllers
         /// <response code="200">Returns a list of paths</response>
         [HttpGet]
         [HttpHead]
+        [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<Path>>> Get([FromQuery] RequestParams requestParams = null, CancellationToken ct = default)
         {
             //TODO: consider adding default page size and show 1st page instead of all
@@ -41,7 +41,20 @@ namespace DeveloperPath.WebApi.Controllers
               : await GetAll(ct);
         }
 
-
+        /// <summary>
+        /// Get all deleted paths
+        /// </summary>
+        /// <returns>A collection of paths with summary information</returns>
+        /// <response code="200">Returns a list of paths</response>
+        [HttpGet("deleted")]
+        [HttpHead("deleted")]
+        [Authorize(Roles = "Administrator")]
+        public async Task<ActionResult<IEnumerable<DeletedPath>>> GetDeleted([FromQuery] RequestParams requestParams = null)
+        {
+            return requestParams is not null && requestParams.UsePaging()
+                ? await GetDeletedPage(requestParams)
+                : await GetAllDeleted();
+        }
 
         /// <summary>
         /// Get path information by its Id
@@ -116,11 +129,42 @@ namespace DeveloperPath.WebApi.Controllers
             return Ok(await Mediator.Send(command));
         }
 
+        /// <summary>
+        /// Update the part of path with given Id
+        /// </summary>
+        /// <param name="patchDocument"></param>
+        /// <param name="pathId">An id of the path</param>
+        /// <returns>Updated path</returns>
+        /// <response code="200">Path updated successfully</response>
+        /// <response code="406">Not acceptable entity provided</response>
+        /// <response code="415">Unsupported media type provided</response>
+        /// <response code="422">Unprocessible entity provided</response>
+        
         [HttpPatch("{pathId}")]
         [Authorize(Roles = "Administrator")]
         public async Task<ActionResult<Path>> Patch([FromBody] JsonPatchDocument patchDocument, [FromRoute] int pathId)
         {
-            var pathPatchCommand = new PathPathCommand(pathId, patchDocument);
+            var pathPatchCommand = new PatchPathCommand(pathId, patchDocument);
+            return Ok(await Mediator.Send(pathPatchCommand));
+        }
+
+        /// <summary>
+        /// Update the part of deleted path with given Id. Common case is restoring deleted Path
+        /// </summary>
+        /// <param name="patchDocument"></param>
+        /// <param name="pathId">An id of the path</param>
+        /// <returns>Updated path</returns>
+        /// <response code="200">Path updated successfully</response>
+        /// <response code="406">Not acceptable entity provided</response>
+        /// <response code="415">Unsupported media type provided</response>
+        /// <response code="422">Unprocessible entity provided</response>
+        
+        [HttpPatch("deleted/{pathId}")]
+        [Authorize(Roles = "Administrator")]
+        [Consumes("application/json")]
+        public async Task<ActionResult<Path>> PatchDeleted([FromBody] JsonPatchDocument patchDocument, [FromRoute] int pathId)
+        {
+            var pathPatchCommand = new PatchPathCommand(pathId, patchDocument);
             return Ok(await Mediator.Send(pathPatchCommand));
         }
 
@@ -145,6 +189,12 @@ namespace DeveloperPath.WebApi.Controllers
             return Ok(model);
         }
 
+        private async Task<ActionResult<IEnumerable<DeletedPath>>> GetAllDeleted()
+        {
+            IEnumerable<DeletedPath> model = await Mediator.Send(new GetDeletedPathListQuery());
+            return Ok(model);
+        }
+
         private async Task<ActionResult<IEnumerable<Path>>> GetPage(RequestParams filter, CancellationToken ct = default)
         {
             var (paginationData, result) = await Mediator.Send(
@@ -156,6 +206,21 @@ namespace DeveloperPath.WebApi.Controllers
 
             Response?.Headers?.Add("X-Pagination", System.Text.Json.JsonSerializer.Serialize(paginationData));
             return Ok(result);
+        }
+
+        private Task<ActionResult<IEnumerable<DeletedPath>>> GetDeletedPage(RequestParams filter)
+        {
+            //var (paginationData, result) = await Mediator.Send(
+            //    new GetDeletedPathListQuery()
+            //    {
+            //        PageNumber = filter.PageNumber,
+            //        PageSize = filter.PageSize
+            //    });
+
+            //Response?.Headers?.Add("X-Pagination", System.Text.Json.JsonSerializer.Serialize(paginationData));
+            // return Ok(result);
+
+            return null;
         }
     }
 }

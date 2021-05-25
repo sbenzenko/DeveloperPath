@@ -4,12 +4,11 @@ using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
+using MediatR;
+using Microsoft.EntityFrameworkCore;
 using DeveloperPath.Application.Common.Interfaces;
 using DeveloperPath.Application.Common.Models;
 using DeveloperPath.Domain.Shared.ClientModels;
-using MediatR;
-using Microsoft.EntityFrameworkCore;
- 
 
 namespace DeveloperPath.Application.CQRS.Paths.Queries.GetPaths
 {

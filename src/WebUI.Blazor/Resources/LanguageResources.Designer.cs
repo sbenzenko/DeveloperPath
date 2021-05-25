@@ -97,6 +97,24 @@ namespace WebUI.Blazor.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Deleted.
+        /// </summary>
+        public static string Deleted {
+            get {
+                return ResourceManager.GetString("Deleted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Deleted Paths.
+        /// </summary>
+        public static string DeletedPaths {
+            get {
+                return ResourceManager.GetString("DeletedPaths", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Description.
         /// </summary>
         public static string Description {
