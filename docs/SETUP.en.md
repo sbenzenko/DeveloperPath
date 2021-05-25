@@ -13,13 +13,13 @@ Connection string for local use is in `\src\WebApi\appsettings.Development.json`
 
 Using CLI from `\src\Infrastructure` run:
 - database update  
-`dotnet ef --startup-project ..\WebUI\ database update`
+`dotnet ef --startup-project ..\WebApi\ database update`
 - revert to migration   
-`dotnet ef --startup-project ..\WebUI\ database update <NAME>`
+`dotnet ef --startup-project ..\WebApi\ database update <NAME>`
 - add migration  
-`dotnet ef --startup-project ..\WebUI\ migrations add <NAME>`
+`dotnet ef --startup-project ..\WebApi\ migrations add <NAME>`
 - remove migration  
-`dotnet ef --startup-project ..\WebUI\ migrations remove`
+`dotnet ef --startup-project ..\WebApi\ migrations remove`
 
 Database is filled with test data automatically when application starts, if it doesn't find data in Paths.
 

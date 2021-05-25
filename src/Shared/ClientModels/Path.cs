@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Shared.ClientModels
+namespace DeveloperPath.Domain.Shared.ClientModels
 {
   /// <summary>
   /// Developer path information

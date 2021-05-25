@@ -8,6 +8,7 @@ using DeveloperPath.Application.CQRS.Modules.Commands.CreateModule;
 using DeveloperPath.Application.CQRS.Sources.Queries.GetSources;
 using DeveloperPath.Domain.Entities;
 using DeveloperPath.Domain.Shared.Enums;
+using System.Threading;
 
 namespace DeveloperPath.Application.IntegrationTests.Queries
 {
@@ -17,7 +18,7 @@ namespace DeveloperPath.Application.IntegrationTests.Queries
   {
 
     [Test]
-    public async Task ShouldReturnSourcesList()
+    public async Task Get_ShouldReturnSourcesList()
     {
       var path = await AddAsync(
         new Path { Title = "Some Path", Key = "some-path", Description = "Some Path Description" });
@@ -81,7 +82,19 @@ namespace DeveloperPath.Application.IntegrationTests.Queries
     }
 
     [Test]
-    public async Task ShouldReturnSource()
+    public void Get_ShouldThrow_WhenCanceled()
+    {
+      var cts = new CancellationTokenSource();
+      cts.Cancel();
+
+      var query = new GetSourceListQuery() { PathId = 1, ModuleId = 1, ThemeId = 1 };
+
+      FluentActions.Invoking(() =>
+          SendAsync(query, cts.Token)).Should().Throw<TaskCanceledException>();
+    }
+
+    [Test]
+    public async Task GetOne_ShouldReturnSource()
     {
       var path = await AddAsync(
         new Path { Title = "Some Path", Key = "some-path", Description = "Some Path Description" });
@@ -131,7 +144,19 @@ namespace DeveloperPath.Application.IntegrationTests.Queries
     }
 
     [Test]
-    public async Task ShouldReturnSourceDetails()
+    public void GetOne_ShouldThrow_WhenCanceled()
+    {
+      var cts = new CancellationTokenSource();
+      cts.Cancel();
+
+      var query = new GetSourceQuery() { PathId = 1, ModuleId = 1, ThemeId = 1, Id = 1 };
+
+      FluentActions.Invoking(() =>
+          SendAsync(query, cts.Token)).Should().Throw<TaskCanceledException>();
+    }
+
+    [Test]
+    public async Task GetDetails_ShouldReturnSourceDetails()
     {
       var path = await AddAsync(
         new Path { Title = "Some Path", Key = "some-path", Description = "Some Path Description" });
@@ -178,6 +203,18 @@ namespace DeveloperPath.Application.IntegrationTests.Queries
       createdSource.Type.Should().Be(SourceType.Documentation);
       createdSource.ThemeId.Should().Be(theme.Id);
       createdSource.Tags.Should().HaveCount(3);
+    }
+
+    [Test]
+    public void GetDetails_ShouldThrow_WhenCanceled()
+    {
+      var cts = new CancellationTokenSource();
+      cts.Cancel();
+
+      var query = new GetSourceDetailsQuery() { PathId = 1, ModuleId = 1, ThemeId = 1, Id = 1 };
+
+      FluentActions.Invoking(() =>
+          SendAsync(query, cts.Token)).Should().Throw<TaskCanceledException>();
     }
 
     [Test]

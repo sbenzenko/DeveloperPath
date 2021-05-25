@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
-using Shared.ProblemDetails;
+using DeveloperPath.Domain.Shared.ProblemDetails;
 
 namespace DeveloperPath.WebApi.Extensions
 {

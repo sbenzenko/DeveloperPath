@@ -1,15 +1,15 @@
-﻿namespace Shared.ProblemDetails
+﻿namespace DeveloperPath.Domain.Shared.ProblemDetails
 {
-    public class ConflictProblemDetailsBase : ProblemDetailsBase
+    public class ConflictProblemDetails : ProblemDetailsBase
     {
-        public ConflictProblemDetailsBase()
+        public ConflictProblemDetails()
         {
             Title = "One or more errors occurred.";
             Status = 409;
         }
         public string Error;
         public string ErrorKey;
-        public ConflictProblemDetailsBase(string message, string errorKey) : this()
+        public ConflictProblemDetails(string message, string errorKey) : this()
         {
             if (!string.IsNullOrEmpty(message))
             {

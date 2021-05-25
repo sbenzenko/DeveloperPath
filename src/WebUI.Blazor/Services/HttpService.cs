@@ -9,7 +9,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.JsonPatch;
 using Newtonsoft.Json;
-using Shared.ProblemDetails;
+using DeveloperPath.Domain.Shared.ProblemDetails;
 using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace WebUI.Blazor.Services

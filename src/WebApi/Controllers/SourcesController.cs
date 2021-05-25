@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
@@ -25,15 +26,16 @@ namespace DeveloperPath.WebApi.Controllers
     /// <param name="pathId">An id of the path</param>
     /// <param name="moduleId">An id of the module</param>
     /// <param name="themeId">An id of the theme</param>
+    /// <param name="ct"></param>
     /// <returns>A collection of sources with summary information</returns>
     /// <response code="200">Returns a list of sources in the theme</response>
     /// <response code="404">Theme not found</response>
     [HttpGet]
     [HttpHead]
-    public async Task<ActionResult<IEnumerable<Source>>> Get(int pathId, int moduleId, int themeId)
+    public async Task<ActionResult<IEnumerable<Source>>> Get(int pathId, int moduleId, int themeId, CancellationToken ct = default)
     {
       IEnumerable<Source> sources = await Mediator.Send(
-         new GetSourceListQuery { PathId = pathId, ModuleId = moduleId, ThemeId = themeId });
+         new GetSourceListQuery { PathId = pathId, ModuleId = moduleId, ThemeId = themeId }, ct);
 
       return Ok(sources);
     }
@@ -45,14 +47,15 @@ namespace DeveloperPath.WebApi.Controllers
     /// <param name="moduleId">An id of the theme</param>
     /// <param name="themeId">An id of the theme</param>
     /// <param name="sourceId">An id of the source</param>
+    /// <param name="ct"></param>
     /// <returns>Detailed information of the source with sources included</returns>
     /// <response code="200">Returns requested source</response>
     [HttpGet("{sourceId}", Name = "GetSource")]
     [HttpHead("{sourceId}")]
-    public async Task<ActionResult<Source>> Get(int pathId, int moduleId, int themeId, int sourceId)
+    public async Task<ActionResult<Source>> Get(int pathId, int moduleId, int themeId, int sourceId, CancellationToken ct = default)
     {
       Source model = await Mediator.Send(
-        new GetSourceQuery { PathId = pathId, ModuleId = moduleId, ThemeId = themeId, Id = sourceId });
+        new GetSourceQuery { PathId = pathId, ModuleId = moduleId, ThemeId = themeId, Id = sourceId }, ct);
 
       return Ok(model);
     }

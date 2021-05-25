@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
-using Shared.ProblemDetails;
+using DeveloperPath.Domain.Shared.ProblemDetails;
 
 namespace DeveloperPath.WebApi.Extensions
 {

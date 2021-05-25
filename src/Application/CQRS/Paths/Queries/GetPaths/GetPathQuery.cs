@@ -3,13 +3,11 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
+using MediatR;
+using Microsoft.EntityFrameworkCore;
 using DeveloperPath.Application.Common.Exceptions;
 using DeveloperPath.Application.Common.Interfaces;
 using DeveloperPath.Domain.Shared.ClientModels;
-using MediatR;
-using Microsoft.EntityFrameworkCore;
-using Shared.ClientModels;
-
 
 namespace DeveloperPath.Application.CQRS.Paths.Queries.GetPaths
 {

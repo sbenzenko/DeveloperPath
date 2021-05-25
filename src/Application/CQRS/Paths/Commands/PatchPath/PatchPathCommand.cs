@@ -3,17 +3,17 @@ using System.Threading.Tasks;
 using AutoMapper;
 using DeveloperPath.Application.Common.Exceptions;
 using DeveloperPath.Application.Common.Interfaces;
+using DeveloperPath.Domain.Shared.ClientModels;
 using MediatR;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.EntityFrameworkCore;
-using Shared.ClientModels;
 
 namespace DeveloperPath.Application.CQRS.Paths.Commands.PatchPath
 {
     /// <summary>
     /// Patch command for updating the Path
     /// </summary>
-    public class PathPathCommand : IRequest<Path>
+    public class PatchPathCommand : IRequest<Path>
     {
         private readonly int _pathId;
         private readonly JsonPatchDocument _patchDocument;
@@ -26,14 +26,12 @@ namespace DeveloperPath.Application.CQRS.Paths.Commands.PatchPath
         /// <param name="patchDocument">Json Patch document</param>
         /// <param name="shouldIgnoreDeletedItems">The flag allows to get deleted items while ignoring the query filters</param>
 
-        public PathPathCommand(int pathId, JsonPatchDocument patchDocument, bool shouldIgnoreDeletedItems = true)
+        public PatchPathCommand(int pathId, JsonPatchDocument patchDocument, bool shouldIgnoreDeletedItems = true)
         {
             _pathId = pathId;
             _patchDocument = patchDocument;
             _shouldIgnoreDeletedItems = shouldIgnoreDeletedItems;
         }
-
-        
 
         /// <summary>
         /// Id of Path
@@ -53,7 +51,7 @@ namespace DeveloperPath.Application.CQRS.Paths.Commands.PatchPath
     /// <summary>
     /// Patch path command handler
     /// </summary>
-    internal class PatchPathCommandHandler : IRequestHandler<PathPathCommand, Path>
+    internal class PatchPathCommandHandler : IRequestHandler<PatchPathCommand, Path>
     {
         private readonly IApplicationDbContext _context;
         private readonly IMapper _mapper;
@@ -69,7 +67,7 @@ namespace DeveloperPath.Application.CQRS.Paths.Commands.PatchPath
         /// <param name="request"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public async Task<Path> Handle(PathPathCommand request, CancellationToken cancellationToken)
+        public async Task<Path> Handle(PatchPathCommand request, CancellationToken cancellationToken)
         {
             var query = _context.Paths.AsQueryable();
             if (!request.ShouldIgnoreDeletedItems)

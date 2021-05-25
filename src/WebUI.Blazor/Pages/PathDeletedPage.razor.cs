@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Localization;
 using MudBlazor;
-using Shared.ClientModels;
-using Shared.ProblemDetails;
+using DeveloperPath.Domain.Shared.ClientModels;
+using DeveloperPath.Domain.Shared.ProblemDetails;
 using WebUI.Blazor.Resources;
 using WebUI.Blazor.Services;
 

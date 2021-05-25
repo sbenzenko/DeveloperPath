@@ -4,7 +4,6 @@ using DeveloperPath.Domain.Shared.ClientModels;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using MudBlazor;
-using Shared.ClientModels;
 
 namespace WebUI.Blazor.Shared
 {

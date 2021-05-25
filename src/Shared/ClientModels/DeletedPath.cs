@@ -1,9 +1,8 @@
 ﻿using System;
-using DeveloperPath.Domain.Shared.ClientModels;
 
-namespace Shared.ClientModels
+namespace DeveloperPath.Domain.Shared.ClientModels
 {
-    public class DeletedPath: Path
+    public class DeletedPath : Path
     {
         /// <summary>
         /// Path deletion date

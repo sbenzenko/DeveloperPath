@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Components;
 using System.Threading.Tasks;
 using DeveloperPath.Domain.Shared.ClientModels;
-using Shared.ClientModels;
 using WebUI.Blazor.Services;
 
 namespace WebUI.Blazor.Pages

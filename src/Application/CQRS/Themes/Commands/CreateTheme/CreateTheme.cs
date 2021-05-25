@@ -10,7 +10,6 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Shared.ClientModels;
 
 
 namespace DeveloperPath.Application.CQRS.Themes.Commands.CreateTheme

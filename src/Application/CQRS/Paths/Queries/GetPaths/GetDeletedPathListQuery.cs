@@ -7,7 +7,7 @@ using AutoMapper.QueryableExtensions;
 using DeveloperPath.Application.Common.Interfaces;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using Shared.ClientModels;
+using DeveloperPath.Domain.Shared.ClientModels;
 
 namespace DeveloperPath.Application.CQRS.Paths.Queries.GetPaths
 {

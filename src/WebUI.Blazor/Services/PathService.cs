@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.JsonPatch;
-using Shared.ClientModels;
+using DeveloperPath.Domain.Shared.ClientModels;
 
 namespace WebUI.Blazor.Services
 {

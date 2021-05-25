@@ -1,5 +1,5 @@
-﻿using Shared.ProblemDetails;
-using System;
+﻿using System;
+using DeveloperPath.Domain.Shared.ProblemDetails;
 
 namespace WebUI.Blazor.Services
 {
