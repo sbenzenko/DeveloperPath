@@ -11,7 +11,7 @@ namespace DeveloperPath.Application.Common.Behaviours
   /// </summary>
   /// <typeparam name="TRequest"></typeparam>
   /// <typeparam name="TResponse"></typeparam>
-  public class UnhandledExceptionBehaviour<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
+  public class HandleExceptionBehaviour<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
   {
     private readonly ILogger<TRequest> _logger;
 
@@ -19,7 +19,7 @@ namespace DeveloperPath.Application.Common.Behaviours
     /// Ctor for injecting dependencies
     /// </summary>
     /// <param name="logger"></param>
-    public UnhandledExceptionBehaviour(ILogger<TRequest> logger)
+    public HandleExceptionBehaviour(ILogger<TRequest> logger)
     {
       _logger = logger;
     }
@@ -40,8 +40,10 @@ namespace DeveloperPath.Application.Common.Behaviours
       catch (Exception ex)
       {
         var requestName = typeof(TRequest).Name;
-
-        _logger.LogError(ex, "DeveloperPath Request: Unhandled Exception for Request {Name} {@Request}", requestName, request);
+        if (ex is OperationCanceledException)
+          _logger.LogWarning("DeveloperPath Request: {@Request} was canceled", requestName);
+        else
+          _logger.LogError(ex, "DeveloperPath Request: Unhandled Exception for Request {Name} {@Request}", requestName, request);
 
         throw;
       }

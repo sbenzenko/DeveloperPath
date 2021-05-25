@@ -4,24 +4,27 @@
         <name>DeveloperPath.WebApi</name>
     </assembly>
     <members>
-        <member name="M:DeveloperPath.WebApi.Controllers.ModulesController.Get(System.Int32,DeveloperPath.WebApi.Models.RequestParams)">
+        <member name="M:DeveloperPath.WebApi.Controllers.ModulesController.Get(System.Int32,DeveloperPath.WebApi.Models.RequestParams,System.Threading.CancellationToken)">
             <summary>
             Get all available modules
             </summary>
             <param name="pathId">An id of the path</param>
             <param name="requestParams">Request parameters</param>
+            <param name="ct"></param>
             <returns>A collection of modules with summary information</returns>
             <response code="200">Returns a list of modules in the path</response>
             <response code="404">Path not found</response>
         </member>
-        <member name="M:DeveloperPath.WebApi.Controllers.ModulesController.Get(System.Int32,System.Int32)">
+        <member name="M:DeveloperPath.WebApi.Controllers.ModulesController.Get(System.Int32,System.Int32,System.Threading.CancellationToken)">
             <summary>
             Get module information by its Id
             </summary>
             <param name="pathId">An id of the path</param>
             <param name="moduleId">An id of the module</param>
+            <param name="ct"></param>
             <returns>Information about the module</returns>
             <response code="200">Returns requested module</response>
+            <response code="404">Module not found</response>
         </member>
         <member name="M:DeveloperPath.WebApi.Controllers.ModulesController.Create(System.Int32,DeveloperPath.Application.CQRS.Modules.Commands.CreateModule.CreateModule)">
             <summary>
@@ -58,20 +61,21 @@
             <returns></returns>
             <response code="204">Module deleted successfully</response>
         </member>
-        <member name="M:DeveloperPath.WebApi.Controllers.PathsController.Get(DeveloperPath.WebApi.Models.RequestParams)">
+        <member name="M:DeveloperPath.WebApi.Controllers.PathsController.Get(DeveloperPath.WebApi.Models.RequestParams,System.Threading.CancellationToken)">
             <summary>
             Get all available paths
             </summary>
             <returns>A collection of paths with summary information</returns>
             <response code="200">Returns a list of paths</response>
         </member>
-        <member name="M:DeveloperPath.WebApi.Controllers.PathsController.Get(System.Int32)">
+        <member name="M:DeveloperPath.WebApi.Controllers.PathsController.Get(System.Int32,System.Threading.CancellationToken)">
             <summary>
             Get path information by its Id
             </summary>
             <param name="pathId">An id of the path</param>
+            <param name="ct"></param>
             <returns>Information of the path with modules included</returns>
-            /// <response code="200">Returns requested path</response>
+            <response code="200">Returns requested path</response>
         </member>
         <member name="M:DeveloperPath.WebApi.Controllers.PathsController.Create(DeveloperPath.Application.CQRS.Paths.Commands.CreatePath.CreatePath)">
             <summary>
@@ -104,18 +108,19 @@
             <returns></returns>
             <response code="204">Path deleted successfully</response>
         </member>
-        <member name="M:DeveloperPath.WebApi.Controllers.SourcesController.Get(System.Int32,System.Int32,System.Int32)">
+        <member name="M:DeveloperPath.WebApi.Controllers.SourcesController.Get(System.Int32,System.Int32,System.Int32,System.Threading.CancellationToken)">
             <summary>
             Get all available sources
             </summary>
             <param name="pathId">An id of the path</param>
             <param name="moduleId">An id of the module</param>
             <param name="themeId">An id of the theme</param>
+            <param name="ct"></param>
             <returns>A collection of sources with summary information</returns>
             <response code="200">Returns a list of sources in the theme</response>
             <response code="404">Theme not found</response>
         </member>
-        <member name="M:DeveloperPath.WebApi.Controllers.SourcesController.Get(System.Int32,System.Int32,System.Int32,System.Int32)">
+        <member name="M:DeveloperPath.WebApi.Controllers.SourcesController.Get(System.Int32,System.Int32,System.Int32,System.Int32,System.Threading.CancellationToken)">
             <summary>
             Get source information by its Id
             </summary>
@@ -123,6 +128,7 @@
             <param name="moduleId">An id of the theme</param>
             <param name="themeId">An id of the theme</param>
             <param name="sourceId">An id of the source</param>
+            <param name="ct"></param>
             <returns>Detailed information of the source with sources included</returns>
             <response code="200">Returns requested source</response>
         </member>
@@ -167,23 +173,25 @@
             <returns></returns>
             <response code="204">Source deleted successfully</response>
         </member>
-        <member name="M:DeveloperPath.WebApi.Controllers.ThemesController.Get(System.Int32,System.Int32)">
+        <member name="M:DeveloperPath.WebApi.Controllers.ThemesController.Get(System.Int32,System.Int32,System.Threading.CancellationToken)">
             <summary>
             Get all available themes
             </summary>
             <param name="pathId">An id of the path</param>
             <param name="moduleId">An id of the module</param>
+            <param name="ct"></param>
             <returns>A collection of themes with summary information</returns>
             <response code="200">Returns a list of themes in the module</response>
             <response code="404">Module not found</response>
         </member>
-        <member name="M:DeveloperPath.WebApi.Controllers.ThemesController.Get(System.Int32,System.Int32,System.Int32)">
+        <member name="M:DeveloperPath.WebApi.Controllers.ThemesController.Get(System.Int32,System.Int32,System.Int32,System.Threading.CancellationToken)">
             <summary>
             Get theme information by its Id
             </summary>
             <param name="pathId">An id of the path</param>
             <param name="moduleId">An id of the module</param>
             <param name="themeId">An id of the theme</param>
+            <param name="ct"></param>
             <returns>Information about the theme</returns>
             <response code="200">Returns requested theme</response>
         </member>

@@ -40,6 +40,7 @@ namespace DeveloperPath.Application.Common.Exceptions
         /// </summary>
         /// <param name="name"></param>
         /// <param name="key"></param>
+        /// <param name="errorKey"></param>
         public NotFoundException(string name, object key, string errorKey)
             : base($"{name} #{key} was not found.")
         {

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using DeveloperPath.Domain.Shared.ClientModels;
 using DeveloperPath.Application.CQRS.Modules.Commands.CreateModule;
@@ -10,7 +11,6 @@ using DeveloperPath.WebApi.Models;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
- 
 
 namespace DeveloperPath.WebApi.Controllers
 {
@@ -27,17 +27,18 @@ namespace DeveloperPath.WebApi.Controllers
     /// </summary>
     /// <param name="pathId">An id of the path</param>
     /// <param name="requestParams">Request parameters</param>
+    /// <param name="ct"></param>
     /// <returns>A collection of modules with summary information</returns>
     /// <response code="200">Returns a list of modules in the path</response>
     /// <response code="404">Path not found</response>
     [HttpGet]
     [HttpHead]
-    public async Task<ActionResult<IEnumerable<Module>>> Get(int pathId, [FromQuery] RequestParams requestParams = null)
+    public async Task<ActionResult<IEnumerable<Module>>> Get(int pathId, [FromQuery] RequestParams requestParams = null, CancellationToken ct = default)
     {
       //TODO: consider adding default page size and show 1st page instead of all
       return requestParams is not null && requestParams.UsePaging()
-        ? await GetPage(pathId, requestParams)
-        : await GetAll(pathId);
+        ? await GetPage(pathId, requestParams, ct)
+        : await GetAll(pathId, ct);
     }
 
     /// <summary>
@@ -45,13 +46,15 @@ namespace DeveloperPath.WebApi.Controllers
     /// </summary>
     /// <param name="pathId">An id of the path</param>
     /// <param name="moduleId">An id of the module</param>
+    /// <param name="ct"></param>
     /// <returns>Information about the module</returns>
     /// <response code="200">Returns requested module</response>
+    /// <response code="404">Module not found</response>
     [HttpGet("{moduleId}", Name = "GetModule")]
     [HttpHead("{moduleId}")]
-    public async Task<ActionResult<Module>> Get(int pathId, int moduleId)
+    public async Task<ActionResult<Module>> Get(int pathId, int moduleId, CancellationToken ct = default)
     {
-      Module model = await Mediator.Send(new GetModuleQuery { PathId = pathId, Id = moduleId });
+      Module model = await Mediator.Send(new GetModuleQuery { PathId = pathId, Id = moduleId }, ct);
 
       return Ok(model);
     }
@@ -138,13 +141,13 @@ namespace DeveloperPath.WebApi.Controllers
       return NoContent();
     }
 
-    private async Task<ActionResult<IEnumerable<Module>>> GetAll(int pathId)
+    private async Task<ActionResult<IEnumerable<Module>>> GetAll(int pathId, CancellationToken ct = default)
     {
-      IEnumerable<Module> model = await Mediator.Send(new GetModuleListQuery { PathId = pathId });
+      IEnumerable<Module> model = await Mediator.Send(new GetModuleListQuery { PathId = pathId }, ct);
       return Ok(model);
     }
 
-    private async Task<ActionResult<IEnumerable<Module>>> GetPage(int pathId, RequestParams filter)
+    private async Task<ActionResult<IEnumerable<Module>>> GetPage(int pathId, RequestParams filter, CancellationToken ct = default)
     {
       var (paginationData, result) = await Mediator.Send(
           new GetModuleListQueryPaging()
@@ -152,7 +155,7 @@ namespace DeveloperPath.WebApi.Controllers
             PathId = pathId,
             PageNumber = filter.PageNumber,
             PageSize = filter.PageSize
-          });
+          }, ct);
 
       Response?.Headers?.Add("X-Pagination", System.Text.Json.JsonSerializer.Serialize(paginationData));
       return Ok(result);

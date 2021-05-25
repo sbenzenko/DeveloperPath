@@ -1,6 +1,10 @@
 ﻿using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
- 
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.JsonPatch;
+using Microsoft.AspNetCore.Mvc;
+using MediatR;
 using DeveloperPath.Application.CQRS.Paths.Commands.CreatePath;
 using DeveloperPath.Application.CQRS.Paths.Commands.DeletePath;
 using DeveloperPath.Application.CQRS.Paths.Commands.PatchPath;
@@ -9,10 +13,6 @@ using DeveloperPath.Application.CQRS.Paths.Queries.GetPaths;
 using DeveloperPath.Domain.Shared.ClientModels;
 using DeveloperPath.WebApi.Extensions;
 using DeveloperPath.WebApi.Models;
-using MediatR;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.JsonPatch;
-using Microsoft.AspNetCore.Mvc;
  
 
 namespace DeveloperPath.WebApi.Controllers
@@ -33,27 +33,28 @@ namespace DeveloperPath.WebApi.Controllers
         /// <response code="200">Returns a list of paths</response>
         [HttpGet]
         [HttpHead]
-        public async Task<ActionResult<IEnumerable<Path>>> Get([FromQuery] RequestParams requestParams = null)
+        public async Task<ActionResult<IEnumerable<Path>>> Get([FromQuery] RequestParams requestParams = null, CancellationToken ct = default)
         {
             //TODO: consider adding default page size and show 1st page instead of all
             return requestParams is not null && requestParams.UsePaging()
-              ? await GetPage(requestParams)
-              : await GetAll();
+              ? await GetPage(requestParams, ct)
+              : await GetAll(ct);
         }
 
-        
+
 
         /// <summary>
         /// Get path information by its Id
         /// </summary>
         /// <param name="pathId">An id of the path</param>
+        /// <param name="ct"></param>
         /// <returns>Information of the path with modules included</returns>
-        /// /// <response code="200">Returns requested path</response>
+        /// <response code="200">Returns requested path</response>
         [HttpGet("{pathId}", Name = "GetPath")]
         [HttpHead("{pathId}")]
-        public async Task<ActionResult<Path>> Get(int pathId)
+        public async Task<ActionResult<Path>> Get(int pathId, CancellationToken ct = default)
         {
-            Path model = await Mediator.Send(new GetPathQuery { Id = pathId });
+            Path model = await Mediator.Send(new GetPathQuery { Id = pathId }, ct);
 
             return Ok(model);
         }
@@ -138,20 +139,20 @@ namespace DeveloperPath.WebApi.Controllers
             return NoContent();
         }
 
-        private async Task<ActionResult<IEnumerable<Path>>> GetAll()
+        private async Task<ActionResult<IEnumerable<Path>>> GetAll(CancellationToken ct = default)
         {
-            IEnumerable<Path> model = await Mediator.Send(new GetPathListQuery());
+            IEnumerable<Path> model = await Mediator.Send(new GetPathListQuery(), ct);
             return Ok(model);
         }
 
-        private async Task<ActionResult<IEnumerable<Path>>> GetPage(RequestParams filter)
+        private async Task<ActionResult<IEnumerable<Path>>> GetPage(RequestParams filter, CancellationToken ct = default)
         {
             var (paginationData, result) = await Mediator.Send(
               new GetPathListQueryPaging()
               {
                   PageNumber = filter.PageNumber,
                   PageSize = filter.PageSize
-              });
+              }, ct);
 
             Response?.Headers?.Add("X-Pagination", System.Text.Json.JsonSerializer.Serialize(paginationData));
             return Ok(result);

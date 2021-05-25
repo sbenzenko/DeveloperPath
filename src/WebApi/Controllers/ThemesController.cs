@@ -1,13 +1,14 @@
 ﻿using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
 using MediatR;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 using DeveloperPath.Domain.Shared.ClientModels;
 using DeveloperPath.Application.CQRS.Themes.Commands.CreateTheme;
 using DeveloperPath.Application.CQRS.Themes.Commands.DeleteTheme;
 using DeveloperPath.Application.CQRS.Themes.Commands.UpdateTheme;
 using DeveloperPath.Application.CQRS.Themes.Queries.GetThemes;
-using Microsoft.AspNetCore.Authorization;
 
 namespace DeveloperPath.WebApi.Controllers
 {
@@ -24,15 +25,16 @@ namespace DeveloperPath.WebApi.Controllers
     /// </summary>
     /// <param name="pathId">An id of the path</param>
     /// <param name="moduleId">An id of the module</param>
+    /// <param name="ct"></param>
     /// <returns>A collection of themes with summary information</returns>
     /// <response code="200">Returns a list of themes in the module</response>
     /// <response code="404">Module not found</response>
     [HttpGet]
     [HttpHead]
-    public async Task<ActionResult<IEnumerable<Theme>>> Get(int pathId, int moduleId)
+    public async Task<ActionResult<IEnumerable<Theme>>> Get(int pathId, int moduleId, CancellationToken ct = default)
     {
       IEnumerable<Theme> themes = await Mediator.Send(
-         new GetThemeListQuery { PathId = pathId, ModuleId = moduleId });
+         new GetThemeListQuery { PathId = pathId, ModuleId = moduleId }, ct);
 
       return Ok(themes);
     }
@@ -43,14 +45,15 @@ namespace DeveloperPath.WebApi.Controllers
     /// <param name="pathId">An id of the path</param>
     /// <param name="moduleId">An id of the module</param>
     /// <param name="themeId">An id of the theme</param>
+    /// <param name="ct"></param>
     /// <returns>Information about the theme</returns>
     /// <response code="200">Returns requested theme</response>
     [HttpGet("{themeId}", Name = "GetTheme")]
     [HttpHead("{themeId}")]
-    public async Task<ActionResult<Theme>> Get(int pathId, int moduleId, int themeId)
+    public async Task<ActionResult<Theme>> Get(int pathId, int moduleId, int themeId, CancellationToken ct = default)
     {
       Theme model = await Mediator.Send(
-        new GetThemeQuery { PathId = pathId, ModuleId = moduleId, Id = themeId });
+        new GetThemeQuery { PathId = pathId, ModuleId = moduleId, Id = themeId }, ct);
 
       return Ok(model);
     }

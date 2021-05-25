@@ -4,6 +4,28 @@
         <name>DeveloperPath.Application</name>
     </assembly>
     <members>
+        <member name="T:DeveloperPath.Application.Common.Behaviours.HandleExceptionBehaviour`2">
+            <summary>
+            Mediator pipilene behaviour for handling exceptions
+            </summary>
+            <typeparam name="TRequest"></typeparam>
+            <typeparam name="TResponse"></typeparam>
+        </member>
+        <member name="M:DeveloperPath.Application.Common.Behaviours.HandleExceptionBehaviour`2.#ctor(Microsoft.Extensions.Logging.ILogger{`0})">
+            <summary>
+            Ctor for injecting dependencies
+            </summary>
+            <param name="logger"></param>
+        </member>
+        <member name="M:DeveloperPath.Application.Common.Behaviours.HandleExceptionBehaviour`2.Handle(`0,System.Threading.CancellationToken,MediatR.RequestHandlerDelegate{`1})">
+            <summary>
+            Pipeline handler. Perform any additional behavior and await the next delegate as necessary
+            </summary>
+            <param name="request"></param>
+            <param name="cancellationToken"></param>
+            <param name="next"></param>
+            <returns></returns>
+        </member>
         <member name="T:DeveloperPath.Application.Common.Behaviours.LoggingBehaviour`1">
             <summary>
             Mediator pipilene behaviour for logging
@@ -42,28 +64,6 @@
             <param name="identityService"></param>
         </member>
         <member name="M:DeveloperPath.Application.Common.Behaviours.PerformanceBehaviour`2.Handle(`0,System.Threading.CancellationToken,MediatR.RequestHandlerDelegate{`1})">
-            <summary>
-            Pipeline handler. Perform any additional behavior and await the next delegate as necessary
-            </summary>
-            <param name="request"></param>
-            <param name="cancellationToken"></param>
-            <param name="next"></param>
-            <returns></returns>
-        </member>
-        <member name="T:DeveloperPath.Application.Common.Behaviours.UnhandledExceptionBehaviour`2">
-            <summary>
-            Mediator pipilene behaviour for handling exceptions
-            </summary>
-            <typeparam name="TRequest"></typeparam>
-            <typeparam name="TResponse"></typeparam>
-        </member>
-        <member name="M:DeveloperPath.Application.Common.Behaviours.UnhandledExceptionBehaviour`2.#ctor(Microsoft.Extensions.Logging.ILogger{`0})">
-            <summary>
-            Ctor for injecting dependencies
-            </summary>
-            <param name="logger"></param>
-        </member>
-        <member name="M:DeveloperPath.Application.Common.Behaviours.UnhandledExceptionBehaviour`2.Handle(`0,System.Threading.CancellationToken,MediatR.RequestHandlerDelegate{`1})">
             <summary>
             Pipeline handler. Perform any additional behavior and await the next delegate as necessary
             </summary>
@@ -141,6 +141,7 @@
             </summary>
             <param name="name"></param>
             <param name="key"></param>
+            <param name="errorKey"></param>
         </member>
         <member name="T:DeveloperPath.Application.Common.Exceptions.ValidationException">
             <summary>

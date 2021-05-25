@@ -14,6 +14,7 @@ using NUnit.Framework;
 using Respawn;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace DeveloperPath.Application.IntegrationTests
@@ -78,13 +79,13 @@ namespace DeveloperPath.Application.IntegrationTests
             context.Database.Migrate();
         }
 
-        public static async Task<TResponse> SendAsync<TResponse>(IRequest<TResponse> request)
+        public static async Task<TResponse> SendAsync<TResponse>(IRequest<TResponse> request, CancellationToken token = default)
         {
             using var scope = _scopeFactory.CreateScope();
 
             var mediator = scope.ServiceProvider.GetService<IMediator>();
 
-            return await mediator.Send(request);
+            return await mediator.Send(request, token);
         }
 
         public static async Task<string> RunAsDefaultUserAsync()
@@ -94,13 +95,13 @@ namespace DeveloperPath.Application.IntegrationTests
 
         public static async Task<string> RunAsUserAsync(string userName, string password)
         {
-            using var scope = _scopeFactory.CreateScope();
+            //using var scope = _scopeFactory.CreateScope();
 
-            var userManager = scope.ServiceProvider.GetService<UserManager<ApplicationUser>>();
+            //var userManager = scope.ServiceProvider.GetService<UserManager<ApplicationUser>>();
 
             var user = new ApplicationUser { UserName = userName, Email = userName };
 
-            // var result = await userManager?.CreateAsync(user, password);
+            //var result = await userManager?.CreateAsync(user, password);
 
             _currentUserId = user.Id;
 

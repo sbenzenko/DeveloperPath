@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using DeveloperPath.Application.Common.Exceptions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -26,29 +27,34 @@ namespace DeveloperPath.WebApi.Filters
             {
                 { typeof(ValidationException), HandleValidationException },
                 { typeof(NotFoundException), HandleNotFoundException },
-                { typeof(ConflictException),  HandleConflictException}
+                { typeof(ConflictException), HandleConflictException},
+                { typeof(TaskCanceledException), HandleRequestCanceledException},
+                { typeof(OperationCanceledException), HandleRequestCanceledException}
             };
         }
 
-        private void HandleConflictException(ExceptionContext context)
+        public override void OnException(ExceptionContext context)
         {
-            if (context.Exception is ConflictException exception)
+            HandleException(context);
+            base.OnException(context);
+        }
+
+        private void HandleException(ExceptionContext context)
+        {
+            Type type = context.Exception.GetType();
+            if (_exceptionHandlers.ContainsKey(type))
             {
-                var details = new ConflictProblemDetailsBase(exception.Message, exception.ErrorKey)
-                {
-                    Type = "https://tools.ietf.org/html/rfc7231#section-6.5.1",
-                    Detail = "See the errors property for details",
-                    Instance = context.HttpContext.Request.Path,
-                };
-
-                context.Result = new NotFoundObjectResult(details)
-                {
-                    StatusCode = StatusCodes.Status409Conflict,
-                    ContentTypes = { "application/problem+json" }
-                };
-
-                context.ExceptionHandled = true;
+                _exceptionHandlers[type].Invoke(context);
+                _logger.LogWarning($"Handled error: {context.Exception.Message}");
+                return;
             }
+
+            if (!context.ModelState.IsValid)
+            {
+                HandleInvalidModelStateException(context);
+            }
+
+            HandleUnknownException(context);
         }
 
         private static void HandleNotFoundException(ExceptionContext context)
@@ -57,7 +63,7 @@ namespace DeveloperPath.WebApi.Filters
             {
                 var details = new NotFoundProblemDetails(exception.Message, exception.ErrorKey)
                 {
-                    Type = "https://tools.ietf.org/html/rfc7231#section-6.5.1",
+                    Type = "https://tools.ietf.org/html/rfc7231#section-6.5.4",
                     Detail = "See the errors property for details",
                     Instance = context.HttpContext.Request.Path,
                 };
@@ -72,29 +78,46 @@ namespace DeveloperPath.WebApi.Filters
             }
         }
 
-        public override void OnException(ExceptionContext context)
+        private static void HandleConflictException(ExceptionContext context)
         {
-            HandleException(context);
+            if (context.Exception is ConflictException exception)
+            {
+                var details = new ConflictProblemDetails(exception.Message, exception.ErrorKey)
+                {
+                    Type = "https://tools.ietf.org/html/rfc7231#section-6.5.8",
+                    Detail = "See the errors property for details",
+                    Instance = context.HttpContext.Request.Path,
+                };
 
-            base.OnException(context);
+                context.Result = new ConflictObjectResult(details)
+                {
+                    StatusCode = StatusCodes.Status409Conflict,
+                    ContentTypes = { "application/problem+json" }
+                };
+
+                context.ExceptionHandled = true;
+            }
         }
 
-        private void HandleException(ExceptionContext context)
+        private static void HandleRequestCanceledException(ExceptionContext context)
         {
-            Type type = context.Exception.GetType();
-            if (_exceptionHandlers.ContainsKey(type))
+            if (context.Exception is OperationCanceledException exception)
             {
-                _exceptionHandlers[type].Invoke(context);
-                return;
-            }
+                var details = new RequestCanceledProblemDetails(exception.Message)
+                {
+                    Type = "https://tools.ietf.org/html/rfc7231#section-6.5.1",
+                    Detail = "See the errors property for details",
+                    Instance = context.HttpContext.Request.Path,
+                };
 
-            if (!context.ModelState.IsValid)
-            {
-                HandleInvalidModelStateException(context);
-                return;
+                context.Result = new ObjectResult(details)
+                {
+                    StatusCode = 499,
+                    ContentTypes = { "application/problem+json" }
+                };
+        
+                context.ExceptionHandled = true;
             }
-
-            HandleUnknownException(context);
         }
 
         private static void HandleValidationException(ExceptionContext context)
@@ -134,15 +157,13 @@ namespace DeveloperPath.WebApi.Filters
                 StatusCode = StatusCodes.Status400BadRequest,
                 ContentTypes = { "application/problem+json" }
             };
-
+            
             context.ExceptionHandled = true;
         }
 
         private void HandleUnknownException(ExceptionContext context)
         {
-            ProblemDetailsBase details = default;
-
-            details = new ProblemDetailsBase
+            var details = new ProblemDetailsBase
             {
                 Status = StatusCodes.Status500InternalServerError,
                 Title = "An error occurred while processing your request.",
@@ -154,6 +175,7 @@ namespace DeveloperPath.WebApi.Filters
             {
                 details.Detail = context.Exception.ToString();
             }
+
             _logger.LogError($"Unhandled error: {context.Exception}");
             context.Result = new ObjectResult(details)
             {
