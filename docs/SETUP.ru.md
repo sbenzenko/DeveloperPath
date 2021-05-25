@@ -13,13 +13,13 @@
 
 Используя CLI из папки `\src\Infrastructure`:
 - обновление базы  
-`dotnet ef --startup-project ..\WebUI\ database update`
+`dotnet ef --startup-project ..\WebApi\ database update`
 - откат к миграции   
-`dotnet ef --startup-project ..\WebUI\ database update <NAME>`
+`dotnet ef --startup-project ..\WebApi\ database update <NAME>`
 - добавление миграции  
-`dotnet ef --startup-project ..\WebUI\ migrations add <NAME>`
+`dotnet ef --startup-project ..\WebApi\ migrations add <NAME>`
 - удаление миграции  
-`dotnet ef --startup-project ..\WebUI\ migrations remove`
+`dotnet ef --startup-project ..\WebApi\ migrations remove`
 
 База заполнится тестовыми данными автоматически при старте приложения, если нет данных в Paths.
 
