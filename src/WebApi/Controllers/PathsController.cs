@@ -148,7 +148,7 @@ namespace DeveloperPath.WebApi.Controllers
         [Authorize(Roles = "Administrator")]
         public async Task<ActionResult<Path>> PatchDeleted([FromBody] JsonPatchDocument patchDocument, [FromRoute] int pathId)
         {
-            var pathPatchCommand = new PathPathCommand(pathId, patchDocument);
+            var pathPatchCommand = new PathPathCommand(pathId, patchDocument, false);
             return Ok(await Mediator.Send(pathPatchCommand));
         }
 

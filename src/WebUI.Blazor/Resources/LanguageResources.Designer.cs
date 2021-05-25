@@ -292,6 +292,15 @@ namespace WebUI.Blazor.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Restore.
+        /// </summary>
+        public static string Restore {
+            get {
+                return ResourceManager.GetString("Restore", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Save.
         /// </summary>
         public static string Save {

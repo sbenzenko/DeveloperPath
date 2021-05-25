@@ -195,6 +195,9 @@
   <data name="ProjectReferences" xml:space="preserve">
     <value>Наблюдать за развитием проекта и поучаствовать в нём можно на &lt;a href="https://github.com/sbenzenko/DeveloperPath" target="_blank"&gt;Github&lt;/a&gt; и &lt;a href="https://dev.azure.com/sbenzenko/DeveloperPath" target="_blank"&gt;Azure DevOps&lt;/a&gt;.</value>
   </data>
+  <data name="Restore" xml:space="preserve">
+    <value>Восстановить</value>
+  </data>
   <data name="Save" xml:space="preserve">
     <value>Сохранить</value>
   </data>

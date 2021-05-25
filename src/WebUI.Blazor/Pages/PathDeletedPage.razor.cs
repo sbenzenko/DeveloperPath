@@ -23,6 +23,13 @@ namespace WebUI.Blazor.Pages
         [Inject] public PathService PathService { get; set; }
         [Inject] public ISnackbar Snackbar { get; set; }
 
+        private bool Filter(DeletedPath element)
+        {
+            if (string.IsNullOrWhiteSpace(_searchString))
+                return true;
+            return element.Title.Contains(_searchString, StringComparison.OrdinalIgnoreCase) ||
+                   element.Key.Contains(_searchString, StringComparison.OrdinalIgnoreCase);
+        }
         protected override async Task OnInitializedAsync()
         {
             try

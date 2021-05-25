@@ -1,8 +1,9 @@
 ﻿@page "/administration/paths/deleted"
+@using global::Shared.ClientModels
 
 <Condition Evaluation="_paths != null">
     <Match>
-        <MudTable Items="@_paths">
+        <MudTable Items="@_paths" Filter="Filter">
             <ToolBarContent>
                 <MudText Typo="Typo.h6">Deleted paths</MudText>
                 <MudToolBarSpacer />
@@ -21,8 +22,10 @@
                 <MudTd DataLabel="@localizer["UriKey"]">@context.Key</MudTd>
                 <MudTd DataLabel="@localizer["Deleted"]">@context.Deleted</MudTd>
                 <MudTd DataLabel="@localizer["Actions"]">
-                    <MudIconButton Icon="@Icons.Outlined.RestoreFromTrash"
-                                   OnClick="()=>RestoreDeletedPath(context)"></MudIconButton>
+                    <MudTooltip Text="@localizer["Restore"]">
+                        <MudIconButton Icon="@Icons.Outlined.RestoreFromTrash"
+                                       OnClick="() => RestoreDeletedPath(context)"></MudIconButton>
+                    </MudTooltip>
                 </MudTd>
             </RowTemplate>
         </MudTable>
