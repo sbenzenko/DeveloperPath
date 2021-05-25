@@ -164,7 +164,7 @@ namespace DeveloperPath.WebApi.Controllers
         [Consumes("application/json")]
         public async Task<ActionResult<Path>> PatchDeleted([FromBody] JsonPatchDocument patchDocument, [FromRoute] int pathId)
         {
-            var pathPatchCommand = new PathPathCommand(pathId, patchDocument, false);
+            var pathPatchCommand = new PatchPathCommand(pathId, patchDocument, false);
             return Ok(await Mediator.Send(pathPatchCommand));
         }
 
