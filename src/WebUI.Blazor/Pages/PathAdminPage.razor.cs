@@ -25,7 +25,7 @@ namespace WebUI.Blazor.Pages
         [Inject] public ISnackbar Snackbar { get; set; }
         [Inject] public NavigationManager NavigationManager { get; set; }
 
-        private Path _editablePath;
+ 
 
         public List<Path> Paths { get; set; }
 
@@ -165,6 +165,11 @@ namespace WebUI.Blazor.Pages
         private void GoToDeleted()
         {
             NavigationManager.NavigateTo("/administration/paths/deleted");
+        }
+
+        private void GoToModules(Path pathItem)
+        {
+            NavigationManager.NavigateTo($"/administration/paths/{pathItem.Key}/modules");
         }
     }
 }

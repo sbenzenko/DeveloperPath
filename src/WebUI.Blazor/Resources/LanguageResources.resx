@@ -168,6 +168,9 @@ Developer Path project was created to answer these and many other questions.</va
   <data name="Menu" xml:space="preserve">
     <value>Menu</value>
   </data>
+  <data name="Modules" xml:space="preserve">
+    <value>Modules</value>
+  </data>
   <data name="NewPath" xml:space="preserve">
     <value>New Path</value>
   </data>

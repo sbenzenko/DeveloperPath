@@ -165,6 +165,9 @@
   <data name="Menu" xml:space="preserve">
     <value>Меню</value>
   </data>
+  <data name="Modules" xml:space="preserve">
+    <value>Модули</value>
+  </data>
   <data name="NewPath" xml:space="preserve">
     <value>Новый путь</value>
   </data>
@@ -217,7 +220,7 @@
     <value>URI ключ должен быть не длинее 20 символов</value>
   </data>
   <data name="Visible" xml:space="preserve">
-    <value>Видимый</value>
+    <value>Видимость</value>
   </data>
   <data name="Welcome" xml:space="preserve">
     <value>Добро пожаловать на проект Путь Разработчика!</value>
