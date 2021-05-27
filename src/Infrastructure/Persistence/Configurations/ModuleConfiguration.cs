@@ -12,7 +12,13 @@ namespace DeveloperPath.Infrastructure.Persistence.Configurations
       builder.Property(m => m.Title)
         .HasMaxLength(100)
         .IsRequired();
-      builder.Property(m => m.Description)
+
+      builder.Property(m => m.Key)
+          .HasMaxLength(100)
+          .IsRequired();
+
+
+            builder.Property(m => m.Description)
         .HasMaxLength(3000)
         .IsRequired();
       builder

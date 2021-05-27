@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WebUI.Blazor.Pages
 {
-    public partial class PathModulesAdminPage.razor
+    public partial class PathModulesAdminPage
     {
         
     }
