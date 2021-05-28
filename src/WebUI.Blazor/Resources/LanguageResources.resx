@@ -171,6 +171,15 @@ Developer Path project was created to answer these and many other questions.</va
   <data name="Modules" xml:space="preserve">
     <value>Modules</value>
   </data>
+  <data name="ModuleTitle" xml:space="preserve">
+    <value>Module Title</value>
+  </data>
+  <data name="MustKnow" xml:space="preserve">
+    <value>Must Know</value>
+  </data>
+  <data name="Necessity" xml:space="preserve">
+    <value>Necessity</value>
+  </data>
   <data name="NewPath" xml:space="preserve">
     <value>New Path</value>
   </data>
@@ -185,6 +194,9 @@ Developer Path project was created to answer these and many other questions.</va
   </data>
   <data name="PathDeleted" xml:space="preserve">
     <value>The Path has been deleted</value>
+  </data>
+  <data name="PathModules" xml:space="preserve">
+    <value>Path Modules</value>
   </data>
   <data name="Paths" xml:space="preserve">
     <value>Paths</value>
@@ -206,6 +218,9 @@ Developer Path project was created to answer these and many other questions.</va
   </data>
   <data name="Save" xml:space="preserve">
     <value>Save</value>
+  </data>
+  <data name="Search" xml:space="preserve">
+    <value>Search</value>
   </data>
   <data name="Tags" xml:space="preserve">
     <value>Tags</value>

@@ -11,6 +11,7 @@ using DeveloperPath.WebApi.Models;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
+using Shared.ClientModels;
 
 namespace DeveloperPath.WebApi.Controllers
 {

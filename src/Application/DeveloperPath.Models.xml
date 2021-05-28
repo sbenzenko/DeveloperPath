@@ -463,6 +463,11 @@
             Module title
             </summary>
         </member>
+        <member name="P:DeveloperPath.Application.CQRS.Modules.Commands.CreateModule.CreateModule.Key">
+            <summary>
+            Module unique URI key
+            </summary>
+        </member>
         <member name="P:DeveloperPath.Application.CQRS.Modules.Commands.CreateModule.CreateModule.Description">
             <summary>
             Module short summary

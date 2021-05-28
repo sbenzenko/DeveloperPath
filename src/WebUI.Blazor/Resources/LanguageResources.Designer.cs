@@ -211,6 +211,33 @@ namespace WebUI.Blazor.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Module Title.
+        /// </summary>
+        public static string ModuleTitle {
+            get {
+                return ResourceManager.GetString("ModuleTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Must Know.
+        /// </summary>
+        public static string MustKnow {
+            get {
+                return ResourceManager.GetString("MustKnow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Necessity.
+        /// </summary>
+        public static string Necessity {
+            get {
+                return ResourceManager.GetString("Necessity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to New Path.
         /// </summary>
         public static string NewPath {
@@ -252,6 +279,15 @@ namespace WebUI.Blazor.Resources {
         public static string PathDeleted {
             get {
                 return ResourceManager.GetString("PathDeleted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Path Modules.
+        /// </summary>
+        public static string PathModules {
+            get {
+                return ResourceManager.GetString("PathModules", resourceCulture);
             }
         }
         
@@ -315,6 +351,15 @@ namespace WebUI.Blazor.Resources {
         public static string Save {
             get {
                 return ResourceManager.GetString("Save", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Search.
+        /// </summary>
+        public static string Search {
+            get {
+                return ResourceManager.GetString("Search", resourceCulture);
             }
         }
         

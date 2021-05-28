@@ -1,35 +1,39 @@
 ﻿@page "/administration/paths/deleted"
+@using WebUI.Blazor.Constants
 
-<Condition Evaluation="_paths != null">
-    <Match>
-        <MudTable Items="@_paths" Filter="Filter">
-            <ToolBarContent>
-                <MudText Typo="Typo.h6">Deleted paths</MudText>
-                <MudToolBarSpacer />
-                <MudTextField @bind-Value="_searchString" Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
-            </ToolBarContent>
-            <HeaderContent>
-                <MudTh>Id</MudTh>
-                <MudTh>@localizer["PathTitle"]</MudTh>
-                <MudTh>@localizer["UriKey"]</MudTh>
-                <MudTh>@localizer["Deleted"]</MudTh>
-                <MudTh>@localizer["Actions"]</MudTh>
-            </HeaderContent>
-            <RowTemplate>
-                <MudTd DataLabel="Id">@context.Id</MudTd>
-                <MudTd DataLabel="@localizer["PathTitle"]">@context.Title</MudTd>
-                <MudTd DataLabel="@localizer["UriKey"]">@context.Key</MudTd>
-                <MudTd DataLabel="@localizer["Deleted"]">@context.Deleted</MudTd>
-                <MudTd DataLabel="@localizer["Actions"]">
-                    <MudTooltip Text="@localizer["Restore"]">
-                        <MudIconButton Icon="@Icons.Outlined.RestoreFromTrash"
-                                       OnClick="() => RestoreDeletedPath(context)"></MudIconButton>
-                    </MudTooltip>
-                </MudTd>
-            </RowTemplate>
-        </MudTable>
-    </Match>
-    <NotMatch>
-        <MudProgressLinear Indeterminate="true" Color="Color.Primary"></MudProgressLinear>
-    </NotMatch>
-</Condition>
+<AuthorizeView Roles="@RolesConstants.ADMINISTRATOR"
+               Context="AuthContext">
+    <Condition Evaluation="_paths != null">
+        <Match>
+            <MudTable Items="@_paths" Filter="Filter">
+                <ToolBarContent>
+                    <MudText Typo="Typo.h6">Deleted paths</MudText>
+                    <MudToolBarSpacer />
+                    <MudTextField @bind-Value="_searchString" Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
+                </ToolBarContent>
+                <HeaderContent>
+                    <MudTh>Id</MudTh>
+                    <MudTh>@localizer["PathTitle"]</MudTh>
+                    <MudTh>@localizer["UriKey"]</MudTh>
+                    <MudTh>@localizer["Deleted"]</MudTh>
+                    <MudTh>@localizer["Actions"]</MudTh>
+                </HeaderContent>
+                <RowTemplate>
+                    <MudTd DataLabel="Id">@context.Id</MudTd>
+                    <MudTd DataLabel="@localizer["PathTitle"]">@context.Title</MudTd>
+                    <MudTd DataLabel="@localizer["UriKey"]">@context.Key</MudTd>
+                    <MudTd DataLabel="@localizer["Deleted"]">@context.Deleted</MudTd>
+                    <MudTd DataLabel="@localizer["Actions"]">
+                        <MudTooltip Text="@localizer["Restore"]">
+                            <MudIconButton Icon="@Icons.Outlined.RestoreFromTrash"
+                                           OnClick="() => RestoreDeletedPath(context)"></MudIconButton>
+                        </MudTooltip>
+                    </MudTd>
+                </RowTemplate>
+            </MudTable>
+        </Match>
+        <NotMatch>
+            <MudProgressLinear Indeterminate="true" Color="Color.Primary"></MudProgressLinear>
+        </NotMatch>
+    </Condition>
+</AuthorizeView>

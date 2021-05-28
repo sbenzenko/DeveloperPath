@@ -168,6 +168,15 @@
   <data name="Modules" xml:space="preserve">
     <value>Модули</value>
   </data>
+  <data name="ModuleTitle" xml:space="preserve">
+    <value>Название модуля</value>
+  </data>
+  <data name="MustKnow" xml:space="preserve">
+    <value>Знать обязательно</value>
+  </data>
+  <data name="Necessity" xml:space="preserve">
+    <value>Обязательность</value>
+  </data>
   <data name="NewPath" xml:space="preserve">
     <value>Новый путь</value>
   </data>
@@ -182,6 +191,9 @@
   </data>
   <data name="PathDeleted" xml:space="preserve">
     <value>Путь удален</value>
+  </data>
+  <data name="PathModules" xml:space="preserve">
+    <value>Модули</value>
   </data>
   <data name="Paths" xml:space="preserve">
     <value>Пути развития</value>
@@ -203,6 +215,9 @@
   </data>
   <data name="Save" xml:space="preserve">
     <value>Сохранить</value>
+  </data>
+  <data name="Search" xml:space="preserve">
+    <value>Поиск</value>
   </data>
   <data name="Tags" xml:space="preserve">
     <value>Теги</value>

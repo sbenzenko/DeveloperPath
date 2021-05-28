@@ -8,6 +8,7 @@ using DeveloperPath.Application.Common.Interfaces;
 using DeveloperPath.Domain.Shared.ClientModels;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Shared.ClientModels;
 
 namespace DeveloperPath.Application.CQRS.Modules.Queries.GetModules
 {
@@ -52,7 +53,6 @@ namespace DeveloperPath.Application.CQRS.Modules.Queries.GetModules
             if (result == null || result.Paths.Where(p => p.Id == request.PathId) == null)
                 throw new NotFoundException(nameof(Module), request.Id, NotFoundHelper.MODULE_NOT_FOUND);
 
-            //TODO: is there another way to map single item?
             return _mapper.Map<ModuleDetails>(result);
         }
     }

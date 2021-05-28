@@ -24,7 +24,10 @@ namespace DeveloperPath.Application.CQRS.Modules.Commands.CreateModule
       RuleFor(v => v.PathId)
           .NotEmpty().WithMessage("Path Id is required.");
 
-      RuleFor(v => v.Title)
+      RuleFor(v => v.Key)
+          .NotEmpty().WithMessage("Path Id is required.");
+
+            RuleFor(v => v.Title)
         .NotEmpty().WithMessage("Title is required.")
         .MaximumLength(100).WithMessage("Title must not exceed 100 characters.")
         .MustAsync(BeUniqueTitle).WithMessage("The specified module already exists in this path.");

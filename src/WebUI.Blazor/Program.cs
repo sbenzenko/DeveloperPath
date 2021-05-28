@@ -73,6 +73,7 @@ namespace WebUI.Blazor
 
             //register services
             builder.Services.AddTransient<PathService>();
+            builder.Services.AddTransient<ModuleService>();
             builder.Services.AddScoped<HttpService>();
 
             var host = builder.Build();
