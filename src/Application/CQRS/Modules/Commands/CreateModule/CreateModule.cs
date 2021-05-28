@@ -82,6 +82,7 @@ namespace DeveloperPath.Application.CQRS.Modules.Commands.CreateModule
             var entity = new Domain.Entities.Module
             {
                 Title = request.Title,
+                Key = request.Key,
                 Description = request.Description,
                 Necessity = request.Necessity,
                 Tags = request.Tags,

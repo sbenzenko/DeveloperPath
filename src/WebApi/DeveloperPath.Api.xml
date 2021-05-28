@@ -4,22 +4,22 @@
         <name>DeveloperPath.WebApi</name>
     </assembly>
     <members>
-        <member name="M:DeveloperPath.WebApi.Controllers.ModulesController.Get(System.Int32,DeveloperPath.WebApi.Models.RequestParams,System.Threading.CancellationToken)">
+        <member name="M:DeveloperPath.WebApi.Controllers.ModulesController.Get(System.String,DeveloperPath.WebApi.Models.RequestParams,System.Threading.CancellationToken)">
             <summary>
             Get all available modules
             </summary>
-            <param name="pathId">An id of the path</param>
+            <param name="pathKey">URI pathKey</param>
             <param name="requestParams">Request parameters</param>
             <param name="ct"></param>
             <returns>A collection of modules with summary information</returns>
             <response code="200">Returns a list of modules in the path</response>
             <response code="404">Path not found</response>
         </member>
-        <member name="M:DeveloperPath.WebApi.Controllers.ModulesController.Get(System.Int32,System.Int32,System.Threading.CancellationToken)">
+        <member name="M:DeveloperPath.WebApi.Controllers.ModulesController.Get(System.String,System.Int32,System.Threading.CancellationToken)">
             <summary>
             Get module information by its Id
             </summary>
-            <param name="pathId">An id of the path</param>
+            <param name="pathKey">An pathKey of the path</param>
             <param name="moduleId">An id of the module</param>
             <param name="ct"></param>
             <returns>Information about the module</returns>

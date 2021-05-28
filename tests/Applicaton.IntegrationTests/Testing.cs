@@ -1,11 +1,9 @@
 ﻿using DeveloperPath.Application.Common.Interfaces;
-using DeveloperPath.Domain.Common;
 using DeveloperPath.Infrastructure.Identity;
 using DeveloperPath.Infrastructure.Persistence;
 using DeveloperPath.WebApi;
 using MediatR;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;

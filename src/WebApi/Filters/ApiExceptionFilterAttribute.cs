@@ -144,7 +144,7 @@ namespace DeveloperPath.WebApi.Filters
 
         private static void HandleInvalidModelStateException(ExceptionContext context)
         {
-            //var x = context.ModelState.Select(x=>x.Key+":"+string.Join(x.Value.Errors));
+            //var x = context.ModelState.Select(x=>x.PathKey+":"+string.Join(x.Value.Errors));
             var details = new Microsoft.AspNetCore.Mvc.ValidationProblemDetails()
             {
                 Type = "https://tools.ietf.org/html/rfc7231#section-6.5.1",

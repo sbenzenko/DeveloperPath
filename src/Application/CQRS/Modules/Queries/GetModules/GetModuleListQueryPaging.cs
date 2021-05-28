@@ -24,7 +24,7 @@ namespace DeveloperPath.Application.CQRS.Modules.Queries.GetModules
     /// Path id
     /// </summary>
     [Required]
-    public int PathId { get; init; }
+    public string PathKey { get; init; }
     /// <summary>
     /// Page number
     /// </summary>
@@ -50,15 +50,15 @@ namespace DeveloperPath.Application.CQRS.Modules.Queries.GetModules
     public async Task<(PaginationData, IEnumerable<Module>)> Handle(GetModuleListQueryPaging request, CancellationToken cancellationToken)
     {
       //TODO: check if requested module is in requested path (???)
-      var path = await _context.Paths.FindAsync(new object[] { request.PathId }, cancellationToken);
+      var path = await _context.Paths.FirstOrDefaultAsync(x => x.Key == request.PathKey, cancellationToken: cancellationToken);
       if (path == null)
-        throw new NotFoundException(nameof(Path), request.PathId, NotFoundHelper.PATH_NOT_FOUND);
+        throw new NotFoundException(nameof(Path), request.PathKey, NotFoundHelper.PATH_NOT_FOUND);
       IEnumerable<Module> modules = null;
 
       if (request.PageNumber > 0 || request.PageSize > 0)
       {
         modules = await _context.Paths
-           .Where(p => p.Id == request.PathId)
+           .Where(p => p.Key == request.PathKey)
            .SelectMany(p => p.Modules)
            .Include(m => m.Paths)
            .Include(m => m.Prerequisites)
@@ -70,7 +70,7 @@ namespace DeveloperPath.Application.CQRS.Modules.Queries.GetModules
 
       // TODO: Order modules (from PathModules.Order)
       modules = await _context.Paths
-          .Where(p => p.Id == request.PathId)
+          .Where(p => p.Key == request.PathKey)
           .SelectMany(p => p.Modules)
           .Include(m => m.Paths)
           .Include(m => m.Prerequisites)

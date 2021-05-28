@@ -134,11 +134,11 @@ namespace DeveloperPath.Application.IntegrationTests.Queries
         Description = "Some Other Path Description",
         Modules = new List<Module>
           {
-            new Module { Title = "Module1", Description = "Module 1 Description", Necessity = Necessity.Other },
-            new Module { Title = "Module2", Description = "Module 2 Description", Necessity = Necessity.GoodToKnow },
-            new Module { Title = "Module3", Description = "Module 3 Description", Necessity = Necessity.Interesting },
-            new Module { Title = "Module4", Description = "Module 4 Description", Necessity = Necessity.MustKnow },
-            new Module { Title = "Module5", Description = "Module 5 Description", Necessity = Necessity.Possibility }
+            new Module { Title = "Module1", Key = "module-key-1",Description = "Module 1 Description", Necessity = Necessity.Other },
+            new Module { Title = "Module2", Key = "module-key-2",Description = "Module 2 Description", Necessity = Necessity.GoodToKnow },
+            new Module { Title = "Module3", Key = "module-key-3",Description = "Module 3 Description", Necessity = Necessity.Interesting },
+            new Module { Title = "Module4", Key = "module-key-4",Description = "Module 4 Description", Necessity = Necessity.MustKnow },
+            new Module { Title = "Module5", Key = "module-key-5",Description = "Module 5 Description", Necessity = Necessity.Possibility }
           },
         Tags = new List<string> { "Tag1", "Tag2", "Tag3" }
       });

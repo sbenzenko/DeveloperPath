@@ -14,44 +14,45 @@ using Shared.ClientModels;
 
 namespace DeveloperPath.Application.CQRS.Modules.Queries.GetModules
 {
-  /// <summary>
-  /// Get module parameters
-  /// </summary>
-  public class GetModuleListQuery : IRequest<IEnumerable<Module>>
-  {
     /// <summary>
-    /// Path id
+    /// Get module parameters
     /// </summary>
-    [Required]
-    public int PathId { get; init; }
-  }
-
-  internal class GetModulesQueryHandler : IRequestHandler<GetModuleListQuery, IEnumerable<Module>>
-  {
-    private readonly IApplicationDbContext _context;
-    private readonly IMapper _mapper;
-
-    public GetModulesQueryHandler(IApplicationDbContext context, IMapper mapper)
+    public class GetModuleListQuery : IRequest<IEnumerable<Module>>
     {
-      _context = context;
-      _mapper = mapper;
+        /// <summary>
+        /// URI key
+        /// </summary>
+        [Required]
+        public string PathKey { get; init; }
     }
 
-    public async Task<IEnumerable<Module>> Handle(GetModuleListQuery request, CancellationToken cancellationToken)
+    internal class GetModulesQueryHandler : IRequestHandler<GetModuleListQuery, IEnumerable<Module>>
     {
-      //TODO: check if requested module is in requested path (???)
-      var path = await _context.Paths.FindAsync(new object[] { request.PathId }, cancellationToken);
-      if (path == null)
-        throw new NotFoundException(nameof(Path), request.PathId, NotFoundHelper.PATH_NOT_FOUND);
+        private readonly IApplicationDbContext _context;
+        private readonly IMapper _mapper;
 
-      // TODO: Order modules (from PathModules.Order)
-      return await _context.Paths
-        .Where(p => p.Id == request.PathId)
-        .SelectMany(p => p.Modules)
-        .Include(m => m.Paths)
-        .Include(m => m.Prerequisites)
-        .ProjectTo<Module>(_mapper.ConfigurationProvider)
-        .ToListAsync(cancellationToken);
+        public GetModulesQueryHandler(IApplicationDbContext context, IMapper mapper)
+        {
+            _context = context;
+            _mapper = mapper;
+        }
+
+        public async Task<IEnumerable<Module>> Handle(GetModuleListQuery request, CancellationToken cancellationToken)
+        {
+            //TODO: check if requested module is in requested path (???)
+            var path = await _context.Paths.FirstOrDefaultAsync(x => x.Key == request.PathKey, cancellationToken: cancellationToken);
+            if (path == null)
+                throw new NotFoundException(nameof(Path), request.PathKey, NotFoundHelper.PATH_NOT_FOUND);
+
+            // TODO: Order modules (from PathModules.Order)
+            return await _context.Paths
+                         .AsNoTracking()
+                         .Where(p => p.Key == request.PathKey)
+                         .SelectMany(p => p.Modules)
+                         .Include(m => m.Paths)
+                         .Include(m => m.Prerequisites)
+                         .ProjectTo<Module>(_mapper.ConfigurationProvider)
+                         .ToListAsync(cancellationToken);
+        }
     }
-  }
 }

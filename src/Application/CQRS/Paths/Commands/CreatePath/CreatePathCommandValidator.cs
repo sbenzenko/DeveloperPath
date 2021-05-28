@@ -24,7 +24,7 @@ namespace DeveloperPath.Application.CQRS.Paths.Commands.CreatePath
 
             RuleFor(v => v.Key)
                 .NotEmpty().WithMessage("URI key is required.")
-                .MaximumLength(100).WithMessage("Key must not exceed 100 characters.")
+                .MaximumLength(100).WithMessage("PathKey must not exceed 100 characters.")
                 .MustAsync((path, key, cancellationToken) => _pathValidation.BeUniqueKey(default, key, cancellationToken))
                 .WithMessage("The specified path key already exists.");
 
