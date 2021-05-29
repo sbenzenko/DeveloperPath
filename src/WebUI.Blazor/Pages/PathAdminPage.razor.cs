@@ -1,17 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Microsoft.AspNetCore.Components;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Localization;
 using MudBlazor;
-
 using DeveloperPath.Domain.Shared.ClientModels;
 using DeveloperPath.Domain.Shared.ProblemDetails;
 using WebUI.Blazor.Resources;
 using WebUI.Blazor.Services;
 using WebUI.Blazor.Shared;
+using WebUI.Blazor.UIHelper;
 
 namespace WebUI.Blazor.Pages
 {
@@ -21,8 +20,7 @@ namespace WebUI.Blazor.Pages
         [Inject] public PathService PathService { get; set; }
         [Inject] public IDialogService DialogService { get; set; }
         [Inject] public IStringLocalizer<LanguageResources> localizer { get; set; }
-        [Inject] public IStringLocalizer<ErrorResources> errorLocalizer { get; set; }
-        [Inject] public ISnackbar Snackbar { get; set; }
+        [Inject] public SnackbarHelper SnackbarHelper { get; set; }
         [Inject] public NavigationManager NavigationManager { get; set; }
 
         public List<Path> Paths { get; set; }
@@ -72,18 +70,18 @@ namespace WebUI.Blazor.Pages
                 {
                     item = result;
                 }
-                Snackbar.Add(localizer["PathUpdated"], Severity.Success);
+                SnackbarHelper.PrintSuccess(localizer["PathUpdated"]);
             }
             catch (ApiError e)
             {
                 if (e.ProblemDetails.Status == 422)
                 {
-                    PrintErrorDetails((e.ProblemDetails as UnprocessableEntityProblemDetails).Errors);
+                    SnackbarHelper.PrintErrorDetails((e.ProblemDetails as UnprocessableEntityProblemDetails).Errors);
                 }
             }
             catch (Exception e)
             {
-                Snackbar.Add(e.Message, Severity.Error);
+                SnackbarHelper.PrintError(e.Message);
             }
             StateHasChanged();
         }
@@ -94,36 +92,24 @@ namespace WebUI.Blazor.Pages
             {
                 var result = await PathService.AddNewPathAsync(resultData);
                 Paths.Add(result);
-                Snackbar.Add(localizer["PathCreated"], Severity.Success);
+                SnackbarHelper.PrintSuccess(localizer["PathCreated"]);
             }
             catch (ApiError e)
             {
                 if (e.ProblemDetails.Status == 422)
                 {
-                    PrintErrorDetails((e.ProblemDetails as UnprocessableEntityProblemDetails).Errors);
+                    SnackbarHelper.PrintErrorDetails((e.ProblemDetails as UnprocessableEntityProblemDetails).Errors);
                 }
             }
             catch (Exception e)
             {
-                Snackbar.Add(e.Message, Severity.Error);
+                SnackbarHelper.PrintError(e.Message);
             }
             StateHasChanged();
         }
 
-        void PrintErrorDetails(IDictionary<string, string[]> errors)
-        {
-            foreach (var error in errors)
-            {
-                StringBuilder sb = new StringBuilder();
-                sb.Append($"<b>{errorLocalizer["VALIDATION_ERROR"]}</b>");
-                sb.Append("<br/>");
-                sb.Append("<ul>");
-                foreach (var details in error.Value)
-                    sb.AppendLine($"<li>{details}</li>");
-                sb.Append("</ul>");
-                Snackbar.Add(sb.ToString(), Severity.Error);
-            }
-        }
+      
+    
 
         private async Task ChangePathVisibilityAsync(Path pathItem)
         {
@@ -138,7 +124,7 @@ namespace WebUI.Blazor.Pages
             }
             catch (Exception e)
             {
-                Snackbar.Add(e.Message, Severity.Error);
+                SnackbarHelper.PrintError(e.Message);
             }
         }
 
@@ -150,13 +136,13 @@ namespace WebUI.Blazor.Pages
                 if (result)
                 {
                     Paths.Remove(pathItem);
-                    Snackbar.Add(localizer["PathDeleted"], Severity.Warning);
+                    SnackbarHelper.PrintWarning(localizer["PathDeleted"]);
                 }
                 StateHasChanged();
             }
             catch (Exception e)
             {
-                Snackbar.Add(e.Message, Severity.Error);
+                SnackbarHelper.PrintError(e.Message);
             }
         }
 

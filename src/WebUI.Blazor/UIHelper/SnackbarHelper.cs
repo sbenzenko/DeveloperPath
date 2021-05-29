@@ -20,6 +20,18 @@ namespace WebUI.Blazor.UIHelper
             this._errorLocalizer = errorLocalizer;
         }
 
+        public void PrintSuccess(string message)
+        {
+            _snackbar.Add(message, Severity.Success);
+        }
+        public void PrintError(string message)
+        {
+            _snackbar.Add(message, Severity.Error);
+        }
+        public void PrintWarning(string message)
+        {
+            _snackbar.Add(message, Severity.Warning);
+        }
 
         public void PrintErrorDetails(IDictionary<string, string[]> errors)
         {

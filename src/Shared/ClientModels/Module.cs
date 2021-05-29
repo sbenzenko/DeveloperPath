@@ -48,5 +48,10 @@ namespace Shared.ClientModels
         /// List of tags related to the module
         /// </summary>
         public ICollection<string> Tags { get; set; }
+
+        /// <summary>
+        /// Service field for Blazor Table
+        /// </summary>
+        public bool ShowDetails;
     }
 }

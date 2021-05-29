@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
-using DeveloperPath.Domain.Shared.ClientModels;
 using DeveloperPath.Domain.Shared.ProblemDetails;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Localization;
@@ -19,16 +17,17 @@ namespace WebUI.Blazor.Pages
     {
         private string _searchString;
         private IEnumerable<Module> _pathsModules;
-        private bool _shouldShowLoading = true;
         [Parameter] public string Key { get; set; }
         [Inject] public IStringLocalizer<LanguageResources> localizer { get; set; }
 
         [Inject] public SnackbarHelper SnakbarHelper { get; set; }
         [Inject] public ModuleService ModuleService { get; set; }
         [Inject] public ISnackbar Snackbar { get; set; }
+
+        private List<BreadcrumbItem> _breadCrumbs;
+
         private bool Filter(Module module)
         {
-            //throw new System.NotImplementedException();
             return true;
         }
 
@@ -36,6 +35,12 @@ namespace WebUI.Blazor.Pages
         {
             try
             {
+                _breadCrumbs = new List<BreadcrumbItem>
+                {
+                    new($"{localizer["paths"]}", href: "/administration/paths"),
+                    new($"{localizer["PathModules"].Value.ToLower()}", href: $"/administration/paths/{Key}/modules")
+
+                };
                 _pathsModules = await ModuleService.GetListAsync(Key);
             }
             catch (ApiError e)
@@ -57,6 +62,11 @@ namespace WebUI.Blazor.Pages
             {
                 Console.WriteLine(e.GetType().Name);
             }
+        }
+
+        private Task ShowModalAddModule()
+        {
+            throw new NotImplementedException();
         }
     }
 }

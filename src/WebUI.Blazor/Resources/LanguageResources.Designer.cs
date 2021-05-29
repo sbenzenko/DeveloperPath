@@ -61,6 +61,15 @@ namespace WebUI.Blazor.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add Module.
+        /// </summary>
+        public static string AddModule {
+            get {
+                return ResourceManager.GetString("AddModule", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to New path.
         /// </summary>
         public static string AddPath {
@@ -102,6 +111,15 @@ namespace WebUI.Blazor.Resources {
         public static string Deleted {
             get {
                 return ResourceManager.GetString("Deleted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Deleted paths.
+        /// </summary>
+        public static string Deleted_paths {
+            get {
+                return ResourceManager.GetString("Deleted paths", resourceCulture);
             }
         }
         
