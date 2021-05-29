@@ -36,8 +36,8 @@ namespace WebUI.Blazor.Pages
             {
                 _breadCrumbs = new List<BreadcrumbItem>
                 {
-                    new($"{localizer["paths"]}", href: "/administration/paths"),
-                    new($"{localizer["DeletedPaths"].Value.ToLower()}", href: "/administration/paths/deleted")
+                    new($"{localizer["Paths"].Value.ToUpper()}", href: "/administration/paths"),
+                    new($"{localizer["DeletedPaths"].Value.ToUpper()}", href: "/administration/paths/deleted")
 
                 };
 

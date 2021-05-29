@@ -19,7 +19,6 @@ namespace WebUI.Blazor.Pages
         private IEnumerable<Module> _pathsModules;
         [Parameter] public string Key { get; set; }
         [Inject] public IStringLocalizer<LanguageResources> localizer { get; set; }
-
         [Inject] public SnackbarHelper SnakbarHelper { get; set; }
         [Inject] public ModuleService ModuleService { get; set; }
         [Inject] public ISnackbar Snackbar { get; set; }
@@ -37,8 +36,8 @@ namespace WebUI.Blazor.Pages
             {
                 _breadCrumbs = new List<BreadcrumbItem>
                 {
-                    new($"{localizer["paths"]}", href: "/administration/paths"),
-                    new($"{localizer["PathModules"].Value.ToLower()}", href: $"/administration/paths/{Key}/modules")
+                    new($"{localizer["Paths"].Value.ToUpper()}", href: "/administration/paths"),
+                    new($"{localizer["PathModules"].Value.ToUpper()}", href: $"/administration/paths/{Key}/modules")
 
                 };
                 _pathsModules = await ModuleService.GetListAsync(Key);

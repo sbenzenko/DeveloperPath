@@ -61,6 +61,15 @@ namespace WebUI.Blazor.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Actions.
+        /// </summary>
+        public static string Actions {
+            get {
+                return ResourceManager.GetString("Actions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add Module.
         /// </summary>
         public static string AddModule {
@@ -355,7 +364,16 @@ namespace WebUI.Blazor.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to See project development status and contribute at &lt;a href=&quot;https://github.com/sbenzenko/DeveloperPath&quot; target=&quot;_blank&quot;&gt;Github&lt;/a&gt; and &lt;a href=&quot;https://dev.azure.com/sbenzenko/DeveloperPath&quot; target=&quot;_blank&quot;&gt;Azure DevOps&lt;/a&gt;..
+        ///   Looks up a localized string similar to Prerequisites details.
+        /// </summary>
+        public static string Prerequisites_details {
+            get {
+                return ResourceManager.GetString("Prerequisites details", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to See project development status and contribute at &lt;a class=&quot;btn-link&quot; href=&quot;https://github.com/sbenzenko/DeveloperPath&quot; target=&quot;_blank&quot;&gt;Github&lt;/a&gt; and &lt;a class=&quot;btn-link&quot; href=&quot;https://dev.azure.com/sbenzenko/DeveloperPath&quot; target=&quot;_blank&quot;&gt;Azure DevOps&lt;/a&gt;..
         /// </summary>
         public static string ProjectReferences {
             get {

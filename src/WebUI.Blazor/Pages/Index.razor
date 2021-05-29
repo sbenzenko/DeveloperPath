@@ -5,16 +5,9 @@
 <AuthorizeView>
     <Authorized>
         <h2>
-            Hello @context.User.Identity.Name 
+            Hello @context.User.Identity.Name
         </h2>
         @* TODO: add Paths user is studying *@
-
-        @*<ul>
-            @foreach (var claim in context.User.Claims)
-            {
-                <li><b>@claim.Type</b>: @claim.Value</li>
-            }
-        </ul>*@
     </Authorized>
     <NotAuthorized>
         <p>

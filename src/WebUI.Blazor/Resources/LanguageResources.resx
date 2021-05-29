@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Actions" xml:space="preserve">
+    <value>Actions</value>
+  </data>
   <data name="AddModule" xml:space="preserve">
     <value>Add Module</value>
   </data>
@@ -219,8 +222,11 @@ Developer Path project was created to answer these and many other questions.</va
   <data name="Prerequisites" xml:space="preserve">
     <value>Prerequisites</value>
   </data>
+  <data name="Prerequisites details" xml:space="preserve">
+    <value>Prerequisites details</value>
+  </data>
   <data name="ProjectReferences" xml:space="preserve">
-    <value>See project development status and contribute at &lt;a href="https://github.com/sbenzenko/DeveloperPath" target="_blank"&gt;Github&lt;/a&gt; and &lt;a href="https://dev.azure.com/sbenzenko/DeveloperPath" target="_blank"&gt;Azure DevOps&lt;/a&gt;.</value>
+    <value>See project development status and contribute at &lt;a class="btn-link" href="https://github.com/sbenzenko/DeveloperPath" target="_blank"&gt;Github&lt;/a&gt; and &lt;a class="btn-link" href="https://dev.azure.com/sbenzenko/DeveloperPath" target="_blank"&gt;Azure DevOps&lt;/a&gt;.</value>
   </data>
   <data name="Restore" xml:space="preserve">
     <value>Restore</value>
