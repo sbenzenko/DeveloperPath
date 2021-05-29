@@ -25,8 +25,6 @@ namespace WebUI.Blazor.Pages
         [Inject] public ISnackbar Snackbar { get; set; }
         [Inject] public NavigationManager NavigationManager { get; set; }
 
- 
-
         public List<Path> Paths { get; set; }
 
         protected override async Task OnInitializedAsync()

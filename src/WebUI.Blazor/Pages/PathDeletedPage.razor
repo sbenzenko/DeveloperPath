@@ -3,6 +3,13 @@
 
 <AuthorizeView Roles="@RolesConstants.ADMINISTRATOR"
                Context="AuthContext">
+    <MudBreadcrumbs Items="_breadCrumbs">
+        <SeparatorTemplate>
+            <MudIcon Icon="@Icons.Material.Filled.DoubleArrow" 
+                     Color="Color.Primary"
+                     Size="Size.Small" />
+        </SeparatorTemplate>
+    </MudBreadcrumbs>
     <Condition Evaluation="_paths != null">
         <Match>
             <MudTable Items="@_paths" Filter="Filter">

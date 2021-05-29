@@ -1,4 +1,6 @@
-﻿namespace DeveloperPath.Domain.Shared.ProblemDetails
+﻿using DeveloperPath.Domain.Shared.ProblemDetails;
+
+namespace Shared.ProblemDetails
 {
     public class NotFoundProblemDetails : ProblemDetailsBase
     {
@@ -8,8 +10,8 @@
             Status = 404;
         }
 
-        public string Error;
-        public string ErrorKey;
+        public string Error { get; set; }
+        public string ErrorKey { get; set; }
 
         public NotFoundProblemDetails(string message, string errorKey) : this()
         {

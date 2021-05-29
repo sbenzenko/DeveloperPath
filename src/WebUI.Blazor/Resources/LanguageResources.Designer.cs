@@ -328,6 +328,15 @@ namespace WebUI.Blazor.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Prerequisites.
+        /// </summary>
+        public static string Prerequisites {
+            get {
+                return ResourceManager.GetString("Prerequisites", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to See project development status and contribute at &lt;a href=&quot;https://github.com/sbenzenko/DeveloperPath&quot; target=&quot;_blank&quot;&gt;Github&lt;/a&gt; and &lt;a href=&quot;https://dev.azure.com/sbenzenko/DeveloperPath&quot; target=&quot;_blank&quot;&gt;Azure DevOps&lt;/a&gt;..
         /// </summary>
         public static string ProjectReferences {

@@ -2,6 +2,7 @@
 
 <AuthorizeView Context="authorizeContext">
     <Authorized>
+        <MudBreadcrumbs Items="_breadCrumbs"></MudBreadcrumbs>
         <Condition Evaluation="Paths == null">
             <Match>
                 <MudProgressLinear Indeterminate="true" Color="Color.Primary"></MudProgressLinear>
@@ -35,14 +36,14 @@
                                     <MudButton Color="Color.Info" OnClick="(() => DeletePath(pathItem))">@localizer["Delete"]</MudButton>
                                     <MudTooltip Text="@localizer["Visible"]">
                                         <MudToggleIconButton Toggled="@pathItem.IsVisible"
-                                                             ToggledChanged="@(()=>ChangePathVisibilityAsync(pathItem))"
-                                                             Icon="@Icons.Material.Filled.VisibilityOff" 
-                                                             ToggledIcon="@Icons.Material.Filled.Visibility" 
-                                                             ToggledColor="@Color.Success"/>
+                                                             ToggledChanged="@(() => ChangePathVisibilityAsync(pathItem))"
+                                                             Icon="@Icons.Material.Filled.VisibilityOff"
+                                                             ToggledIcon="@Icons.Material.Filled.Visibility"
+                                                             ToggledColor="@Color.Success" />
                                     </MudTooltip>
                                     <MudTooltip Text="@localizer["Modules"]">
                                         <MudIconButton Icon="@Icons.Outlined.List"
-                                                       OnClick="()=>GoToModules(pathItem)"/>
+                                                       OnClick="() => GoToModules(pathItem)" />
                                     </MudTooltip>
                                 </MudCardActions>
                             </MudCard>

@@ -10,6 +10,7 @@ using WebUI.Blazor.Security;
 using MudBlazor.Services;
 using WebUI.Blazor.Extensions;
 using WebUI.Blazor.Services;
+using WebUI.Blazor.UIHelper;
 
 namespace WebUI.Blazor
 {
@@ -75,6 +76,7 @@ namespace WebUI.Blazor
             builder.Services.AddTransient<PathService>();
             builder.Services.AddTransient<ModuleService>();
             builder.Services.AddScoped<HttpService>();
+            builder.Services.AddScoped<SnackbarHelper>();
 
             var host = builder.Build();
             await host.SetDefaultCulture();

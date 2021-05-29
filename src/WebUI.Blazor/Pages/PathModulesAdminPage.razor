@@ -9,10 +9,15 @@
                     <ToolBarContent>
                         <MudText Typo="Typo.h6">@localizer["PathModules"]</MudText>
                         <MudToolBarSpacer />
-                        <MudTextField @bind-Value="_searchString" Placeholder="@localizer["Search"]" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
+                        <MudTextField @bind-Value="_searchString" Placeholder="@localizer["Search"]" 
+                                      Adornment="Adornment.Start" 
+                                      AdornmentIcon="@Icons.Material.Filled.Search" 
+                                      IconSize="Size.Medium" 
+                                      Class="mt-0"></MudTextField>
                     </ToolBarContent>
                     <HeaderContent>
                         <MudTh>Id</MudTh>
+                        <MudTh></MudTh>
                         <MudTh>@localizer["ModuleTitle"]</MudTh>
                         <MudTh>@localizer["UriKey"]</MudTh>
                         <MudTh>@localizer["Necessity"]</MudTh>
@@ -20,6 +25,11 @@
                     </HeaderContent>
                     <RowTemplate>
                         <MudTd DataLabel="Id">@context.Id</MudTd>
+                        <MudTd>
+                            <MudButton Color="Color.Primary">
+                                @localizer["Prerequisites"]
+                            </MudButton>
+                        </MudTd>
                         <MudTd DataLabel="@localizer["ModuleTitle"]">@context.Title</MudTd>
                         <MudTd DataLabel="@localizer["UriKey"]">@context.Key</MudTd>
                         <MudTd DataLabel="@localizer["Necessity"]">@localizer[context.Necessity.ToString()]</MudTd>
@@ -32,7 +42,7 @@
                 </MudTable>
             </Match>
             <NotMatch>
-                <MudProgressLinear Indeterminate="true" Color="Color.Primary"></MudProgressLinear>
+                <MudProgressLinear Indeterminate="true" Color="Color.Primary"></MudProgressLinear>  
             </NotMatch>
         </Condition>
     </Authorized>

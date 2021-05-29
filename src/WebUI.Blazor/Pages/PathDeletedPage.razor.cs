@@ -22,7 +22,7 @@ namespace WebUI.Blazor.Pages
         [Inject] public IStringLocalizer<ErrorResources> errorLocalizer { get; set; }
         [Inject] public PathService PathService { get; set; }
         [Inject] public ISnackbar Snackbar { get; set; }
-
+        private List<BreadcrumbItem> _breadCrumbs;
         private bool Filter(DeletedPath element)
         {
             if (string.IsNullOrWhiteSpace(_searchString))
@@ -34,6 +34,13 @@ namespace WebUI.Blazor.Pages
         {
             try
             {
+                _breadCrumbs = new List<BreadcrumbItem>
+                {
+                    new($"{localizer["paths"]}", href: "/administration/paths"),
+                    new($"{localizer["DeletedPaths"].Value.ToLower()}", href: "/administration/paths/deleted")
+
+                };
+
                 _paths = await PathService.GetDeletedListAsync();
             }
             catch

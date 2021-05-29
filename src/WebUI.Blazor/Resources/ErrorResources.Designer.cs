@@ -61,6 +61,15 @@ namespace WebUI.Blazor.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Path not found.
+        /// </summary>
+        public static string PATH_NOT_FOUND {
+            get {
+                return ResourceManager.GetString("PATH_NOT_FOUND", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Validation error.
         /// </summary>
         public static string VALIDATION_ERROR {

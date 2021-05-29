@@ -10,7 +10,7 @@ namespace WebUI.Blazor.Services
     public class ModuleService
     {
         private readonly HttpService _httpService;
-        string BaseResourceString(int pathId)=> $"api/paths/{pathId}/modules";
+        string BaseResourceString(string pathkey)=> $"api/paths/{pathkey}/modules";
 
 
         public ModuleService(HttpService httpService)
@@ -18,9 +18,9 @@ namespace WebUI.Blazor.Services
             _httpService = httpService;
         }
 
-        public async Task<List<Module>> GetListAsync(int pathId)
+        public async Task<List<Module>> GetListAsync(string pathKey)
         {
-            return await _httpService.GetListAsync<Module>(BaseResourceString(pathId));
+            return await _httpService.GetListAsync<Module>(BaseResourceString(pathKey));
         }
 
         //public async Task<Path> AddNewPathAsync(Path path)

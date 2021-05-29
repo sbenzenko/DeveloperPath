@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using DeveloperPath.Domain.Shared.ProblemDetails;
+using Shared.ProblemDetails;
 
 namespace DeveloperPath.WebApi.Filters
 {
