@@ -576,6 +576,11 @@
             <param name="cancellationToken"></param>
             <returns></returns>
         </member>
+        <member name="T:DeveloperPath.Application.CQRS.Modules.Queries.GetModules.GetAllAvailableModulesQuery">
+            <summary>
+            Get list of visible modules
+            </summary>
+        </member>
         <member name="T:DeveloperPath.Application.CQRS.Modules.Queries.GetModules.GetModuleDetailsQuery">
             <summary>
             Get module details parameters

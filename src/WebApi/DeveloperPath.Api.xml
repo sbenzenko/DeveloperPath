@@ -4,9 +4,17 @@
         <name>DeveloperPath.WebApi</name>
     </assembly>
     <members>
-        <member name="M:DeveloperPath.WebApi.Controllers.ModulesController.Get(System.String,DeveloperPath.WebApi.Models.RequestParams,System.Threading.CancellationToken)">
+        <member name="M:DeveloperPath.WebApi.Controllers.ModulesController.Get(System.Threading.CancellationToken)">
             <summary>
             Get all available modules
+            </summary>
+            <param name="ct"></param>
+            <returns>A collection of modules</returns>
+            <response code="200">Returns a list of modules</response>
+        </member>
+        <member name="M:DeveloperPath.WebApi.Controllers.ModulesController.Get(System.String,DeveloperPath.WebApi.Models.RequestParams,System.Threading.CancellationToken)">
+            <summary>
+            Get all available modules for a path
             </summary>
             <param name="pathKey">URI pathKey</param>
             <param name="requestParams">Request parameters</param>

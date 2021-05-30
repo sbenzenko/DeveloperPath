@@ -25,6 +25,20 @@ namespace DeveloperPath.WebApi.Controllers
         /// <summary>
         /// Get all available modules
         /// </summary>
+        /// <param name="ct"></param>
+        /// <returns>A collection of modules</returns>
+        /// <response code="200">Returns a list of modules</response>
+        [HttpGet("/api/modules")]
+        [HttpHead("/api/modules")]
+        public async Task<ActionResult<IEnumerable<ModuleTitle>>> Get(CancellationToken ct = default)
+        {
+            var result = await _mediator.Send(new GetAllAvailableModulesQuery(), ct);
+            return Ok(result);
+        }
+
+        /// <summary>
+        /// Get all available modules for a path
+        /// </summary>
         /// <param name="pathKey">URI pathKey</param>
         /// <param name="requestParams">Request parameters</param>
         /// <param name="ct"></param>

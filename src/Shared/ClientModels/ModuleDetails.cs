@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
-using DeveloperPath.Domain.Shared.Enums; 
+using DeveloperPath.Domain.Shared.Enums;
+using Shared.ClientModels;
 
 namespace DeveloperPath.Domain.Shared.ClientModels
 {
