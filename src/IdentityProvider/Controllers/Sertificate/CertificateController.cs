@@ -2,7 +2,7 @@
 
 namespace IdentityProvider.Controllers.Sertificate
 {
-    [Route("/mailru-domain4EhnXUZ2cDNSixfe.html")]
+    [Route("/mailru-domainvkDkz6cBaTa8hYbP.html")]
     public class CertificateController : Controller
     {
         public IActionResult Index()
