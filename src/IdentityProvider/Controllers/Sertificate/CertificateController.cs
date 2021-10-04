@@ -2,7 +2,7 @@
 
 namespace IdentityProvider.Controllers.Sertificate
 {
-    [Route("/.well-known/pki-validation/godaddy.html")]
+    [Route("/mailru-domain4EhnXUZ2cDNSixfe.html")]
     public class CertificateController : Controller
     {
         public IActionResult Index()
