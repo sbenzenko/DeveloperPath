@@ -5,9 +5,9 @@ namespace IdentityProvider.Controllers.Sertificate
     [Route("/mailru-domainvkDkz6cBaTa8hYbP.html")]
     public class CertificateController : Controller
     {
-        public IActionResult Index()
+        public string Index()
         {
-            return Ok("mailru-domain: vkDkz6cBaTa8hYbP");
+            return "mailru-domain: vkDkz6cBaTa8hYbP";
         }
     }
 }
