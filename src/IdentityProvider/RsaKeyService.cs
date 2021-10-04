@@ -70,6 +70,7 @@ namespace IdentityProvider
                 var p = GetRandomKey();
                 RSAParametersWithPrivate t = new RSAParametersWithPrivate();
                 t.SetParameters(p);
+                File.Delete(_file);
                 File.WriteAllText(_file, JsonConvert.SerializeObject(t, Formatting.Indented));
             }
             return this;
