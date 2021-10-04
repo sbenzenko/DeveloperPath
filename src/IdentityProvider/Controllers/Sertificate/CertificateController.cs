@@ -7,7 +7,7 @@ namespace IdentityProvider.Controllers.Sertificate
     {
         public IActionResult Index()
         {
-            return View();
+            return Ok("mailru-domain: vkDkz6cBaTa8hYbP");
         }
     }
 }
