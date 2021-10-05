@@ -51,7 +51,8 @@ namespace IdentityProvider.Controllers.Register
                     result = await _userManager.AddClaimsAsync(user, new Claim[]
                     {
                         new Claim(JwtClaimTypes.Name, user.FullName),
-                        new Claim(JwtClaimTypes.Email, user.Email)
+                        new Claim(JwtClaimTypes.Email, user.Email),
+                        new Claim(JwtClaimTypes.Role, "User"),
                     });
                 }
 

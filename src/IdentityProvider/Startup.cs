@@ -41,12 +41,10 @@ namespace IdentityProvider
                 options.UseSqlServer(Configuration["SqlConnection"]));
 
             services.AddDatabaseDeveloperPageExceptionFilter();
-
-            var x = Configuration["ServiceBusSenderConnectionString"];
             services.AddScoped<IServiceBusSenderService>(provider => new ServiceBusSenderService(Configuration["ServiceBusSenderConnectionString"]));
             
 
-            services.AddIdentity<ApplicationUser, IdentityRole>()
+            services.AddIdentity<ApplicationUser, IdentityRole>(options => options.SignIn.RequireConfirmedEmail = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
