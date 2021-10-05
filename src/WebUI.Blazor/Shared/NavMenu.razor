@@ -1,4 +1,5 @@
-﻿@inject IStringLocalizer<LanguageResources> localizer
+﻿@using WebUI.Blazor.Constants
+@inject IStringLocalizer<LanguageResources> localizer
 
 <MudNavMenu>
     <MudListSubheader Style="font-size: 0.8em" 
@@ -12,7 +13,7 @@
                 Icon="@Icons.Material.Filled.School">
         <MudText Typo="Typo.button">@localizer["Paths"].Value.ToUpper()</MudText>
     </MudNavLink>
-    <AuthorizeView>
+    <AuthorizeView Roles="@RolesConstants.ADMINISTRATOR">
         <Authorized>
             <MudListSubheader Style="font-size: 0.8em"
                               Class="mt-2 mb-n2">@localizer["Administrator zone"].Value.ToUpper()</MudListSubheader>
