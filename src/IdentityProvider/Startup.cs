@@ -1,21 +1,14 @@
 ﻿// Copyright (c) Brock Allen & Dominick Baier. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
-
-using EmailSender.Implementations;
 using System;
-using Azure.Extensions.AspNetCore.Configuration.Secrets;
-using Azure.Identity;
-using Azure.Security.KeyVault.Secrets;
-using DeveloperPath.Application.Common.Interfaces;
-using DeveloperPath.Infrastructure.EmailSender;
 using IdentityServer4;
 using IdentityProvider.Data;
 using IdentityProvider.Models;
+using IdentityProvider.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
- 
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -47,14 +40,10 @@ namespace IdentityProvider
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(Configuration["SqlConnection"]));
 
-            services.AddDatabaseDeveloperPageExceptionFilter();      
+            services.AddDatabaseDeveloperPageExceptionFilter();
 
-            services.AddSingleton<IEmailNotifierConfig>(new EmailNotifierConfig
-            {
-                //there should be some config 
-            });
-
-            services.AddScoped<IEmailNotifier>(provider => new SendGridEmailNotifier(provider.GetRequiredService<IEmailNotifierConfig>().EmailApiKey));
+            var x = Configuration["ServiceBusSenderConnectionString"];
+            services.AddScoped<IServiceBusSenderService>(provider => new ServiceBusSenderService(Configuration["ServiceBusSenderConnectionString"]));
             
 
             services.AddIdentity<ApplicationUser, IdentityRole>()

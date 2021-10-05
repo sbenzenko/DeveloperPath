@@ -1,14 +1,11 @@
 ﻿using System.Security.Claims;
 using System.Text;
-using System.Text.Encodings.Web;
 using System.Threading.Tasks;
-using DeveloperPath.Application.Common.Interfaces;
-using DeveloperPath.Infrastructure.EmailSender;
 using IdentityModel;
 using IdentityProvider.Models;
 using IdentityProvider.Models.Error;
 using IdentityProvider.Models.Register;
-using IdentityServer4.Models;
+using IdentityProvider.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.WebUtilities;
@@ -21,17 +18,15 @@ namespace IdentityProvider.Controllers.Register
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
-        private readonly IEmailNotifier _emailNotifier;
-        private readonly IEmailNotifierConfig _emailNotifierConfig;
+        private readonly IServiceBusSenderService _serviceBusSenderService;
 
         public RegisterController(UserManager<ApplicationUser> userManager,
-            SignInManager<ApplicationUser> signInManager,
-            IEmailNotifier emailNotifier, IEmailNotifierConfig emailNotifierConfig)
+            SignInManager<ApplicationUser> signInManager, 
+            IServiceBusSenderService serviceBusSenderService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
-            _emailNotifier = emailNotifier;
-            _emailNotifierConfig = emailNotifierConfig;
+            _serviceBusSenderService = serviceBusSenderService;
         }
 
         [HttpGet]
@@ -106,26 +101,9 @@ namespace IdentityProvider.Controllers.Register
             code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
             var callbackUrl = Url.ActionLink(nameof(ConfirmEmail), "Register",
                 new {userId = user.Id, code, returnUrl = model.ReturnUrl});
-            var message = new StringBuilder();
-            message.Append("<body>");
-            message.AppendLine("<h3><strong>Подтвердите свою почту на сайте</strong></h3>");
-            message.AppendLine("<h3>Вы зарегистрировались на сайте газовой компании </h3>");
-            message.AppendLine(
-                $"Пожалуйста, подтвердите свою почту <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>кликнув здесь!</a>.");
-            message.Append("</body>");
-            var email = new Email()
-            {
-                HtmlContent = message.ToString(),
-                EmailSender = new DeveloperPath.Infrastructure.EmailSender.EmailSender()
-                {
-                    Email = _emailNotifierConfig.Email,
-                    Name = _emailNotifierConfig.EmailUserName
-                },
-                Subject = "Подтверждение регистрации",
-                Recipients = new[] {user.Email}
-            };
-            await _emailNotifier.SendEmailAsync(email);
 
+            await _serviceBusSenderService.SendMessageToEmailQueueAsync(callbackUrl, user.Email);
+             
             return View(model);
         }
 
