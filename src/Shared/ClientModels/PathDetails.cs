@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Shared.ClientModels;
 
 namespace DeveloperPath.Domain.Shared.ClientModels
 {

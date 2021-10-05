@@ -1,4 +1,4 @@
-﻿namespace DeveloperPath.Domain.Shared.ClientModels
+﻿namespace Shared.ClientModels
 {
   /// <summary>
   /// Module title

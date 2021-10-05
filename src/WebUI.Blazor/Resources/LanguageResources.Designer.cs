@@ -61,6 +61,24 @@ namespace WebUI.Blazor.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Actions.
+        /// </summary>
+        public static string Actions {
+            get {
+                return ResourceManager.GetString("Actions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add Module.
+        /// </summary>
+        public static string AddModule {
+            get {
+                return ResourceManager.GetString("AddModule", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to New path.
         /// </summary>
         public static string AddPath {
@@ -102,6 +120,15 @@ namespace WebUI.Blazor.Resources {
         public static string Deleted {
             get {
                 return ResourceManager.GetString("Deleted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Deleted paths.
+        /// </summary>
+        public static string Deleted_paths {
+            get {
+                return ResourceManager.GetString("Deleted paths", resourceCulture);
             }
         }
         
@@ -202,6 +229,42 @@ namespace WebUI.Blazor.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Modules.
+        /// </summary>
+        public static string Modules {
+            get {
+                return ResourceManager.GetString("Modules", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Module Title.
+        /// </summary>
+        public static string ModuleTitle {
+            get {
+                return ResourceManager.GetString("ModuleTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Must Know.
+        /// </summary>
+        public static string MustKnow {
+            get {
+                return ResourceManager.GetString("MustKnow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Necessity.
+        /// </summary>
+        public static string Necessity {
+            get {
+                return ResourceManager.GetString("Necessity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to New Path.
         /// </summary>
         public static string NewPath {
@@ -247,6 +310,15 @@ namespace WebUI.Blazor.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Path Modules.
+        /// </summary>
+        public static string PathModules {
+            get {
+                return ResourceManager.GetString("PathModules", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Paths.
         /// </summary>
         public static string Paths {
@@ -283,7 +355,25 @@ namespace WebUI.Blazor.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to See project development status and contribute at &lt;a href=&quot;https://github.com/sbenzenko/DeveloperPath&quot; target=&quot;_blank&quot;&gt;Github&lt;/a&gt; and &lt;a href=&quot;https://dev.azure.com/sbenzenko/DeveloperPath&quot; target=&quot;_blank&quot;&gt;Azure DevOps&lt;/a&gt;..
+        ///   Looks up a localized string similar to Prerequisites.
+        /// </summary>
+        public static string Prerequisites {
+            get {
+                return ResourceManager.GetString("Prerequisites", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Prerequisites details.
+        /// </summary>
+        public static string Prerequisites_details {
+            get {
+                return ResourceManager.GetString("Prerequisites details", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to See project development status and contribute at &lt;a class=&quot;btn-link&quot; href=&quot;https://github.com/sbenzenko/DeveloperPath&quot; target=&quot;_blank&quot;&gt;Github&lt;/a&gt; and &lt;a class=&quot;btn-link&quot; href=&quot;https://dev.azure.com/sbenzenko/DeveloperPath&quot; target=&quot;_blank&quot;&gt;Azure DevOps&lt;/a&gt;..
         /// </summary>
         public static string ProjectReferences {
             get {
@@ -306,6 +396,15 @@ namespace WebUI.Blazor.Resources {
         public static string Save {
             get {
                 return ResourceManager.GetString("Save", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Search.
+        /// </summary>
+        public static string Search {
+            get {
+                return ResourceManager.GetString("Search", resourceCulture);
             }
         }
         

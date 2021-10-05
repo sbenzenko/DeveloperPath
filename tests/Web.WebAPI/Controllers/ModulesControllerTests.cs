@@ -14,7 +14,8 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using NUnit.Framework;
- 
+using Shared.ClientModels;
+
 
 namespace DeveloperPath.Web.WebAPI.Controllers
 {
@@ -63,7 +64,7 @@ namespace DeveloperPath.Web.WebAPI.Controllers
     {
       var controller = new ModulesController(moqMediator.Object);
 
-      var result = await controller.Get(1);
+      var result = await controller.Get("asp-net-developer");
       var content = GetObjectResultContent<IEnumerable<Module>>(result.Result);
 
       Assert.IsInstanceOf(typeof(OkObjectResult), result.Result);
@@ -76,7 +77,7 @@ namespace DeveloperPath.Web.WebAPI.Controllers
     {
       var controller = new ModulesController(moqMediator.Object);
 
-      var result = await controller.Get(1, 1);
+      var result = await controller.Get("asp-net-developer", 1);
       var content = GetObjectResultContent<Module>(result.Result);
 
       Assert.IsInstanceOf(typeof(OkObjectResult), result.Result);
@@ -89,7 +90,7 @@ namespace DeveloperPath.Web.WebAPI.Controllers
     {
       var controller = new ModulesController(moqMediator.Object);
 
-      var result = await controller.Get(1, null);
+      var result = await controller.Get("asp-net-developer", null);
 
       var contentResult = (OkObjectResult)result.Result;
       var value = contentResult.Value as IEnumerable<Module>;
@@ -103,7 +104,7 @@ namespace DeveloperPath.Web.WebAPI.Controllers
     public async Task Get_ReturnsModulesPage_WhenPagingProvided()
     {
       var controller = new ModulesController(moqMediator.Object);
-      var result = await controller.Get(1, new RequestParams()
+      var result = await controller.Get("asp-net-developer", new RequestParams()
       {
         PageNumber = 1,
         PageSize = 1
@@ -121,7 +122,7 @@ namespace DeveloperPath.Web.WebAPI.Controllers
     public async Task Get_ReturnsAllModules_WhenPagingIsNotValid()
     {
       var controller = new ModulesController(moqMediator.Object);
-      var result = await controller.Get(1, new RequestParams()
+      var result = await controller.Get("asp-net-developer", new RequestParams()
       {
         PageNumber = -1,
         PageSize = -1

@@ -117,6 +117,12 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Actions" xml:space="preserve">
+    <value>Actions</value>
+  </data>
+  <data name="AddModule" xml:space="preserve">
+    <value>Add Module</value>
+  </data>
   <data name="AddPath" xml:space="preserve">
     <value>New path</value>
   </data>
@@ -131,6 +137,9 @@
   </data>
   <data name="Deleted" xml:space="preserve">
     <value>Deleted</value>
+  </data>
+  <data name="Deleted paths" xml:space="preserve">
+    <value>Deleted paths</value>
   </data>
   <data name="DeletedPaths" xml:space="preserve">
     <value>Deleted Paths</value>
@@ -168,6 +177,18 @@ Developer Path project was created to answer these and many other questions.</va
   <data name="Menu" xml:space="preserve">
     <value>Menu</value>
   </data>
+  <data name="Modules" xml:space="preserve">
+    <value>Modules</value>
+  </data>
+  <data name="ModuleTitle" xml:space="preserve">
+    <value>Module Title</value>
+  </data>
+  <data name="MustKnow" xml:space="preserve">
+    <value>Must Know</value>
+  </data>
+  <data name="Necessity" xml:space="preserve">
+    <value>Necessity</value>
+  </data>
   <data name="NewPath" xml:space="preserve">
     <value>New Path</value>
   </data>
@@ -183,6 +204,9 @@ Developer Path project was created to answer these and many other questions.</va
   <data name="PathDeleted" xml:space="preserve">
     <value>The Path has been deleted</value>
   </data>
+  <data name="PathModules" xml:space="preserve">
+    <value>Path Modules</value>
+  </data>
   <data name="Paths" xml:space="preserve">
     <value>Paths</value>
   </data>
@@ -195,14 +219,23 @@ Developer Path project was created to answer these and many other questions.</va
   <data name="PathUpdated" xml:space="preserve">
     <value>Path has been updated</value>
   </data>
+  <data name="Prerequisites" xml:space="preserve">
+    <value>Prerequisites</value>
+  </data>
+  <data name="Prerequisites details" xml:space="preserve">
+    <value>Prerequisites details</value>
+  </data>
   <data name="ProjectReferences" xml:space="preserve">
-    <value>See project development status and contribute at &lt;a href="https://github.com/sbenzenko/DeveloperPath" target="_blank"&gt;Github&lt;/a&gt; and &lt;a href="https://dev.azure.com/sbenzenko/DeveloperPath" target="_blank"&gt;Azure DevOps&lt;/a&gt;.</value>
+    <value>See project development status and contribute at &lt;a class="btn-link" href="https://github.com/sbenzenko/DeveloperPath" target="_blank"&gt;Github&lt;/a&gt; and &lt;a class="btn-link" href="https://dev.azure.com/sbenzenko/DeveloperPath" target="_blank"&gt;Azure DevOps&lt;/a&gt;.</value>
   </data>
   <data name="Restore" xml:space="preserve">
     <value>Restore</value>
   </data>
   <data name="Save" xml:space="preserve">
     <value>Save</value>
+  </data>
+  <data name="Search" xml:space="preserve">
+    <value>Search</value>
   </data>
   <data name="Tags" xml:space="preserve">
     <value>Tags</value>

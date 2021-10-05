@@ -69,6 +69,7 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
             var module = await AddAsync(new Module
             {
                 Title = "New Module",
+                Key = "module-key",
                 Description = "New Module Description",
                 Paths = new List<Path> { new Path
           {
@@ -121,6 +122,7 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
             var module = await AddAsync(new Module
             {
                 Title = "New Module",
+                Key = "module-key",
                 Description = "New Module Description",
                 Paths = new List<Path> { new Path
           {
@@ -173,6 +175,7 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
             var module = await AddAsync(new Module
             {
                 Title = "New Module",
+                Key = "module-key",
                 Description = "New Module Description",
                 Paths = new List<Path> { new Path
           {
@@ -224,14 +227,16 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
             var module = await AddAsync(new Module
             {
                 Title = "New Module",
+                Key = "module-key",
                 Description = "New Module Description",
-                Paths = new List<Path> { new Path
-          {
-            Title = "Some Path",
-            Key = "some-path",
-            Description = "Some Path Description"
-          }
-        }
+                Paths = new List<Path> {
+                    new Path
+                     {
+                       Title = "Some Path",
+                       Key = "some-path",
+                       Description = "Some Path Description"
+                     }
+                }
             });
 
             var theme = await AddAsync(new Theme
@@ -286,6 +291,7 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
             {
                 PathId = path.Id,
                 Title = "Module Title",
+                Key = "module-key",
                 Description = "Module Decription"
             });
 

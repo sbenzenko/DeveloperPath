@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.JsonPatch;
 using Newtonsoft.Json;
 using DeveloperPath.Domain.Shared.ProblemDetails;
+using Shared.ProblemDetails;
 using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace WebUI.Blazor.Services
@@ -29,8 +30,14 @@ namespace WebUI.Blazor.Services
 
         public async Task<List<T>> GetListAsync<T>(string resourceUri)
         {
-            var response = await HttpClient.GetStreamAsync(resourceUri);
-            return await JsonSerializer.DeserializeAsync<List<T>>(response, new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
+            var response = await HttpClient.GetAsync(resourceUri);
+            var stream = await response.Content.ReadAsStreamAsync();
+            if (response.StatusCode == HttpStatusCode.NotFound)
+            {
+                var notFound = await JsonSerializer.DeserializeAsync<NotFoundProblemDetails>(stream, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+                throw new ApiError(notFound);
+            }
+            return await JsonSerializer.DeserializeAsync<List<T>>(stream, new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
         }
 
         public async Task<T> CreateAsync<T>(string resourceUri, T resource)

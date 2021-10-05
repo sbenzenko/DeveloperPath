@@ -21,7 +21,7 @@ namespace DeveloperPath.Application.CQRS.Paths.Commands.CreatePath
         [MaxLength(100)]
         public string Title { get; init; }
         /// <summary>
-        /// URI Key
+        /// URI PathKey
         /// </summary>
         [Required]
         [MaxLength(100)]

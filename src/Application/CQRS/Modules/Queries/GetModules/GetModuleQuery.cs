@@ -7,8 +7,8 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using DeveloperPath.Application.Common.Exceptions;
 using DeveloperPath.Application.Common.Interfaces;
-using DeveloperPath.Domain.Shared.ClientModels;
- 
+using Shared.ClientModels;
+
 
 namespace DeveloperPath.Application.CQRS.Modules.Queries.GetModules
 {
@@ -23,10 +23,10 @@ namespace DeveloperPath.Application.CQRS.Modules.Queries.GetModules
     [Required]
     public int Id { get; init; }
     /// <summary>
-    /// Path Id
+    /// Path URI key
     /// </summary>
     [Required]
-    public int PathId { get; init; }
+    public string PathKey { get; init; }
   }
 
   internal class GetModuleQueryHandler : IRequestHandler<GetModuleQuery, Module>
@@ -48,7 +48,7 @@ namespace DeveloperPath.Application.CQRS.Modules.Queries.GetModules
         .Where(m => m.Id == request.Id)
         .FirstOrDefaultAsync(cancellationToken);
 
-      if (result == null || result.Paths.Where(p => p.Id == request.PathId) == null)
+      if (result == null || result.Paths.Where(p => p.Key == request.PathKey) == null)
         throw new NotFoundException(nameof(Module), request.Id, NotFoundHelper.MODULE_NOT_FOUND);
 
       //TODO: is there another way to map single item?

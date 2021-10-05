@@ -52,6 +52,7 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
             var module = await AddAsync(new Module
             {
                 Title = "New Module",
+                Key = "module-key",
                 Description = "New Module Description",
                 Paths = new List<Path> { new Path
           {
@@ -91,6 +92,7 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
             var module = await AddAsync(new Module
             {
                 Title = "New Module",
+                Key = "module-key",
                 Description = "New Module Description",
                 Paths = new List<Path> { new Path
           {
@@ -130,6 +132,7 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
             var module = await AddAsync(new Module
             {
                 Title = "New Module",
+                Key = "module-key",
                 Description = "New Module Description",
                 Paths = new List<Path> { new Path
           {
@@ -168,6 +171,7 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
             var module = await AddAsync(new Module
             {
                 Title = "New Module",
+                Key = "module-key",
                 Description = "New Module Description",
                 Paths = new List<Path> { new Path
           {
@@ -222,6 +226,7 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
             var module = await SendAsync(new CreateModule
             {
                 PathId = path.Id,
+                Key = "module-key",
                 Title = "Module Title",
                 Description = "Module Decription"
             });

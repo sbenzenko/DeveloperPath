@@ -463,6 +463,11 @@
             Module title
             </summary>
         </member>
+        <member name="P:DeveloperPath.Application.CQRS.Modules.Commands.CreateModule.CreateModule.Key">
+            <summary>
+            Module unique URI key
+            </summary>
+        </member>
         <member name="P:DeveloperPath.Application.CQRS.Modules.Commands.CreateModule.CreateModule.Description">
             <summary>
             Module short summary
@@ -571,6 +576,11 @@
             <param name="cancellationToken"></param>
             <returns></returns>
         </member>
+        <member name="T:DeveloperPath.Application.CQRS.Modules.Queries.GetModules.GetAllAvailableModulesQuery">
+            <summary>
+            Get list of visible modules
+            </summary>
+        </member>
         <member name="T:DeveloperPath.Application.CQRS.Modules.Queries.GetModules.GetModuleDetailsQuery">
             <summary>
             Get module details parameters
@@ -591,9 +601,9 @@
             Get module parameters
             </summary>
         </member>
-        <member name="P:DeveloperPath.Application.CQRS.Modules.Queries.GetModules.GetModuleListQuery.PathId">
+        <member name="P:DeveloperPath.Application.CQRS.Modules.Queries.GetModules.GetModuleListQuery.PathKey">
             <summary>
-            Path id
+            URI key
             </summary>
         </member>
         <member name="T:DeveloperPath.Application.CQRS.Modules.Queries.GetModules.GetModuleListQueryPaging">
@@ -601,7 +611,7 @@
             Get modules paged
             </summary>
         </member>
-        <member name="P:DeveloperPath.Application.CQRS.Modules.Queries.GetModules.GetModuleListQueryPaging.PathId">
+        <member name="P:DeveloperPath.Application.CQRS.Modules.Queries.GetModules.GetModuleListQueryPaging.PathKey">
             <summary>
             Path id
             </summary>
@@ -626,9 +636,9 @@
             Module Id
             </summary>
         </member>
-        <member name="P:DeveloperPath.Application.CQRS.Modules.Queries.GetModules.GetModuleQuery.PathId">
+        <member name="P:DeveloperPath.Application.CQRS.Modules.Queries.GetModules.GetModuleQuery.PathKey">
             <summary>
-            Path Id
+            Path URI key
             </summary>
         </member>
         <member name="T:DeveloperPath.Application.CQRS.Paths.Commands.IBasePathValidation">
@@ -689,7 +699,7 @@
         </member>
         <member name="P:DeveloperPath.Application.CQRS.Paths.Commands.CreatePath.CreatePath.Key">
             <summary>
-            URI Key
+            URI PathKey
             </summary>
         </member>
         <member name="P:DeveloperPath.Application.CQRS.Paths.Commands.CreatePath.CreatePath.Description">
@@ -780,7 +790,7 @@
         </member>
         <member name="P:DeveloperPath.Application.CQRS.Paths.Commands.UpdatePath.UpdatePath.Key">
             <summary>
-            URI Key
+            URI PathKey
             </summary>
         </member>
         <member name="P:DeveloperPath.Application.CQRS.Paths.Commands.UpdatePath.UpdatePath.Description">

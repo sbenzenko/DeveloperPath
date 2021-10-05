@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using DeveloperPath.Domain.Shared.ClientModels;
+using Shared.ClientModels;
 
 namespace DeveloperPath.Application.Common.Mappings.Profiles
 {

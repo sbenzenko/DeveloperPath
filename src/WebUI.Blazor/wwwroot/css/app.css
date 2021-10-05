@@ -8,10 +8,6 @@ ul.cite {
         font-style: italic;
     }
 
-a {
-    text-decoration: underline !important;
-}
-
 .mat-card {
     max-width: 400px;
 }
@@ -37,6 +33,10 @@ a {
     }
 
 .drawer-header {
+}
+
+a {
+    text-decoration: underline;
 }
 
 .flex-container {
@@ -210,9 +210,10 @@ html, body {
 }
 
 
-a, .btn-link {
-        color: #0366d6;
-    }
+.btn-link {
+    color: #1b6ec2;
+    text-decoration: underline;
+}
 
 .btn-primary {
     color: #fff;
