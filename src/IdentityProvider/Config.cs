@@ -49,17 +49,20 @@ namespace IdentityProvider
                     RequirePkce = true,
                     RequireClientSecret = false,
                     AllowedCorsOrigins = {
+                        "https://developer-path.com",
                         "https://www.developer-path.com",
                         "https://localhost:5005",
                         "https://victorious-cliff-02bdab803.azurestaticapps.net" },
 
                     AllowedScopes = { "openid", "profile", "email", "pathapi" },
                     RedirectUris = {
+                        "https://developer-path.com/authentication/login-callback",
                         "https://www.developer-path.com/authentication/login-callback",
                         "https://localhost:5005/authentication/login-callback",
                         "https://victorious-cliff-02bdab803.azurestaticapps.net/authentication/login-callback" },
 
                     PostLogoutRedirectUris = {
+                        "https://developer-path.com/",
                         "https://www.developer-path.com/",
                         "https://localhost:5005/",
                         "https://victorious-cliff-02bdab803.azurestaticapps.net/" },
