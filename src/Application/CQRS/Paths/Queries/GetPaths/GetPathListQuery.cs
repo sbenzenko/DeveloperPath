@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -8,6 +9,7 @@ using AutoMapper.QueryableExtensions;
 using MediatR;
 using DeveloperPath.Application.Common.Interfaces;
 using DeveloperPath.Domain.Shared.ClientModels;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace DeveloperPath.Application.CQRS.Paths.Queries.GetPaths
 {
@@ -20,21 +22,40 @@ namespace DeveloperPath.Application.CQRS.Paths.Queries.GetPaths
 
     internal class GetPathsQueryHandler : IRequestHandler<GetPathListQuery, IEnumerable<Path>>
     {
+        private const string CacheKey = "GetPathsQueryHandler";
+
         private readonly IApplicationDbContext _context;
         private readonly IMapper _mapper;
+        private readonly IMemoryCache _cache;
 
-        public GetPathsQueryHandler(IApplicationDbContext context, IMapper mapper)
+        public GetPathsQueryHandler(IApplicationDbContext context, IMapper mapper, IMemoryCache cache)
         {
-            _context = context;
-            _mapper = mapper;
+            _context = context ?? throw new ArgumentNullException(nameof(context));
+            _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
+            _cache = cache ?? throw new ArgumentNullException(nameof(cache));
         }
 
         public async Task<IEnumerable<Path>> Handle(GetPathListQuery request, CancellationToken cancellationToken)
         {
-            return await _context.Paths
-              .OrderBy(t => t.Title)
-              .ProjectTo<Path>(_mapper.ConfigurationProvider)
-              .ToListAsync(cancellationToken);
+            if (_cache.TryGetValue(CacheKey, out IEnumerable<Path> result))
+            {
+                return result;
+            }
+            else
+            {
+                result = await _context.Paths
+                    .OrderBy(t => t.Title)
+                    .ProjectTo<Path>(_mapper.ConfigurationProvider)
+                    .ToListAsync(cancellationToken);
+                
+                _cache.Set(CacheKey, result, new MemoryCacheEntryOptions()
+                {
+                    AbsoluteExpirationRelativeToNow = TimeSpan.FromSeconds(30),
+                    SlidingExpiration = TimeSpan.FromSeconds(10)
+                });
+
+                return result;
+            }
         }
     }
 }
