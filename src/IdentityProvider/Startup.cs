@@ -2,6 +2,8 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using IdentityServer4;
 using IdentityProvider.Data;
 using IdentityProvider.Models;
@@ -42,7 +44,6 @@ namespace IdentityProvider
 
             services.AddDatabaseDeveloperPageExceptionFilter();
             services.AddScoped<IServiceBusSenderService>(provider => new ServiceBusSenderService(Configuration["ServiceBusSenderConnectionString"]));
-            
 
             services.AddIdentity<ApplicationUser, IdentityRole>(options => options.SignIn.RequireConfirmedEmail = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>()
