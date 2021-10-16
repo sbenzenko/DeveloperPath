@@ -10,6 +10,7 @@ using MediatR;
 using DeveloperPath.Application.Common.Interfaces;
 using DeveloperPath.Domain.Shared.ClientModels;
 using Microsoft.Extensions.Caching.Memory;
+using Microsoft.Extensions.Primitives;
 
 namespace DeveloperPath.Application.CQRS.Paths.Queries.GetPaths
 {
@@ -28,34 +29,18 @@ namespace DeveloperPath.Application.CQRS.Paths.Queries.GetPaths
         private readonly IMapper _mapper;
         private readonly IMemoryCache _cache;
 
-        public GetPathsQueryHandler(IApplicationDbContext context, IMapper mapper, IMemoryCache cache)
+        public GetPathsQueryHandler(IApplicationDbContext context, IMapper mapper)
         {
             _context = context ?? throw new ArgumentNullException(nameof(context));
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
-            _cache = cache ?? throw new ArgumentNullException(nameof(cache));
         }
 
         public async Task<IEnumerable<Path>> Handle(GetPathListQuery request, CancellationToken cancellationToken)
         {
-            if (_cache.TryGetValue(CacheKey, out IEnumerable<Path> result))
-            {
-                return result;
-            }
-            else
-            {
-                result = await _context.Paths
-                    .OrderBy(t => t.Title)
-                    .ProjectTo<Path>(_mapper.ConfigurationProvider)
-                    .ToListAsync(cancellationToken);
-                
-                _cache.Set(CacheKey, result, new MemoryCacheEntryOptions()
-                {
-                    AbsoluteExpirationRelativeToNow = TimeSpan.FromSeconds(30),
-                    SlidingExpiration = TimeSpan.FromSeconds(10)
-                });
-
-                return result;
-            }
+            return await _context.Paths
+                .OrderBy(t => t.Title)
+                .ProjectTo<Path>(_mapper.ConfigurationProvider)
+                .ToListAsync(cancellationToken); ;
         }
     }
 }

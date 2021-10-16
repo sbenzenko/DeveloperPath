@@ -53,7 +53,8 @@ namespace DeveloperPath.Application.IntegrationTests
                 d.ServiceType == typeof(ICurrentUserService));
 
             services.Remove(currentUserServiceDescriptor);
-
+            
+            services.AddMemoryCache();
             // Register testing version
             services.AddTransient(provider =>
                 Mock.Of<ICurrentUserService>(s => s.UserId == _currentUserId));

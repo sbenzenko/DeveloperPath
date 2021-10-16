@@ -54,7 +54,6 @@ namespace DeveloperPath.Application.CQRS.Paths.Commands.CreatePath
             var entity = _mapper.Map<Domain.Entities.Path>(request);
 
             _context.Paths.Add(entity);
-
             await _context.SaveChangesAsync(cancellationToken);
 
             return _mapper.Map<Path>(entity);

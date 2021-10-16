@@ -22,7 +22,7 @@ namespace DeveloperPath.Application.IntegrationTests.Queries
       await AddAsync(new Path { Title = "Path2", Key = "some-path2", Description = "Description 2" });
       await AddAsync(new Path { Title = "Path3", Key = "some-path3", Description = "Description 3" });
       await AddAsync(new Path { Title = "Path4", Key = "some-path4", Description = "Description 4" });
-
+      
       var query = new GetPathListQuery();
 
       var result = await SendAsync(query);
