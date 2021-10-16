@@ -23,11 +23,8 @@ namespace DeveloperPath.Application.CQRS.Paths.Queries.GetPaths
 
     internal class GetPathsQueryHandler : IRequestHandler<GetPathListQuery, IEnumerable<Path>>
     {
-        private const string CacheKey = "GetPathsQueryHandler";
-
         private readonly IApplicationDbContext _context;
         private readonly IMapper _mapper;
-        private readonly IMemoryCache _cache;
 
         public GetPathsQueryHandler(IApplicationDbContext context, IMapper mapper)
         {
