@@ -21,7 +21,7 @@ namespace DeveloperPath.Application.Common.Behaviours
     /// </summary>
     /// <param name="logger"></param>
     /// <param name="currentUserService"></param>
-    /// <param name="identityService"></param>
+    ///// <param name="identityService"></param>
     public LoggingBehaviour(ILogger<TRequest> logger, ICurrentUserService currentUserService )
     {
       _logger = logger;

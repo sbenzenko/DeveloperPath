@@ -1,25 +1,21 @@
 ﻿@inherits LayoutComponentBase
 @inject IStringLocalizer<LanguageResources> localizer
-
  
 <MudLayout>
-    <MudAppBar Elevation="4" Color="Color.Primary">
-        <MudIcon Size="Size.Large" ViewBox="0 0 500 500" />
+    <MudAppBar Elevation="4" Color="Color.Primary" Class="appbar-logo">
         <MudHidden Breakpoint="Breakpoint.Xs">
-            <MudText Typo="Typo.h6" Class="ml-4">
-                <div class="drawer-logo">
-                    <a href="/" style="text-decoration: none">DEVELOPER PATH</a>
-                </div>
+            <MudText Typo="Typo.h6" Class="mainheader">
+              <a href="/">@localizer["DeveloperPath"]</a>
             </MudText>
         </MudHidden>
         <MudToolBar DisableGutters="true">
-            <MudIconButton Icon="@Icons.Material.Outlined.Menu" Color="Color.Inherit" OnClick="@((e) => DrawerToggle())" Class="ml-3" />
+            <MudIconButton Icon="@Icons.Material.Outlined.Menu" Color="Color.Inherit" OnClick="DrawerToggle" Class="ml-3" />
         </MudToolBar>
         <MudAppBarSpacer />
         <CultureSelector></CultureSelector>
         <LoginDisplay></LoginDisplay>
     </MudAppBar>
-    <MudDrawer @bind-Open="DrawerOpened" Elevation="25" ClipMode="DrawerClipMode.Always">
+    <MudDrawer @bind-open="DrawerOpened" Elevation="25" ClipMode="DrawerClipMode.Always">
         <NavMenu/>
     </MudDrawer>
     <MudMainContent>
@@ -33,7 +29,6 @@
 @code
 {
     bool DrawerOpened = false;
-
 
     void DrawerToggle()
     {

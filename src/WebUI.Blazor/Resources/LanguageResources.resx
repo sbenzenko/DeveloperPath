@@ -153,6 +153,9 @@
   <data name="DescriptionTooLong" xml:space="preserve">
     <value>Description must be shorter than 3000 characters</value>
   </data>
+  <data name="DeveloperPath" xml:space="preserve">
+    <value>Developer Path</value>
+  </data>
   <data name="Edit" xml:space="preserve">
     <value>Edit</value>
   </data>

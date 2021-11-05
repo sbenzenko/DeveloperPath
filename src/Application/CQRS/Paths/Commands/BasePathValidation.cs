@@ -37,6 +37,10 @@ namespace DeveloperPath.Application.CQRS.Paths.Commands
     {
         private readonly IApplicationDbContext _context;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="context"></param>
         public BasePathValidation(IApplicationDbContext context)
         {
             _context = context;

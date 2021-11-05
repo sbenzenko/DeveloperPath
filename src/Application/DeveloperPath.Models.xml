@@ -38,7 +38,6 @@
             </summary>
             <param name="logger"></param>
             <param name="currentUserService"></param>
-            <param name="identityService"></param>
         </member>
         <member name="M:DeveloperPath.Application.Common.Behaviours.LoggingBehaviour`1.Process(`0,System.Threading.CancellationToken)">
             <summary>
@@ -61,7 +60,6 @@
             </summary>
             <param name="logger"></param>
             <param name="currentUserService"></param>
-            <param name="identityService"></param>
         </member>
         <member name="M:DeveloperPath.Application.Common.Behaviours.PerformanceBehaviour`2.Handle(`0,System.Threading.CancellationToken,MediatR.RequestHandlerDelegate{`1})">
             <summary>
@@ -669,6 +667,12 @@
             Base validation logic for path related to data base checking
             </summary>
         </member>
+        <member name="M:DeveloperPath.Application.CQRS.Paths.Commands.BasePathValidation.#ctor(DeveloperPath.Application.Common.Interfaces.IApplicationDbContext)">
+            <summary>
+            
+            </summary>
+            <param name="context"></param>
+        </member>
         <member name="M:DeveloperPath.Application.CQRS.Paths.Commands.BasePathValidation.BeUniqueKey(System.Nullable{System.Int32},System.String,System.Threading.CancellationToken)">
             <summary>
             Request to context to check for unique URI key
@@ -812,6 +816,12 @@
             <summary>
             Validation rules for updating path
             </summary>
+        </member>
+        <member name="M:DeveloperPath.Application.CQRS.Paths.Commands.UpdatePath.UpdatePathCommandValidator.#ctor(DeveloperPath.Application.CQRS.Paths.Commands.IBasePathValidation)">
+            <summary>
+            
+            </summary>
+            <param name="pathValidation"></param>
         </member>
         <member name="T:DeveloperPath.Application.CQRS.Paths.Queries.GetPaths.GetDeletedPathListQuery">
             <summary>

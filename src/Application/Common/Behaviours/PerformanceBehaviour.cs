@@ -24,7 +24,7 @@ namespace DeveloperPath.Application.Common.Behaviours
     /// </summary>
     /// <param name="logger"></param>
     /// <param name="currentUserService"></param>
-    /// <param name="identityService"></param>
+    ///// <param name="identityService"></param>
     public PerformanceBehaviour(
         ILogger<TRequest> logger,
         ICurrentUserService currentUserService)

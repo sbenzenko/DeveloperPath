@@ -302,6 +302,7 @@ namespace IdentityProvider.Controllers.Account
             // get context information (client name, post logout redirect URI and iframe for federated signout)
             var logout = await _interaction.GetLogoutContextAsync(logoutId);
 
+            // TODO: Need to provide default PostLogoutRedirectUri if logout doesn't have one
             var vm = new LoggedOutViewModel
             {
                 AutomaticRedirectAfterSignOut = AccountOptions.AutomaticRedirectAfterSignOut,
