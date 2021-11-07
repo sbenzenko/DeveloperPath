@@ -6,7 +6,7 @@ variables:
     deployment_token: '79c0c85d71d89daa8d3841f2ebaf955849a1161f155d5e3121d218aaf48b18d70-b174618f-1e57-435c-a722-3303e3810c1f00344502'
 
 pool:
-  vmImage: windows-latest
+  vmImage: 'ubuntu-latest'
 
 steps:
 - task: DotNetCoreCLI@2
