@@ -119,6 +119,7 @@ namespace DeveloperPath.Infrastructure.Persistence
         var cSharp = new Module
         {
           Title = "C#",
+          Key = "c-sharp",
           Description = "C# is the most commonly used language for leveraging the .NET Framework. " +
           "As such, learning C# is a springboard to creating enterprise systems, desktop applications, websites and mobile applications.",
           Necessity = Necessity.MustKnow,
@@ -133,6 +134,7 @@ namespace DeveloperPath.Infrastructure.Persistence
         var aspNet = new Module
         {
           Title = "ASP.NET Core",
+          Key = "asp-net-core",
           Description = "ASP.NET Core is Microsoft's modern, cross-platform framework for building web applications and web APIs. " +
                 "In this path, you will learn everything you need to know about building ASP.NET Core applications, " +
                 "from building web applications with Razor to creating APIs.",

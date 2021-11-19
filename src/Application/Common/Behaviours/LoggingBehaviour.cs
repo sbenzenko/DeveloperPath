@@ -35,7 +35,7 @@ namespace DeveloperPath.Application.Common.Behaviours
     /// <param name="request"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    public async Task Process(TRequest request, CancellationToken cancellationToken)
+    public Task Process(TRequest request, CancellationToken cancellationToken)
     {
       var requestName = typeof(TRequest).Name;
       var userId = _currentUserService.UserId ?? string.Empty;
@@ -48,6 +48,7 @@ namespace DeveloperPath.Application.Common.Behaviours
 
       _logger.LogInformation("DeveloperPath Request: {Name} {@UserId} {@UserName} {@Request}",
           requestName, userId, userName, request);
+      return Task.CompletedTask;
     }
   }
 }

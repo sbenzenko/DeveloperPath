@@ -1,81 +1,87 @@
 ﻿@import url('open-iconic/font/css/open-iconic-bootstrap.min.css');
 
 html, body {
-  height: 100%;
-  margin: 0;
-  padding: 0;
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
+
 a {
-  text-decoration: underline;
+    text-decoration: underline;
 }
 
 .appbar-logo {
-  background: url(/Images/icon-512.png) center left no-repeat transparent;
-  background-size: 40px;
+    background: url(/Images/icon-512-white.png) center left no-repeat transparent;
+    background-size: 40px;
 }
+
 .mainheader {
-  height: 64px;
-  color: #fff;
-  padding-left: 25px;
-  line-height: 64px !important;
-}
-  .mainheader a {
+    height: 64px;
     color: #fff;
-    text-decoration: none;
-  }
+    padding-left: 25px;
+    line-height: 64px !important;
+}
+
+    .mainheader a {
+        color: #fff;
+        text-decoration: none;
+    }
 
 .mainlogo-container {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -moz-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-  -moz-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-  -moz-box-pack: center;
-  -ms-flex-pack: center;
-  justify-content: flex-start;
-  position: fixed;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  flex-direction: column;
-  background: url(/Images/logo.png) top center no-repeat transparent;
-  background-size: 400px;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    -moz-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+    -moz-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: flex-start;
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    flex-direction: column;
+    margin: 10em;
+    background: url(/Images/logo.png) top center no-repeat transparent;
+    background-size: 400px;
 }
+
 .page-loading-warp {
-  padding: 420px 50px 50px 50px;
-  text-align: center;
+    padding: 420px 50px 50px 50px;
+    text-align: center;
 }
+
 .ant-spin {
-  -webkit-box-sizing: border-box;
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  color: rgba(0, 0, 0, 0.65);
-  font-size: 14px;
-  font-variant: tabular-nums;
-  line-height: 1.5;
-  list-style: none;
-  -webkit-font-feature-settings: 'tnum';
-  font-feature-settings: 'tnum';
-  position: absolute;
-  display: none;
-  color: #1890ff;
-  text-align: center;
-  vertical-align: middle;
-  opacity: 0;
-  -webkit-transition: -webkit-transform 0.3s cubic-bezier(0.78, 0.14, 0.15, 0.86);
-  transition: -webkit-transform 0.3s cubic-bezier(0.78, 0.14, 0.15, 0.86);
-  transition: transform 0.3s cubic-bezier(0.78, 0.14, 0.15, 0.86);
-  transition: transform 0.3s cubic-bezier(0.78, 0.14, 0.15, 0.86), -webkit-transform 0.3s cubic-bezier(0.78, 0.14, 0.15, 0.86);
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    color: rgba(0, 0, 0, 0.65);
+    font-size: 14px;
+    font-variant: tabular-nums;
+    line-height: 1.5;
+    list-style: none;
+    -webkit-font-feature-settings: 'tnum';
+    font-feature-settings: 'tnum';
+    position: absolute;
+    display: none;
+    color: #1890ff;
+    text-align: center;
+    vertical-align: middle;
+    opacity: 0;
+    -webkit-transition: -webkit-transform 0.3s cubic-bezier(0.78, 0.14, 0.15, 0.86);
+    transition: -webkit-transform 0.3s cubic-bezier(0.78, 0.14, 0.15, 0.86);
+    transition: transform 0.3s cubic-bezier(0.78, 0.14, 0.15, 0.86);
+    transition: transform 0.3s cubic-bezier(0.78, 0.14, 0.15, 0.86), -webkit-transform 0.3s cubic-bezier(0.78, 0.14, 0.15, 0.86);
 }
 
 .ant-spin-spinning {
@@ -189,23 +195,23 @@ a {
 }
 
 ul.cite {
-  margin-left: 20px;
+    margin-left: 20px;
 }
 
-  ul.cite li {
-    font-style: italic;
-  }
+    ul.cite li {
+        font-style: italic;
+    }
 
 .mat-card {
-  max-width: 400px;
+    max-width: 400px;
 }
 
 .mat-card-content {
-  padding: 1rem;
+    padding: 1rem;
 }
 
 .mat-card-clean-margin {
-  margin: 0px;
+    margin: 0px;
 }
 
 

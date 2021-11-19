@@ -92,7 +92,7 @@ namespace DeveloperPath.Application.IntegrationTests
             return await RunAsUserAsync("test@local", "Testing1234!");
         }
 
-        public static async Task<string> RunAsUserAsync(string userName, string password)
+        public static Task<string> RunAsUserAsync(string userName, string password)
         {
             //using var scope = _scopeFactory.CreateScope();
 
@@ -104,7 +104,7 @@ namespace DeveloperPath.Application.IntegrationTests
 
             _currentUserId = user.Id;
 
-            return _currentUserId;
+            return Task.FromResult(_currentUserId);
         }
 
         public static async Task ResetState()

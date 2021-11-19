@@ -11,67 +11,67 @@ using Microsoft.Extensions.Logging;
 
 namespace DeveloperPath.WebApi
 {
-  public class Program
-  {
-    public async static Task Main(string[] args)
+    public class Program
     {
-      var host = CreateHostBuilder(args).Build();
-
-      using (var scope = host.Services.CreateScope())
-      {
-        var services = scope.ServiceProvider;
-
-        try
+        public async static Task Main(string[] args)
         {
-          var context = services.GetRequiredService<ApplicationDbContext>();
+            var host = CreateHostBuilder(args).Build();
 
-          if (context.Database.IsSqlServer())
-          {
-            context.Database.Migrate();
-          }
+            using (var scope = host.Services.CreateScope())
+            {
+                var services = scope.ServiceProvider;
 
-         
-          await ApplicationDbContextSeed.SeedSampleDataAsync(context);
-        }
-        catch (Exception ex)
-        {
-          var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
-
-          logger.LogError(ex, "An error occurred while migrating or seeding the database.");
-
-          throw;
-        }
-      }
-
-      await host.RunAsync();
-    }
-
-    public static IHostBuilder CreateHostBuilder(string[] args) =>
-        Host.CreateDefaultBuilder(args)
-            .ConfigureWebHostDefaults(webBuilder =>
-                webBuilder.ConfigureAppConfiguration((hostingContext, config) =>
+                try
                 {
-                    if (hostingContext.HostingEnvironment.IsProduction())
+                    var context = services.GetRequiredService<ApplicationDbContext>();
+
+                    if (context.Database.IsSqlServer())
                     {
-                        var settings = config.Build();
+                        await context.Database.MigrateAsync();
+                    }
 
-                        if (hostingContext.HostingEnvironment.IsDevelopment())
-                        {
 
-                        }
+                    await ApplicationDbContextSeed.SeedSampleDataAsync(context);
+                }
+                catch (Exception ex)
+                {
+                    var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
 
+                    logger.LogError(ex, "An error occurred while migrating or seeding the database.");
+
+                    throw;
+                }
+            }
+
+            await host.RunAsync();
+        }
+
+        public static IHostBuilder CreateHostBuilder(string[] args) =>
+            Host.CreateDefaultBuilder(args)
+                .ConfigureWebHostDefaults(webBuilder =>
+                    webBuilder.ConfigureAppConfiguration((hostingContext, config) =>
+                    {
                         if (hostingContext.HostingEnvironment.IsProduction())
                         {
-                            config.AddAzureAppConfiguration(options =>
+                            var settings = config.Build();
+
+                            if (hostingContext.HostingEnvironment.IsDevelopment())
                             {
-                                options.Connect(settings["ConnectionStrings:AppConfig"])
-                                    .ConfigureKeyVault(kv =>
-                                    {
-                                        kv.SetCredential(new DefaultAzureCredential());
-                                    });
-                            });
+
+                            }
+
+                            if (hostingContext.HostingEnvironment.IsProduction())
+                            {
+                                config.AddAzureAppConfiguration(options =>
+                                {
+                                    options.Connect(settings["ConnectionStrings:AppConfig"])
+                                        .ConfigureKeyVault(kv =>
+                                        {
+                                            kv.SetCredential(new DefaultAzureCredential());
+                                        });
+                                });
+                            }
                         }
-                    }
-                }).UseStartup<Startup>());
+                    }).UseStartup<Startup>());
     }
 }
