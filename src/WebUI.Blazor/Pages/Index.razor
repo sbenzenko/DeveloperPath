@@ -1,12 +1,13 @@
 ﻿@page "/"
 @inject IStringLocalizer<LanguageResources> localizer
 
-<h1>@localizer["Welcome"]</h1>
+<MudText Typo="Typo.h1">@localizer["Welcome"]</MudText>
 <AuthorizeView>
     <Authorized>
-        <h2>
-            Hello @context.User.Identity.Name
-        </h2>
+        <MudText Typo="Typo.h2">
+          @localizer["Hello"] @context.User.Identity.Name
+        </MudText>
+        
         @* TODO: add Paths user is studying *@
     </Authorized>
     <NotAuthorized>

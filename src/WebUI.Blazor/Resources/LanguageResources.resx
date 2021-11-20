@@ -159,6 +159,9 @@
   <data name="Edit" xml:space="preserve">
     <value>Edit</value>
   </data>
+  <data name="Hello" xml:space="preserve">
+    <value>Hello</value>
+  </data>
   <data name="Home" xml:space="preserve">
     <value>Home</value>
   </data>
@@ -229,7 +232,7 @@ Developer Path project was created to answer these and many other questions.</va
     <value>Prerequisites details</value>
   </data>
   <data name="ProjectReferences" xml:space="preserve">
-    <value>See project development status and contribute at &lt;a class="btn-link" href="https://github.com/sbenzenko/DeveloperPath" target="_blank"&gt;Github&lt;/a&gt; and &lt;a class="btn-link" href="https://dev.azure.com/sbenzenko/DeveloperPath" target="_blank"&gt;Azure DevOps&lt;/a&gt;.</value>
+    <value>See project development status and contribute at &lt;a href="https://github.com/sbenzenko/DeveloperPath" target="_blank"&gt;Github&lt;/a&gt; and &lt;a href="https://dev.azure.com/sbenzenko/DeveloperPath" target="_blank"&gt;Azure DevOps&lt;/a&gt;.</value>
   </data>
   <data name="Restore" xml:space="preserve">
     <value>Restore</value>

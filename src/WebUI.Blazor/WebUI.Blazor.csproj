@@ -62,4 +62,9 @@
     </EmbeddedResource>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\redesign\css\" />
+    <Folder Include="wwwroot\redesign\js\" />
+  </ItemGroup>
+
 </Project>

@@ -187,6 +187,15 @@ namespace WebUI.Blazor.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Hello.
+        /// </summary>
+        public static string Hello {
+            get {
+                return ResourceManager.GetString("Hello", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Home.
         /// </summary>
         public static string Home {
@@ -382,7 +391,7 @@ namespace WebUI.Blazor.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to See project development status and contribute at &lt;a class=&quot;btn-link&quot; href=&quot;https://github.com/sbenzenko/DeveloperPath&quot; target=&quot;_blank&quot;&gt;Github&lt;/a&gt; and &lt;a class=&quot;btn-link&quot; href=&quot;https://dev.azure.com/sbenzenko/DeveloperPath&quot; target=&quot;_blank&quot;&gt;Azure DevOps&lt;/a&gt;..
+        ///   Looks up a localized string similar to See project development status and contribute at &lt;a href=&quot;https://github.com/sbenzenko/DeveloperPath&quot; target=&quot;_blank&quot;&gt;Github&lt;/a&gt; and &lt;a href=&quot;https://dev.azure.com/sbenzenko/DeveloperPath&quot; target=&quot;_blank&quot;&gt;Azure DevOps&lt;/a&gt;..
         /// </summary>
         public static string ProjectReferences {
             get {
