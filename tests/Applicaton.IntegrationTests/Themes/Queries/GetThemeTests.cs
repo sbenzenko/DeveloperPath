@@ -7,10 +7,10 @@ using DeveloperPath.Application.Common.Exceptions;
 using DeveloperPath.Application.CQRS.Modules.Commands.CreateModule;
 using DeveloperPath.Application.CQRS.Themes.Queries.GetThemes;
 using DeveloperPath.Domain.Entities;
-using DeveloperPath.Domain.Shared.Enums;
 using System.Threading;
+using DeveloperPath.Shared.Enums;
 
-namespace DeveloperPath.Application.IntegrationTests.Queries
+namespace DeveloperPath.Application.IntegrationTests.Themes.Queries
 {
     using static Testing;
 
@@ -67,7 +67,7 @@ namespace DeveloperPath.Application.IntegrationTests.Queries
             var result = await SendAsync(query);
 
             result.Should().HaveCount(3);
-            (result.ToList())[2].Title.Should().Be("New Theme3");
+            result.ToList()[2].Title.Should().Be("New Theme3");
         }
 
         [Test]

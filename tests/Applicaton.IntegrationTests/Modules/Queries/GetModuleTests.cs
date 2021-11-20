@@ -6,7 +6,7 @@ using DeveloperPath.Application.Common.Exceptions;
 using DeveloperPath.Application.CQRS.Modules.Commands.CreateModule;
 using DeveloperPath.Application.CQRS.Modules.Queries.GetModules;
 using DeveloperPath.Domain.Entities;
-using DeveloperPath.Domain.Shared.Enums;
+using DeveloperPath.Shared.Enums;
 using FluentAssertions;
 using NUnit.Framework;
 

@@ -7,10 +7,10 @@ using DeveloperPath.Application.Common.Exceptions;
 using DeveloperPath.Application.CQRS.Modules.Commands.CreateModule;
 using DeveloperPath.Application.CQRS.Sources.Queries.GetSources;
 using DeveloperPath.Domain.Entities;
-using DeveloperPath.Domain.Shared.Enums;
 using System.Threading;
+using DeveloperPath.Shared.Enums;
 
-namespace DeveloperPath.Application.IntegrationTests.Queries
+namespace DeveloperPath.Application.IntegrationTests.Sources.Queries
 {
     using static Testing;
 
@@ -77,8 +77,8 @@ namespace DeveloperPath.Application.IntegrationTests.Queries
             var result = await SendAsync(query);
 
             result.Should().HaveCount(3);
-            (result.ToList())[1].Title.Should().Be("Source 2");
-            (result.ToList())[2].Url.Should().Be("https://source3.com");
+            result.ToList()[1].Title.Should().Be("Source 2");
+            result.ToList()[2].Url.Should().Be("https://source3.com");
         }
 
         [Test]

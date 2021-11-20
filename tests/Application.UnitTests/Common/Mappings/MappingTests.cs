@@ -3,8 +3,7 @@ using AutoMapper;
 using NUnit.Framework;
 using DeveloperPath.Application.Common.Mappings.Interfaces;
 using DeveloperPath.Application.Common.Mappings.Profiles;
-using DeveloperPath.Domain.Shared.ClientModels;
-using Shared.ClientModels;
+using DeveloperPath.Shared.ClientModels;
 
 namespace DeveloperPath.Application.UnitTests.Common.Mappings
 {

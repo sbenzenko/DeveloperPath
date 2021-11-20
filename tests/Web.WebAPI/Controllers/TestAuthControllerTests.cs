@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using NUnit.Framework;
 
-namespace DeveloperPath.Web.WebAPI.Controllers
+namespace Web.WebAPI.Controllers
 {
   public class TestAuthControllerTests : TestBase
   {

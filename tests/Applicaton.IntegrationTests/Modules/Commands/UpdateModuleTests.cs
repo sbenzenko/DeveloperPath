@@ -8,7 +8,7 @@ using NUnit.Framework;
 using System;
 using System.Threading.Tasks;
 
-namespace DeveloperPath.Application.IntegrationTests.Commands
+namespace DeveloperPath.Application.IntegrationTests.Modules.Commands
 {
     using static Testing;
 

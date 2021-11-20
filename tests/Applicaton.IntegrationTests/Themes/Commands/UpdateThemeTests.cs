@@ -8,7 +8,7 @@ using DeveloperPath.Domain.Entities;
 using FluentAssertions;
 using NUnit.Framework;
 
-namespace DeveloperPath.Application.IntegrationTests.Commands
+namespace DeveloperPath.Application.IntegrationTests.Themes.Commands
 {
     using static Testing;
 
