@@ -26,7 +26,7 @@ steps:
     command: 'publish'
     publishWebProjects: false
     projects: '**/src/DeveloperPath.WebUI/DeveloperPath.WebUI.csproj'
-    arguments: '--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)'
+    arguments: '--configuration $(BuildConfiguration) --output data'
     zipAfterPublish: true
       
 - task: PowerShell@2
