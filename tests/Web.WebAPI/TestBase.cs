@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace DeveloperPath.Web.WebAPI
+namespace Web.WebAPI
 {
     public class TestBase
     {

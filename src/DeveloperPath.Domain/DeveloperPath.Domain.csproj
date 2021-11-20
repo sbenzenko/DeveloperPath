@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net6.0</TargetFramework>
+		<RootNamespace>DeveloperPath.Domain</RootNamespace>
+		<AssemblyName>DeveloperPath.Domain</AssemblyName>
+		<EnableNETAnalyzers>true</EnableNETAnalyzers>
+		<AnalysisLevel>latest</AnalysisLevel>
+	</PropertyGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\DeveloperPath.Shared\DeveloperPath.Shared.csproj" />
+	</ItemGroup>
+
+</Project>

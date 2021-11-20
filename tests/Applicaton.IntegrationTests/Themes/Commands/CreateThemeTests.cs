@@ -6,9 +6,9 @@ using DeveloperPath.Application.Common.Exceptions;
 using DeveloperPath.Application.CQRS.Modules.Commands.CreateModule;
 using DeveloperPath.Application.CQRS.Themes.Commands.CreateTheme;
 using DeveloperPath.Domain.Entities;
-using DeveloperPath.Domain.Shared.Enums;
+using DeveloperPath.Shared.Enums;
 
-namespace DeveloperPath.Application.IntegrationTests.Commands
+namespace DeveloperPath.Application.IntegrationTests.Themes.Commands
 {
     using static Testing;
 
@@ -112,7 +112,6 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
 
             var module = await SendAsync(new CreateModule
             {
-                PathId = path.Id,
                 Key = "module-key",
                 Title = "Module Title",
                 Description = "Module Decription"
@@ -153,7 +152,6 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
 
             var module = await SendAsync(new CreateModule
             {
-                PathId = path.Id,
                 Title = "Module Title",
                 Key = "module-key",
                 Description = "Module Decription"
@@ -196,7 +194,6 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
 
             var module = await SendAsync(new CreateModule
             {
-                PathId = path.Id,
                 Title = "Module Title",
                 Key = "module-key",
                 Description = "Module Decription"
@@ -247,7 +244,6 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
 
             var module = await SendAsync(new CreateModule
             {
-                PathId = path.Id,
                 Title = "Module Title",
                 Key = "module-key",
                 Description = "Module Decription"
@@ -264,8 +260,8 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
                 SectionId = 999
             };
 
-            FluentActions.Invoking(() =>
-                SendAsync(command)).Should().ThrowAsync<NotFoundException>();
+            await FluentActions.Invoking(() =>
+               SendAsync(command)).Should().ThrowAsync<NotFoundException>();
         }
     }
 }

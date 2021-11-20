@@ -2,20 +2,20 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using MediatR;
-using Microsoft.AspNetCore.Mvc;
-using Moq;
-using NUnit.Framework;
 using DeveloperPath.Application.CQRS.Themes.Commands.CreateTheme;
 using DeveloperPath.Application.CQRS.Themes.Commands.DeleteTheme;
 using DeveloperPath.Application.CQRS.Themes.Commands.UpdateTheme;
 using DeveloperPath.Application.CQRS.Themes.Queries.GetThemes;
-using DeveloperPath.Domain.Shared.ClientModels;
+using DeveloperPath.Shared.ClientModels;
 using DeveloperPath.WebApi.Controllers;
+using MediatR;
+using Microsoft.AspNetCore.Mvc;
+using Moq;
+using NUnit.Framework;
 
-namespace DeveloperPath.Web.WebAPI.Controllers
+namespace Web.WebAPI.Controllers
 {
-  public class ThemesControllerTests : TestBase
+    public class ThemesControllerTests : TestBase
   {
     private readonly Mock<IMediator> moqMediator;
     private readonly Theme sampleTheme;

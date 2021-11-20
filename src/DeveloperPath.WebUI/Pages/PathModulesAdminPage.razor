@@ -1,0 +1,21 @@
+﻿@page "/administration/paths/{key}/modules"
+
+<Breadcrumbs Items="@_breadCrumbs" />
+<AuthorizeView Roles="Administrator"
+               Context="AuthContext">
+    <Authorized>
+        <Condition Evaluation="_pathsModules != null">
+            <Match>
+                <MudButton Style="margin-bottom: 20px" StartIcon="@Icons.Outlined.Add" 
+                           OnClick="ShowModalAddModule">@localizer["AddModule"]</MudButton>
+             
+            </Match>
+            <NotMatch>
+                <MudProgressLinear Indeterminate="true" Color="Color.Primary"></MudProgressLinear>
+            </NotMatch>
+        </Condition>
+    </Authorized>
+    <NotAuthorized>
+        @localizer["NotAuthorized"]
+    </NotAuthorized>
+</AuthorizeView>

@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Threading.Tasks;
-using FluentAssertions;
-using NUnit.Framework;
 using DeveloperPath.Application.Common.Exceptions;
 using DeveloperPath.Application.CQRS.Modules.Commands.CreateModule;
 using DeveloperPath.Application.CQRS.Sources.Commands.CreateSource;
 using DeveloperPath.Domain.Entities;
-using DeveloperPath.Domain.Shared.Enums;
+using DeveloperPath.Shared.Enums;
+using FluentAssertions;
+using NUnit.Framework;
 
-namespace DeveloperPath.Application.IntegrationTests.Commands
+namespace DeveloperPath.Application.IntegrationTests.Sources.Commands
 {
     using static Testing;
 
@@ -173,7 +173,6 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
 
             var module = await SendAsync(new CreateModule
             {
-                PathId = path.Id,
                 Key = "module-key",
                 Title = "Module Title",
                 Description = "Module Decription"

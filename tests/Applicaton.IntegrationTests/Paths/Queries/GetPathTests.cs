@@ -2,18 +2,18 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using FluentAssertions;
-using NUnit.Framework;
 using DeveloperPath.Application.Common.Exceptions;
 using DeveloperPath.Application.CQRS.Paths.Queries.GetPaths;
 using DeveloperPath.Domain.Entities;
-using DeveloperPath.Domain.Shared.Enums;
+using DeveloperPath.Shared.Enums;
+using FluentAssertions;
+using NUnit.Framework;
 
-namespace DeveloperPath.Application.IntegrationTests.Queries
+namespace DeveloperPath.Application.IntegrationTests.Paths.Queries
 {
-  using static Testing;
+    using static Testing;
 
-  public class GetPathTests : TestBase
+    public class GetPathTests : TestBase
   {
     [Test]
     public async Task Get_ShouldReturnPathList()

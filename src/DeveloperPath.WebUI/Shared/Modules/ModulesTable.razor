@@ -1,0 +1,60 @@
+﻿<MudTable Items="Data" Filter="Filter">
+    <ToolBarContent>
+        <MudText Typo="Typo.h6">@Localizer["PathModules"]</MudText>
+        <MudSpacer />
+        <MudTextField @bind-Value="_searchString" Placeholder="@Localizer["Search"]"
+                      Adornment="Adornment.Start"
+                      AdornmentIcon="@Icons.Material.Filled.Search"
+                      IconSize="Size.Medium"
+                      Class="mt-0"></MudTextField>
+    </ToolBarContent>
+    <HeaderContent>
+        <MudTh>Id</MudTh>
+        <MudTh></MudTh>
+        <MudTh>@Localizer["ModuleTitle"]</MudTh>
+        <MudTh>@Localizer["UriKey"]</MudTh>
+        <MudTh>@Localizer["Necessity"]</MudTh>
+        <MudTh>@Localizer["Tags"]</MudTh>
+    </HeaderContent>
+    <RowTemplate>
+        <MudTd DataLabel="Id">@context.Id</MudTd>
+        <MudTd>
+            <MudButton Color="Color.Primary" OnClick="() => context.ShowDetails = !context.ShowDetails">
+                @Localizer["Prerequisites"]
+            </MudButton>
+        </MudTd>
+        <MudTd DataLabel="@Localizer["ModuleTitle"]">@context.Title</MudTd>
+        <MudTd DataLabel="@Localizer["UriKey"]">@context.Key</MudTd>
+        <MudTd DataLabel="@Localizer["Necessity"]">@Localizer[context.Necessity.ToString()]</MudTd>
+        <MudTd DataLabel="@Localizer["Tags"]">
+            <Iterations Items="@context.Tags" Context="tagItem">
+                <MudChip Size="Size.Small">@tagItem</MudChip>
+            </Iterations>
+        </MudTd>
+    </RowTemplate>
+    <ChildRowContent>
+        <Condition Evaluation="context.ShowDetails">
+            <Match>
+                <td colspan="6">
+                    <MudCard Elevation="0">
+                        <MudCardHeader>
+                            <CardHeaderContent>
+                                <MudText Typo="Typo.body1">@Localizer["Prerequisites details"]</MudText>
+                            </CardHeaderContent>
+                        </MudCardHeader>
+                        <MudCardContent Class="pa-0">
+                            <MudTable Items="@context.Prerequisites"
+                                      Context="PrerequisitesContext"
+                                      Hover="true"
+                                      Breakpoint="Breakpoint.Sm">
+                                <RowTemplate>
+                                    <MudTd>@PrerequisitesContext.Title</MudTd>
+                                </RowTemplate>
+                            </MudTable>
+                        </MudCardContent>
+                    </MudCard>
+                </td>
+            </Match>
+        </Condition>
+    </ChildRowContent>
+</MudTable>
