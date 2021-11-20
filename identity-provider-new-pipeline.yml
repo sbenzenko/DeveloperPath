@@ -13,18 +13,13 @@ steps:
   inputs:
     packageType: 'sdk'
     version: '6.0.x'
-- task: DotNetCoreCLI@2
-  inputs:
-    command: 'build'
-    projects: '**/src/IdentityProvider/*.csproj'
-    arguments: '--configuration $(buildConfiguration)'
 
 - task: DotNetCoreCLI@2 
   displayName: 'Publish'
   inputs:
     command: 'publish'
     publishWebProjects: false
-    projects: '**/src/IdentityProvider/IdentityProvider.csproj'
+    projects: '**/src/DeveloperPath.IdentityProvider/DeveloperPath.IdentityProvider.csproj'
     arguments: '--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)'
     zipAfterPublish: true
 

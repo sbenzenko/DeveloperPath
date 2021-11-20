@@ -16,7 +16,7 @@ steps:
 - task: DotNetCoreCLI@2
   inputs:
     command: 'build'
-    projects: '**/src/WebApi/*.csproj'
+    projects: '**/src/DeveloperPath.WebApi/*.csproj'
     arguments: '--configuration $(buildConfiguration)'
 
 - task: DotNetCoreCLI@2
@@ -31,7 +31,7 @@ steps:
   inputs:
     command: 'publish'
     publishWebProjects: false
-    projects: '**/src/WebApi/WebApi.csproj'
+    projects: '**/src/DeveloperPath.WebApi/WebApi.csproj'
     arguments: '--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)'
     zipAfterPublish: true
 
