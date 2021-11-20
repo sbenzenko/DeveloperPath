@@ -112,7 +112,6 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
 
             var module = await SendAsync(new CreateModule
             {
-                PathId = path.Id,
                 Key = "module-key",
                 Title = "Module Title",
                 Description = "Module Decription"
@@ -153,7 +152,6 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
 
             var module = await SendAsync(new CreateModule
             {
-                PathId = path.Id,
                 Title = "Module Title",
                 Key = "module-key",
                 Description = "Module Decription"
@@ -196,7 +194,6 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
 
             var module = await SendAsync(new CreateModule
             {
-                PathId = path.Id,
                 Title = "Module Title",
                 Key = "module-key",
                 Description = "Module Decription"
@@ -247,7 +244,6 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
 
             var module = await SendAsync(new CreateModule
             {
-                PathId = path.Id,
                 Title = "Module Title",
                 Key = "module-key",
                 Description = "Module Decription"
@@ -264,7 +260,7 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
                 SectionId = 999
             };
 
-            FluentActions.Invoking(() =>
+            await FluentActions.Invoking( () =>
                 SendAsync(command)).Should().ThrowAsync<NotFoundException>();
         }
     }

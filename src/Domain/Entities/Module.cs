@@ -13,7 +13,6 @@ namespace DeveloperPath.Domain.Entities
         /// <summary>
         /// Module URI key
         /// </summary>
-        
         public string Key { get; set; }
 
         /// <summary>

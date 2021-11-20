@@ -14,7 +14,7 @@ using Shared.ClientModels;
 
 namespace DeveloperPath.WebApi.Controllers
 {
-    [Route("api/paths/{pathKey}/modules")]
+    [Route("api/modules")]
     public class ModulesController : ApiController
     {
         public ModulesController(IMediator mediator)
@@ -28,8 +28,8 @@ namespace DeveloperPath.WebApi.Controllers
         /// <param name="ct"></param>
         /// <returns>A collection of modules</returns>
         /// <response code="200">Returns a list of modules</response>
-        [HttpGet("/api/modules")]
-        [HttpHead("/api/modules")]
+        [HttpGet]
+        [HttpHead]
         public async Task<ActionResult<IEnumerable<ModuleTitle>>> Get(CancellationToken ct = default)
         {
             var result = await _mediator.Send(new GetAllAvailableModulesQuery(), ct);
@@ -37,62 +37,25 @@ namespace DeveloperPath.WebApi.Controllers
         }
 
         /// <summary>
-        /// Get all available modules for a path
-        /// </summary>
-        /// <param name="pathKey">URI pathKey</param>
-        /// <param name="requestParams">Request parameters</param>
-        /// <param name="ct"></param>
-        /// <returns>A collection of modules with summary information</returns>
-        /// <response code="200">Returns a list of modules in the path</response>
-        /// <response code="404">Path not found</response>
-        [HttpGet]
-        [HttpHead]
-        public async Task<ActionResult<IEnumerable<Module>>> Get(string pathKey, [FromQuery] RequestParams requestParams = null, CancellationToken ct = default)
-        {
-            //TODO: consider adding default page size and show 1st page instead of all
-            return requestParams is not null && requestParams.UsePaging()
-              ? await GetPage(pathKey, requestParams, ct)
-              : await GetAll(pathKey, ct);
-        }
-
-        /// <summary>
         /// Get module information by its Id
         /// </summary>
-        /// <param name="pathKey">An pathKey of the path</param>
         /// <param name="moduleId">An id of the module</param>
         /// <param name="ct"></param>
         /// <returns>Information about the module</returns>
         /// <response code="200">Returns requested module</response>
         /// <response code="404">Module not found</response>
-        [HttpGet("{moduleId}", Name = "GetModule")]
+        [HttpGet("{moduleId}", Name = "GetModuleById")]
         [HttpHead("{moduleId}")]
-        public async Task<ActionResult<Module>> Get(string pathKey, int moduleId, CancellationToken ct = default)
+        public async Task<ActionResult<Module>> Get(int moduleId, CancellationToken ct = default)
         {
-            Module model = await Mediator.Send(new GetModuleQuery { PathKey = pathKey, Id = moduleId }, ct);
+            Module model = await Mediator.Send(new GetModuleQuery { Id = moduleId }, ct);
 
             return Ok(model);
         }
 
-        ///// <summary>
-        ///// Get module details information by its Id
-        ///// </summary>
-        ///// <param name="pathId">An id of the path</param>
-        ///// <param name="moduleId">An id of the module</param>
-        ///// <returns>Detailed information of the module with themes included</returns>
-        //[Route("api/paths/{pathId}/moduledetails")]
-        //[HttpGet("{moduleId}", Name = "GetModuleDetails")]
-        //[HttpHead("{moduleId}")]
-        //public async Task<ActionResult<ModuleViewModel>> GetDetails(int pathId, int moduleId)
-        //{
-        //  ModuleViewModel model = await Mediator.Send(new GetModuleDetailsQuery { Id = moduleId });
-
-        //  return Ok(model);
-        //}
-
         /// <summary>
         /// Create a module
         /// </summary>
-        /// <param name="pathId">An id of the path</param>
         /// <param name="command">Module object</param>
         /// <returns>Created module</returns>
         /// <response code="201">Module created successfully</response>
@@ -103,21 +66,16 @@ namespace DeveloperPath.WebApi.Controllers
         [Authorize]
         [HttpPost]
         [Consumes("application/json")]
-        public async Task<ActionResult<Module>> Create(int pathId,
-          [FromBody] CreateModule command)
+        public async Task<ActionResult<Module>> Create([FromBody] CreateModule command)
         {
-            if (pathId != command.PathId)
-                return BadRequest();
-
             Module model = await Mediator.Send(command);
 
-            return CreatedAtRoute("GetModule", new { pathId = command.PathId, moduleId = model.Id }, model);
+            return CreatedAtRoute("GetModule", new { moduleId = model.Id }, model);
         }
 
         /// <summary>
         /// Update the module with given Id
         /// </summary>
-        /// <param name="pathId">An id of the path</param>
         /// <param name="moduleId">An id of the module</param>
         /// <param name="command">Updated module object</param>
         /// <returns>Updated module</returns>
@@ -128,7 +86,7 @@ namespace DeveloperPath.WebApi.Controllers
         [Authorize]
         [HttpPut("{moduleId}")]
         [Consumes("application/json")]
-        public async Task<ActionResult<Module>> Update(int pathId, int moduleId,
+        public async Task<ActionResult<Module>> Update(int moduleId,
           [FromBody] UpdateModule command)
         {
             if (moduleId != command.Id)

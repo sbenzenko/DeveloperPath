@@ -24,26 +24,10 @@ namespace DeveloperPath.Application.IntegrationTests.Modules.Commands
         }
 
         [Test]
-        public void ShouldRequirePathId()
-        {
-            var command = new CreateModule
-            {
-                Title = "Module Title",
-                Description = "Module Decription"
-            };
-
-            FluentActions.Invoking(() =>
-                SendAsync(command)).Should().ThrowAsync<ValidationException>()
-                  .Where(ex => ex.Errors.ContainsKey("PathId"))
-                  .Result.And.Errors["PathId"].Should().Contain("Path Id is required.");
-        }
-
-        [Test]
         public void ShouldReturnNotFoundForNonExistingPath()
         {
             var command = new CreateModule
             {
-                PathId = 999,
                 Title = "New Title",
                 Key = "module-key",
                 Description = "New Description",
@@ -59,7 +43,6 @@ namespace DeveloperPath.Application.IntegrationTests.Modules.Commands
         {
             var command = new CreateModule
             {
-                PathId = 1,
                 Title = "",
                 Description = "Module Decription"
             };
@@ -76,7 +59,6 @@ namespace DeveloperPath.Application.IntegrationTests.Modules.Commands
         {
             var command = new CreateModule
             {
-                PathId = 1,
                 Title = "This module title is too long and exceeds one hundred characters allowed for module titles by CreateModuleCommandValidator",
                 Description = "Learn how to design modern web applications using ASP.NET"
             };
@@ -92,7 +74,6 @@ namespace DeveloperPath.Application.IntegrationTests.Modules.Commands
         {
             var command = new CreateModule
             {
-                PathId = 1,
                 Title = "Module Title"
             };
 
@@ -102,53 +83,43 @@ namespace DeveloperPath.Application.IntegrationTests.Modules.Commands
                   .Result.And.Errors["Description"].Should().Contain("Description is required.");
         }
 
-        [Test]
-        public async Task ShouldRequireUniqueTitle()
-        {
-            var path = await AddAsync(new Path
-            {
-                Title = "Some Path",
-                Key = "some-path",
-                Description = "Some Path Description"
-            });
+        //[Test]
+        //public async Task ShouldRequireUniqueTitle()
+        //{
+        //    var path = await AddAsync(new Path
+        //    {
+        //        Title = "Some Path",
+        //        Key = "some-path",
+        //        Description = "Some Path Description"
+        //    });
 
-            await SendAsync(new CreateModule
-            {
-                PathId = path.Id,
-                Key = "module-key",
-                Title = "Module Title",
-                Description = "Module Decription"
-            });
+        //    await SendAsync(new CreateModule
+        //    {
+        //        Key = "module-key",
+        //        Title = "Module Title",
+        //        Description = "Module Decription"
+        //    });
 
-            var command = new CreateModule
-            {
-                PathId = path.Id,
-                Key = "module-key-two",
-                Title = "Module Title",
-                Description = "Module Decription"
-            };
+        //    var command = new CreateModule
+        //    {
+        //        Key = "module-key-two",
+        //        Title = "Module Title",
+        //        Description = "Module Decription"
+        //    };
 
-            FluentActions.Invoking(() =>
-                SendAsync(command)).Should().ThrowAsync<ValidationException>()
-                  .Where(ex => ex.Errors.ContainsKey("Title"))
-                  .Result.And.Errors["Title"].Should().Contain("The specified module already exists in this path.");
-        }
+        //    FluentActions.Invoking(() =>
+        //        SendAsync(command)).Should().ThrowAsync<ValidationException>()
+        //          .Where(ex => ex.Errors.ContainsKey("Title"))
+        //          .Result.And.Errors["Title"].Should().Contain("The specified module already exists in this path.");
+        //}
 
         [Test]
         public async Task ShouldCreateModule()
         {
             var userId = await RunAsDefaultUserAsync();
 
-            var path = await AddAsync(new Path
-            {
-                Title = "Some Path",
-                Key = "some-path",
-                Description = "Some Path Description"
-            });
-
             var command = new CreateModule
             {
-                PathId = path.Id,
                 Title = "New Module",
                 Key = "new-module",
                 Description = "New Module Description",

@@ -1,13 +1,9 @@
 ﻿using AutoMapper;
-using DeveloperPath.Application.Common.Exceptions;
 using DeveloperPath.Application.Common.Interfaces;
-using DeveloperPath.Domain.Shared.ClientModels;
 using DeveloperPath.Domain.Shared.Enums;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Shared.ClientModels;
@@ -19,12 +15,6 @@ namespace DeveloperPath.Application.CQRS.Modules.Commands.CreateModule
     /// </summary>
     public record CreateModule : IRequest<Module>
     {
-        // TODO: add Prerequisites, provide Order
-        /// <summary>
-        /// Id of path the module is in
-        /// </summary>
-        [Required]
-        public int PathId { get; init; }
         /// <summary>
         /// Module title
         /// </summary>
@@ -72,13 +62,6 @@ namespace DeveloperPath.Application.CQRS.Modules.Commands.CreateModule
 
         public async Task<Module> Handle(CreateModule request, CancellationToken cancellationToken)
         {
-            var path = await _context.Paths
-              .Where(c => c.Id == request.PathId)
-              .FirstOrDefaultAsync(cancellationToken);
-
-            if (path == null)
-                throw new NotFoundException(nameof(Path), request.PathId, NotFoundHelper.PATH_NOT_FOUND);
-
             var entity = new Domain.Entities.Module
             {
                 Title = request.Title,
@@ -86,7 +69,6 @@ namespace DeveloperPath.Application.CQRS.Modules.Commands.CreateModule
                 Description = request.Description,
                 Necessity = request.Necessity,
                 Tags = request.Tags,
-                Paths = new List<Domain.Entities.Path> { path }
             };
 
             _context.Modules.Add(entity);

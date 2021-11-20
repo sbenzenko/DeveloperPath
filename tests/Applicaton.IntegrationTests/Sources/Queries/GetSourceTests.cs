@@ -25,7 +25,6 @@ namespace DeveloperPath.Application.IntegrationTests.Queries
 
             var module = await SendAsync(new CreateModule
             {
-                PathId = path.Id,
                 Key = "module-key",
                 Title = "New Other Module",
                 Description = "New Other Module Description",
@@ -102,7 +101,6 @@ namespace DeveloperPath.Application.IntegrationTests.Queries
 
             var module = await SendAsync(new CreateModule
             {
-                PathId = path.Id,
                 Key = "module-key",
                 Title = "New Module Module",
                 Description = "New Module Description",
@@ -165,7 +163,6 @@ namespace DeveloperPath.Application.IntegrationTests.Queries
 
             var module = await SendAsync(new CreateModule
             {
-                PathId = path.Id,
                 Key = "module-key",
                 Title = "New Module Module",
                 Description = "New Module Description",

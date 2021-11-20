@@ -451,11 +451,6 @@
             A module to create
             </summary>
         </member>
-        <member name="P:DeveloperPath.Application.CQRS.Modules.Commands.CreateModule.CreateModule.PathId">
-            <summary>
-            Id of path the module is in
-            </summary>
-        </member>
         <member name="P:DeveloperPath.Application.CQRS.Modules.Commands.CreateModule.CreateModule.Title">
             <summary>
             Module title
@@ -491,19 +486,10 @@
             Validation rules for creating module
             </summary>
         </member>
-        <member name="M:DeveloperPath.Application.CQRS.Modules.Commands.CreateModule.CreateModuleCommandValidator.#ctor(DeveloperPath.Application.Common.Interfaces.IApplicationDbContext)">
+        <member name="M:DeveloperPath.Application.CQRS.Modules.Commands.CreateModule.CreateModuleCommandValidator.#ctor">
             <summary>
+            CreateModuleCommand validator
             </summary>
-            <param name="context"></param>
-        </member>
-        <member name="M:DeveloperPath.Application.CQRS.Modules.Commands.CreateModule.CreateModuleCommandValidator.BeUniqueTitle(DeveloperPath.Application.CQRS.Modules.Commands.CreateModule.CreateModule,System.String,System.Threading.CancellationToken)">
-            <summary>
-            Request to context to check for unique title
-            </summary>
-            <param name="model"></param>
-            <param name="title"></param>
-            <param name="cancellationToken"></param>
-            <returns></returns>
         </member>
         <member name="T:DeveloperPath.Application.CQRS.Modules.Commands.DeleteModule.DeleteModule">
             <summary>

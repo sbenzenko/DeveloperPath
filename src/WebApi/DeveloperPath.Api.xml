@@ -12,33 +12,20 @@
             <returns>A collection of modules</returns>
             <response code="200">Returns a list of modules</response>
         </member>
-        <member name="M:DeveloperPath.WebApi.Controllers.ModulesController.Get(System.String,DeveloperPath.WebApi.Models.RequestParams,System.Threading.CancellationToken)">
-            <summary>
-            Get all available modules for a path
-            </summary>
-            <param name="pathKey">URI pathKey</param>
-            <param name="requestParams">Request parameters</param>
-            <param name="ct"></param>
-            <returns>A collection of modules with summary information</returns>
-            <response code="200">Returns a list of modules in the path</response>
-            <response code="404">Path not found</response>
-        </member>
-        <member name="M:DeveloperPath.WebApi.Controllers.ModulesController.Get(System.String,System.Int32,System.Threading.CancellationToken)">
+        <member name="M:DeveloperPath.WebApi.Controllers.ModulesController.Get(System.Int32,System.Threading.CancellationToken)">
             <summary>
             Get module information by its Id
             </summary>
-            <param name="pathKey">An pathKey of the path</param>
             <param name="moduleId">An id of the module</param>
             <param name="ct"></param>
             <returns>Information about the module</returns>
             <response code="200">Returns requested module</response>
             <response code="404">Module not found</response>
         </member>
-        <member name="M:DeveloperPath.WebApi.Controllers.ModulesController.Create(System.Int32,DeveloperPath.Application.CQRS.Modules.Commands.CreateModule.CreateModule)">
+        <member name="M:DeveloperPath.WebApi.Controllers.ModulesController.Create(DeveloperPath.Application.CQRS.Modules.Commands.CreateModule.CreateModule)">
             <summary>
             Create a module
             </summary>
-            <param name="pathId">An id of the path</param>
             <param name="command">Module object</param>
             <returns>Created module</returns>
             <response code="201">Module created successfully</response>
@@ -47,11 +34,10 @@
             <response code="415">Unsupported media type provided</response>
             <response code="422">Unprocessible entity provided</response>
         </member>
-        <member name="M:DeveloperPath.WebApi.Controllers.ModulesController.Update(System.Int32,System.Int32,DeveloperPath.Application.CQRS.Modules.Commands.UpdateModule.UpdateModule)">
+        <member name="M:DeveloperPath.WebApi.Controllers.ModulesController.Update(System.Int32,DeveloperPath.Application.CQRS.Modules.Commands.UpdateModule.UpdateModule)">
             <summary>
             Update the module with given Id
             </summary>
-            <param name="pathId">An id of the path</param>
             <param name="moduleId">An id of the module</param>
             <param name="command">Updated module object</param>
             <returns>Updated module</returns>

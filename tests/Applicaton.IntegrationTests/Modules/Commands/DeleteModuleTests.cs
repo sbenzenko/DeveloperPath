@@ -57,7 +57,6 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
                 }
             });
 
-            var pathId = module.Paths.FirstOrDefault().Id;
             var query = new GetModuleQuery() { PathKey = "some-path1", Id = module.Id };
             var moduleAdded = await SendAsync(query);
 
@@ -67,7 +66,6 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
                 Id = module.Id
             });
 
-            pathId = module.Paths.FirstOrDefault().Id;
             query = new GetModuleQuery() { PathKey = "some-path1", Id = module.Id };
             var moduleRemovedFromPath1 = await SendAsync(query);
 

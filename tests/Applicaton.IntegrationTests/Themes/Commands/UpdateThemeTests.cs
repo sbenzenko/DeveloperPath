@@ -225,7 +225,6 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
 
             var module = await SendAsync(new CreateModule
             {
-                PathId = path.Id,
                 Key = "module-key",
                 Title = "Module Title",
                 Description = "Module Decription"
