@@ -22,7 +22,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\DeveloperPath.Domain\DeveloperPath.Domain.csproj" />
-    <ProjectReference Include="..\DeveloperPath.Shared\DeveloperPath.Shared.csproj" />
   </ItemGroup>
 
   <ItemGroup>

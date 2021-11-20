@@ -34,7 +34,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\DeveloperPath.Infrastructure\DeveloperPath.Infrastructure.csproj" />
-    <ProjectReference Include="..\DeveloperPath.Shared\DeveloperPath.Shared.csproj" />
   </ItemGroup>
 
 

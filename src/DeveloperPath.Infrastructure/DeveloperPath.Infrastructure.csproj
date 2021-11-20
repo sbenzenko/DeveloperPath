@@ -20,7 +20,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\DeveloperPath.Application\DeveloperPath.Application.csproj" />
-    <ProjectReference Include="..\DeveloperPath.Shared\DeveloperPath.Shared.csproj" />
   </ItemGroup>
 
 </Project>

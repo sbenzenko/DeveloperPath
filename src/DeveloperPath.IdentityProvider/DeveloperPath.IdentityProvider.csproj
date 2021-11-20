@@ -31,8 +31,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Application\DeveloperPath.Application.csproj" />
-    <ProjectReference Include="..\Infrastructure\DeveloperPath.Infrastructure.csproj" />
+    <ProjectReference Include="..\DeveloperPath.Infrastructure\DeveloperPath.Infrastructure.csproj" />
   </ItemGroup>
 
   <ItemGroup>
