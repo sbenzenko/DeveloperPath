@@ -91,7 +91,7 @@ namespace DeveloperPath.Application.IntegrationTests.Queries
             var query = new GetSourceListQuery() { PathId = 1, ModuleId = 1, ThemeId = 1 };
 
             FluentActions.Invoking(() =>
-                SendAsync(query, cts.Token)).Should().Throw<TaskCanceledException>();
+                SendAsync(query, cts.Token)).Should().ThrowAsync<TaskCanceledException>();
         }
 
         [Test]
@@ -154,7 +154,7 @@ namespace DeveloperPath.Application.IntegrationTests.Queries
             var query = new GetSourceQuery() { PathId = 1, ModuleId = 1, ThemeId = 1, Id = 1 };
 
             FluentActions.Invoking(() =>
-                SendAsync(query, cts.Token)).Should().Throw<TaskCanceledException>();
+                SendAsync(query, cts.Token)).Should().ThrowAsync<TaskCanceledException>();
         }
 
         [Test]
@@ -217,7 +217,7 @@ namespace DeveloperPath.Application.IntegrationTests.Queries
             var query = new GetSourceDetailsQuery() { PathId = 1, ModuleId = 1, ThemeId = 1, Id = 1 };
 
             FluentActions.Invoking(() =>
-                SendAsync(query, cts.Token)).Should().Throw<TaskCanceledException>();
+                SendAsync(query, cts.Token)).Should().ThrowAsync<TaskCanceledException>();
         }
 
         [Test]
@@ -226,7 +226,7 @@ namespace DeveloperPath.Application.IntegrationTests.Queries
             var query = new GetSourceListQuery() { PathId = 99999, ModuleId = 1, ThemeId = 1 };
 
             FluentActions.Invoking(() =>
-                SendAsync(query)).Should().Throw<NotFoundException>();
+                SendAsync(query)).Should().ThrowAsync<NotFoundException>();
         }
 
         [Test]
@@ -235,7 +235,7 @@ namespace DeveloperPath.Application.IntegrationTests.Queries
             var query = new GetSourceListQuery() { PathId = 1, ModuleId = 99999, ThemeId = 1 };
 
             FluentActions.Invoking(() =>
-                SendAsync(query)).Should().Throw<NotFoundException>();
+                SendAsync(query)).Should().ThrowAsync<NotFoundException>();
         }
 
         [Test]
@@ -244,7 +244,7 @@ namespace DeveloperPath.Application.IntegrationTests.Queries
             var query = new GetSourceListQuery() { PathId = 1, ModuleId = 1, ThemeId = 99999 };
 
             FluentActions.Invoking(() =>
-                SendAsync(query)).Should().Throw<NotFoundException>();
+                SendAsync(query)).Should().ThrowAsync<NotFoundException>();
         }
 
         [Test]
@@ -253,7 +253,7 @@ namespace DeveloperPath.Application.IntegrationTests.Queries
             var query = new GetSourceQuery() { PathId = 1, ModuleId = 1, ThemeId = 1, Id = 99999 };
 
             FluentActions.Invoking(() =>
-                SendAsync(query)).Should().Throw<NotFoundException>();
+                SendAsync(query)).Should().ThrowAsync<NotFoundException>();
         }
 
         [Test]
@@ -262,7 +262,7 @@ namespace DeveloperPath.Application.IntegrationTests.Queries
             var query = new GetSourceQuery() { PathId = 1, ModuleId = 1, ThemeId = 99999, Id = 1 };
 
             FluentActions.Invoking(() =>
-                SendAsync(query)).Should().Throw<NotFoundException>();
+                SendAsync(query)).Should().ThrowAsync<NotFoundException>();
         }
 
         [Test]
@@ -271,7 +271,7 @@ namespace DeveloperPath.Application.IntegrationTests.Queries
             var query = new GetSourceQuery() { PathId = 1, ModuleId = 99999, ThemeId = 1, Id = 1 };
 
             FluentActions.Invoking(() =>
-                SendAsync(query)).Should().Throw<NotFoundException>();
+                SendAsync(query)).Should().ThrowAsync<NotFoundException>();
         }
 
         [Test]
@@ -280,7 +280,7 @@ namespace DeveloperPath.Application.IntegrationTests.Queries
             var query = new GetSourceQuery() { PathId = 99999, ModuleId = 1, ThemeId = 1, Id = 1 };
 
             FluentActions.Invoking(() =>
-                SendAsync(query)).Should().Throw<NotFoundException>();
+                SendAsync(query)).Should().ThrowAsync<NotFoundException>();
         }
 
         [Test]
@@ -289,7 +289,7 @@ namespace DeveloperPath.Application.IntegrationTests.Queries
             var query = new GetSourceDetailsQuery() { PathId = 1, ModuleId = 1, ThemeId = 1, Id = 99999 };
 
             FluentActions.Invoking(() =>
-                SendAsync(query)).Should().Throw<NotFoundException>();
+                SendAsync(query)).Should().ThrowAsync<NotFoundException>();
         }
 
         [Test]
@@ -298,7 +298,7 @@ namespace DeveloperPath.Application.IntegrationTests.Queries
             var query = new GetSourceDetailsQuery() { PathId = 1, ModuleId = 1, ThemeId = 99999, Id = 1 };
 
             FluentActions.Invoking(() =>
-                SendAsync(query)).Should().Throw<NotFoundException>();
+                SendAsync(query)).Should().ThrowAsync<NotFoundException>();
         }
 
         [Test]
@@ -307,7 +307,7 @@ namespace DeveloperPath.Application.IntegrationTests.Queries
             var query = new GetSourceDetailsQuery() { PathId = 1, ModuleId = 99999, ThemeId = 1, Id = 1 };
 
             FluentActions.Invoking(() =>
-                SendAsync(query)).Should().Throw<NotFoundException>();
+                SendAsync(query)).Should().ThrowAsync<NotFoundException>();
         }
 
         [Test]
@@ -316,7 +316,7 @@ namespace DeveloperPath.Application.IntegrationTests.Queries
             var query = new GetSourceDetailsQuery() { PathId = 99999, ModuleId = 1, ThemeId = 1, Id = 1 };
 
             FluentActions.Invoking(() =>
-                SendAsync(query)).Should().Throw<NotFoundException>();
+                SendAsync(query)).Should().ThrowAsync<NotFoundException>();
         }
     }
 }

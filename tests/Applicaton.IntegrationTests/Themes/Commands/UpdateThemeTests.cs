@@ -27,7 +27,7 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
             };
 
             FluentActions.Invoking(() =>
-                SendAsync(command)).Should().Throw<NotFoundException>();
+                SendAsync(command)).Should().ThrowAsync<NotFoundException>();
         }
 
         [Test]
@@ -43,7 +43,7 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
             };
 
             FluentActions.Invoking(() =>
-                SendAsync(command)).Should().Throw<NotFoundException>();
+                SendAsync(command)).Should().ThrowAsync<NotFoundException>();
         }
 
         [Test]
@@ -82,8 +82,8 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
 
             FluentActions.Invoking(() =>
                 SendAsync(command))
-                    .Should().Throw<ValidationException>().Where(ex => ex.Errors.ContainsKey("Title"))
-                    .And.Errors["Title"].Should().Contain("Title is required.");
+                    .Should().ThrowAsync<ValidationException>().Where(ex => ex.Errors.ContainsKey("Title"))
+                   .Result.And.Errors["Title"].Should().Contain("Title is required.");
         }
 
         [Test]
@@ -122,8 +122,8 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
 
             FluentActions.Invoking(() =>
                 SendAsync(command))
-                    .Should().Throw<ValidationException>().Where(ex => ex.Errors.ContainsKey("Description"))
-                    .And.Errors["Description"].Should().Contain("Description is required.");
+                    .Should().ThrowAsync<ValidationException>().Where(ex => ex.Errors.ContainsKey("Description"))
+                    .Result.And.Errors["Description"].Should().Contain("Description is required.");
         }
 
         [Test]
@@ -161,8 +161,8 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
 
             FluentActions.Invoking(() =>
                 SendAsync(command))
-                    .Should().Throw<ValidationException>().Where(ex => ex.Errors.ContainsKey("Title"))
-                    .And.Errors["Title"].Should().Contain("Title must not exceed 200 characters.");
+                    .Should().ThrowAsync<ValidationException>().Where(ex => ex.Errors.ContainsKey("Title"))
+                    .Result.And.Errors["Title"].Should().Contain("Title must not exceed 200 characters.");
         }
 
         [Test]
@@ -207,8 +207,8 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
 
             FluentActions.Invoking(() =>
                 SendAsync(command))
-                    .Should().Throw<ValidationException>().Where(ex => ex.Errors.ContainsKey("Title"))
-                    .And.Errors["Title"].Should().Contain("Theme with this title already exists in this module.");
+                    .Should().ThrowAsync<ValidationException>().Where(ex => ex.Errors.ContainsKey("Title"))
+                    .Result.And.Errors["Title"].Should().Contain("Theme with this title already exists in this module.");
         }
 
         [Test]
@@ -257,7 +257,7 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
             updatedTheme.LastModifiedBy.Should().NotBeNull();
             updatedTheme.LastModifiedBy.Should().Be(userId);
             updatedTheme.LastModified.Should().NotBeNull();
-            updatedTheme.LastModified.Should().BeCloseTo(DateTime.Now, 1000);
+            updatedTheme.LastModified.Should().BeCloseTo(DateTime.Now, TimeSpan.FromMilliseconds(1000));
         }
     }
 }

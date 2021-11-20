@@ -19,7 +19,7 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
             var command = new CreatePath();
 
             FluentActions.Invoking(() =>
-                SendAsync(command)).Should().Throw<ValidationException>();
+                SendAsync(command)).Should().ThrowAsync<ValidationException>();
         }
 
         [Test]
@@ -33,9 +33,9 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
             };
 
             FluentActions.Invoking(() =>
-                SendAsync(command)).Should().Throw<ValidationException>()
+                SendAsync(command)).Should().ThrowAsync<ValidationException>()
                   .Where(ex => ex.Errors.ContainsKey("Title"))
-                  .And.Errors["Title"].Should().Contain("Title is required.");
+                  .Result.And.Errors["Title"].Should().Contain("Title is required.");
         }
 
         [Test]
@@ -49,9 +49,9 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
             };
 
             FluentActions.Invoking(() =>
-                SendAsync(command)).Should().Throw<ValidationException>()
+                SendAsync(command)).Should().ThrowAsync<ValidationException>()
                   .Where(ex => ex.Errors.ContainsKey("Title"))
-                  .And.Errors["Title"].Should().Contain("Title must not exceed 100 characters.");
+                  .Result.And.Errors["Title"].Should().Contain("Title must not exceed 100 characters.");
         }
 
         [Test]
@@ -64,9 +64,9 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
             };
 
             FluentActions.Invoking(() =>
-                SendAsync(command)).Should().Throw<ValidationException>()
+                SendAsync(command)).Should().ThrowAsync<ValidationException>()
                   .Where(ex => ex.Errors.ContainsKey("Description"))
-                  .And.Errors["Description"].Should().Contain("Description is required.");
+                  .Result.And.Errors["Description"].Should().Contain("Description is required.");
         }
 
         [Test]
@@ -79,9 +79,9 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
             };
 
             FluentActions.Invoking(() =>
-                    SendAsync(command)).Should().Throw<ValidationException>()
+                    SendAsync(command)).Should().ThrowAsync<ValidationException>()
                 .Where(ex => ex.Errors.ContainsKey("Key"))
-                .And.Errors["Key"].Should().Contain("URI key is required.");
+                .Result.And.Errors["Key"].Should().Contain("URI key is required.");
         }
 
         [Test]
@@ -105,9 +105,9 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
             };
 
             FluentActions.Invoking(() =>
-                SendAsync(command)).Should().Throw<ValidationException>()
+                SendAsync(command)).Should().ThrowAsync<ValidationException>()
                   .Where(ex => ex.Errors.ContainsKey("Title"))
-                  .And.Errors["Title"].Should().Contain("The specified path already exists.");
+                  .Result.And.Errors["Title"].Should().Contain("The specified path already exists.");
         }
 
         [Test]
@@ -130,7 +130,7 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
             path.Title.Should().Be(command.Title);
             path.Description.Should().Be(command.Description);
             //path.CreatedBy.Should().Be(userId);
-            path.Created.Should().BeCloseTo(DateTime.Now, 10000);
+            path.Created.Should().BeCloseTo(DateTime.Now, TimeSpan.FromMilliseconds(1000));
         }
     }
 }

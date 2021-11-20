@@ -20,7 +20,7 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
             var command = new DeleteModule { PathId = 999999, Id = 1 };
 
             FluentActions.Invoking(() =>
-                SendAsync(command)).Should().Throw<NotFoundException>();
+                SendAsync(command)).Should().ThrowAsync<NotFoundException>();
         }
 
         [Test]
@@ -29,7 +29,7 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
             var command = new DeleteModule { PathId = 1, Id = 999999 };
 
             FluentActions.Invoking(() =>
-                SendAsync(command)).Should().Throw<NotFoundException>();
+                SendAsync(command)).Should().ThrowAsync<NotFoundException>();
         }
 
         [Test]

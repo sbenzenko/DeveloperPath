@@ -20,7 +20,7 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
             var command = new CreateSource();
 
             FluentActions.Invoking(() =>
-                SendAsync(command)).Should().Throw<ValidationException>();
+                SendAsync(command)).Should().ThrowAsync<ValidationException>();
         }
 
         [Test]
@@ -35,9 +35,9 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
             };
 
             FluentActions.Invoking(() =>
-                SendAsync(command)).Should().Throw<ValidationException>()
+                SendAsync(command)).Should().ThrowAsync<ValidationException>()
                   .Where(ex => ex.Errors.ContainsKey("ModuleId"))
-                  .And.Errors["ModuleId"].Should().Contain("Module Id is required.");
+                  .Result.And.Errors["ModuleId"].Should().Contain("Module Id is required.");
         }
 
         [Test]
@@ -52,9 +52,9 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
             };
 
             FluentActions.Invoking(() =>
-                SendAsync(command)).Should().Throw<ValidationException>()
+                SendAsync(command)).Should().ThrowAsync<ValidationException>()
                   .Where(ex => ex.Errors.ContainsKey("ThemeId"))
-                  .And.Errors["ThemeId"].Should().Contain("Theme Id is required.");
+                  .Result.And.Errors["ThemeId"].Should().Contain("Theme Id is required.");
         }
 
         [Test]
@@ -70,7 +70,7 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
             };
 
             FluentActions.Invoking(() =>
-                SendAsync(command)).Should().Throw<NotFoundException>();
+                SendAsync(command)).Should().ThrowAsync<NotFoundException>();
         }
 
         [Test]
@@ -86,7 +86,7 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
             };
 
             FluentActions.Invoking(() =>
-                SendAsync(command)).Should().Throw<NotFoundException>();
+                SendAsync(command)).Should().ThrowAsync<NotFoundException>();
         }
 
         [Test]
@@ -101,9 +101,9 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
             };
 
             FluentActions.Invoking(() =>
-                SendAsync(command)).Should().Throw<ValidationException>()
+                SendAsync(command)).Should().ThrowAsync<ValidationException>()
                   .Where(ex => ex.Errors.ContainsKey("Title"))
-                  .And.Errors["Title"].Should().Contain("Title is required.");
+                  .Result.And.Errors["Title"].Should().Contain("Title is required.");
         }
 
         [Test]
@@ -119,9 +119,9 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
             };
 
             FluentActions.Invoking(() =>
-                SendAsync(command)).Should().Throw<ValidationException>()
+                SendAsync(command)).Should().ThrowAsync<ValidationException>()
                   .Where(ex => ex.Errors.ContainsKey("Title"))
-                  .And.Errors["Title"].Should().Contain("Title must not exceed 200 characters.");
+                  .Result.And.Errors["Title"].Should().Contain("Title must not exceed 200 characters.");
         }
 
         [Test]
@@ -136,9 +136,9 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
             };
 
             FluentActions.Invoking(() =>
-                SendAsync(command)).Should().Throw<ValidationException>()
+                SendAsync(command)).Should().ThrowAsync<ValidationException>()
                   .Where(ex => ex.Errors.ContainsKey("Url"))
-                  .And.Errors["Url"].Should().Contain("URL is required.");
+                  .Result.And.Errors["Url"].Should().Contain("URL is required.");
         }
 
         [Test]
@@ -154,9 +154,9 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
             };
 
             FluentActions.Invoking(() =>
-                SendAsync(command)).Should().Throw<ValidationException>()
+                SendAsync(command)).Should().ThrowAsync<ValidationException>()
                   .Where(ex => ex.Errors.ContainsKey("Url"))
-                  .And.Errors["Url"].Should().Contain("URL must be in valid format, e.g. http://www.domain.com.");
+                  .Result.And.Errors["Url"].Should().Contain("URL must be in valid format, e.g. http://www.domain.com.");
         }
 
         [Test]
@@ -216,7 +216,7 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
             source.Availability.Should().Be(command.Availability);
             source.Relevance.Should().Be(command.Relevance);
             // source.CreatedBy.Should().Be(userId);
-            source.Created.Should().BeCloseTo(DateTime.Now, 10000);
+            source.Created.Should().BeCloseTo(DateTime.Now, TimeSpan.FromMilliseconds(1000));
         }
     }
 }

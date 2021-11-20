@@ -26,7 +26,7 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
             };
 
             FluentActions.Invoking(() =>
-                SendAsync(command)).Should().Throw<NotFoundException>();
+                SendAsync(command)).Should().ThrowAsync<NotFoundException>();
         }
 
         [Test]
@@ -57,8 +57,8 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
 
             FluentActions.Invoking(() =>
                 SendAsync(command))
-                    .Should().Throw<ValidationException>().Where(ex => ex.Errors.ContainsKey("Title"))
-                    .And.Errors["Title"].Should().Contain("Title is required.");
+                    .Should().ThrowAsync<ValidationException>().Where(ex => ex.Errors.ContainsKey("Title"))
+                    .Result.And.Errors["Title"].Should().Contain("Title is required.");
         }
 
         [Test]
@@ -89,8 +89,8 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
 
             FluentActions.Invoking(() =>
                 SendAsync(command))
-                    .Should().Throw<ValidationException>().Where(ex => ex.Errors.ContainsKey("Description"))
-                    .And.Errors["Description"].Should().Contain("Description is required.");
+                    .Should().ThrowAsync<ValidationException>().Where(ex => ex.Errors.ContainsKey("Description"))
+                    .Result.And.Errors["Description"].Should().Contain("Description is required.");
         }
 
         [Test]
@@ -121,8 +121,8 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
 
             FluentActions.Invoking(() =>
                 SendAsync(command))
-                    .Should().Throw<ValidationException>().Where(ex => ex.Errors.ContainsKey("Title"))
-                    .And.Errors["Title"].Should().Contain("Title must not exceed 100 characters.");
+                    .Should().ThrowAsync<ValidationException>().Where(ex => ex.Errors.ContainsKey("Title"))
+                    .Result.And.Errors["Title"].Should().Contain("Title must not exceed 100 characters.");
         }
 
         [Test]
@@ -160,8 +160,8 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
 
             FluentActions.Invoking(() =>
                 SendAsync(command))
-                    .Should().Throw<ValidationException>().Where(ex => ex.Errors.ContainsKey("Title"))
-                    .And.Errors["Title"].Should().Contain("Module with this title already exists in one of associated paths.");
+                    .Should().ThrowAsync<ValidationException>().Where(ex => ex.Errors.ContainsKey("Title"))
+                    .Result.And.Errors["Title"].Should().Contain("Module with this title already exists in one of associated paths.");
         }
 
         [Test]
@@ -201,7 +201,7 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
             updatedModule.LastModifiedBy.Should().NotBeNull();
             updatedModule.LastModifiedBy.Should().Be(userId);
             updatedModule.LastModified.Should().NotBeNull();
-            updatedModule.LastModified.Should().BeCloseTo(DateTime.Now, 1000);
+            updatedModule.LastModified.Should().BeCloseTo(DateTime.Now, TimeSpan.FromMilliseconds(1000));
         }
     }
 }

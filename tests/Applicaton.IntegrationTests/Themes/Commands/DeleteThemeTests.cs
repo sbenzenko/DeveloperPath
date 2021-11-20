@@ -19,7 +19,7 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
             var command = new DeleteTheme { PathId = 999999, ModuleId = 1, Id = 1 };
 
             FluentActions.Invoking(() =>
-                SendAsync(command)).Should().Throw<NotFoundException>();
+                SendAsync(command)).Should().ThrowAsync<NotFoundException>();
         }
         [Test]
         public void ShouldRequireValidModuleId()
@@ -27,7 +27,7 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
             var command = new DeleteTheme { PathId = 1, ModuleId = 999999, Id = 1 };
 
             FluentActions.Invoking(() =>
-                SendAsync(command)).Should().Throw<NotFoundException>();
+                SendAsync(command)).Should().ThrowAsync<NotFoundException>();
         }
         [Test]
         public void ShouldRequireValidThemeId()
@@ -35,7 +35,7 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
             var command = new DeleteTheme { PathId = 1, ModuleId = 1, Id = 999999 };
 
             FluentActions.Invoking(() =>
-                SendAsync(command)).Should().Throw<NotFoundException>();
+                SendAsync(command)).Should().ThrowAsync<NotFoundException>();
         }
 
         [Test]

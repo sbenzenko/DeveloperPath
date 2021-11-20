@@ -25,7 +25,7 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
             };
 
             FluentActions.Invoking(() =>
-                SendAsync(command)).Should().Throw<NotFoundException>();
+                SendAsync(command)).Should().ThrowAsync<NotFoundException>();
         }
 
 
@@ -47,9 +47,9 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
             };
 
             FluentActions.Invoking(() =>
-                SendAsync(command)).Should().Throw<ValidationException>()
+                SendAsync(command)).Should().ThrowAsync<ValidationException>()
                   .Where(ex => ex.Errors.ContainsKey("Title"))
-                  .And.Errors["Title"].Should().Contain("Title is required.");
+                  .Result.And.Errors["Title"].Should().Contain("Title is required.");
         }
 
         [Test]
@@ -70,9 +70,9 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
             };
 
             FluentActions.Invoking(() =>
-                SendAsync(command)).Should().Throw<ValidationException>()
+                SendAsync(command)).Should().ThrowAsync<ValidationException>()
                   .Where(ex => ex.Errors.ContainsKey("Title"))
-                  .And.Errors["Title"].Should().Contain("Title must not exceed 100 characters.");
+                  .Result.And.Errors["Title"].Should().Contain("Title must not exceed 100 characters.");
         }
 
         [Test]
@@ -100,9 +100,9 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
             };
 
             FluentActions.Invoking(() =>
-                SendAsync(command)).Should().Throw<ValidationException>()
+                SendAsync(command)).Should().ThrowAsync<ValidationException>()
                   .Where(ex => ex.Errors.ContainsKey("Title"))
-                  .And.Errors["Title"].Should().Contain("The specified path already exists.");
+                  .Result.And.Errors["Title"].Should().Contain("The specified path already exists.");
         }
 
         [Test]
@@ -133,7 +133,7 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
             updatedPath.LastModifiedBy.Should().NotBeNull();
             updatedPath.LastModifiedBy.Should().Be(userId);
             updatedPath.LastModified.Should().NotBeNull();
-            updatedPath.LastModified.Should().BeCloseTo(DateTime.Now, 1000);
+            updatedPath.LastModified.Should().BeCloseTo(DateTime.Now, TimeSpan.FromMilliseconds(1000));
         }
     }
 }

@@ -133,7 +133,7 @@ namespace DeveloperPath.Application.IntegrationTests.Modules.Queries
             var query = new GetModuleListQuery() { PathKey = "" };
 
             FluentActions.Invoking(() =>
-                SendAsync(query, cts.Token)).Should().Throw<TaskCanceledException>();
+                SendAsync(query, cts.Token)).Should().ThrowAsync<TaskCanceledException>();
         }
 
         [Test]
@@ -145,7 +145,7 @@ namespace DeveloperPath.Application.IntegrationTests.Modules.Queries
             var query = new GetModuleListQueryPaging { PathKey = "some-key", PageNumber = 1, PageSize = 1 };
 
             FluentActions.Invoking(() =>
-                SendAsync(query, cts.Token)).Should().Throw<TaskCanceledException>();
+                SendAsync(query, cts.Token)).Should().ThrowAsync<TaskCanceledException>();
         }
 
         [Test]
@@ -187,7 +187,7 @@ namespace DeveloperPath.Application.IntegrationTests.Modules.Queries
             var query = new GetModuleQuery() { PathKey = "some-path", Id = 1 };
 
             FluentActions.Invoking(() =>
-                SendAsync(query, cts.Token)).Should().Throw<TaskCanceledException>();
+                SendAsync(query, cts.Token)).Should().ThrowAsync<TaskCanceledException>();
         }
 
         [Test]
@@ -245,7 +245,7 @@ namespace DeveloperPath.Application.IntegrationTests.Modules.Queries
             var query = new GetModuleDetailsQuery() { PathId = 1, Id = 1 };
 
             FluentActions.Invoking(() =>
-                SendAsync(query, cts.Token)).Should().Throw<TaskCanceledException>();
+                SendAsync(query, cts.Token)).Should().ThrowAsync<TaskCanceledException>();
         }
 
         [Test]
@@ -254,7 +254,7 @@ namespace DeveloperPath.Application.IntegrationTests.Modules.Queries
             var query = new GetModuleListQuery() { PathKey = "99999" };
 
             FluentActions.Invoking(() =>
-                SendAsync(query)).Should().Throw<NotFoundException>();
+                SendAsync(query)).Should().ThrowAsync<NotFoundException>();
         }
 
         [Test]
@@ -263,7 +263,7 @@ namespace DeveloperPath.Application.IntegrationTests.Modules.Queries
             var query = new GetModuleQuery() { PathKey = "some-path", Id = 99999 };
 
             FluentActions.Invoking(() =>
-                SendAsync(query)).Should().Throw<NotFoundException>();
+                SendAsync(query)).Should().ThrowAsync<NotFoundException>();
         }
 
         [Test]
@@ -272,7 +272,7 @@ namespace DeveloperPath.Application.IntegrationTests.Modules.Queries
             var query = new GetModuleQuery() { PathKey = "99999", Id = 1 };
 
             FluentActions.Invoking(() =>
-                SendAsync(query)).Should().Throw<NotFoundException>();
+                SendAsync(query)).Should().ThrowAsync<NotFoundException>();
         }
 
         [Test]
@@ -281,7 +281,7 @@ namespace DeveloperPath.Application.IntegrationTests.Modules.Queries
             var query = new GetModuleDetailsQuery() { PathId = 1, Id = 99999 };
 
             FluentActions.Invoking(() =>
-                SendAsync(query)).Should().Throw<NotFoundException>();
+                SendAsync(query)).Should().ThrowAsync<NotFoundException>();
         }
 
         [Test]
@@ -290,7 +290,7 @@ namespace DeveloperPath.Application.IntegrationTests.Modules.Queries
             var query = new GetModuleDetailsQuery() { PathId = 99999, Id = 1 };
 
             FluentActions.Invoking(() =>
-                SendAsync(query)).Should().Throw<NotFoundException>();
+                SendAsync(query)).Should().ThrowAsync<NotFoundException>();
         }
     }
 }

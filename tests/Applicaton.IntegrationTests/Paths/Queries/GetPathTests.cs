@@ -69,7 +69,7 @@ namespace DeveloperPath.Application.IntegrationTests.Queries
       var query = new GetPathListQuery();
 
       FluentActions.Invoking(() =>
-          SendAsync(query, cts.Token)).Should().Throw<TaskCanceledException>();
+          SendAsync(query, cts.Token)).Should().ThrowAsync<TaskCanceledException>();
     }
 
     [Test]
@@ -81,7 +81,7 @@ namespace DeveloperPath.Application.IntegrationTests.Queries
       var query = new GetPathListQueryPaging { PageNumber = 1, PageSize = 1 };
 
       FluentActions.Invoking(() =>
-          SendAsync(query, cts.Token)).Should().Throw<TaskCanceledException>();
+          SendAsync(query, cts.Token)).Should().ThrowAsync<TaskCanceledException>();
     }
 
     [Test]
@@ -112,7 +112,7 @@ namespace DeveloperPath.Application.IntegrationTests.Queries
       var query = new GetPathQuery() { Id = 1 };
 
       FluentActions.Invoking(() =>
-          SendAsync(query, cts.Token)).Should().Throw<TaskCanceledException>();
+          SendAsync(query, cts.Token)).Should().ThrowAsync<TaskCanceledException>();
     }
 
     [Test]
@@ -121,7 +121,7 @@ namespace DeveloperPath.Application.IntegrationTests.Queries
       var query = new GetPathQuery() { Id = 99999 };
 
       FluentActions.Invoking(() =>
-          SendAsync(query)).Should().Throw<NotFoundException>();
+          SendAsync(query)).Should().ThrowAsync<NotFoundException>();
     }
 
     [Test]
@@ -158,7 +158,7 @@ namespace DeveloperPath.Application.IntegrationTests.Queries
       var query = new GetPathDetailsQuery() { Id = 99999 };
 
       FluentActions.Invoking(() =>
-          SendAsync(query)).Should().Throw<NotFoundException>();
+          SendAsync(query)).Should().ThrowAsync<NotFoundException>();
     }
   }
 }

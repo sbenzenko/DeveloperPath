@@ -18,7 +18,7 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
             var command = new DeletePath { Id = 99 };
 
             FluentActions.Invoking(() =>
-                SendAsync(command)).Should().Throw<NotFoundException>();
+                SendAsync(command)).Should().ThrowAsync<NotFoundException>();
         }
 
         [Test]
