@@ -159,6 +159,9 @@
   <data name="Edit" xml:space="preserve">
     <value>Редактировать</value>
   </data>
+  <data name="EditModule" xml:space="preserve">
+    <value>Редактировать модуль</value>
+  </data>
   <data name="Home" xml:space="preserve">
     <value>Домой</value>
   </data>
@@ -186,11 +189,17 @@
   <data name="ModuleTitle" xml:space="preserve">
     <value>Название модуля</value>
   </data>
+  <data name="ModuleTitleTooLong" xml:space="preserve">
+    <value>Название модуля не должно превышать 100 знаков</value>
+  </data>
   <data name="MustKnow" xml:space="preserve">
     <value>Знать обязательно</value>
   </data>
   <data name="Necessity" xml:space="preserve">
     <value>Обязательность</value>
+  </data>
+  <data name="NewModule" xml:space="preserve">
+    <value>Новый Модуль</value>
   </data>
   <data name="NewPath" xml:space="preserve">
     <value>Новый путь</value>

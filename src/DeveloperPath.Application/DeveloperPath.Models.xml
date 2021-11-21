@@ -521,6 +521,11 @@
             Module title
             </summary>
         </member>
+        <member name="P:DeveloperPath.Application.CQRS.Modules.Commands.UpdateModule.UpdateModule.Key">
+            <summary>
+            URI Key
+            </summary>
+        </member>
         <member name="P:DeveloperPath.Application.CQRS.Modules.Commands.UpdateModule.UpdateModule.Description">
             <summary>
             Module short summary
@@ -814,6 +819,16 @@
             Get deleted paths
             </summary>
         </member>
+        <member name="P:DeveloperPath.Application.CQRS.Paths.Queries.GetPaths.GetDeletedPathListQuery.PageSize">
+            <summary>
+            Page Size (5 10 25 50 100)
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.CQRS.Paths.Queries.GetPaths.GetDeletedPathListQuery.PageNumber">
+            <summary>
+             Page Number
+            </summary>
+        </member>
         <member name="T:DeveloperPath.Application.CQRS.Paths.Queries.GetPaths.GetPathDetailsQuery">
             <summary>
             Get path details parameters
@@ -829,17 +844,17 @@
             Get path
             </summary>
         </member>
-        <member name="T:DeveloperPath.Application.CQRS.Paths.Queries.GetPaths.GetPathListQueryPaging">
+        <member name="T:DeveloperPath.Application.CQRS.Paths.Queries.GetPaths.GetPathPagedListQuery">
             <summary>
             Get paths paged
             </summary>
         </member>
-        <member name="P:DeveloperPath.Application.CQRS.Paths.Queries.GetPaths.GetPathListQueryPaging.PageNumber">
+        <member name="P:DeveloperPath.Application.CQRS.Paths.Queries.GetPaths.GetPathPagedListQuery.PageNumber">
             <summary>
             Page number
             </summary>
         </member>
-        <member name="P:DeveloperPath.Application.CQRS.Paths.Queries.GetPaths.GetPathListQueryPaging.PageSize">
+        <member name="P:DeveloperPath.Application.CQRS.Paths.Queries.GetPaths.GetPathPagedListQuery.PageSize">
             <summary>
             Items per page
             </summary>
@@ -1320,6 +1335,28 @@
             </summary>
             <param name="services"></param>
             <returns></returns>
+        </member>
+        <member name="T:DeveloperPath.Application.Extensions.PagedDataExtension">
+            <summary>
+            Encapsulates pagination logic
+            </summary>
+        </member>
+        <member name="M:DeveloperPath.Application.Extensions.PagedDataExtension.ToPagedListAsync``1(System.Linq.IQueryable{``0},System.Int32,System.Int32,System.Threading.CancellationToken)">
+            <summary>
+            Get portion of data
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="query"></param>
+            <param name="pageSize"></param>
+            <param name="pageNumber"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="T:DeveloperPath.Application.Helpers.PagedList`1">
+            <summary>
+            
+            </summary>
+            <typeparam name="T"></typeparam>
         </member>
     </members>
 </doc>

@@ -1,4 +1,5 @@
-﻿<MudTable Items="Data" Filter="Filter">
+﻿ 
+<MudTable Items="Data" Filter="Filter">
     <ToolBarContent>
         <MudText Typo="Typo.h6">@Localizer["PathModules"]</MudText>
         <MudSpacer />
@@ -15,6 +16,9 @@
         <MudTh>@Localizer["UriKey"]</MudTh>
         <MudTh>@Localizer["Necessity"]</MudTh>
         <MudTh>@Localizer["Tags"]</MudTh>
+        <Condition Evaluation="IsAdminMode">
+            <Match><MudTh></MudTh></Match>
+        </Condition>
     </HeaderContent>
     <RowTemplate>
         <MudTd DataLabel="Id">@context.Id</MudTd>
@@ -31,6 +35,13 @@
                 <MudChip Size="Size.Small">@tagItem</MudChip>
             </Iterations>
         </MudTd>
+        <Condition Evaluation="IsAdminMode">
+            <Match>
+                <MudTd>
+                    <MudIconButton OnClick="() => OnModuleEditClick(context)" Icon="@Icons.Filled.Edit"></MudIconButton>
+                </MudTd>
+            </Match>
+        </Condition>
     </RowTemplate>
     <ChildRowContent>
         <Condition Evaluation="context.ShowDetails">

@@ -11,7 +11,6 @@ using DeveloperPath.Application.CQRS.Paths.Commands.PatchPath;
 using DeveloperPath.Application.CQRS.Paths.Commands.UpdatePath;
 using DeveloperPath.Application.CQRS.Paths.Queries.GetPaths;
 using DeveloperPath.Shared.ClientModels;
-using DeveloperPath.WebApi.Extensions;
 using DeveloperPath.WebApi.Models;
 
 namespace DeveloperPath.WebApi.Controllers
@@ -33,12 +32,16 @@ namespace DeveloperPath.WebApi.Controllers
         [HttpGet]
         [HttpHead]
         [AllowAnonymous]
-        public async Task<ActionResult<IEnumerable<Path>>> Get([FromQuery] RequestParams requestParams = null, CancellationToken ct = default)
+        public async Task<ActionResult<IEnumerable<Path>>> Get([FromQuery] PathRequestParams requestParams = null, CancellationToken ct = default)
         {
-            //TODO: consider adding default page size and show 1st page instead of all
-            return requestParams is not null && requestParams.UsePaging()
-              ? await GetPage(requestParams, ct)
-              : await GetAll(ct);
+            var result = await _mediator.Send(new GetPathPagedListQuery()
+            {
+                PageSize = requestParams.PageSize,
+                PageNumber = requestParams.PageNumber,
+                OnlyVisible = requestParams.OnlyVisible
+            }, ct);
+
+            return Ok(result);
         }
 
         /// <summary>
@@ -51,9 +54,13 @@ namespace DeveloperPath.WebApi.Controllers
         [Authorize(Roles = "Administrator")]
         public async Task<ActionResult<IEnumerable<DeletedPath>>> GetDeleted([FromQuery] RequestParams requestParams = null)
         {
-            return requestParams is not null && requestParams.UsePaging()
-                ? await GetDeletedPage(requestParams)
-                : await GetAllDeleted();
+            var result = await _mediator.Send(new GetDeletedPathListQuery()
+            {
+                PageSize = requestParams.PageSize,
+                PageNumber = requestParams.PageNumber,
+            });
+
+            return Ok(result);
         }
 
         /// <summary>
@@ -139,7 +146,7 @@ namespace DeveloperPath.WebApi.Controllers
         /// <response code="406">Not acceptable entity provided</response>
         /// <response code="415">Unsupported media type provided</response>
         /// <response code="422">Unprocessible entity provided</response>
-        
+
         [HttpPatch("{pathId}")]
         [Authorize(Roles = "Administrator")]
         public async Task<ActionResult<Path>> Patch([FromBody] JsonPatchDocument patchDocument, [FromRoute] int pathId)
@@ -158,7 +165,7 @@ namespace DeveloperPath.WebApi.Controllers
         /// <response code="406">Not acceptable entity provided</response>
         /// <response code="415">Unsupported media type provided</response>
         /// <response code="422">Unprocessible entity provided</response>
-        
+
         [HttpPatch("deleted/{pathId}")]
         [Authorize(Roles = "Administrator")]
         [Consumes("application/json")]
@@ -181,46 +188,6 @@ namespace DeveloperPath.WebApi.Controllers
             await Mediator.Send(new DeletePath { Id = pathId });
 
             return NoContent();
-        }
-
-        private async Task<ActionResult<IEnumerable<Path>>> GetAll(CancellationToken ct = default)
-        {
-            IEnumerable<Path> model = await Mediator.Send(new GetPathListQuery(), ct);
-            return Ok(model);
-        }
-
-        private async Task<ActionResult<IEnumerable<DeletedPath>>> GetAllDeleted()
-        {
-            IEnumerable<DeletedPath> model = await Mediator.Send(new GetDeletedPathListQuery());
-            return Ok(model);
-        }
-
-        private async Task<ActionResult<IEnumerable<Path>>> GetPage(RequestParams filter, CancellationToken ct = default)
-        {
-            var (paginationData, result) = await Mediator.Send(
-              new GetPathListQueryPaging()
-              {
-                  PageNumber = filter.PageNumber,
-                  PageSize = filter.PageSize
-              }, ct);
-
-            Response?.Headers?.Add("X-Pagination", System.Text.Json.JsonSerializer.Serialize(paginationData));
-            return Ok(result);
-        }
-
-        private Task<ActionResult<IEnumerable<DeletedPath>>> GetDeletedPage(RequestParams filter)
-        {
-            //var (paginationData, result) = await Mediator.Send(
-            //    new GetDeletedPathListQuery()
-            //    {
-            //        PageNumber = filter.PageNumber,
-            //        PageSize = filter.PageSize
-            //    });
-
-            //Response?.Headers?.Add("X-Pagination", System.Text.Json.JsonSerializer.Serialize(paginationData));
-            // return Ok(result);
-
-            return null;
         }
     }
 }

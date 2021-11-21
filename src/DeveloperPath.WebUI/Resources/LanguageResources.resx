@@ -159,6 +159,9 @@
   <data name="Edit" xml:space="preserve">
     <value>Edit</value>
   </data>
+  <data name="EditModule" xml:space="preserve">
+    <value>Edit Module</value>
+  </data>
   <data name="Home" xml:space="preserve">
     <value>Home</value>
   </data>
@@ -186,11 +189,17 @@ Developer Path project was created to answer these and many other questions.</va
   <data name="ModuleTitle" xml:space="preserve">
     <value>Module Title</value>
   </data>
+  <data name="ModuleTitleTooLong" xml:space="preserve">
+    <value>Module Title is too long (max 100 characters)</value>
+  </data>
   <data name="MustKnow" xml:space="preserve">
     <value>Must Know</value>
   </data>
   <data name="Necessity" xml:space="preserve">
     <value>Necessity</value>
+  </data>
+  <data name="NewModule" xml:space="preserve">
+    <value>New Module</value>
   </data>
   <data name="NewPath" xml:space="preserve">
     <value>New Path</value>

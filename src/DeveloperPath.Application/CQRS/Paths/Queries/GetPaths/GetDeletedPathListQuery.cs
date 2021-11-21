@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using DeveloperPath.Application.Common.Interfaces;
+using DeveloperPath.Application.Extensions;
+using DeveloperPath.Application.Helpers;
 using DeveloperPath.Shared.ClientModels;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -15,11 +17,19 @@ namespace DeveloperPath.Application.CQRS.Paths.Queries.GetPaths
     /// <summary>
     /// Get deleted paths
     /// </summary>
-    public class GetDeletedPathListQuery : IRequest<IEnumerable<DeletedPath>>
+    public class GetDeletedPathListQuery : IRequest<PagedList<DeletedPath>>
     {
+        /// <summary>
+        /// Page Size (5 10 25 50 100)
+        /// </summary>
+        public int PageSize { get; set; }
+        /// <summary>
+        ///  Page Number
+        /// </summary>
+        public int PageNumber { get; set; }
     }
 
-    internal class GetDeletedPathListQueryHandler : IRequestHandler<GetDeletedPathListQuery, IEnumerable<DeletedPath>>
+    internal class GetDeletedPathListQueryHandler : IRequestHandler<GetDeletedPathListQuery, PagedList<DeletedPath>>
     {
         private readonly IApplicationDbContext _context;
         private readonly IMapper _mapper;
@@ -30,14 +40,14 @@ namespace DeveloperPath.Application.CQRS.Paths.Queries.GetPaths
             _mapper = mapper;
         }
 
-        public async Task<IEnumerable<DeletedPath>> Handle(GetDeletedPathListQuery request, CancellationToken cancellationToken)
+        public Task<PagedList<DeletedPath>> Handle(GetDeletedPathListQuery request, CancellationToken cancellationToken)
         {
-            return await _context.Paths
+            return _context.Paths
                 .OrderBy(t => t.Title)
                 .IgnoreQueryFilters()
                 .Where(x=>x.Deleted != null)
                 .ProjectTo<DeletedPath>(_mapper.ConfigurationProvider)
-                .ToListAsync(cancellationToken);
+                .ToPagedListAsync(request.PageSize, request.PageNumber, cancellationToken);
         }
     }
 }

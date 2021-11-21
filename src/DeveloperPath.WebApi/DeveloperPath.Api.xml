@@ -55,7 +55,7 @@
             <returns></returns>
             <response code="204">Module deleted successfully</response>
         </member>
-        <member name="M:DeveloperPath.WebApi.Controllers.PathsController.Get(DeveloperPath.WebApi.Models.RequestParams,System.Threading.CancellationToken)">
+        <member name="M:DeveloperPath.WebApi.Controllers.PathsController.Get(DeveloperPath.WebApi.Models.PathRequestParams,System.Threading.CancellationToken)">
             <summary>
             Get all available paths
             </summary>

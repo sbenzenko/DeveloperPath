@@ -24,6 +24,10 @@ namespace DeveloperPath.WebUI.Services
         {
             return await _httpService.GetListAsync<Module>(BaseResourceString);
         }
+        public async Task<Module> EditModuleAsync(Module module)
+        {
+            return await _httpService.PutAsync($"{BaseResourceString}/{module.Id}", module);
+        }
 
         //public async Task<Path> AddNewPathAsync(Path path)
         //{
@@ -37,10 +41,7 @@ namespace DeveloperPath.WebUI.Services
         //    return await _httpService.PatchAsync<Path>($"{BaseResourceString}/{pathItem.Id}", patchDocument);
         //}
 
-        //public async Task<Path> EditPathAsync(Path path)
-        //{
-        //    return await _httpService.PutAsync<Path>($"{BaseResourceString}/{path.Id}", path);
-        //}
+
 
         //public async Task<bool> DeletePath(Path path)
         //{
@@ -63,5 +64,6 @@ namespace DeveloperPath.WebUI.Services
         //    patchDocument.Replace(nameof(deletedPath.Deleted), null);
         //    return await _httpService.PatchAsync<Path>($"{BaseResourceString}/deleted/{deletedPath.Id}", patchDocument);
         //}
+
     }
 }

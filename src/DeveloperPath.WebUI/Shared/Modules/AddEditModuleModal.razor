@@ -6,15 +6,15 @@
         <MudCard Style="padding: 20px; width: 500px">
             <MudCardContent>
                 <MudTextField T="string"
-                              Label="@localizer["PathTitle"]"
+                              Label="@localizer["ModuleTitle"]"
                               Required="true"
-                              @bind-Value="Path.Title"
-                              Validation="@(new MaxLengthAttribute(100) {ErrorMessage = localizer["PathTitleToLong"]})"
+                              @bind-Value="Module.Title"
+                              Validation="@(new MaxLengthAttribute(100) {ErrorMessage = localizer["ModuleTitleTooLong"]})"
                               RequiredError="@localizer["TitleIsRequired"]"></MudTextField>
                 <MudTextField T="string"
                               Label="@localizer["UriKey"]"
                               Required="true"
-                              @bind-Value="Path.Key"
+                              @bind-Value="Module.Key"
                               Validation="@(new MaxLengthAttribute(20) {ErrorMessage = localizer["UriToLong"]})"
                               RequiredError="@localizer["UriKeyIsRequired"]"></MudTextField>
                 <MudItem Class="d-flex flex-row">
@@ -28,14 +28,14 @@
                                    OnClick="AddTag"></MudIconButton>
                 </MudItem>
                 <MudChipSet AllClosable="true" OnClose="RemoveChip">
-                    <Iterations Items="@Path.Tags.ToList()" Context="pathTag">
+                    <Iterations Items="@Module.Tags.ToList()" Context="pathTag">
                         <MudChip Text="@pathTag"></MudChip>
                     </Iterations>
                 </MudChipSet>
                 <MudTextField T="string"
                               Label="@localizer["Description"]"
                               Required="true"
-                              @bind-Value="Path.Description"
+                              @bind-Value="Module.Description"
                               Validation="@(new MaxLengthAttribute(3000) {ErrorMessage = localizer["DescriptionTooLong"]})"
                               RequiredError="@localizer["DescriptionIsRequired"]"
                               Lines="4"></MudTextField>

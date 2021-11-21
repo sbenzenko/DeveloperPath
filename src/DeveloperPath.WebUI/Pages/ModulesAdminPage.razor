@@ -3,6 +3,8 @@
 @using DeveloperPath.WebUI.UIHelper
  
 
+ 
+
 <Condition Evaluation="_state == State.Loading">
     <Match>
         <MudProgressLinear Indeterminate="true" Color="Color.Primary"></MudProgressLinear>
@@ -10,8 +12,8 @@
 </Condition>
 <Condition Evaluation="_state == State.ContentReady">
     <Match>
-        <MudButton Style="margin-bottom: 20px" StartIcon="@Icons.Outlined.Add" OnClick="ShowModalNewPath">@localizer["AddModule"]</MudButton>
-        <ModulesTable Data="Modules"></ModulesTable>
+        <MudButton Style="margin-bottom: 20px" StartIcon="@Icons.Outlined.Add" OnClick="ShowModalNewModule">@localizer["AddModule"]</MudButton>
+        <ModulesTable Data="Modules" IsAdminMode="true" OnEditClick="ShowModalEditingPath"></ModulesTable>
     </Match>
 </Condition>
 <Condition Evaluation="_state == State.Error">
