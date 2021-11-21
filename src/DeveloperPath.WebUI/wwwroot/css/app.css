@@ -11,10 +11,10 @@ a {
     text-decoration: underline;
 }
 
-.appbar-logo {
+/*.appbar-logo {
     background: url(/Images/icon-512-white.png) center left no-repeat transparent;
     background-size: 40px;
-}
+}*/
 
 .mainheader {
     height: 64px;

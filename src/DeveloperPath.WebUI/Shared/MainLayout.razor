@@ -1,10 +1,10 @@
-﻿@using DeveloperPath.WebUI.Resources
-
+﻿
 @inherits LayoutComponentBase
 @inject IStringLocalizer<LanguageResources> localizer
  
 <MudLayout>
-    <MudAppBar Elevation="4" Color="Color.Primary" Class="appbar-logo">
+    <MudAppBar Elevation="4" Color="Color.Primary">
+        <MudIcon Icon="@DeveloperPathIcon.DeveloperPath" Size="Size.Large" ViewBox="0, 0, 400,400"></MudIcon>
         <MudHidden Breakpoint="Breakpoint.Xs">
             <MudText Typo="Typo.h6" Class="mainheader">
               <a href="/">@localizer["DeveloperPath"]</a>
@@ -30,7 +30,7 @@
 
 @code
 {
-    bool DrawerOpened = false;
+    bool DrawerOpened = true;
 
     void DrawerToggle()
     {

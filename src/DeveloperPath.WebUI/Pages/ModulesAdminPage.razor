@@ -1,10 +1,21 @@
 ﻿@page "/administration/modules"
+@using DeveloperPath.WebUI.Shared.Modules
+@using DeveloperPath.WebUI.UIHelper
+ 
 
-<Condition Evaluation="Modules != null">
+<Condition Evaluation="_state == State.Loading">
     <Match>
+        <MudProgressLinear Indeterminate="true" Color="Color.Primary"></MudProgressLinear>
+    </Match>
+</Condition>
+<Condition Evaluation="_state == State.ContentReady">
+    <Match>
+        <MudButton Style="margin-bottom: 20px" StartIcon="@Icons.Outlined.Add" OnClick="ShowModalNewPath">@localizer["AddModule"]</MudButton>
         <ModulesTable Data="Modules"></ModulesTable>
     </Match>
-    <NotMatch>
+</Condition>
+<Condition Evaluation="_state == State.Error">
+    <Match>
 
-    </NotMatch>
+    </Match>
 </Condition>
