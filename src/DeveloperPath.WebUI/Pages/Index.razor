@@ -1,0 +1,21 @@
+﻿@page "/"
+
+@inject IStringLocalizer<LanguageResources> localizer
+
+<MudText Typo="Typo.h1">@localizer["Welcome"]</MudText>
+<AuthorizeView>
+    <Authorized>
+        <MudText Typo="Typo.h2">
+          @localizer["Hello"] @context.User.Identity.Name
+        </MudText>
+        
+        @* TODO: add Paths user is studying *@
+    </Authorized>
+    <NotAuthorized>
+        <p>
+            @((MarkupString)localizer["HomeDescription"].ToString())
+        </p>
+    </NotAuthorized>
+</AuthorizeView>
+
+<p>@((MarkupString)localizer["ProjectReferences"].ToString())</p>

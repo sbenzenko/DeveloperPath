@@ -7,7 +7,7 @@ using DeveloperPath.Domain.Entities;
 using FluentAssertions;
 using NUnit.Framework;
 
-namespace DeveloperPath.Application.IntegrationTests.Commands
+namespace DeveloperPath.Application.IntegrationTests.Themes.Commands
 {
     using static Testing;
 
@@ -50,7 +50,6 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
 
             var module = await SendAsync(new CreateModule
             {
-                PathId = path.Id,
                 Key = "module-key",
                 Title = "Module Title",
                 Description = "Module Decription"

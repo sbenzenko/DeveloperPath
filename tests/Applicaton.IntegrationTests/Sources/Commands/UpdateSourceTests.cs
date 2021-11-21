@@ -7,9 +7,9 @@ using DeveloperPath.Application.Common.Exceptions;
 using DeveloperPath.Application.CQRS.Modules.Commands.CreateModule;
 using DeveloperPath.Application.CQRS.Sources.Commands.UpdateSource;
 using DeveloperPath.Domain.Entities;
-using DeveloperPath.Domain.Shared.Enums;
+using DeveloperPath.Shared.Enums;
 
-namespace DeveloperPath.Application.IntegrationTests.Commands
+namespace DeveloperPath.Application.IntegrationTests.Sources.Commands
 {
     using static Testing;
 
@@ -289,7 +289,6 @@ namespace DeveloperPath.Application.IntegrationTests.Commands
 
             var module = await SendAsync(new CreateModule
             {
-                PathId = path.Id,
                 Title = "Module Title",
                 Key = "module-key",
                 Description = "Module Decription"

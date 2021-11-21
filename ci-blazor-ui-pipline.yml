@@ -17,7 +17,7 @@ steps:
 - task: DotNetCoreCLI@2
   inputs:
     command: 'build'
-    projects: '**/src/WebUI.Blazor/*.csproj'
+    projects: '**/src/DeveloperPath.WebUI/*.csproj'
     arguments: '--configuration $(buildConfiguration)'
 
 - task: DotNetCoreCLI@2 
@@ -25,16 +25,7 @@ steps:
   inputs:
     command: 'publish'
     publishWebProjects: false
-    projects: '**/src/WebUI.Blazor/WebUI.Blazor.csproj'
-    arguments: '--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)'
-    zipAfterPublish: true
-
-- task: DotNetCoreCLI@2 
-  displayName: 'Publish'
-  inputs:
-    command: 'publish'
-    publishWebProjects: false
-    projects: '**/src/WebUI.Blazor/WebUI.Blazor.csproj'
+    projects: '**/src/DeveloperPath.WebUI/DeveloperPath.WebUI.csproj'
     arguments: '--configuration $(BuildConfiguration) --output data'
     zipAfterPublish: true
       
@@ -46,7 +37,7 @@ steps:
     errorActionPreference: 'continue'
 - task: ExtractFiles@1
   inputs:
-    archiveFilePatterns: '**/data/WebUI.Blazor.zip'
+    archiveFilePatterns: '**/data/DeveloperPath.WebUI.zip'
     destinationFolder: 'PublishData'
     cleanDestinationFolder: true
     overwriteExistingFiles: false

@@ -2,20 +2,20 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using MediatR;
-using Microsoft.AspNetCore.Mvc;
-using Moq;
-using NUnit.Framework;
 using DeveloperPath.Application.CQRS.Sources.Commands.CreateSource;
 using DeveloperPath.Application.CQRS.Sources.Commands.DeleteSource;
 using DeveloperPath.Application.CQRS.Sources.Commands.UpdateSource;
 using DeveloperPath.Application.CQRS.Sources.Queries.GetSources;
-using DeveloperPath.Domain.Shared.ClientModels;
+using DeveloperPath.Shared.ClientModels;
 using DeveloperPath.WebApi.Controllers;
+using MediatR;
+using Microsoft.AspNetCore.Mvc;
+using Moq;
+using NUnit.Framework;
 
-namespace DeveloperPath.Web.WebAPI.Controllers
+namespace Web.WebAPI.Controllers
 {
-  public class SourcesControllerTests : TestBase
+    public class SourcesControllerTests : TestBase
   {
     private readonly Mock<IMediator> moqMediator;
     private readonly Source sampleSource;
@@ -49,7 +49,7 @@ namespace DeveloperPath.Web.WebAPI.Controllers
           .ReturnsAsync(sampleSource);
       // Update
       moqMediator
-        .Setup(m => m.Send(It.IsAny<UpdateSource>(), It.IsAny<CancellationToken>()))
+          .Setup(m => m.Send(It.IsAny<UpdateSource>(), It.IsAny<CancellationToken>()))
           .ReturnsAsync(sampleSource);
       // Delete
       moqMediator
