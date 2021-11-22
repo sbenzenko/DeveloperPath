@@ -11,6 +11,7 @@ using DeveloperPath.Application.CQRS.Paths.Commands.PatchPath;
 using DeveloperPath.Application.CQRS.Paths.Commands.UpdatePath;
 using DeveloperPath.Application.CQRS.Paths.Queries.GetPaths;
 using DeveloperPath.Shared.ClientModels;
+using DeveloperPath.WebApi.Helpers;
 using DeveloperPath.WebApi.Models;
 
 namespace DeveloperPath.WebApi.Controllers
@@ -29,7 +30,7 @@ namespace DeveloperPath.WebApi.Controllers
         /// </summary>
         /// <returns>A collection of paths with summary information</returns>
         /// <response code="200">Returns a list of paths</response>
-        [HttpGet]
+        [HttpGet(Name = "GetPaths")]
         [HttpHead]
         [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<Path>>> Get([FromQuery] PathRequestParams requestParams = null, CancellationToken ct = default)
@@ -42,6 +43,11 @@ namespace DeveloperPath.WebApi.Controllers
             }, ct);
 
             return Ok(result);
+        }
+
+        private string CreatePathResourceUri(RequestParams requestParams, ResourceUriType resourceUriType)
+        {
+
         }
 
         /// <summary>

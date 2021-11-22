@@ -22,7 +22,7 @@ namespace DeveloperPath.Application.Extensions
         /// <param name="pageNumber"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public static Task<PagedList<T>> ToPagedListAsync<T>(this IQueryable<T> query, int pageSize, int pageNumber,
+        public static Task<PagedList<T>> ToPagedListAsync<T>(this IQueryable<T> query, int pageNumber, int pageSize,
             CancellationToken cancellationToken = default)
             => PagedList<T>.CreateAsync(query, pageNumber, pageSize, cancellationToken);
     }
