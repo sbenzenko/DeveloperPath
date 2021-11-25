@@ -1,8 +1,17 @@
-﻿namespace DeveloperPath.WebApi.Helpers
+﻿using DeveloperPath.WebApi.Models;
+using Microsoft.AspNetCore.Mvc;
+
+namespace DeveloperPath.WebApi.Helpers
 {
-    public static class PagedListHeadersHelper
+    public class PagedListHeadersHelper
     {
-        public static string CreatePathResourceUri(int currentPage, int pageSize, ResourceUriType resourceUriType)
+        private readonly IUrlHelper _url;
+
+        public PagedListHeadersHelper(IUrlHelper urlHelper)
+        {
+            this._url = urlHelper;
+        }
+        public string CreatePathResourceUri(int currentPage, int pageSize, PathRequestParams requestParams, ResourceUriType resourceUriType)
         {
             switch (resourceUriType)
             {
@@ -11,21 +20,21 @@
                     {
                         pageNumber = currentPage + 1,
                         pageSize = pageSize,
-                        onlyVisible = _requestParams.OnlyVisible
+                        onlyVisible = requestParams.OnlyVisible
                     });
                 case ResourceUriType.PreviousPage:
                     return _url.Link("GetPaths", new
                     {
                         pageNumber = currentPage - 1,
                         pageSize = pageSize,
-                        onlyVisible = _requestParams.OnlyVisible
+                        onlyVisible = requestParams.OnlyVisible
                     });
                 default:
                     return _url.Link("GetPaths", new
                     {
                         pageNumber = currentPage,
                         pageSize = pageSize,
-                        onlyVisible = _requestParams.OnlyVisible
+                        onlyVisible = requestParams.OnlyVisible
                     });
             }
         }

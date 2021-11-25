@@ -1,29 +1,41 @@
 ﻿@import url('open-iconic/font/css/open-iconic-bootstrap.min.css');
 
 html, body {
-    height: 100%;
-    margin: 0;
-    padding: 0;
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans","Liberation Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
 }
 
 a {
     text-decoration: underline;
 }
 
-/*.appbar-logo {
-    background: url(/Images/icon-512-white.png) center left no-repeat transparent;
-    background-size: 40px;
-}*/
+.appbar-logo {
 
-.mainheader {
-    height: 64px;
-    color: #fff;
-    padding-left: 25px;
-    line-height: 64px !important;
 }
 
-    .mainheader a {
+  .appbar-logo:before {
+    content: ' ';
+    z-index: -1;
+    position: absolute;
+    left: 0;
+    top: 0;
+    background: url(/Images/icon-512-white.png) center left no-repeat transparent;
+    background-size: 40px;
+    opacity: 0.5;
+    height: 100%;
+    width: 40px;
+  }
+
+.mainheader {
+    color: #fff;
+    padding-left: 25px;
+    line-height: 43px !important;
+}
+
+    .mainheader a,
+    .mainheader a:hover {
         color: #fff;
         text-decoration: none;
     }
@@ -50,14 +62,17 @@ a {
     bottom: 0;
     left: 0;
     flex-direction: column;
-    margin: 10em;
+    margin: 10em auto;
     background: url(/Images/logo.png) top center no-repeat transparent;
-    background-size: 400px;
+    background-size: 100%;
+    width: 50%;
+    max-width: 400px;
+    max-height: 400px;
 }
 
 .page-loading-warp {
-    padding: 420px 50px 50px 50px;
-    text-align: center;
+  padding: 120% 50px 50px 50px;
+  text-align: center;
 }
 
 .ant-spin {

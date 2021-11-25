@@ -126,8 +126,8 @@
   <data name="AddPath" xml:space="preserve">
     <value>New path</value>
   </data>
-  <data name="Administrator zone" xml:space="preserve">
-    <value>Administrator zone</value>
+  <data name="Administration" xml:space="preserve">
+    <value>Administration</value>
   </data>
   <data name="Cancel" xml:space="preserve">
     <value>Cancel</value>
@@ -238,7 +238,7 @@ Developer Path project was created to answer these and many other questions.</va
     <value>Prerequisites details</value>
   </data>
   <data name="ProjectReferences" xml:space="preserve">
-    <value>See project development status and contribute at &lt;a class="btn-link" href="https://github.com/sbenzenko/DeveloperPath" target="_blank"&gt;Github&lt;/a&gt; and &lt;a class="btn-link" href="https://dev.azure.com/sbenzenko/DeveloperPath" target="_blank"&gt;Azure DevOps&lt;/a&gt;.</value>
+    <value>See project development status and contribute at &lt;a href="https://github.com/sbenzenko/DeveloperPath" target="_blank"&gt;Github&lt;/a&gt; and &lt;a href="https://dev.azure.com/sbenzenko/DeveloperPath" target="_blank"&gt;Azure DevOps&lt;/a&gt;.</value>
   </data>
   <data name="Restore" xml:space="preserve">
     <value>Restore</value>
@@ -251,6 +251,12 @@ Developer Path project was created to answer these and many other questions.</va
   </data>
   <data name="Tags" xml:space="preserve">
     <value>Tags</value>
+  </data>
+  <data name="ThemeDark" xml:space="preserve">
+    <value>Dark theme</value>
+  </data>
+  <data name="ThemeLight" xml:space="preserve">
+    <value>Light theme</value>
   </data>
   <data name="TitleIsRequired" xml:space="preserve">
     <value>Title is required</value>

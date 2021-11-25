@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 using MudBlazor;
 using MudBlazor.Services;
 using DeveloperPath.WebUI.Services;
-using DeveloperPath.WebUI.UIHelper;
+using DeveloperPath.WebUI.UIHelpers;
 using DeveloperPath.WebUI.Extensions;
 using DeveloperPath.WebUI.Security;
  
@@ -77,9 +77,11 @@ namespace DeveloperPath.WebUI
             builder.Services.AddTransient<ModuleService>();
             builder.Services.AddScoped<HttpService>();
             builder.Services.AddScoped<SnackbarHelper>();
+            builder.Services.AddScoped(state => new AppState(new ThemesHelper()));
 
             var host = builder.Build();
             await host.SetDefaultCulture();
+            await host.SetCurrentTheme(host.Services.GetService<AppState>());
             await host.RunAsync();
         }
     }

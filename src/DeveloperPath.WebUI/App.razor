@@ -1,8 +1,8 @@
 @using DeveloperPath.WebUI.Resources
 @using DeveloperPath.WebUI.Shared
-@inject IStringLocalizer<LanguageResources> localizer
 
-<MudThemeProvider Theme="MyCustomTheme" />
+
+<MudThemeProvider Theme="@appState.CurrentTheme" />
 <MudDialogProvider />
 <MudSnackbarProvider />
 
@@ -30,14 +30,4 @@
     </Router>
 </CascadingAuthenticationState>
 
-@code {
-    MudTheme MyCustomTheme = new MudTheme()
-        {
-            Palette = new Palette
-            {
-                Primary = Colors.Blue.Default,
-                Secondary = Colors.Green.Accent4,
-                AppbarBackground = Colors.Red.Default,
-            }
-        };
-}
+ 

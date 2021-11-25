@@ -6,7 +6,7 @@
     <MudAppBar Elevation="4" Color="Color.Primary">
         <MudIcon Icon="@DeveloperPathIcon.DeveloperPath" Size="Size.Large" ViewBox="0, 0, 400,400"></MudIcon>
         <MudHidden Breakpoint="Breakpoint.Xs">
-            <MudText Typo="Typo.h6" Class="mainheader">
+            <MudText Typo="Typo.h3" Class="mainheader">
               <a href="/">@localizer["DeveloperPath"]</a>
             </MudText>
         </MudHidden>
@@ -15,6 +15,7 @@
         </MudToolBar>
         <MudSpacer />
         <CultureSelector></CultureSelector>
+        <ThemeSelector></ThemeSelector>
         <LoginDisplay></LoginDisplay>
     </MudAppBar>
     <MudDrawer @bind-open="DrawerOpened" Elevation="25" ClipMode="DrawerClipMode.Always">

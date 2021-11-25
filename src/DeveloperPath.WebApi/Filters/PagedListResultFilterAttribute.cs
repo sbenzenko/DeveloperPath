@@ -21,12 +21,15 @@ namespace DeveloperPath.WebApi.Filters
             if (context.Result is OkObjectResult okResult && okResult.Value is PagedList<Path> pagedList)
             {
                 _url = context.HttpContext.RequestServices.GetService<IUrlHelper>();
+                var helper = context.HttpContext.RequestServices.GetService<PagedListHeadersHelper>();
+
                 var nextPageLink = pagedList.HasNext ?
-                    CreatePathResourceUri(pagedList.CurrentPage, pagedList.PageSize, ResourceUriType.NextPage)
+                    helper.CreatePathResourceUri(pagedList.CurrentPage, pagedList.PageSize, _requestParams, ResourceUriType.NextPage)
                     : null;
                 var prevPageLink = pagedList.HasPrevious ?
-                    CreatePathResourceUri(pagedList.CurrentPage, pagedList.PageSize, ResourceUriType.PreviousPage)
+                    helper.CreatePathResourceUri(pagedList.CurrentPage, pagedList.PageSize, _requestParams, ResourceUriType.PreviousPage)
                     : null;
+
                 var paginationMetadata = new PaginationMetadata
                 {
                     TotalCount = pagedList.TotalCount,
@@ -36,8 +39,8 @@ namespace DeveloperPath.WebApi.Filters
                     PrevPageLink = prevPageLink,
                     NextPageLink = nextPageLink
                 };
-                var options = new JsonSerializerOptions{ PropertyNamingPolicy = JsonNamingPolicy.CamelCase};
-                context.HttpContext.Response.Headers.Add("X-Pagination", JsonSerializer.Serialize(paginationMetadata, options ));
+                var options = new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
+                context.HttpContext.Response.Headers.Add("X-Pagination", JsonSerializer.Serialize(paginationMetadata, options));
             }
         }
 
@@ -47,7 +50,5 @@ namespace DeveloperPath.WebApi.Filters
             if (param.Value is PathRequestParams reqParams)
                 _requestParams = reqParams;
         }
-
-       
     }
 }

@@ -8,6 +8,7 @@ using DeveloperPath.WebUI.Resources;
 using DeveloperPath.WebUI.Services;
 using DeveloperPath.WebUI.Shared.Modules;
 using DeveloperPath.WebUI.UIHelper;
+using DeveloperPath.WebUI.UIHelpers;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Localization;
 using MudBlazor;
