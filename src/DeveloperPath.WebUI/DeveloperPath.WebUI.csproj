@@ -7,6 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="wwwroot\redesign\js\**" />
+    <Content Remove="wwwroot\redesign\js\**" />
+    <EmbeddedResource Remove="wwwroot\redesign\js\**" />
+    <None Remove="wwwroot\redesign\js\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Remove="C:\Users\seche\.nuget\packages\prettyblazor\1.1.0\contentFiles\any\net5.0\License.txt" />
     <Content Remove="C:\Users\Serhii_Trofimov\.nuget\packages\prettyblazor\1.2.0\contentFiles\any\net5.0\License.txt" />
   </ItemGroup>
@@ -63,6 +70,10 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>LanguageResources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\redesign\css\" />
   </ItemGroup>
 
 </Project>

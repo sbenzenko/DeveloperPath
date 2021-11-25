@@ -126,7 +126,7 @@
   <data name="AddPath" xml:space="preserve">
     <value>Добавить новый</value>
   </data>
-  <data name="Administrator zone" xml:space="preserve">
+  <data name="Administration" xml:space="preserve">
     <value>Администрирование</value>
   </data>
   <data name="Cancel" xml:space="preserve">
@@ -137,9 +137,6 @@
   </data>
   <data name="Deleted" xml:space="preserve">
     <value>Удалено</value>
-  </data>
-  <data name="Deleted paths" xml:space="preserve">
-    <value>Удаленные пути</value>
   </data>
   <data name="DeletedPaths" xml:space="preserve">
     <value>Удаленные пути</value>
@@ -158,6 +155,9 @@
   </data>
   <data name="Edit" xml:space="preserve">
     <value>Редактировать</value>
+  </data>
+  <data name="Hello" xml:space="preserve">
+    <value>Привет,</value>
   </data>
   <data name="Home" xml:space="preserve">
     <value>Домой</value>
@@ -229,7 +229,7 @@
     <value>Требования к модулю</value>
   </data>
   <data name="ProjectReferences" xml:space="preserve">
-    <value>Наблюдать за развитием проекта и поучаствовать в нём можно на &lt;a class="btn-link" href="https://github.com/sbenzenko/DeveloperPath" target="_blank"&gt;Github&lt;/a&gt; и &lt;a class="btn-link" href="https://dev.azure.com/sbenzenko/DeveloperPath" target="_blank"&gt;Azure DevOps&lt;/a&gt;.</value>
+    <value>Наблюдать за развитием проекта и поучаствовать в нём можно на &lt;a href="https://github.com/sbenzenko/DeveloperPath" target="_blank"&gt;Github&lt;/a&gt; и &lt;a href="https://dev.azure.com/sbenzenko/DeveloperPath" target="_blank"&gt;Azure DevOps&lt;/a&gt;.</value>
   </data>
   <data name="Restore" xml:space="preserve">
     <value>Восстановить</value>
@@ -242,6 +242,12 @@
   </data>
   <data name="Tags" xml:space="preserve">
     <value>Теги</value>
+  </data>
+  <data name="ThemeDark" xml:space="preserve">
+    <value>Тёмная тема</value>
+  </data>
+  <data name="ThemeLight" xml:space="preserve">
+    <value>Светлая тема</value>
   </data>
   <data name="TitleIsRequired" xml:space="preserve">
     <value>Название обязательно</value>
