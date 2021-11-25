@@ -1358,5 +1358,45 @@
             </summary>
             <typeparam name="T"></typeparam>
         </member>
+        <member name="P:DeveloperPath.Application.Helpers.PagedList`1.CurrentPage">
+            <summary>
+            Current page
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Helpers.PagedList`1.TotalPages">
+            <summary>
+            Total number of pages
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Helpers.PagedList`1.TotalCount">
+            <summary>
+            Total count of entities
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Helpers.PagedList`1.PageSize">
+            <summary>
+            Current Page Size
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Helpers.PagedList`1.HasPrevious">
+            <summary>
+            If has previous page
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.Helpers.PagedList`1.HasNext">
+            <summary>
+            If has the next page
+            </summary>
+        </member>
+        <member name="M:DeveloperPath.Application.Helpers.PagedList`1.CreateAsync(System.Linq.IQueryable{`0},System.Int32,System.Int32,System.Threading.CancellationToken)">
+            <summary>
+            Creates a list based on the portion of data
+            </summary>
+            <param name="source"></param>
+            <param name="pageNumber"></param>
+            <param name="pageSize"></param>
+            <param name="ct"></param>
+            <returns></returns>
+        </member>
     </members>
 </doc>

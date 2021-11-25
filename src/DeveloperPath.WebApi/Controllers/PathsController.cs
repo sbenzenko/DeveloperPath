@@ -13,6 +13,7 @@ using DeveloperPath.Application.CQRS.Paths.Queries.GetPaths;
 using DeveloperPath.Shared.ClientModels;
 using DeveloperPath.WebApi.Helpers;
 using DeveloperPath.WebApi.Models;
+using DeveloperPath.WebApi.Filters;
 
 namespace DeveloperPath.WebApi.Controllers
 {
@@ -33,6 +34,7 @@ namespace DeveloperPath.WebApi.Controllers
         [HttpGet(Name = "GetPaths")]
         [HttpHead]
         [AllowAnonymous]
+        [ServiceFilter(typeof(PagedListResultFilterAttribute))]
         public async Task<ActionResult<IEnumerable<Path>>> Get([FromQuery] PathRequestParams requestParams = null, CancellationToken ct = default)
         {
             var result = await _mediator.Send(new GetPathPagedListQuery()
@@ -45,10 +47,7 @@ namespace DeveloperPath.WebApi.Controllers
             return Ok(result);
         }
 
-        private string CreatePathResourceUri(RequestParams requestParams, ResourceUriType resourceUriType)
-        {
-
-        }
+    
 
         /// <summary>
         /// Get all deleted paths

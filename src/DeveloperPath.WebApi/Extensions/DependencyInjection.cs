@@ -22,7 +22,7 @@ namespace DeveloperPath.WebApi.Extensions
             services.ConfigureBehaviour();
             services.AddVersioning();
             services.AddSwaggerGenConfiguration();
-
+            services.AddScoped<PagedListResultFilterAttribute>();
             return services;
         }
 
