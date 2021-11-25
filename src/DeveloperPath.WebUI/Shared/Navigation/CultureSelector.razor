@@ -1,0 +1,24 @@
+﻿
+<MudMenu Icon="@Icons.Material.Outlined.Translate" Color="Color.Inherit" Direction="Direction.Bottom" 
+    AnchorOrigin="Origin.BottomCenter" TransformOrigin="Origin.TopCenter" OffsetY="true" Dense="true">
+    @foreach (var language in languages)
+    {
+        <MudMenuItem OnClick="(()=> ChangeLanguageAsync(language.Code))">@language.Description</MudMenuItem>
+    }
+</MudMenu>
+
+@code
+{
+    private async Task ChangeLanguageAsync(string languageCode)
+    {
+        var js = (IJSInProcessRuntime) JSRuntime;
+        await js.InvokeVoidAsync("cultureService.set", languageCode);
+        NavigationManager.NavigateTo(NavigationManager.Uri, forceLoad: true);
+    }
+
+    private List<OptionItem> languages = new()
+    {
+        new OptionItem("en-US", "English"),
+        new OptionItem("ru-RU", "Русский")
+    };
+}

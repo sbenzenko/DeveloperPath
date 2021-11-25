@@ -1,0 +1,19 @@
+﻿@inject DeveloperPath.WebUI.Services.AppState appState
+@inject IStringLocalizer<LanguageResources> localizer
+
+<MudMenu Icon="@Icons.Filled.Brightness4" Color="Color.Inherit" Direction="Direction.Bottom" 
+  AnchorOrigin="Origin.BottomCenter" TransformOrigin="Origin.TopCenter" OffsetY="true" Dense="true">
+    @foreach (var theme in appState.Themes)
+    {
+        <MudMenuItem OnClick="(()=> ChangeThemeAsync(theme))" >@localizer[theme].Value</MudMenuItem>
+    }
+</MudMenu>
+@code
+{
+    async Task ChangeThemeAsync(string theme)
+    {
+      var js = (IJSInProcessRuntime)JSRuntime;
+      await js.InvokeVoidAsync("currentTheme.set", theme);
+      NavigationManager.NavigateTo(NavigationManager.Uri, forceLoad: true);
+    }
+}

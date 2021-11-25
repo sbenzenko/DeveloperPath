@@ -1,8 +1,9 @@
 @using DeveloperPath.WebUI.Resources
 @using DeveloperPath.WebUI.Shared
 @inject IStringLocalizer<LanguageResources> localizer
+@inject DeveloperPath.WebUI.Services.AppState appState
 
-<MudThemeProvider Theme="MyCustomTheme" />
+<MudThemeProvider Theme="@appState.CurrentTheme" />
 <MudDialogProvider />
 <MudSnackbarProvider />
 
@@ -29,45 +30,3 @@
         </NotFound>
     </Router>
 </CascadingAuthenticationState>
-
-@code {
-  static string[] fontFamily = @"-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Arial,Noto Sans,Liberation Sans,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol,Noto Color Emoji".Split(",");
-  MudTheme MyCustomTheme = new MudTheme()
-  {
-    LayoutProperties = new LayoutProperties
-    {
-      AppbarHeight = "50px"
-    },
-    Palette = new Palette
-    {
-      Primary = Colors.DeepPurple.Default,
-      Secondary = Colors.Green.Accent4,
-      AppbarBackground = Colors.Red.Default,
-    },
-    Typography = new Typography
-    {
-      Default = new Default
-      {
-        FontFamily = fontFamily
-      },
-      H1 = new H1
-      {
-        FontSize = "220%"
-      },
-      H2 = new H2
-      {
-         FontSize = "200%"
-      },
-      H3 = new H3
-      {
-         FontSize = "150%",
-         FontWeight = 300
-      },
-      H4 = new H4
-      {
-         FontSize = "110%",
-         FontWeight = 300
-      }
-    }
-  };
-}

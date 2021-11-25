@@ -126,8 +126,8 @@
   <data name="AddPath" xml:space="preserve">
     <value>New path</value>
   </data>
-  <data name="Administrator zone" xml:space="preserve">
-    <value>Administrator zone</value>
+  <data name="Administration" xml:space="preserve">
+    <value>Administration</value>
   </data>
   <data name="Cancel" xml:space="preserve">
     <value>Cancel</value>
@@ -137,9 +137,6 @@
   </data>
   <data name="Deleted" xml:space="preserve">
     <value>Deleted</value>
-  </data>
-  <data name="Deleted paths" xml:space="preserve">
-    <value>Deleted paths</value>
   </data>
   <data name="DeletedPaths" xml:space="preserve">
     <value>Deleted Paths</value>
@@ -245,6 +242,12 @@ Developer Path project was created to answer these and many other questions.</va
   </data>
   <data name="Tags" xml:space="preserve">
     <value>Tags</value>
+  </data>
+  <data name="ThemeDark" xml:space="preserve">
+    <value>Dark theme</value>
+  </data>
+  <data name="ThemeLight" xml:space="preserve">
+    <value>Light theme</value>
   </data>
   <data name="TitleIsRequired" xml:space="preserve">
     <value>Title is required</value>

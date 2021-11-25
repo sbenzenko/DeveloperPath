@@ -88,11 +88,11 @@ namespace DeveloperPath.WebUI.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Administrator zone.
+        ///   Looks up a localized string similar to Administration.
         /// </summary>
-        public static string Administrator_zone {
+        public static string Administration {
             get {
-                return ResourceManager.GetString("Administrator zone", resourceCulture);
+                return ResourceManager.GetString("Administration", resourceCulture);
             }
         }
         
@@ -120,15 +120,6 @@ namespace DeveloperPath.WebUI.Resources {
         public static string Deleted {
             get {
                 return ResourceManager.GetString("Deleted", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Deleted paths.
-        /// </summary>
-        public static string Deleted_paths {
-            get {
-                return ResourceManager.GetString("Deleted paths", resourceCulture);
             }
         }
         
@@ -432,6 +423,24 @@ namespace DeveloperPath.WebUI.Resources {
         public static string Tags {
             get {
                 return ResourceManager.GetString("Tags", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dark theme.
+        /// </summary>
+        public static string ThemeDark {
+            get {
+                return ResourceManager.GetString("ThemeDark", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Light theme.
+        /// </summary>
+        public static string ThemeLight {
+            get {
+                return ResourceManager.GetString("ThemeLight", resourceCulture);
             }
         }
         
