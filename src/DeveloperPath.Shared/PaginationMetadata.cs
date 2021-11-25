@@ -8,5 +8,7 @@
         public int TotalPages { get; set; }
         public string PrevPageLink { get; set; }
         public string NextPageLink { get; set; }
+        public bool HasNext => CurrentPage < TotalPages;
+        public bool HasPrevious => CurrentPage > TotalPages;    
     }
 }

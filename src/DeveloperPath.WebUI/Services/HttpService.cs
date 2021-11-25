@@ -10,6 +10,9 @@ using Microsoft.AspNetCore.JsonPatch;
 using Newtonsoft.Json;
 using JsonSerializer = System.Text.Json.JsonSerializer;
 using DeveloperPath.Shared.ProblemDetails;
+using DeveloperPath.WebUI.Commons; 
+using System.Linq;
+using DeveloperPath.Shared;
 
 namespace DeveloperPath.WebUI.Services
 {
@@ -17,6 +20,7 @@ namespace DeveloperPath.WebUI.Services
     {
         public HttpClient HttpClient { get; }
         public HttpClient AnonymousHttpClient { get; }
+        private JsonSerializerOptions _jsonDeserOpt = new JsonSerializerOptions() { PropertyNameCaseInsensitive = true };
 
         public HttpService(IHttpClientFactory clientFactory)
         {
@@ -109,10 +113,27 @@ namespace DeveloperPath.WebUI.Services
             throw new Exception("Server returned error");
         }
 
-        public async Task<List<T>> GetListAnonymousAsync<T>(string resourceUri)
+        public async Task<ListWithMetadata<T>> GetListAnonymousAsync<T>(string resourceUri)
         {
-            var response = await AnonymousHttpClient.GetStreamAsync(resourceUri);
-            return await JsonSerializer.DeserializeAsync<List<T>>(response, new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
+            
+            var response = await AnonymousHttpClient.GetAsync(resourceUri);
+            var result = await JsonSerializer.DeserializeAsync<List<T>>(await response.Content.ReadAsStreamAsync(), _jsonDeserOpt);
+ 
+            if (response.Headers.TryGetValues("x-pagination", out var values))
+            {
+                var paginationMeta = JsonSerializer.Deserialize<PaginationMetadata>(values.First(), _jsonDeserOpt);
+                return new ListWithMetadata<T>
+                {
+                    Data = result,
+                    Metadata = paginationMeta
+                };
+            }
+
+            return new ListWithMetadata<T>
+            {
+                Data = result,
+                Metadata = new PaginationMetadata()
+            };
         }
     }
 }

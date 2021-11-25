@@ -69,12 +69,16 @@ namespace DeveloperPath.WebApi
                 app.UseHsts();
             }
 
+            //todo: fix CORS
             app.UseCors(config =>
             {
                 config.AllowAnyOrigin();
                 config.AllowAnyMethod();
                 config.AllowAnyHeader();
+                config.WithExposedHeaders("*"); //needs for blazor to read headers
             });
+
+           
 
             app.UseHealthChecks("/health");
 

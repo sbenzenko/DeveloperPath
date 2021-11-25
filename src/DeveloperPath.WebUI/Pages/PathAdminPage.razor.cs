@@ -28,7 +28,7 @@ namespace DeveloperPath.WebUI.Pages
         {
             try
             {
-                Paths = await PathService.GetListAsync();
+                Paths = await PathService.GetListAsync(false);
             }
             catch (Exception e)
             {

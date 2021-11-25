@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using DeveloperPath.Shared;
 using DeveloperPath.Shared.ClientModels;
+using DeveloperPath.WebUI.Commons;
 using Microsoft.AspNetCore.JsonPatch;
 
 namespace DeveloperPath.WebUI.Services
@@ -16,9 +18,9 @@ namespace DeveloperPath.WebUI.Services
             _httpService = httpService;
         }
 
-        public async Task<List<Path>> GetListAsync()
+        public async Task<List<Path>> GetListAsync(bool onlyVisible=true)
         {
-            return await _httpService.GetListAsync<Path>(BaseResourceString);
+            return await _httpService.GetListAsync<Path>($"{BaseResourceString}?onlyVisible={onlyVisible}");
         }
 
         public async Task<Path> AddNewPathAsync(Path path)
@@ -43,9 +45,9 @@ namespace DeveloperPath.WebUI.Services
             return await _httpService.DeleteAsync($"{BaseResourceString}/{path.Id}");
         }
 
-        public async Task<List<Path>> GetListAnonymousAsync()
+        public async Task<ListWithMetadata<Path>> GetListAnonymousAsync(bool onlyVisible = true)
         {
-            return await _httpService.GetListAnonymousAsync<Path>(BaseResourceString);
+            return await _httpService.GetListAnonymousAsync<Path>($"{BaseResourceString}?onlyVisible={onlyVisible}");
         }
 
         public async Task<List<DeletedPath>> GetDeletedListAsync()
