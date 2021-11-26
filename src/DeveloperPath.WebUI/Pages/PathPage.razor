@@ -3,7 +3,7 @@
 @inject IStringLocalizer<LanguageResources> _localizer
 
 
-<Condition Evaluation="Paths == null">
+<Condition Evaluation="_state == UIHelper.State.Loading">
     <Match>
         <MudProgressLinear Indeterminate="true" Color="Color.Primary"></MudProgressLinear>
     </Match>
@@ -31,7 +31,8 @@
                            BoundaryCount="2"
                            Color="Color.Primary"
                            Count="@PaginationMetadata.TotalPages"
-                           Selected="@PaginationMetadata.CurrentPage" />
+                           Selected= "@PaginationMetadata.CurrentPage"
+                           SelectedChanged="ChangePageAsync"/>
             </MudContainer>
         </MudTreeView>
     </NotMatch>

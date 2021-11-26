@@ -12,15 +12,17 @@ namespace DeveloperPath.WebUI.Services
         private readonly HttpService _httpService;
         const string BaseResourceString = "api/paths";
 
+        private string GetQueryString(bool onlyVisible, int pageNum, int pageSize)
+            => $"?onlyVisible={onlyVisible}&pageNumber={pageNum}&pageSize={pageSize}";
 
         public PathService(HttpService httpService)
         {
             _httpService = httpService;
         }
 
-        public async Task<List<Path>> GetListAsync(bool onlyVisible=true)
+        public async Task<ListWithMetadata<Path>> GetListAsync(bool onlyVisible=true, int pageNum = 1, int pageSize = 5)
         {
-            return await _httpService.GetListAsync<Path>($"{BaseResourceString}?onlyVisible={onlyVisible}");
+            return await _httpService.GetListAsync<Path>($"{BaseResourceString}{GetQueryString(onlyVisible, pageNum, pageSize)}");
         }
 
         public async Task<Path> AddNewPathAsync(Path path)
@@ -45,14 +47,15 @@ namespace DeveloperPath.WebUI.Services
             return await _httpService.DeleteAsync($"{BaseResourceString}/{path.Id}");
         }
 
-        public async Task<ListWithMetadata<Path>> GetListAnonymousAsync(bool onlyVisible = true)
+        public async Task<ListWithMetadata<Path>> GetListAnonymousAsync(bool onlyVisible = true, int pageNum = 1, int pageSize = 5)
         {
-            return await _httpService.GetListAnonymousAsync<Path>($"{BaseResourceString}?onlyVisible={onlyVisible}");
+            return await _httpService.GetListAnonymousAsync<Path>($"{BaseResourceString}{GetQueryString(onlyVisible, pageNum, pageSize)}");
         }
 
         public async Task<List<DeletedPath>> GetDeletedListAsync()
         {
-            return await _httpService.GetListAsync<DeletedPath>($"{BaseResourceString}/deleted");
+            //return await _httpService.GetListAsync<DeletedPath>($"{BaseResourceString}/deleted");
+            return null;
         }
 
         public async Task<Path> RestoreDeletedPathAsync(DeletedPath deletedPath)

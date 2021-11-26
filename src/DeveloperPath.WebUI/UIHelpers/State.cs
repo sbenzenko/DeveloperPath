@@ -2,6 +2,7 @@
 {
     public enum State
     {
+        None,
         Loading,
         ContentReady,
         Error

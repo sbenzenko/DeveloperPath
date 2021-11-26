@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using DeveloperPath.Shared;
 using DeveloperPath.Shared.ClientModels;
 using DeveloperPath.Shared.ProblemDetails;
 using DeveloperPath.WebUI.Resources;
 using DeveloperPath.WebUI.Services;
 using DeveloperPath.WebUI.Shared;
+using DeveloperPath.WebUI.UIHelper;
 using DeveloperPath.WebUI.UIHelpers;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Localization;
@@ -14,7 +16,7 @@ using MudBlazor;
 
 namespace DeveloperPath.WebUI.Pages
 {
-    public partial class PathAdminPage:ComponentBase
+    public partial class PathAdminPage : ComponentBase
     {
         [Inject] public PathService PathService { get; set; }
         [Inject] public IDialogService DialogService { get; set; }
@@ -23,17 +25,36 @@ namespace DeveloperPath.WebUI.Pages
         [Inject] public NavigationManager NavigationManager { get; set; }
 
         public List<Path> Paths { get; set; }
+        private State _state;
+        public PaginationMetadata PaginationMetadata { get; private set; }
 
         protected override async Task OnInitializedAsync()
         {
             try
             {
-                Paths = await PathService.GetListAsync(false);
+                _state = State.Loading;
+                var result = await PathService.GetListAsync(false, 1, 5);
+                Paths = result.Data;
+                PaginationMetadata = result.Metadata;
+                _state = State.ContentReady;
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                Console.WriteLine(e);
+                SnackbarHelper.PrintError(ex.Message);
+                _state = State.Error;
             }
+        }
+
+        private async Task ChangePageAsync(int pageNum)
+        {
+            _state = State.Loading;
+            var result = await PathService.GetListAnonymousAsync(true, pageNum, PaginationMetadata.PageSize);
+
+            Paths = result.Data;
+            PaginationMetadata = result.Metadata;
+            _state = State.ContentReady;
+
+            StateHasChanged();
         }
 
         private async Task ShowModalNewPath()
@@ -107,8 +128,8 @@ namespace DeveloperPath.WebUI.Pages
             StateHasChanged();
         }
 
-      
-    
+
+
 
         private async Task ChangePathVisibilityAsync(Path pathItem)
         {

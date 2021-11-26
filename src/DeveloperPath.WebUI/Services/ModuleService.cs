@@ -22,7 +22,8 @@ namespace DeveloperPath.WebUI.Services
 
         public async Task<List<Module>> GetListAsync()
         {
-            return await _httpService.GetListAsync<Module>(BaseResourceString);
+            //return await _httpService.GetListAsync<Module>(BaseResourceString);
+            return null;
         }
         public async Task<Module> EditModuleAsync(Module module)
         {

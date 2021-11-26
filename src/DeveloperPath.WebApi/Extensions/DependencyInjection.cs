@@ -3,9 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using DeveloperPath.Shared.ProblemDetails;
 using DeveloperPath.WebApi.Filters;
+using DeveloperPath.WebApi.Helpers;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Abstractions;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -22,7 +25,11 @@ namespace DeveloperPath.WebApi.Extensions
             services.ConfigureBehaviour();
             services.AddVersioning();
             services.AddSwaggerGenConfiguration();
+
+            services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
             services.AddScoped<PagedListResultFilterAttribute>();
+            services.AddScoped<PagedListHeadersHelper>();
+
             return services;
         }
 

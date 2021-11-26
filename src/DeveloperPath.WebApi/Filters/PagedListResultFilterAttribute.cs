@@ -13,21 +13,19 @@ namespace DeveloperPath.WebApi.Filters
 {
     public class PagedListResultFilterAttribute : IActionFilter
     {
-        IUrlHelper _url;
         PathRequestParams _requestParams;
 
         public void OnActionExecuted(ActionExecutedContext context)
         {
             if (context.Result is OkObjectResult okResult && okResult.Value is PagedList<Path> pagedList)
             {
-                _url = context.HttpContext.RequestServices.GetService<IUrlHelper>();
                 var helper = context.HttpContext.RequestServices.GetService<PagedListHeadersHelper>();
 
                 var nextPageLink = pagedList.HasNext ?
-                    helper.CreatePathResourceUri(pagedList.CurrentPage, pagedList.PageSize, _requestParams, ResourceUriType.NextPage)
+                    helper.CreatePathResourceUri(pagedList.CurrentPage, pagedList.PageSize,_requestParams, ResourceUriType.NextPage)
                     : null;
                 var prevPageLink = pagedList.HasPrevious ?
-                    helper.CreatePathResourceUri(pagedList.CurrentPage, pagedList.PageSize, _requestParams, ResourceUriType.PreviousPage)
+                    helper.CreatePathResourceUri(pagedList.CurrentPage, pagedList.PageSize,  _requestParams, ResourceUriType.PreviousPage)
                     : null;
 
                 var paginationMetadata = new PaginationMetadata

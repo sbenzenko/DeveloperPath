@@ -28,16 +28,33 @@ namespace DeveloperPath.WebUI.Services
             AnonymousHttpClient = clientFactory.CreateClient("api-anonymous");
         }
 
-        public async Task<List<T>> GetListAsync<T>(string resourceUri)
+        public async Task<ListWithMetadata<T>> GetListAsync<T>(string resourceUri)
         {
             var response = await HttpClient.GetAsync(resourceUri);
             var stream = await response.Content.ReadAsStreamAsync();
+            
             if (response.StatusCode == HttpStatusCode.NotFound)
             {
                 var notFound = await JsonSerializer.DeserializeAsync<NotFoundProblemDetails>(stream, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
-                throw new ApiError(notFound);
+                throw new ApiError(notFound, HttpStatusCode.NotFound);
             }
-            return await JsonSerializer.DeserializeAsync<List<T>>(stream, new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
+
+            var result = await JsonSerializer.DeserializeAsync<List<T>>(stream, new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
+            if (response.Headers.TryGetValues("x-pagination", out var values))
+            {
+                var paginationMeta = JsonSerializer.Deserialize<PaginationMetadata>(values.First(), _jsonDeserOpt);
+                return new ListWithMetadata<T>
+                {
+                    Data = result,
+                    Metadata = paginationMeta
+                };
+            }
+
+            return new ListWithMetadata<T>
+            {
+                Data = result,
+                Metadata = new PaginationMetadata()
+            };
         }
 
         public async Task<T> CreateAsync<T>(string resourceUri, T resource)
