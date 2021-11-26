@@ -1,70 +1,84 @@
 ﻿@page "/administration/paths"
 
 <AuthorizeView Context="authorizeContext">
-	<Authorized>
-		<Condition Evaluation="_state == UIHelper.State.Loading">
-			<Match>
-				<MudProgressLinear Indeterminate="true" Color="Color.Primary"></MudProgressLinear>
-			</Match>
-			<NotMatch>
-				<MudButton Style="margin-bottom: 20px" StartIcon="@Icons.Outlined.Add" OnClick="ShowModalNewPath">@localizer["AddPath"]</MudButton>
-				<MudButton Style="margin-bottom: 20px" StartIcon="@Icons.Outlined.DeleteSweep" OnClick="GoToDeleted">@localizer["DeletedPaths"]</MudButton>
-				<MudGrid>
-					<Iterations Items="Paths" Context="pathItem">
-						<MudItem xs="12" sm="6" md="6" lg="4" Class="px-1" Style="height: 350px;">
-							<MudCard>
-								<MudCardHeader>
-									<CardHeaderContent>
-										<MudText Typo="Typo.h6">@pathItem.Title</MudText>
-									</CardHeaderContent>
-								</MudCardHeader>
-								<MudCardContent>
-									<MudItem Class="px-1" Style="height: 60px;">
-										<Iterations Items="pathItem.Tags" Context="tagItem">
-											<MudChip Size="Size.Small">@tagItem</MudChip>
-										</Iterations>
-									</MudItem>
-									<MudItem Class="px-1" Style="height: 100px;">
-										<MudText Typo="Typo.body1">
-											@(pathItem.Description.Length > 180 ? $"{pathItem.Description.Substring(0, 180)}.." : pathItem.Description)
-										</MudText>
-									</MudItem>
-								</MudCardContent>
-								<MudCardActions>
-									<MudTooltip Text="@localizer["Edit"]">
-										<MudIconButton Icon="@Icons.Material.Filled.Edit" Color="Color.Info" OnClick="(() => ShowModalEditingPath(pathItem))" />
-									</MudTooltip>
-									<MudTooltip Text="@localizer["Delete"]">
-										<MudIconButton Icon="@Icons.Material.Filled.Delete" Color="Color.Warning" OnClick="(() => DeletePath(pathItem))" />
-									</MudTooltip>
-									<MudTooltip Text="@localizer["Visible"]">
-										<MudToggleIconButton Toggled="@pathItem.IsVisible"
-															 ToggledChanged="@(() => ChangePathVisibilityAsync(pathItem))"
-															 Icon="@Icons.Material.Filled.VisibilityOff"
-															 ToggledIcon="@Icons.Material.Filled.Visibility"
-															 ToggledColor="@Color.Success" />
-									</MudTooltip>
-									<MudTooltip Text="@localizer["Modules"]">
-										<MudIconButton Icon="@Icons.Outlined.List"
-													   OnClick="() => GoToModules(pathItem)" />
-									</MudTooltip>
-								</MudCardActions>
-							</MudCard>
-						</MudItem>
-					</Iterations>
-				</MudGrid>
-				<MudContainer Class="d-flex justify-center py-2 px-1 mt-6">
-                   <MudPagination Rectangular=true
-                           BoundaryCount="2"
-                           Color="Color.Primary"
-                           Count="@PaginationMetadata.TotalPages"
-                           Selected= "@PaginationMetadata.CurrentPage"
-                           SelectedChanged="ChangePageAsync"/>
-            </MudContainer>
-			</NotMatch>
-		</Condition>
-	</Authorized>
-	<NotAuthorized>
-		<p>@localizer["NotAuthorized"]</p>
-	</NotAuthorized>
+    <Authorized>
+        <Condition Evaluation="_state == UIHelper.State.Loading">
+            <Match>
+                <MudProgressLinear Indeterminate="true" Color="Color.Primary"></MudProgressLinear>
+            </Match>
+        </Condition>
+        <Condition Evaluation="_state == UIHelper.State.ContentReady">
+            <Match>
+                <MudButton Style="margin-bottom: 20px" StartIcon="@Icons.Outlined.Add" OnClick="ShowModalNewPath">@localizer["AddPath"]</MudButton>
+                <MudButton Style="margin-bottom: 20px" StartIcon="@Icons.Outlined.DeleteSweep" OnClick="GoToDeleted">@localizer["DeletedPaths"]</MudButton>
+                <MudGrid>
+                    <Iterations Items="Paths" Context="pathItem">
+                        <MudItem xs="12" sm="6" md="6" lg="4" Class="px-1" Style="height: 350px;">
+                            <MudCard>
+                                <MudCardHeader>
+                                    <CardHeaderContent>
+                                        <MudText Typo="Typo.h6">@pathItem.Title</MudText>
+                                    </CardHeaderContent>
+                                </MudCardHeader>
+                                <MudCardContent>
+                                    <MudItem Class="px-1" Style="height: 60px;">
+                                        <Iterations Items="pathItem.Tags" Context="tagItem">
+                                            <MudChip Size="Size.Small">@tagItem</MudChip>
+                                        </Iterations>
+                                    </MudItem>
+                                    <MudItem Class="px-1" Style="height: 100px;">
+                                        <MudText Typo="Typo.body1">
+                                            @(pathItem.Description.Length > 180 ? $"{pathItem.Description.Substring(0, 180)}.." : pathItem.Description)
+                                        </MudText>
+                                    </MudItem>
+                                </MudCardContent>
+                                <MudCardActions>
+                                    <MudTooltip Text="@localizer["Edit"]">
+                                        <MudIconButton Icon="@Icons.Material.Filled.Edit" Color="Color.Info" OnClick="(() => ShowModalEditingPath(pathItem))" />
+                                    </MudTooltip>
+                                    <MudTooltip Text="@localizer["Delete"]">
+                                        <MudIconButton Icon="@Icons.Material.Filled.Delete" Color="Color.Warning" OnClick="(() => DeletePath(pathItem))" />
+                                    </MudTooltip>
+                                    <MudTooltip Text="@localizer["Visible"]">
+                                        <MudToggleIconButton Toggled="@pathItem.IsVisible"
+                                                             ToggledChanged="@(() => ChangePathVisibilityAsync(pathItem))"
+                                                             Icon="@Icons.Material.Filled.VisibilityOff"
+                                                             ToggledIcon="@Icons.Material.Filled.Visibility"
+                                                             ToggledColor="@Color.Success" />
+                                    </MudTooltip>
+                                    <MudTooltip Text="@localizer["Modules"]">
+                                        <MudIconButton Icon="@Icons.Outlined.List"
+                                                       OnClick="() => GoToModules(pathItem)" />
+                                    </MudTooltip>
+                                </MudCardActions>
+                            </MudCard>
+                        </MudItem>
+                    </Iterations>
+                </MudGrid>
+                <MudContainer Class="d-flex justify-center py-2 px-1 mt-6">
+                    <MudPagination Rectangular=true
+                                   BoundaryCount="2"
+                                   Color="Color.Primary"
+                                   Count="@PaginationMetadata.TotalPages"
+                                   Selected="@PaginationMetadata.CurrentPage"
+                                   SelectedChanged="ChangePageAsync" />
+                </MudContainer>
+            </Match>
+        </Condition>
+        <Condition Evaluation="_state == UIHelper.State.Error">
+            <Match>
+                <MudContainer Class="d-flex justify-center py-2 px-1 mt-6">
+                    <MudButton StartIcon="@Icons.Filled.Refresh"
+                               Color="Color.Primary"
+                               Size="Size.Large"
+                               OnClick="Reload">
+                        Ooops, something went wrong, try again
+                    </MudButton>
+                </MudContainer>
+            </Match>
+        </Condition>
+    </Authorized>
+    <NotAuthorized>
+        <p>@localizer["NotAuthorized"]</p>
+    </NotAuthorized>
 </AuthorizeView>

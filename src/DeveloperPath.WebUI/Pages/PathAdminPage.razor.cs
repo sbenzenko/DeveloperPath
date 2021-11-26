@@ -18,6 +18,7 @@ namespace DeveloperPath.WebUI.Pages
 {
     public partial class PathAdminPage : ComponentBase
     {
+        const int PAGE_SIZE = 5;
         [Inject] public PathService PathService { get; set; }
         [Inject] public IDialogService DialogService { get; set; }
         [Inject] public IStringLocalizer<LanguageResources> localizer { get; set; }
@@ -28,12 +29,21 @@ namespace DeveloperPath.WebUI.Pages
         private State _state;
         public PaginationMetadata PaginationMetadata { get; private set; }
 
+        private int _lastPageRequest;
+      
         protected override async Task OnInitializedAsync()
+        {
+            await LoadDataAsync(1);
+        }
+
+        private async Task LoadDataAsync(int pageNum)
         {
             try
             {
+                _lastPageRequest = pageNum;
+
                 _state = State.Loading;
-                var result = await PathService.GetListAsync(false, 1, 5);
+                var result = await PathService.GetListAsync(false, pageNum, PAGE_SIZE);
                 Paths = result.Data;
                 PaginationMetadata = result.Metadata;
                 _state = State.ContentReady;
@@ -45,16 +55,14 @@ namespace DeveloperPath.WebUI.Pages
             }
         }
 
+        private async Task Reload()
+        {
+            await LoadDataAsync(_lastPageRequest);
+        }
+
         private async Task ChangePageAsync(int pageNum)
         {
-            _state = State.Loading;
-            var result = await PathService.GetListAnonymousAsync(true, pageNum, PaginationMetadata.PageSize);
-
-            Paths = result.Data;
-            PaginationMetadata = result.Metadata;
-            _state = State.ContentReady;
-
-            StateHasChanged();
+            await LoadDataAsync(pageNum);
         }
 
         private async Task ShowModalNewPath()

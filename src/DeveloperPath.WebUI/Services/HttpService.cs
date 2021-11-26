@@ -109,7 +109,7 @@ namespace DeveloperPath.WebUI.Services
                 var unprocessableResult = await JsonSerializer.DeserializeAsync<UnprocessableEntityProblemDetails>(
                     await response.Content.ReadAsStreamAsync(),
                     new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
-                throw new ApiError(unprocessableResult);
+                throw new ApiError(unprocessableResult, HttpStatusCode.UnprocessableEntity);
             }
             if (response.StatusCode == HttpStatusCode.InternalServerError)
             {
