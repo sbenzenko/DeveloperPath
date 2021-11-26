@@ -13,13 +13,13 @@ namespace DeveloperPath.Application.CQRS.Modules.Queries.GetModules
     /// <summary>
     /// Get list of visible modules
     /// </summary>
-    public class GetAllAvailableModulesQuery : IRequest<List<ModuleTitle>>
+    public class GetAllAvailableModulesQuery : IRequest<List<ModuleDetails>>
     {
         
     }
 
     internal class GetAllAvailableModulesQueryHandler 
-        : IRequestHandler<GetAllAvailableModulesQuery, List<ModuleTitle>>
+        : IRequestHandler<GetAllAvailableModulesQuery, List<ModuleDetails>>
     {
         private readonly IApplicationDbContext _context;
         private readonly IMapper _mapper;
@@ -30,10 +30,11 @@ namespace DeveloperPath.Application.CQRS.Modules.Queries.GetModules
             _context = context;
             _mapper = mapper;
         }
-        public Task<List<ModuleTitle>> Handle(GetAllAvailableModulesQuery request, CancellationToken cancellationToken)
+        public Task<List<ModuleDetails>> Handle(GetAllAvailableModulesQuery request, CancellationToken cancellationToken)
         {
             return _context.Modules
-                .ProjectTo<ModuleTitle>(_mapper.ConfigurationProvider)
+                .Include(x=>x.Prerequisites)
+                .ProjectTo<ModuleDetails>(_mapper.ConfigurationProvider)
                 .ToListAsync(cancellationToken: cancellationToken);
         }
     }

@@ -3,14 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using DeveloperPath.Shared.ProblemDetails;
 using DeveloperPath.WebApi.Filters;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
+using DeveloperPath.WebApi.Helpers;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Abstractions;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.AspNetCore.Mvc.Versioning;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
- 
+
 
 namespace DeveloperPath.WebApi.Extensions
 {
@@ -22,6 +25,10 @@ namespace DeveloperPath.WebApi.Extensions
             services.ConfigureBehaviour();
             services.AddVersioning();
             services.AddSwaggerGenConfiguration();
+
+            services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
+            services.AddScoped<PagedListResultFilterAttribute>();
+            services.AddScoped<PagedListHeadersHelper>();
 
             return services;
         }
@@ -71,7 +78,7 @@ namespace DeveloperPath.WebApi.Extensions
                 options.Filters.Add(
             new ProducesAttribute("application/json", "application/xml"));
             }).AddNewtonsoftJson()
-              .AddXmlDataContractSerializerFormatters()
+              //.AddXmlDataContractSerializerFormatters()
               .AddJsonOptions(options =>
               {
                   // serialize enums as strings
@@ -101,8 +108,10 @@ namespace DeveloperPath.WebApi.Extensions
 
         private static IServiceCollection AddSwaggerGenConfiguration(this IServiceCollection services)
         {
-            var apiVersionDescriptionProvider =
-              services.BuildServiceProvider().GetService<IApiVersionDescriptionProvider>();
+            var serviceProvider = services.BuildServiceProvider();
+            var apiVersionDescriptionProvider = serviceProvider.GetService<IApiVersionDescriptionProvider>();
+            var configuration = serviceProvider.GetService<IConfiguration>();
+            
 
             services.AddSwaggerGen(setupAction =>
             {
@@ -110,7 +119,7 @@ namespace DeveloperPath.WebApi.Extensions
                 foreach (var description in apiVersionDescriptionProvider.ApiVersionDescriptions)
                 {
                     setupAction.SwaggerDoc($"DeveloperPathAPISpecification{description.GroupName}",
-                    new Microsoft.OpenApi.Models.OpenApiInfo()
+                    new OpenApiInfo()
                     {
                         Version = description.ApiVersion.ToString(),
                         Title = "Developer Path API",
@@ -123,29 +132,25 @@ namespace DeveloperPath.WebApi.Extensions
                         }
                     });
                 }
+                var authority = configuration["Authority"] ?? throw new Exception("Value can't be null: Authority");
+                setupAction.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
+                {
+                    Type = SecuritySchemeType.OAuth2,
+                    Flows = new OpenApiOAuthFlows
+                    {
+                        AuthorizationCode = new OpenApiOAuthFlow
+                        {
+                            AuthorizationUrl = new Uri($"{authority}/connect/authorize"),
+                            TokenUrl = new Uri($"{authority}/connect/token"),
+                            Scopes = new Dictionary<string, string>
+                            {
+                                {"pathapi", "API - full access"}
+                            }
+                        }
+                    }
+                });
 
-                setupAction.AddSecurityDefinition("bearerAuth",
-            new OpenApiSecurityScheme()
-            {
-                Type = SecuritySchemeType.Http,
-                Scheme = JwtBearerDefaults.AuthenticationScheme,
-                Description = "Provide a JWT bearer token to access the API"
-            });
-
-                setupAction.AddSecurityRequirement(new OpenApiSecurityRequirement
-              {
-          {
-            new OpenApiSecurityScheme
-            {
-              Reference = new OpenApiReference
-              {
-                Type = ReferenceType.SecurityScheme,
-                Id = "bearerAuth"
-              }
-            },
-            new List<string>()
-          }
-              });
+                setupAction.OperationFilter<AuthorizeCheckOperationFilter>();
 
                 // select swagger document based on selected API version
                 setupAction.DocInclusionPredicate((documentName, apiDescription) =>

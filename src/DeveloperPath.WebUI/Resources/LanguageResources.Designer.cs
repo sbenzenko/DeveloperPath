@@ -178,6 +178,15 @@ namespace DeveloperPath.WebUI.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Edit Module.
+        /// </summary>
+        public static string EditModule {
+            get {
+                return ResourceManager.GetString("EditModule", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Hello.
         /// </summary>
         public static string Hello {
@@ -256,6 +265,15 @@ namespace DeveloperPath.WebUI.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Module Title is too long (max 100 characters).
+        /// </summary>
+        public static string ModuleTitleTooLong {
+            get {
+                return ResourceManager.GetString("ModuleTitleTooLong", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Must Know.
         /// </summary>
         public static string MustKnow {
@@ -270,6 +288,15 @@ namespace DeveloperPath.WebUI.Resources {
         public static string Necessity {
             get {
                 return ResourceManager.GetString("Necessity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to New Module.
+        /// </summary>
+        public static string NewModule {
+            get {
+                return ResourceManager.GetString("NewModule", resourceCulture);
             }
         }
         

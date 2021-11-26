@@ -1,7 +1,6 @@
 @using DeveloperPath.WebUI.Resources
 @using DeveloperPath.WebUI.Shared
-@inject IStringLocalizer<LanguageResources> localizer
-@inject DeveloperPath.WebUI.Services.AppState appState
+
 
 <MudThemeProvider Theme="@appState.CurrentTheme" />
 <MudDialogProvider />
@@ -30,3 +29,5 @@
         </NotFound>
     </Router>
 </CascadingAuthenticationState>
+
+ 

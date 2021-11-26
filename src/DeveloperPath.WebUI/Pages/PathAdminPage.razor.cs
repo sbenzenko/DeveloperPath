@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using DeveloperPath.Shared;
 using DeveloperPath.Shared.ClientModels;
 using DeveloperPath.Shared.ProblemDetails;
 using DeveloperPath.WebUI.Resources;
 using DeveloperPath.WebUI.Services;
 using DeveloperPath.WebUI.Shared;
+using DeveloperPath.WebUI.UIHelper;
 using DeveloperPath.WebUI.UIHelpers;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Localization;
@@ -14,8 +16,9 @@ using MudBlazor;
 
 namespace DeveloperPath.WebUI.Pages
 {
-    public partial class PathAdminPage:ComponentBase
+    public partial class PathAdminPage : ComponentBase
     {
+        const int PAGE_SIZE = 5;
         [Inject] public PathService PathService { get; set; }
         [Inject] public IDialogService DialogService { get; set; }
         [Inject] public IStringLocalizer<LanguageResources> localizer { get; set; }
@@ -23,17 +26,43 @@ namespace DeveloperPath.WebUI.Pages
         [Inject] public NavigationManager NavigationManager { get; set; }
 
         public List<Path> Paths { get; set; }
+        private State _state;
+        public PaginationMetadata PaginationMetadata { get; private set; }
 
+        private int _lastPageRequest;
+      
         protected override async Task OnInitializedAsync()
+        {
+            await LoadDataAsync(1);
+        }
+
+        private async Task LoadDataAsync(int pageNum)
         {
             try
             {
-                Paths = await PathService.GetListAsync();
+                _lastPageRequest = pageNum;
+
+                _state = State.Loading;
+                var result = await PathService.GetListAsync(false, pageNum, PAGE_SIZE);
+                Paths = result.Data;
+                PaginationMetadata = result.Metadata;
+                _state = State.ContentReady;
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                Console.WriteLine(e);
+                SnackbarHelper.PrintError(ex.Message);
+                _state = State.Error;
             }
+        }
+
+        private async Task Reload()
+        {
+            await LoadDataAsync(_lastPageRequest);
+        }
+
+        private async Task ChangePageAsync(int pageNum)
+        {
+            await LoadDataAsync(pageNum);
         }
 
         private async Task ShowModalNewPath()
@@ -107,8 +136,8 @@ namespace DeveloperPath.WebUI.Pages
             StateHasChanged();
         }
 
-      
-    
+
+
 
         private async Task ChangePathVisibilityAsync(Path pathItem)
         {

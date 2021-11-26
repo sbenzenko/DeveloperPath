@@ -29,6 +29,10 @@ namespace DeveloperPath.Application.CQRS.Modules.Commands.UpdateModule
       RuleFor(v => v.Description)
         .NotEmpty().WithMessage("Description is required.")
         .MaximumLength(3000).WithMessage("Description must not exceed 3000 characters.");
+
+      RuleFor(x => x.Key).NotEmpty().WithMessage("Key is required.")
+          .MaximumLength(20)
+          .WithMessage("Title must not exceed 100 characters.");
     }
 
     /// <summary>

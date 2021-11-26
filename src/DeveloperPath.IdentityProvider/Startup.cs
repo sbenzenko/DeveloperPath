@@ -52,7 +52,7 @@ namespace IdentityProvider
             //var x509Certificate2Certs =
             //    CertificationManager.GetCertificates(Environment, Configuration)
             //        .GetAwaiter().GetResult();
-
+          
             var builder = services.AddIdentityServer(options =>
                 {
                     options.Events.RaiseErrorEvents = true;
@@ -63,7 +63,7 @@ namespace IdentityProvider
                 .AddInMemoryApiScopes(Config.Scopes)
                 .AddInMemoryIdentityResources(Config.Ids)
                 .AddInMemoryApiResources(Config.Apis)
-                .AddInMemoryClients(Config.Clients)
+                .AddInMemoryClients(Config.GetClients(Configuration))
                 .AddAspNetIdentity<ApplicationUser>();
 
             var rsa = new RsaKeyService(Environment, TimeSpan.FromDays(30));

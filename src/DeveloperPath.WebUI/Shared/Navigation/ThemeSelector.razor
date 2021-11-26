@@ -1,4 +1,5 @@
-﻿@inject DeveloperPath.WebUI.Services.AppState appState
+﻿@using DeveloperPath.WebUI.Services
+@inject DeveloperPath.WebUI.Services.AppState appState
 @inject IStringLocalizer<LanguageResources> localizer
 
 <MudMenu Icon="@Icons.Filled.Brightness4" Color="Color.Inherit" Direction="Direction.Bottom" 
@@ -12,8 +13,8 @@
 {
     async Task ChangeThemeAsync(string theme)
     {
-      var js = (IJSInProcessRuntime)JSRuntime;
-      await js.InvokeVoidAsync("currentTheme.set", theme);
-      NavigationManager.NavigateTo(NavigationManager.Uri, forceLoad: true);
+        var js = (IJSInProcessRuntime)JSRuntime;
+        await js.InvokeVoidAsync("currentTheme.set", theme);
+        appState.SetTheme(theme);
     }
 }

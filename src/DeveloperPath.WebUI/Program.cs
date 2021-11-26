@@ -11,7 +11,7 @@ using DeveloperPath.WebUI.Services;
 using DeveloperPath.WebUI.UIHelpers;
 using DeveloperPath.WebUI.Extensions;
 using DeveloperPath.WebUI.Security;
- 
+
 namespace DeveloperPath.WebUI
 {
     public class Program
@@ -29,6 +29,7 @@ namespace DeveloperPath.WebUI
                 throw new Exception("Path API base URL is null");
             }
 
+       
             builder.Services.AddHttpClient("api",
                     client => client.BaseAddress = new Uri(builder.Configuration["PathApiBaseUri"]))
                 .AddHttpMessageHandler(sp =>
@@ -68,7 +69,6 @@ namespace DeveloperPath.WebUI
                 {
                     builder.Configuration.Bind("oidc", options.ProviderOptions);
                     options.UserOptions.RoleClaim = "role";
-
                 })
                 .AddAccountClaimsPrincipalFactory<ArrayClaimsPrincipalFactory<RemoteUserAccount>>();
 
@@ -80,6 +80,7 @@ namespace DeveloperPath.WebUI
             builder.Services.AddScoped(state => new AppState(new ThemesHelper()));
 
             var host = builder.Build();
+
             await host.SetDefaultCulture();
             await host.SetCurrentTheme(host.Services.GetService<AppState>());
             await host.RunAsync();

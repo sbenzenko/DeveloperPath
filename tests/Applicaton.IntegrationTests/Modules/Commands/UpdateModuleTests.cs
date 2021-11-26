@@ -175,6 +175,7 @@ namespace DeveloperPath.Application.IntegrationTests.Modules.Commands
             {
                 Id = module.Id,
                 Title = "Updated title",
+                Key = "module-key",
                 Description = "Updated Description",
                 Necessity = 0
             };
@@ -185,6 +186,7 @@ namespace DeveloperPath.Application.IntegrationTests.Modules.Commands
 
             updatedModule.Title.Should().Be(command.Title);
             updatedModule.Description.Should().Be(command.Description);
+            updatedModule.Key.Should().Be(module.Key);
             updatedModule.LastModifiedBy.Should().NotBeNull();
             updatedModule.LastModifiedBy.Should().Be(userId);
             updatedModule.LastModified.Should().NotBeNull();

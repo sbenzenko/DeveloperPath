@@ -11,37 +11,37 @@ namespace DeveloperPath.Shared.ClientModels
         /// <summary>
         /// Module ID
         /// </summary>
-        public int Id { get; init; }
+        public int Id { get; set; }
 
         /// <summary>
         /// Module title
         /// </summary>
-        public string Title { get; init; }
+        public string Title { get; set; }
 
         /// <summary>
         /// Module unique URI key
         /// </summary>
-        public string Key { get; init; }
+        public string Key { get; set; }
 
         /// <summary>
         /// Module short summary
         /// </summary>
-        public string Description { get; init; }
+        public string Description { get; set; }
 
         /// <summary>
         /// Paths module attached to
         /// </summary>
-        public ICollection<PathTitle> Paths { get; init; }
+        public ICollection<PathTitle> Paths { get; set; }
 
         /// <summary>
         /// Necessity level (Other (default) | Possibilities | Interesting | Good to know | Must know)
         /// </summary>
-        public Necessity Necessity { get; init; }
+        public Necessity Necessity { get; set; }
 
         /// <summary>
         /// Modules required to know before studying this module
         /// </summary>
-        public ICollection<ModuleTitle> Prerequisites { get; init; }
+        public ICollection<ModuleTitle> Prerequisites { get; set; }
 
         /// <summary>
         /// List of tags related to the module
