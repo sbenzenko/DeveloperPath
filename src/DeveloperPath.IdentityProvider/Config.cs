@@ -4,6 +4,8 @@
 
 using IdentityModel;
 using IdentityServer4.Models;
+using Microsoft.Extensions.Configuration;
+using System;
 using System.Collections.Generic;
 
 namespace IdentityProvider
@@ -38,13 +40,35 @@ namespace IdentityProvider
             };
 
 
-        public static IEnumerable<Client> Clients =>
+        public static IEnumerable<Client> GetClients(IConfiguration configuration)=>
             new Client[]
             {
+                 new Client
+                {
+                    ClientId = "swagger",
+                    ClientName = "Developer Path API - Swagger",
+                    ClientSecrets = {new Secret(
+                        string.IsNullOrEmpty(configuration["PathApiSwaggerSecret"])? 
+                        throw new ArgumentException("Value mustn't be null: PathApiSwaggerSecret")
+                        : configuration["PathApiSwaggerSecret"].Sha256())},  
+                    AllowedGrantTypes = GrantTypes.Code,
+                    RequirePkce = true,
+                    RequireClientSecret = false,
+                    RedirectUris = {
+                         "https://localhost:7001/oauth2-redirect.html",
+                         "https://developerpathapi.azurewebsites.net/oauth2-redirect.html"
+                     },
+                    AllowedCorsOrigins = 
+                     {
+                         "https://localhost:7001",
+                         "https://developerpathapi.azurewebsites.net"
+                     },
+                    AllowedScopes = {"pathapi"}
+                },
                 new Client
                 {
                     ClientId = "WebUI.Blazor",
-                
+
                     AllowedGrantTypes = GrantTypes.Code,
                     RequirePkce = true,
                     RequireClientSecret = false,

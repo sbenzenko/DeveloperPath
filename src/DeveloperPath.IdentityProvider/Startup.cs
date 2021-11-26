@@ -63,7 +63,7 @@ namespace IdentityProvider
                 .AddInMemoryApiScopes(Config.Scopes)
                 .AddInMemoryIdentityResources(Config.Ids)
                 .AddInMemoryApiResources(Config.Apis)
-                .AddInMemoryClients(Config.Clients)
+                .AddInMemoryClients(Config.GetClients(Configuration))
                 .AddAspNetIdentity<ApplicationUser>();
 
             var rsa = new RsaKeyService(Environment, TimeSpan.FromDays(30));

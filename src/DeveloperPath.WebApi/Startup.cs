@@ -7,13 +7,13 @@ using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.IdentityModel.Tokens;
 using DeveloperPath.Application;
 using DeveloperPath.Application.Common.Interfaces;
 using DeveloperPath.Infrastructure;
 using DeveloperPath.Infrastructure.Persistence;
 using DeveloperPath.WebApi.Extensions;
 using DeveloperPath.WebApi.Services;
+using Microsoft.IdentityModel.Tokens;
 
 [assembly: ApiConventionType(typeof(ApiCustomConventions))]
 namespace DeveloperPath.WebApi
@@ -78,7 +78,7 @@ namespace DeveloperPath.WebApi
                 config.WithExposedHeaders("*"); //needs for blazor to read headers
             });
 
-           
+
 
             app.UseHealthChecks("/health");
 
@@ -87,6 +87,11 @@ namespace DeveloperPath.WebApi
             app.UseSwagger();
             app.UseSwaggerUI(settings =>
             {
+                settings.OAuthClientId("swagger");
+                settings.OAuthAppName("Developer Path API - Swagger");
+                settings.OAuthUsePkce();
+                settings.OAuthClientSecret(Configuration["Audience"] ?? throw new Exception("Value can't be null: Audience"));
+
                 foreach (var description in apiVersionDescriptionProvider.ApiVersionDescriptions)
                 {
                     settings.RoutePrefix = "";

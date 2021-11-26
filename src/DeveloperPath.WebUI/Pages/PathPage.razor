@@ -26,11 +26,13 @@
                     </MudCardContent>
                 </MudTreeViewItem>
             </Iterations>
-            <MudPagination Rectangular=true
+            <MudContainer Class="d-flex justify-center py-2 px-1 mt-6">
+                   <MudPagination Rectangular=true
                            BoundaryCount="2"
                            Color="Color.Primary"
                            Count="@PaginationMetadata.TotalPages"
                            Selected="@PaginationMetadata.CurrentPage" />
+            </MudContainer>
         </MudTreeView>
     </NotMatch>
 </Condition>
