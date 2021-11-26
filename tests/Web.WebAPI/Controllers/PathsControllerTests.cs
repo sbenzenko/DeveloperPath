@@ -29,7 +29,10 @@ namespace Web.WebAPI.Controllers
       paths = new List<Path>
       {
         samplePath,
-        new Path { Id = 2, Title = "Path2", Description = "Description2" }
+        new Path { Id = 2, Title = "Path2", Description = "Description2" },
+        new Path { Id = 3, Title = "Path3", Description = "Description3" },
+        new Path { Id = 4, Title = "Path4", Description = "Description4" },
+        new Path { Id = 5, Title = "Path5", Description = "Description5" }
       };
 
       moqMediator = new Mock<IMediator>();
@@ -134,23 +137,23 @@ namespace Web.WebAPI.Controllers
     //  Assert.AreEqual(2, value.Count());
     //}
 
-    [Test]
-    public async Task Get_ReturnsPathsPage_WhenPagingProvided()
-    {
-      var controller = new PathsController(moqMediator.Object);
-      var result = await controller.Get(new PathRequestParams()
-      {
-        PageNumber = 1,
-        PageSize = 1
-      });
+    //[Test]
+    //public async Task Get_ReturnsPathsPage_WhenPagingProvided()
+    //{
+    //  var controller = new PathsController(moqMediator.Object);
+    //  var result = await controller.Get(new PathRequestParams()
+    //  {
+    //    PageNumber = 1,
+    //    PageSize = 1
+    //  });
 
-      var contentResult = (OkObjectResult)result.Result;
-      var value = contentResult.Value as IEnumerable<Path>;
-
-      Assert.IsInstanceOf(typeof(OkObjectResult), result.Result);
-      Assert.IsNotNull(contentResult);
-      Assert.AreEqual(1, value.Count());
-    }
+    //  var contentResult = (OkObjectResult)result.Result;
+    //  var value = contentResult.Value as IEnumerable<Path>;
+  
+    //  Assert.IsInstanceOf(typeof(OkObjectResult), result.Result);
+    //  Assert.IsNotNull(contentResult);
+    //  Assert.AreEqual(1, value.Count());
+    //}
 
     public async Task Get_ReturnsAllPaths_WhenPagingIsNotValid()
     {
