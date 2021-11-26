@@ -40,25 +40,25 @@ namespace IdentityProvider
             };
 
 
-        public static IEnumerable<Client> GetClients(IConfiguration configuration)=>
+        public static IEnumerable<Client> GetClients(IConfiguration configuration) =>
             new Client[]
             {
                  new Client
                 {
                     ClientId = "swagger",
                     ClientName = "Developer Path API - Swagger",
-                    ClientSecrets = {new Secret(
-                        string.IsNullOrEmpty(configuration["PathApiSwaggerSecret"])? 
-                        throw new ArgumentException("Value mustn't be null: PathApiSwaggerSecret")
-                        : configuration["PathApiSwaggerSecret"].Sha256())},  
+                    ClientSecrets = {
+                         new Secret(string.IsNullOrEmpty(configuration["PathApiSwaggerSecret"])?
+                                        throw new ArgumentException("Value mustn't be null: PathApiSwaggerSecret")
+                                        :configuration["PathApiSwaggerSecret"].Sha256())},
                     AllowedGrantTypes = GrantTypes.Code,
                     RequirePkce = true,
-                    RequireClientSecret = false,
+                    RequireClientSecret = true,
                     RedirectUris = {
                          "https://localhost:7001/oauth2-redirect.html",
                          "https://developerpathapi.azurewebsites.net/oauth2-redirect.html"
                      },
-                    AllowedCorsOrigins = 
+                    AllowedCorsOrigins =
                      {
                          "https://localhost:7001",
                          "https://developerpathapi.azurewebsites.net"

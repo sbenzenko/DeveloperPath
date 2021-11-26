@@ -52,7 +52,7 @@ namespace IdentityProvider
             //var x509Certificate2Certs =
             //    CertificationManager.GetCertificates(Environment, Configuration)
             //        .GetAwaiter().GetResult();
-
+          
             var builder = services.AddIdentityServer(options =>
                 {
                     options.Events.RaiseErrorEvents = true;

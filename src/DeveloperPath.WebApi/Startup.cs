@@ -14,6 +14,7 @@ using DeveloperPath.Infrastructure.Persistence;
 using DeveloperPath.WebApi.Extensions;
 using DeveloperPath.WebApi.Services;
 using Microsoft.IdentityModel.Tokens;
+using IdentityModel;
 
 [assembly: ApiConventionType(typeof(ApiCustomConventions))]
 namespace DeveloperPath.WebApi
@@ -85,13 +86,14 @@ namespace DeveloperPath.WebApi
             app.UseHttpsRedirection();
 
             app.UseSwagger();
+            var secret = Configuration["PathApiSwaggerSecret"] ?? throw new Exception("Value can't be null: PathApiSwaggerSecret");
             app.UseSwaggerUI(settings =>
             {
                 settings.OAuthClientId("swagger");
                 settings.OAuthAppName("Developer Path API - Swagger");
                 settings.OAuthUsePkce();
-                settings.OAuthClientSecret(Configuration["Audience"] ?? throw new Exception("Value can't be null: Audience"));
-
+                settings.OAuthClientSecret(secret);
+                 
                 foreach (var description in apiVersionDescriptionProvider.ApiVersionDescriptions)
                 {
                     settings.RoutePrefix = "";
