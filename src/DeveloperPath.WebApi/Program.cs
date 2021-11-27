@@ -27,7 +27,7 @@ namespace DeveloperPath.WebApi
                .Enrich.FromLogContext()
                // uncomment to write to Azure diagnostics stream
                .WriteTo.File(
-                   @"D:\home\LogFiles\Application\identityserver.txt",
+                   @"D:\home\LogFiles\Application\webapi.txt",
                    fileSizeLimitBytes: 1_000_000,
                    rollOnFileSizeLimit: true,
                    shared: true,

@@ -75,6 +75,7 @@ public class ThemesHelper
                   Primary = Colors.DeepPurple.Default,
                   Background = "#191d21",
                   TextPrimary = "#fff",
+                  TextSecondary = Colors.BlueGrey.Default,
                   DrawerBackground = "#292c2f",
                   DrawerText = "#fff",
                   Surface = "#343a40",
