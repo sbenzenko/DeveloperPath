@@ -159,6 +159,9 @@
   <data name="EditModule" xml:space="preserve">
     <value>Редактировать модуль</value>
   </data>
+  <data name="FetchError" xml:space="preserve">
+    <value>Произошла ошибка при загрузке данных, попробовать еще раз</value>
+  </data>
   <data name="Hello" xml:space="preserve">
     <value>Привет,</value>
   </data>

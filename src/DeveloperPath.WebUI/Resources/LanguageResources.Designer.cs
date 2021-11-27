@@ -124,6 +124,15 @@ namespace DeveloperPath.WebUI.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Deleted paths.
+        /// </summary>
+        public static string Deleted_paths {
+            get {
+                return ResourceManager.GetString("Deleted paths", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Deleted Paths.
         /// </summary>
         public static string DeletedPaths {
@@ -187,11 +196,11 @@ namespace DeveloperPath.WebUI.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Hello.
+        ///   Looks up a localized string similar to Ooops, something went wrong, try again.
         /// </summary>
-        public static string Hello {
+        public static string FetchError {
             get {
-                return ResourceManager.GetString("Hello", resourceCulture);
+                return ResourceManager.GetString("FetchError", resourceCulture);
             }
         }
         

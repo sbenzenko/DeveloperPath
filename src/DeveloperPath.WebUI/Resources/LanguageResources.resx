@@ -162,6 +162,9 @@
   <data name="EditModule" xml:space="preserve">
     <value>Edit Module</value>
   </data>
+  <data name="FetchError" xml:space="preserve">
+    <value>Ooops, something went wrong, try again</value>
+  </data>
   <data name="Home" xml:space="preserve">
     <value>Home</value>
   </data>

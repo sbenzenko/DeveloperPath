@@ -2,12 +2,13 @@
 @using DeveloperPath.WebUI.Resources
 @inject IStringLocalizer<LanguageResources> _localizer
 
-
 <Condition Evaluation="_state == UIHelper.State.Loading">
     <Match>
         <MudProgressLinear Indeterminate="true" Color="Color.Primary"></MudProgressLinear>
     </Match>
-    <NotMatch>
+</Condition>
+<Condition Evaluation="_state == UIHelper.State.ContentReady">
+    <Match>
         <MudText Typo="Typo.h1" Class="py-3">@_localizer["Paths"]</MudText>
         <MudTreeView T="string">
             <Iterations Items="Paths" Context="pathItem">
@@ -27,13 +28,25 @@
                 </MudTreeViewItem>
             </Iterations>
             <MudContainer Class="d-flex justify-center py-2 px-1 mt-6">
-                   <MudPagination Rectangular=true
-                           BoundaryCount="2"
-                           Color="Color.Primary"
-                           Count="@PaginationMetadata.TotalPages"
-                           Selected= "@PaginationMetadata.CurrentPage"
-                           SelectedChanged="ChangePageAsync"/>
+                <MudPagination Rectangular=true
+                               BoundaryCount="2"
+                               Color="Color.Primary"
+                               Count="@PaginationMetadata.TotalPages"
+                               Selected="@PaginationMetadata.CurrentPage"
+                               SelectedChanged="ChangePageAsync" />
             </MudContainer>
         </MudTreeView>
-    </NotMatch>
+    </Match>
+</Condition>
+<Condition Evaluation="_state == UIHelper.State.Error">
+    <Match>
+        <MudContainer Class="d-flex justify-center py-2 px-1 mt-6">
+            <MudButton StartIcon="@Icons.Filled.Refresh"
+                       Color="Color.Primary"
+                       Size="Size.Large"
+                       OnClick="Reload">
+                @_localizer["FetchError"]
+            </MudButton>
+        </MudContainer>
+    </Match>
 </Condition>
