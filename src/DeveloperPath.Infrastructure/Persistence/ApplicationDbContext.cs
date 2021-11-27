@@ -11,6 +11,9 @@ using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore.Query;
+using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
+using System.Text.Json;
 
 namespace DeveloperPath.Infrastructure.Persistence
 {
@@ -19,6 +22,9 @@ namespace DeveloperPath.Infrastructure.Persistence
         private readonly ICurrentUserService _currentUserService;
         private readonly IDateTime _dateTime;
         private IDbContextTransaction _currentTransaction;
+        private ValueComparer<ICollection<string>> valueComparer = new ValueComparer<ICollection<string>>((c1, c2) => c1.SequenceEqual(c2),
+                                c => c.Aggregate(0, (a, v) => HashCode.Combine(a, v.GetHashCode())),
+                                c => c.ToList());
 
         public ApplicationDbContext(
             DbContextOptions options,
@@ -117,12 +123,30 @@ namespace DeveloperPath.Infrastructure.Persistence
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            builder.Entity<Domain.Entities.Module>().Property(x => x.Tags)
+                .HasConversion(v => JsonSerializer.Serialize(v, (JsonSerializerOptions)null),
+                v => JsonSerializer.Deserialize<ICollection<string>>(v, (JsonSerializerOptions)null), valueComparer);
+            builder.Entity<Path>().Property(x => x.Tags)
+              .HasConversion(v => JsonSerializer.Serialize(v, (JsonSerializerOptions)null),
+              v => JsonSerializer.Deserialize<ICollection<string>>(v, (JsonSerializerOptions)null), valueComparer);
+            builder.Entity<Theme>().Property(x => x.Tags)
+             .HasConversion(v => JsonSerializer.Serialize(v, (JsonSerializerOptions)null),
+             v => JsonSerializer.Deserialize<ICollection<string>>(v, (JsonSerializerOptions)null), valueComparer);
+            builder.Entity<Section>().Property(x => x.Tags)
+             .HasConversion(v => JsonSerializer.Serialize(v, (JsonSerializerOptions)null),
+             v => JsonSerializer.Deserialize<ICollection<string>>(v, (JsonSerializerOptions)null), valueComparer);
+            builder.Entity<Source>().Property(x => x.Tags)
+             .HasConversion(v => JsonSerializer.Serialize(v, (JsonSerializerOptions)null),
+             v => JsonSerializer.Deserialize<ICollection<string>>(v, (JsonSerializerOptions)null), valueComparer);
+
+             
+
             builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
             var entities = builder.Model
                 .GetEntityTypes()
                 .Where(e => e.ClrType.GetInterface(typeof(IAllowSoftDeletion).Name) != null)
                 .Select(e => e.ClrType);
-            
+
             Expression<Func<IAllowSoftDeletion, bool>> expression = deletion => deletion.Deleted == null;
 
             foreach (var entity in entities)
