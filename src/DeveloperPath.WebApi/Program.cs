@@ -38,6 +38,7 @@ namespace DeveloperPath.WebApi
                .WriteTo.Console(outputTemplate: "[{Timestamp:HH:mm:ss} {Level}] {SourceContext}{NewLine}{Message:lj}{NewLine}{Exception}{NewLine}", theme: AnsiConsoleTheme.Code)
                .CreateLogger();
 
+
             try
             {
                 var host = CreateHostBuilder(args).Build();
@@ -45,7 +46,7 @@ namespace DeveloperPath.WebApi
                 {
                     var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
                     var services = scope.ServiceProvider;
-
+                    logger.LogInformation($"BaseDirectory: {AppDomain.CurrentDomain.BaseDirectory}");
                     try
                     {
                         var context = services.GetRequiredService<ApplicationDbContext>();
