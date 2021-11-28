@@ -43,6 +43,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DeveloperPath.EmailVerifica
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{262E306E-78B2-4ED6-B904-E18F1B5CD898}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeveloperPath.BuildInfo", "src\DeveloperPath.BuildInfo\DeveloperPath.BuildInfo.csproj", "{E4CE74B8-9C7B-43C5-A514-867B6BF341DB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -97,6 +99,10 @@ Global
 		{4EFD8893-3392-4ECB-B539-9AF0D4157A92}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4EFD8893-3392-4ECB-B539-9AF0D4157A92}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4EFD8893-3392-4ECB-B539-9AF0D4157A92}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E4CE74B8-9C7B-43C5-A514-867B6BF341DB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E4CE74B8-9C7B-43C5-A514-867B6BF341DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E4CE74B8-9C7B-43C5-A514-867B6BF341DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E4CE74B8-9C7B-43C5-A514-867B6BF341DB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -120,6 +126,7 @@ Global
 		{532C03A2-2A33-4331-B519-7B0A70B08480} = {6ED356A7-8B47-4613-AD01-C85CF28491BD}
 		{4EFD8893-3392-4ECB-B539-9AF0D4157A92} = {532C03A2-2A33-4331-B519-7B0A70B08480}
 		{262E306E-78B2-4ED6-B904-E18F1B5CD898} = {6ED356A7-8B47-4613-AD01-C85CF28491BD}
+		{E4CE74B8-9C7B-43C5-A514-867B6BF341DB} = {262E306E-78B2-4ED6-B904-E18F1B5CD898}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {3CB609D9-5D54-4C11-A371-DAAC8B74E430}
