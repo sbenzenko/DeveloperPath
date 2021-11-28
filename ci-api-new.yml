@@ -13,6 +13,9 @@ steps:
   inputs:
     packageType: 'sdk'
     version: '6.0.x'
+
+
+  
 - task: DotNetCoreCLI@2
   inputs:
     command: 'build'
@@ -25,7 +28,11 @@ steps:
     command: 'test'
     projects: '**/tests/*/*.csproj'
     arguments: '-- configuration ($buildConfiguration)'
-
+- task: Bash@3
+  displayName: 'Build info json'
+  inputs:
+    targetType: 'inline'
+    script: 'echo -e -n "{\"buildNumber\":\"$(Build.BuildNumber)\",\"buildId\":\"$(Build.BuildId)\",\"branchName\":\"$(Build.SourceBranchName)\",\"commitHash\":\"$(Build.SourceVersion)\"}" > "**/src/DeveloperPath.WebApi/buildinfo.json"'
 - task: DotNetCoreCLI@2 
   displayName: 'Publish'
   inputs:
