@@ -20,9 +20,9 @@ namespace DeveloperPath.WebApi
         const string APP_NAME = "DeveloperPath.WebApi";
         public async static Task Main(string[] args)
         {
-            Log.Logger = new LoggerConfiguration()
             AppVersionInfo.InitialiseBuildInfoGivenPath(AppDomain.CurrentDomain.BaseDirectory);
-               .MinimumLevel.Debug()
+            Log.Logger = new LoggerConfiguration()
+              .MinimumLevel.Debug()
                .MinimumLevel.Override("Microsoft", LogEventLevel.Warning)
                .MinimumLevel.Override("Microsoft.Hosting.Lifetime", LogEventLevel.Information)
                .MinimumLevel.Override("System", LogEventLevel.Warning)
