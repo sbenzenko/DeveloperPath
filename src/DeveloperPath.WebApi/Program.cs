@@ -43,7 +43,7 @@ namespace DeveloperPath.WebApi
             try
             {
                 var host = CreateHostBuilder(args).Build();
-              
+
 
                 using (var scope = host.Services.CreateScope())
                 {
@@ -56,10 +56,10 @@ namespace DeveloperPath.WebApi
                         baseLoggerConfig = baseLoggerConfig.WriteTo.ApplicationInsights(telemetry, TelemetryConverter.Traces);
                     }
 
-                    baseLoggerConfig.CreateLogger();
+                    Log.Logger = baseLoggerConfig.CreateLogger();
 
                     var logger = services.GetRequiredService<ILogger<Program>>();
-                 
+
                     logger.LogInformation($"BaseDirectory: {AppDomain.CurrentDomain.BaseDirectory}");
                     try
                     {
