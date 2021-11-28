@@ -22,14 +22,21 @@ namespace DeveloperPath.WebApi
         public async static Task Main(string[] args)
         {
             AppVersionInfo.InitialiseBuildInfoGivenPath(AppDomain.CurrentDomain.BaseDirectory);
+            var buildInfo = AppVersionInfo.GetBuildInfo();
+
             var baseLoggerConfig = new LoggerConfiguration()
               .MinimumLevel.Debug()
                .MinimumLevel.Override("Microsoft", LogEventLevel.Warning)
                .MinimumLevel.Override("Microsoft.Hosting.Lifetime", LogEventLevel.Information)
                .MinimumLevel.Override("System", LogEventLevel.Warning)
                .MinimumLevel.Override("Microsoft.AspNetCore.Authentication", LogEventLevel.Information)
+
                .Enrich.FromLogContext()
-               // uncomment to write to Azure diagnostics stream
+               .Enrich.WithProperty("ApplicationName", APP_NAME)
+               .Enrich.WithProperty(nameof(buildInfo.BuildId), buildInfo.BuildId)
+               .Enrich.WithProperty(nameof(buildInfo.BuildNumber), buildInfo.BuildNumber)
+               .Enrich.WithProperty(nameof(buildInfo.BranchName), buildInfo.BranchName)
+               .Enrich.WithProperty(nameof(buildInfo.CommitHash), buildInfo.CommitHash)
                .WriteTo.File(
                    @"D:\home\LogFiles\Application\webapi.txt",
                    fileSizeLimitBytes: 1_000_000,
@@ -43,8 +50,6 @@ namespace DeveloperPath.WebApi
             try
             {
                 var host = CreateHostBuilder(args).Build();
-
-
                 using (var scope = host.Services.CreateScope())
                 {
                     var services = scope.ServiceProvider;

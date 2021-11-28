@@ -15,6 +15,7 @@ using DeveloperPath.WebApi.Extensions;
 using DeveloperPath.WebApi.Services;
 using Microsoft.IdentityModel.Tokens;
 using IdentityModel;
+using Microsoft.ApplicationInsights.Extensibility;
 
 [assembly: ApiConventionType(typeof(ApiCustomConventions))]
 namespace DeveloperPath.WebApi
@@ -53,6 +54,8 @@ namespace DeveloperPath.WebApi
 
             services.AddHealthChecks()
                     .AddDbContextCheck<ApplicationDbContext>();
+
+            services.AddScoped<TelemetryConfiguration>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
