@@ -14,6 +14,12 @@ steps:
     packageType: 'sdk'
     version: '6.0.x'
 
+- task: Bash@3
+  displayName: 'Build info json'
+  inputs:
+    targetType: 'inline'
+    script: 'echo -e -n "{\"buildNumber\":\"$(Build.BuildNumber)\",\"buildId\":\"$(Build.BuildId)\",\"branchName\":\"$(Build.SourceBranchName)\",\"commitHash\":\"$(Build.SourceVersion)\"}" > "$(Build.SourcesDirectory)/src/DeveloperPath.IdentityProvider/buildinfo.json"'
+
 - task: DotNetCoreCLI@2 
   displayName: 'Publish'
   inputs:
