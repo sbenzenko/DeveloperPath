@@ -56,12 +56,12 @@ namespace IdentityProvider
                     RequireClientSecret = true,
                     RedirectUris = {
                          "https://localhost:7001/oauth2-redirect.html",
-                         "https://developerpathapi.azurewebsites.net/oauth2-redirect.html"
+                         "https://dev-path-api.azurewebsites.net/oauth2-redirect.html"
                      },
                     AllowedCorsOrigins =
                      {
                          "https://localhost:7001",
-                         "https://developerpathapi.azurewebsites.net"
+                         "https://dev-path-api.azurewebsites.net"
                      },
                     AllowedScopes = {"pathapi"}
                 },
