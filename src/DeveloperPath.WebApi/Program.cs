@@ -1,6 +1,7 @@
 using System;
 using System.Threading.Tasks;
 using Azure.Identity;
+using DeveloperPath.BuildInfo;
 using DeveloperPath.Infrastructure.Persistence;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -16,9 +17,11 @@ namespace DeveloperPath.WebApi
 {
     public class Program
     {
+        const string APP_NAME = "DeveloperPath.WebApi";
         public async static Task Main(string[] args)
         {
             Log.Logger = new LoggerConfiguration()
+            AppVersionInfo.InitialiseBuildInfoGivenPath(AppDomain.CurrentDomain.BaseDirectory);
                .MinimumLevel.Debug()
                .MinimumLevel.Override("Microsoft", LogEventLevel.Warning)
                .MinimumLevel.Override("Microsoft.Hosting.Lifetime", LogEventLevel.Information)

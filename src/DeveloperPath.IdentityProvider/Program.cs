@@ -12,6 +12,7 @@ using Serilog.Sinks.SystemConsole.Themes;
 using System;
 using System.Linq;
 using Azure.Identity;
+using DeveloperPath.BuildInfo;
 
 namespace IdentityProvider
 {
@@ -19,6 +20,8 @@ namespace IdentityProvider
     {
         public static int Main(string[] args)
         {
+            AppVersionInfo.InitialiseBuildInfoGivenPath(AppDomain.CurrentDomain.BaseDirectory);
+
             Log.Logger = new LoggerConfiguration()
                 .MinimumLevel.Debug()
                 .MinimumLevel.Override("Microsoft", LogEventLevel.Warning)
