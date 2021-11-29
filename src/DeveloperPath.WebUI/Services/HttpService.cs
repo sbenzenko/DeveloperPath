@@ -49,7 +49,7 @@ namespace DeveloperPath.WebUI.Services
                     Metadata = paginationMeta
                 };
             }
-
+            
             return new ListWithMetadata<T>
             {
                 Data = result,

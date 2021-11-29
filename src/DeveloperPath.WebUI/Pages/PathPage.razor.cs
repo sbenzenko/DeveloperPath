@@ -33,7 +33,7 @@ namespace DeveloperPath.WebUI.Pages
                 _lastPageRequest = pageNum;
 
                 _state = State.Loading;
-                var result = await PathService.GetListAsync(false, pageNum, PAGE_SIZE);
+                var result = await PathService.GetListAnonymousAsync(false, pageNum, PAGE_SIZE);
                 Paths = result.Data;
                 PaginationMetadata = result.Metadata;
                 _state = State.ContentReady;
