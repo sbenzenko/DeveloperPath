@@ -859,6 +859,11 @@
             Items per page
             </summary>
         </member>
+        <member name="P:DeveloperPath.Application.CQRS.Paths.Queries.GetPaths.GetPathPagedListQuery.OnlyVisible">
+            <summary>
+            Whether to show only visible items
+            </summary>
+        </member>
         <member name="T:DeveloperPath.Application.CQRS.Paths.Queries.GetPaths.GetPathQuery">
             <summary>
             Get path parameters

@@ -24,6 +24,9 @@ namespace DeveloperPath.Application.CQRS.Paths.Queries.GetPaths
         /// Items per page
         /// </summary>
         public int PageSize { get; init; }
+        /// <summary>
+        /// Whether to show only visible items
+        /// </summary>
         public bool OnlyVisible { get; set; }
     }
 

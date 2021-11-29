@@ -3,15 +3,17 @@
 @inject IStringLocalizer<LanguageResources> localizer
  
 <MudLayout>
-    <MudAppBar Elevation="4" Color="Color.Primary">
-        <MudIcon Icon="@DeveloperPathIcon.DeveloperPath" Size="Size.Large" ViewBox="0, 0, 400,400"></MudIcon>
+    <MudAppBar Elevation="4" Color="Color.Primary" Class="main-appbar">
+        <a href="/">
+          <MudIcon Icon="@DeveloperPathIcon.DeveloperPath" Class="top-logo" Size="Size.Large" ViewBox="0, 0, 400,400"></MudIcon>
+        </a>
         <MudHidden Breakpoint="Breakpoint.Xs">
-            <MudText Typo="Typo.h3" Class="mainheader">
+            <MudText Typo="Typo.h3" Class="title">
               <a href="/">@localizer["DeveloperPath"]</a>
             </MudText>
         </MudHidden>
         <MudToolBar DisableGutters="true">
-            <MudIconButton Icon="@Icons.Material.Outlined.Menu" Color="Color.Inherit" OnClick="DrawerToggle" Class="ml-3" />
+            <MudIconButton Icon="@Icons.Material.Outlined.Menu" Color="Color.Inherit" OnClick="DrawerToggle" />
         </MudToolBar>
         <MudSpacer />
         <CultureSelector></CultureSelector>

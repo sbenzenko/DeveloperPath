@@ -4,99 +4,101 @@ html, body {
   height: 100%;
   margin: 0;
   padding: 0;
+  min-width: 300px;
   font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans","Liberation Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
 }
-
-a {
-    text-decoration: underline;
-}
-
-.appbar-logo {
-
-}
-
-  .appbar-logo:before {
-    content: ' ';
-    z-index: -1;
-    position: absolute;
-    left: 0;
-    top: 0;
-    background: url(/Images/icon-512-white.png) center left no-repeat transparent;
-    background-size: 40px;
-    opacity: 0.5;
-    height: 100%;
-    width: 40px;
+  html.ThemeLight body {
+    color: #424242;
+    background-color: #fff;
+  }
+  html.ThemeDark body {
+    color: #fff;
+    background-color: #191d21;
   }
 
-.mainheader {
-    color: #fff;
-    padding-left: 25px;
-    line-height: 43px !important;
+header.main-appbar div.mud-toolbar-appbar {
+  padding-left: 4px !important;
+}
+header.main-appbar .top-logo {
+  opacity: 0.6;
+}
+  header.main-appbar .top-logo:hover {
+    opacity: 1;
+  }
+header.main-appbar a,
+header.main-appbar a:hover {
+  color: #fff;
+  text-decoration: none;
 }
 
-    .mainheader a,
-    .mainheader a:hover {
-        color: #fff;
-        text-decoration: none;
-    }
+header.main-appbar .title {
+  color: #fff;
+  padding-left: 5px;
+  line-height: 43px !important;
+}
+
+
+a {
+  text-decoration: underline;
+}
+
 
 .mainlogo-container {
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -moz-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-align: center;
-    -webkit-align-items: center;
-    -moz-box-align: center;
-    -ms-flex-align: center;
-    align-items: center;
-    -webkit-box-pack: center;
-    -webkit-justify-content: center;
-    -moz-box-pack: center;
-    -ms-flex-pack: center;
-    justify-content: flex-start;
-    position: fixed;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    flex-direction: column;
-    margin: 10em auto;
-    background: url(/Images/logo.png) top center no-repeat transparent;
-    background-size: 100%;
-    width: 50%;
-    max-width: 400px;
-    max-height: 400px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -moz-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -moz-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: flex-start;
+  flex-direction: column;
+  margin: 1em auto;
+  background: url(/images/icon-512.png) top center no-repeat transparent;
+  background-size: 100%;
+  max-width: 400px;
+  max-height: 400px;
+  width: 50vmin;
+  height: 50vmin;
 }
-
+.mainlogo-container h1 {
+  font-size: 5vmin;
+  text-transform: uppercase;
+}
 .page-loading-warp {
-  padding: 120% 50px 50px 50px;
+  padding: 55vmin 50px 50px 50px;
   text-align: center;
 }
 
 .ant-spin {
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    color: rgba(0, 0, 0, 0.65);
-    font-size: 14px;
-    font-variant: tabular-nums;
-    line-height: 1.5;
-    list-style: none;
-    -webkit-font-feature-settings: 'tnum';
-    font-feature-settings: 'tnum';
-    position: absolute;
-    display: none;
-    color: #1890ff;
-    text-align: center;
-    vertical-align: middle;
-    opacity: 0;
-    -webkit-transition: -webkit-transform 0.3s cubic-bezier(0.78, 0.14, 0.15, 0.86);
-    transition: -webkit-transform 0.3s cubic-bezier(0.78, 0.14, 0.15, 0.86);
-    transition: transform 0.3s cubic-bezier(0.78, 0.14, 0.15, 0.86);
-    transition: transform 0.3s cubic-bezier(0.78, 0.14, 0.15, 0.86), -webkit-transform 0.3s cubic-bezier(0.78, 0.14, 0.15, 0.86);
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  color: rgba(0, 0, 0, 0.65);
+  font-size: 14px;
+  font-variant: normal;
+  line-height: 1.5;
+  list-style: none;
+  -webkit-font-feature-settings: 'tnum';
+  font-feature-settings: 'tnum';
+  position: absolute;
+  display: none;
+  color: #1890ff;
+  text-align: center;
+  vertical-align: middle;
+  opacity: 0;
+  -webkit-transition: -webkit-transform 0.3s cubic-bezier(0.78, 0.14, 0.15, 0.86);
+  transition: -webkit-transform 0.3s cubic-bezier(0.78, 0.14, 0.15, 0.86);
+  transition: transform 0.3s cubic-bezier(0.78, 0.14, 0.15, 0.86);
+  transition: transform 0.3s cubic-bezier(0.78, 0.14, 0.15, 0.86), -webkit-transform 0.3s cubic-bezier(0.78, 0.14, 0.15, 0.86);
 }
 
 .ant-spin-spinning {
