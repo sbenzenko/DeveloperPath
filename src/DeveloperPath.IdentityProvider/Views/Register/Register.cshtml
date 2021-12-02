@@ -5,8 +5,7 @@
     <div class="row h-50"> </div>
     <div class="row h-100"> </div>
     <div class="row">
-        <div class="col s2 m2 l2"></div>
-        <div class="col s8 m8 l8">
+        <div class="col s10 m6 l4">
             <div class="card">
                 <div class="card-content">
                     <div class="center"><span class="card-title">Новый аккаунт</span></div>
@@ -39,10 +38,10 @@
                             <span asp-validation-for="@Model.ConfirmPassword" class="helper-text"></span>
                         </div>
                         <div class="center">
-                            <button type="submit" class="btn w-100 light-blue darken-3">Регистрация</button>
+                            <button type="submit" class="btn light-blue darken-3">Регистрация</button>
                         </div>
                     </form>
-
+                    <div class="row"> </div>
                     <div class="row">
                         <div class="center">
                             <text>Уже есть аккаунт?</text><a asp-controller="Account" asp-action="Login" asp-route-returnUrl="@Model.ReturnUrl"> Войти</a>
@@ -51,7 +50,6 @@
                 </div>
             </div>
         </div>
-        <div class="col s2 m2 l2"></div>
     </div>
 </div>
 

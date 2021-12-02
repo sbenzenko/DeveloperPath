@@ -4,8 +4,7 @@
     <div class="row h-50"> </div>
     <div class="row h-100"> </div>
     <div class="row">
-        <div class="col s2 m2 l2"></div>
-        <div class="col s8 m8 l8">
+        <div class="col s10 m6 l4">
             <div class="card">
                 <div class="card-content">
                     <div class="center"><span class="card-title">Войти</span></div>
@@ -14,7 +13,7 @@
                         <div class="input-field">
                             <i class="material-icons prefix">account_circle</i>
                             <input asp-for="Username" type="text" class="validate">
-                            <label asp-for="Username">Имя входа</label>
+                            <label asp-for="Username">Имя пользователя (login)</label>
                             <span class="helper-text" asp-validation-for="Username"></span>
                         </div>
                         <div class="input-field">
@@ -26,29 +25,25 @@
                         <div class="center">
                             <div asp-validation-summary="ModelOnly" class="helper-text"></div>
                         </div>
-                        <div class="row h-100"></div>
-                        <div class="right">
-                            <p>
+                        <div class="row">
+                            <p class="col text-right">
                                 <label>
                                     <input asp-for="RememberLogin" type="checkbox"/>
                                     <span>Оставаться в системе?</span>
                                 </label>
                             </p>
                         </div>
-                        <div class="row h-100"></div>
-                        <div class="row">
-                            <div class="col center s12">
-                                <button class="btn w-100 light-blue darken-3" name="button" value="login">&nbsp;&nbsp;&nbsp;&nbsp;Вход&nbsp;&nbsp;&nbsp;&nbsp;</button>
-                            </div>
+                        <div class="center">
+                            <button class="btn light-blue darken-3" name="button" value="login">&nbsp;&nbsp;&nbsp;&nbsp;Вход&nbsp;&nbsp;&nbsp;&nbsp;</button>
                         </div>
                     </form>
-
+                    <div class="row"> </div>
                     <div>
-                        <div class="row">
+@*                        <div class="row">
                             <div class="center">
                                 <a asp-controller="Account" asp-action="Login">Забыли пароль?</a>
                             </div>
-                        </div>
+                        </div>*@
                         <div class="row">
                             <div class="center">
                                 <text>Нет аккаунта?</text><a asp-controller="Register" asp-action="Register" asp-route-returnUrl="@Model.ReturnUrl"> Зарегистрироваться</a>
@@ -58,8 +53,6 @@
                 </div>
             </div>
         </div>
-        <div class="col s2 m2 l2"></div>
-
     </div>
 </div>
 

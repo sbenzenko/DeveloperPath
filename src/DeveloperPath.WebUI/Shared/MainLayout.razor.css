@@ -1,9 +1,28 @@
+/*
+TODO: For some reason CSS isolation doesn't work with MudBlazor components. Put styles into app.css
+*/
+/*
+.main-appbar div.mud-toolbar-appbar {
+  padding-left: 4px !important;
+}
 
-.content{
-    margin: 1em;
-    padding : 1em;
+.main-appbar .top-logo {
+  opacity: 0.6;
 }
-.listitem{
-    margin: 5px;
+
+  .main-appbar .top-logo:hover {
+    opacity: 1;
+  }
+
+.main-appbar a,
+.main-appbar a:hover {
+  color: #fff;
+  text-decoration: none;
 }
- 
+
+.main-appbar .title {
+  color: #fff;
+  padding-left: 5px;
+  line-height: 43px !important;
+}
+*/

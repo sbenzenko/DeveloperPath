@@ -6,9 +6,7 @@
 
 <AuthorizeView>
     <Authorized>
-        <div style="margin-right:20px">
-            <NavLink class="text-white nav-link">@context.User.Identity.Name</NavLink>
-        </div>
+        <NavLink class="text-white nav-link">@context.User.Identity.Name</NavLink>
         <MudIconButton Icon="@Icons.Material.Outlined.ExitToApp" Color="Color.Inherit" OnClick="BeginSignOut"></MudIconButton>
     </Authorized>
     <NotAuthorized>

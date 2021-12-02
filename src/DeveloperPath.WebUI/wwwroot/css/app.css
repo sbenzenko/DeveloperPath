@@ -16,31 +16,35 @@ html, body {
     background-color: #191d21;
   }
 
-header.main-appbar div.mud-toolbar-appbar {
+a {
+  text-decoration: underline;
+}
+
+/* MainLayout.razor.css */
+.main-appbar div.mud-toolbar-appbar {
   padding-left: 4px !important;
 }
-header.main-appbar .top-logo {
+
+.main-appbar .top-logo {
   opacity: 0.6;
 }
-  header.main-appbar .top-logo:hover {
+
+  .main-appbar .top-logo:hover {
     opacity: 1;
   }
-header.main-appbar a,
-header.main-appbar a:hover {
+
+.main-appbar a,
+.main-appbar a:hover {
   color: #fff;
   text-decoration: none;
 }
 
-header.main-appbar .title {
+.main-appbar .title {
   color: #fff;
   padding-left: 5px;
   line-height: 43px !important;
 }
-
-
-a {
-  text-decoration: underline;
-}
+/* /MainLayout.razor.css */
 
 
 .mainlogo-container {
@@ -67,6 +71,7 @@ a {
   max-height: 400px;
   width: 50vmin;
   height: 50vmin;
+  margin-top: 3em;
 }
 .mainlogo-container h1 {
   font-size: 5vmin;

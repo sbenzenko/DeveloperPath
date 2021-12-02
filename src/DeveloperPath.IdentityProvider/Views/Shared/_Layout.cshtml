@@ -8,13 +8,17 @@
 
     <link rel="icon" type="image/x-icon" href="~/favicon.ico" />
     <link rel="shortcut icon" type="image/x-icon" href="~/favicon.ico" />
+    <link rel="stylesheet" href="~/css/bootstrap/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/theme-light.css" media="(prefers-color-scheme: light)" />
+    <link rel="stylesheet" href="~/css/theme-dark.css" media="(prefers-color-scheme: dark)" />
     <link rel="stylesheet" href="~/css/materialize.min.css" />
     <link rel="stylesheet" href="~/css/icon.css">
     <link rel="stylesheet" href="~/css/ovveridecolors.css">
+    <link rel="stylesheet" href="~/css/app.css">
+    <script type="text/javascript" src="~/js/materialize.min.js"></script>
 </head>
 <body>
 
-<script type="text/javascript" src="~/js/materialize.min.js"></script>
 @RenderBody()
 
 @RenderSection("scripts", required: false)
