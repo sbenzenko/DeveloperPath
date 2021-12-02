@@ -10,6 +10,8 @@
 	<IncludeOpenAPIAnalyzers>true</IncludeOpenAPIAnalyzers>
 
 	<NoWarn>$(NoWarn);1591</NoWarn>
+
+	<UserSecretsId>4d454d57-5e39-4feb-bc9b-1102619a74f9</UserSecretsId>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
