@@ -1,4 +1,6 @@
-﻿namespace DeveloperPath.Shared.ClientModels
+﻿using System;
+
+namespace DeveloperPath.Shared.ClientModels
 {
     /// <summary>
     /// Theme title
@@ -8,7 +10,7 @@
         /// <summary>
         /// Theme id
         /// </summary>
-        public int Id { get; init; }
+        public Guid Id { get; init; }
 
         /// <summary>
         /// Theme title

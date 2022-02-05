@@ -6,6 +6,8 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
+#nullable disable
+
 namespace DeveloperPath.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
@@ -15,16 +17,16 @@ namespace DeveloperPath.Infrastructure.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("ProductVersion", "5.0.5")
-                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                .HasAnnotation("ProductVersion", "6.0.1")
+                .HasAnnotation("Relational:MaxIdentifierLength", 128);
+
+            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
             modelBuilder.Entity("DeveloperPath.Domain.Entities.Module", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("Created")
                         .HasColumnType("datetime2");
@@ -51,8 +53,8 @@ namespace DeveloperPath.Infrastructure.Migrations
                     b.Property<string>("LastModifiedBy")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("ModuleId")
-                        .HasColumnType("int");
+                    b.Property<Guid?>("ModuleId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("Necessity")
                         .HasColumnType("int");
@@ -77,10 +79,9 @@ namespace DeveloperPath.Infrastructure.Migrations
 
             modelBuilder.Entity("DeveloperPath.Domain.Entities.Path", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("Created")
                         .HasColumnType("datetime2");
@@ -95,9 +96,6 @@ namespace DeveloperPath.Infrastructure.Migrations
                         .IsRequired()
                         .HasMaxLength(3000)
                         .HasColumnType("nvarchar(3000)");
-
-                    b.Property<bool>("IsVisible")
-                        .HasColumnType("bit");
 
                     b.Property<string>("Key")
                         .IsRequired()
@@ -118,6 +116,9 @@ namespace DeveloperPath.Infrastructure.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
+                    b.Property<bool>("Visible")
+                        .HasColumnType("bit");
+
                     b.HasKey("Id");
 
                     b.HasIndex("Key")
@@ -128,11 +129,11 @@ namespace DeveloperPath.Infrastructure.Migrations
 
             modelBuilder.Entity("DeveloperPath.Domain.Entities.PathModules", b =>
                 {
-                    b.Property<int>("PathId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("PathId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("ModuleId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("ModuleId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("Order")
                         .ValueGeneratedOnAdd()
@@ -148,10 +149,9 @@ namespace DeveloperPath.Infrastructure.Migrations
 
             modelBuilder.Entity("DeveloperPath.Domain.Entities.Section", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("Created")
                         .HasColumnType("datetime2");
@@ -165,8 +165,8 @@ namespace DeveloperPath.Infrastructure.Migrations
                     b.Property<string>("LastModifiedBy")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("ModuleId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("ModuleId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("Necessity")
                         .HasColumnType("int");
@@ -191,10 +191,9 @@ namespace DeveloperPath.Infrastructure.Migrations
 
             modelBuilder.Entity("DeveloperPath.Domain.Entities.Source", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("Availability")
                         .HasColumnType("int");
@@ -224,8 +223,8 @@ namespace DeveloperPath.Infrastructure.Migrations
                     b.Property<string>("Tags")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("ThemeId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("ThemeId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Title")
                         .IsRequired()
@@ -251,8 +250,9 @@ namespace DeveloperPath.Infrastructure.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -266,10 +266,9 @@ namespace DeveloperPath.Infrastructure.Migrations
 
             modelBuilder.Entity("DeveloperPath.Domain.Entities.Theme", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("Complexity")
                         .HasColumnType("int");
@@ -291,8 +290,8 @@ namespace DeveloperPath.Infrastructure.Migrations
                     b.Property<string>("LastModifiedBy")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("ModuleId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("ModuleId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("Necessity")
                         .HasColumnType("int");
@@ -300,8 +299,8 @@ namespace DeveloperPath.Infrastructure.Migrations
                     b.Property<int>("Order")
                         .HasColumnType("int");
 
-                    b.Property<int?>("SectionId")
-                        .HasColumnType("int");
+                    b.Property<Guid?>("SectionId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Tags")
                         .HasColumnType("nvarchar(max)");
@@ -322,11 +321,11 @@ namespace DeveloperPath.Infrastructure.Migrations
 
             modelBuilder.Entity("ThemeTheme", b =>
                 {
-                    b.Property<int>("PrerequisitesId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("PrerequisitesId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("RelatedId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("RelatedId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("PrerequisitesId", "RelatedId");
 

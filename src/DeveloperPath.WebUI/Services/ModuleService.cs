@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using DeveloperPath.Shared.ClientModels;
 using DeveloperPath.WebUI.Commons;
@@ -16,7 +17,7 @@ namespace DeveloperPath.WebUI.Services
             _httpService = httpService;
         }
 
-        public async Task<ListWithMetadata<Module>> GetListAsync(int Id)
+        public async Task<ListWithMetadata<Module>> GetListAsync(Guid Id)
         {
             return await _httpService.GetListAnonymousAsync<Module>($"{BaseResourceString}/{Id}");
         }

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace DeveloperPath.Shared.ClientModels
 {
@@ -10,7 +11,7 @@ namespace DeveloperPath.Shared.ClientModels
         /// <summary>
         /// Path ID
         /// </summary>
-        public int Id { get; set; }
+        public Guid Id { get; set; }
 
         /// <summary>
         /// Path title

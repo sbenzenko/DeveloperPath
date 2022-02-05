@@ -9,6 +9,7 @@ using DeveloperPath.Application.CQRS.Themes.Commands.DeleteTheme;
 using DeveloperPath.Application.CQRS.Themes.Commands.UpdateTheme;
 using DeveloperPath.Application.CQRS.Themes.Queries.GetThemes;
 using DeveloperPath.Shared.ClientModels;
+using System;
 
 namespace DeveloperPath.WebApi.Controllers
 {
@@ -31,7 +32,7 @@ namespace DeveloperPath.WebApi.Controllers
     /// <response code="404">Module not found</response>
     [HttpGet]
     [HttpHead]
-    public async Task<ActionResult<IEnumerable<Theme>>> Get(int pathId, int moduleId, CancellationToken ct = default)
+    public async Task<ActionResult<IEnumerable<Theme>>> Get(Guid pathId, Guid moduleId, CancellationToken ct = default)
     {
       IEnumerable<Theme> themes = await Mediator.Send(
          new GetThemeListQuery { PathId = pathId, ModuleId = moduleId }, ct);
@@ -50,7 +51,7 @@ namespace DeveloperPath.WebApi.Controllers
     /// <response code="200">Returns requested theme</response>
     [HttpGet("{themeId}", Name = "GetTheme")]
     [HttpHead("{themeId}")]
-    public async Task<ActionResult<Theme>> Get(int pathId, int moduleId, int themeId, CancellationToken ct = default)
+    public async Task<ActionResult<Theme>> Get(Guid pathId, Guid moduleId, Guid themeId, CancellationToken ct = default)
     {
       Theme model = await Mediator.Send(
         new GetThemeQuery { PathId = pathId, ModuleId = moduleId, Id = themeId }, ct);
@@ -91,7 +92,7 @@ namespace DeveloperPath.WebApi.Controllers
     [Authorize]
     [HttpPost]
     [Consumes("application/json")]
-    public async Task<ActionResult<Theme>> Create(int pathId, int moduleId,
+    public async Task<ActionResult<Theme>> Create(Guid pathId, Guid moduleId,
       [FromBody] CreateTheme command)
     {
       if (pathId != command.PathId || moduleId != command.ModuleId)
@@ -118,7 +119,7 @@ namespace DeveloperPath.WebApi.Controllers
     [Authorize]
     [HttpPut("{themeId}")]
     [Consumes("application/json")]
-    public async Task<ActionResult<Theme>> Update(int pathId, int moduleId, int themeId,
+    public async Task<ActionResult<Theme>> Update(Guid pathId, Guid moduleId, Guid themeId,
       [FromBody] UpdateTheme command)
     {
       if (pathId != command.PathId || moduleId != command.ModuleId || themeId != command.Id)
@@ -139,7 +140,7 @@ namespace DeveloperPath.WebApi.Controllers
     /// <response code="204">Theme deleted successfully</response>
     [Authorize]
     [HttpDelete("{themeId}")]
-    public async Task<ActionResult> Delete(int pathId, int moduleId, int themeId)
+    public async Task<ActionResult> Delete(Guid pathId, Guid moduleId, Guid themeId)
     {
       await Mediator.Send(new DeleteTheme { PathId = pathId, ModuleId = moduleId, Id = themeId });
 

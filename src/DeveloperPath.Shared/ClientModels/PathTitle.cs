@@ -1,4 +1,6 @@
-﻿namespace DeveloperPath.Shared.ClientModels
+﻿using System;
+
+namespace DeveloperPath.Shared.ClientModels
 {
     /// <summary>
     /// Path title
@@ -8,7 +10,7 @@
         /// <summary>
         /// Path ID
         /// </summary>
-        public int Id { get; init; }
+        public Guid Id { get; init; }
 
         /// <summary>
         /// Path title

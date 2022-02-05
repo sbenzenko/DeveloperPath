@@ -8,7 +8,7 @@ namespace DeveloperPath.Domain.Entities;
 /// <summary>
 /// Represents module (skill) of the path, e.g. Programming language, Databases, CI/CD. etc.
 /// </summary>
-public record Module : AuditableEntity, IAllowSoftDeletion
+public class Module : AuditableEntity //, IAllowSoftDeletion
 {
   /// <summary>
   /// Module URI key

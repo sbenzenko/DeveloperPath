@@ -1,4 +1,6 @@
-﻿namespace DeveloperPath.Shared.ClientModels
+﻿using System;
+
+namespace DeveloperPath.Shared.ClientModels
 {
     /// <summary>
     /// Module title
@@ -8,7 +10,7 @@
         /// <summary>
         /// Module ID
         /// </summary>
-        public int Id { get; init; }
+        public Guid Id { get; init; }
 
         /// <summary>
         /// Module title

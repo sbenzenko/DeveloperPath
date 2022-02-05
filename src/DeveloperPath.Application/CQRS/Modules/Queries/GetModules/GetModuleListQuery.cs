@@ -10,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using DeveloperPath.Application.Common.Exceptions;
 using DeveloperPath.Application.Common.Interfaces;
 using DeveloperPath.Shared.ClientModels;
+using System;
 
 namespace DeveloperPath.Application.CQRS.Modules.Queries.GetModules
 {
@@ -22,7 +23,7 @@ namespace DeveloperPath.Application.CQRS.Modules.Queries.GetModules
         /// PathId
         /// </summary>
         [Required]
-        public int PathId { get; init; }
+        public Guid PathId { get; init; }
     }
 
     internal class GetModulesQueryHandler : IRequestHandler<GetModuleListQuery, IEnumerable<Module>>

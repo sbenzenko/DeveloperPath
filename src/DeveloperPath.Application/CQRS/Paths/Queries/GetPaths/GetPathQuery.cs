@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using DeveloperPath.Application.Common.Exceptions;
 using DeveloperPath.Application.Common.Interfaces;
 using DeveloperPath.Shared.ClientModels;
+using System;
 
 namespace DeveloperPath.Application.CQRS.Paths.Queries.GetPaths
 {
@@ -20,7 +21,7 @@ namespace DeveloperPath.Application.CQRS.Paths.Queries.GetPaths
     /// Path id
     /// </summary>
     [Required]
-    public int Id { get; init; }
+    public Guid Id { get; init; }
   }
 
   internal class GetPathQueryHandler : IRequestHandler<GetPathQuery, Path>

@@ -9,7 +9,7 @@ namespace DeveloperPath.Domain.Entities;
 /// Represents a section in module (logical group of themes, like a book chapter).
 /// May or may not exist in a module
 /// </summary>
-public record Section : AuditableEntity
+public class Section : AuditableEntity
 {
   /// <summary>
   /// Theme Title

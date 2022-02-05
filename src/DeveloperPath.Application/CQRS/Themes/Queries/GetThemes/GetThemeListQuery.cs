@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading;
@@ -23,12 +24,12 @@ namespace DeveloperPath.Application.CQRS.Themes.Queries.GetThemes
     /// Path Id
     /// </summary>
     [Required]
-    public int PathId { get; init; }
+    public Guid PathId { get; init; }
     /// <summary>
     /// Module Id
     /// </summary>
     [Required]
-    public int ModuleId { get; init; }
+    public Guid ModuleId { get; init; }
   }
 
   internal class GetThemeListQueryHandler : IRequestHandler<GetThemeListQuery, IEnumerable<Theme>>

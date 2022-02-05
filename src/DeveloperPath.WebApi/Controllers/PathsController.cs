@@ -14,6 +14,7 @@ using DeveloperPath.Shared.ClientModels;
 using DeveloperPath.WebApi.Helpers;
 using DeveloperPath.WebApi.Models;
 using DeveloperPath.WebApi.Filters;
+using System;
 
 namespace DeveloperPath.WebApi.Controllers
 {
@@ -77,7 +78,7 @@ namespace DeveloperPath.WebApi.Controllers
         /// <response code="200">Returns requested path</response>
         [HttpGet("{pathId}", Name = "GetPath")]
         [HttpHead("{pathId}")]
-        public async Task<ActionResult<Path>> Get(int pathId, CancellationToken ct = default)
+        public async Task<ActionResult<Path>> Get(Guid pathId, CancellationToken ct = default)
         {
             Path model = await Mediator.Send(new GetPathQuery { Id = pathId }, ct);
 
@@ -132,7 +133,7 @@ namespace DeveloperPath.WebApi.Controllers
         [Authorize(Roles = "Administrator")]
         [HttpPut("{pathId}")]
         [Consumes("application/json")]
-        public async Task<ActionResult<Path>> Update(int pathId,
+        public async Task<ActionResult<Path>> Update(Guid pathId,
           [FromBody] UpdatePath command)
         {
             if (pathId != command.Id)
@@ -154,7 +155,7 @@ namespace DeveloperPath.WebApi.Controllers
 
         [HttpPatch("{pathId}")]
         [Authorize(Roles = "Administrator")]
-        public async Task<ActionResult<Path>> Patch([FromBody] JsonPatchDocument patchDocument, [FromRoute] int pathId)
+        public async Task<ActionResult<Path>> Patch([FromBody] JsonPatchDocument patchDocument, [FromRoute] Guid pathId)
         {
             var pathPatchCommand = new PatchPathCommand(pathId, patchDocument);
             return Ok(await Mediator.Send(pathPatchCommand));
@@ -174,7 +175,7 @@ namespace DeveloperPath.WebApi.Controllers
         [HttpPatch("deleted/{pathId}")]
         [Authorize(Roles = "Administrator")]
         [Consumes("application/json")]
-        public async Task<ActionResult<Path>> PatchDeleted([FromBody] JsonPatchDocument patchDocument, [FromRoute] int pathId)
+        public async Task<ActionResult<Path>> PatchDeleted([FromBody] JsonPatchDocument patchDocument, [FromRoute] Guid pathId)
         {
             var pathPatchCommand = new PatchPathCommand(pathId, patchDocument, false);
             return Ok(await Mediator.Send(pathPatchCommand));
@@ -188,7 +189,7 @@ namespace DeveloperPath.WebApi.Controllers
         /// <response code="204">Path deleted successfully</response>
         [Authorize(Roles = "Administrator")]
         [HttpDelete("{pathId}")]
-        public async Task<IActionResult> Delete(int pathId)
+        public async Task<IActionResult> Delete(Guid pathId)
         {
             await Mediator.Send(new DeletePath { Id = pathId });
 

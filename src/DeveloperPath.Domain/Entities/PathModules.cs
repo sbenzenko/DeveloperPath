@@ -2,7 +2,7 @@
 
 namespace DeveloperPath.Domain.Entities;
 
-public record PathModules
+public class PathModules
 {
   /// <summary>
   /// Path ID

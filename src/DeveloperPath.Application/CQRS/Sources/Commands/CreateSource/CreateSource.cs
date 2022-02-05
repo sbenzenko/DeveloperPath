@@ -10,6 +10,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using DeveloperPath.Shared.Enums;
 using DeveloperPath.Shared.ClientModels;
+using System;
 
 namespace DeveloperPath.Application.CQRS.Sources.Commands.CreateSource
 {
@@ -22,17 +23,17 @@ namespace DeveloperPath.Application.CQRS.Sources.Commands.CreateSource
     /// Path Id
     /// </summary>
     [Required]
-    public int PathId { get; init; }
+    public Guid PathId { get; init; }
     /// <summary>
     /// Module Id
     /// </summary>
     [Required]
-    public int ModuleId { get; init; }
+    public Guid ModuleId { get; init; }
     /// <summary>
     /// Theme id that the source is for
     /// </summary>
     [Required]
-    public int ThemeId { get; init; }
+    public Guid ThemeId { get; init; }
     /// <summary>
     /// Source title
     /// </summary>

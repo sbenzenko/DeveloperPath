@@ -35,7 +35,7 @@ namespace DeveloperPath.WebUI.Pages
                 Modules = result.Data;
                 _state = State.ContentReady;
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 _state = State.Error;
             }

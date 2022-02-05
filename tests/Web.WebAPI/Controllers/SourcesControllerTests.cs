@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -24,14 +25,14 @@ namespace Web.WebAPI.Controllers
 
     public SourcesControllerTests()
     {
-      sampleSource = new Source { Id = 1, ThemeId = 1, Title = "Source1", Description = "Description1", Url = "https://www.test1.com" };
+      sampleSource = new Source { Id = Guid.Empty, ThemeId = Guid.Empty, Title = "Source1", Description = "Description1", Url = "https://www.test1.com" };
       Sources = new List<Source>
       {
         sampleSource,
-        new Source { Id = 2, ThemeId = 1, Title = "Source2", Description = "Description2", Url = "https://www.test1.com" }
+        new Source { Id = Guid.Empty, ThemeId = Guid.Empty, Title = "Source2", Description = "Description2", Url = "https://www.test1.com" }
       };
 
-      updateCommand = new UpdateSource { Id = 1, PathId = 1, ModuleId = 1, ThemeId = 1, 
+      updateCommand = new UpdateSource { Id = Guid.Empty, PathId = Guid.Empty, ModuleId = Guid.Empty, ThemeId = Guid.Empty, 
         Order = 0, Title = "Create title", Description = "Create Description", Url = "http://www.ww.ww" };
 
       moqMediator = new Mock<IMediator>();
@@ -61,7 +62,7 @@ namespace Web.WebAPI.Controllers
     {
       var controller = new SourcesController(moqMediator.Object);
       
-      var result = await controller.Get(1, 1, 1);
+      var result = await controller.Get(Guid.Empty, Guid.Empty, Guid.Empty);
       var content = GetObjectResultContent<IEnumerable<Source>>(result.Result);
 
       Assert.IsInstanceOf(typeof(OkObjectResult), result.Result);
@@ -74,7 +75,7 @@ namespace Web.WebAPI.Controllers
     {
       var controller = new SourcesController(moqMediator.Object);
       
-      var result = await controller.Get(1, 1, 1, 1);
+      var result = await controller.Get(Guid.Empty, Guid.Empty, Guid.Empty, Guid.Empty);
       var content = GetObjectResultContent<Source>(result.Result);
 
       Assert.IsInstanceOf(typeof(OkObjectResult), result.Result);
@@ -85,11 +86,11 @@ namespace Web.WebAPI.Controllers
     [Test]
     public async Task Create_ReturnsCreatedAtRoute()
     {
-      var createCommand = new CreateSource { PathId = 1, ModuleId = 1, ThemeId = 1, 
+      var createCommand = new CreateSource { PathId = Guid.Empty, ModuleId = Guid.Empty, ThemeId = Guid.Empty, 
         Order = 0, Title = "Create title", Description = "Create Description", Url = "http://www.ww.ww" };
       var controller = new SourcesController(moqMediator.Object);
       
-      var result = await controller.Create(1, 1, 1, createCommand);
+      var result = await controller.Create(Guid.Empty, Guid.Empty, Guid.Empty, createCommand);
       var content = GetObjectResultContent<Source>(result.Result);
 
       Assert.IsInstanceOf(typeof(CreatedAtRouteResult), result.Result);
@@ -101,11 +102,11 @@ namespace Web.WebAPI.Controllers
     [Test]
     public async Task Create_ReturnsBadRequest_WhenRequestedModuleIdDoesNotMatchCommandModuleId()
     {
-      var createCommand = new CreateSource { PathId = 1, ModuleId = 1, ThemeId = 1, 
+      var createCommand = new CreateSource { PathId = Guid.Empty, ModuleId = Guid.Empty, ThemeId = Guid.Empty, 
         Order = 0, Title = "Create title", Description = "Create Description", Url = "http://www.ww.ww" };
       var controller = new SourcesController(moqMediator.Object);
       
-      var result = await controller.Create(1, 2, 1, createCommand);
+      var result = await controller.Create(Guid.Empty, Guid.Empty, Guid.Empty, createCommand);
 
       Assert.IsInstanceOf(typeof(BadRequestResult), result.Result);
     }
@@ -113,11 +114,11 @@ namespace Web.WebAPI.Controllers
     [Test]
     public async Task Create_ReturnsBadRequest_WhenRequestedThemeIdDoesNotMatchCommandThemeId()
     {
-      var createCommand = new CreateSource { PathId = 1, ModuleId = 1, ThemeId = 1, 
+      var createCommand = new CreateSource { PathId = Guid.Empty, ModuleId = Guid.Empty, ThemeId = Guid.Empty, 
         Order = 0, Title = "Create title", Description = "Create Description", Url = "http://www.ww.ww" };
       var controller = new SourcesController(moqMediator.Object);
       
-      var result = await controller.Create(1, 1, 2, createCommand);
+      var result = await controller.Create(Guid.Empty, Guid.Empty, Guid.Empty, createCommand);
 
       Assert.IsInstanceOf(typeof(BadRequestResult), result.Result);
     }
@@ -125,11 +126,11 @@ namespace Web.WebAPI.Controllers
     [Test]
     public async Task Create_ReturnsBadRequest_WhenRequestedPathIdDoesNotMatchCommandId()
     {
-      var createCommand = new CreateSource { PathId = 1, ModuleId = 1, ThemeId = 1, 
+      var createCommand = new CreateSource { PathId = Guid.Empty, ModuleId = Guid.Empty, ThemeId = Guid.Empty, 
         Order = 0, Title = "Create title", Description = "Create Description", Url = "http://www.ww.ww" };
       var controller = new SourcesController(moqMediator.Object);
       
-      var result = await controller.Create(2, 1, 1, createCommand);
+      var result = await controller.Create(Guid.Empty, Guid.Empty, Guid.Empty, createCommand);
 
       Assert.IsInstanceOf(typeof(BadRequestResult), result.Result);
     }
@@ -137,11 +138,11 @@ namespace Web.WebAPI.Controllers
     [Test]
     public async Task Update_ReturnsUpdatedSource_WhenRequestedIdMatchesCommandId()
     {
-      var updateCommand = new UpdateSource { Id = 1, PathId = 1, ModuleId = 1, ThemeId = 1, 
+      var updateCommand = new UpdateSource { Id = Guid.Empty, PathId = Guid.Empty, ModuleId = Guid.Empty, ThemeId = Guid.Empty, 
         Order = 0, Title = "Create title", Description = "Create Description", Url = "http://www.ww.ww" };
       var controller = new SourcesController(moqMediator.Object);
       
-      var result = await controller.Update(1, 1, 1, 1, updateCommand);
+      var result = await controller.Update(Guid.Empty, Guid.Empty, Guid.Empty, Guid.Empty, updateCommand);
       var content = GetObjectResultContent<Source>(result.Result);
 
       Assert.IsInstanceOf(typeof(OkObjectResult), result.Result);
@@ -154,7 +155,7 @@ namespace Web.WebAPI.Controllers
     {
       var controller = new SourcesController(moqMediator.Object);
       
-      var result = await controller.Update(2, 1, 1, 1, updateCommand);
+      var result = await controller.Update(Guid.Empty, Guid.Empty, Guid.Empty, Guid.Empty, updateCommand);
 
       Assert.IsInstanceOf(typeof(BadRequestResult), result.Result);
     }
@@ -164,7 +165,7 @@ namespace Web.WebAPI.Controllers
     {
       var controller = new SourcesController(moqMediator.Object);
       
-      var result = await controller.Update(1, 2, 1, 1, updateCommand);
+      var result = await controller.Update(Guid.Empty, Guid.Empty, Guid.Empty, Guid.Empty, updateCommand);
 
       Assert.IsInstanceOf(typeof(BadRequestResult), result.Result);
     }
@@ -174,7 +175,7 @@ namespace Web.WebAPI.Controllers
     {
       var controller = new SourcesController(moqMediator.Object);
       
-      var result = await controller.Update(1, 1, 2, 1, updateCommand);
+      var result = await controller.Update(Guid.Empty, Guid.Empty, Guid.Empty, Guid.Empty, updateCommand);
 
       Assert.IsInstanceOf(typeof(BadRequestResult), result.Result);
     }
@@ -184,7 +185,7 @@ namespace Web.WebAPI.Controllers
     {
       var controller = new SourcesController(moqMediator.Object);
       
-      var result = await controller.Update(1, 1, 1, 2, updateCommand);
+      var result = await controller.Update(Guid.Empty, Guid.Empty, Guid.Empty, Guid.Empty, updateCommand);
 
       Assert.IsInstanceOf(typeof(BadRequestResult), result.Result);
     }
@@ -194,7 +195,7 @@ namespace Web.WebAPI.Controllers
     {
       var controller = new SourcesController(moqMediator.Object);
       
-      var result = await controller.Delete(1, 1, 1, 1);
+      var result = await controller.Delete(Guid.Empty, Guid.Empty, Guid.Empty, Guid.Empty);
 
       Assert.IsInstanceOf(typeof(NoContentResult), result);
     }

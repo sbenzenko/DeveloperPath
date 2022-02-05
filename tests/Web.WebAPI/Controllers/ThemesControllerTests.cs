@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -23,11 +24,11 @@ namespace Web.WebAPI.Controllers
 
     public ThemesControllerTests()
     {
-      sampleTheme = new Theme { Id = 1, ModuleId = 1, Title = "Theme1", Description = "Description1" };
+      sampleTheme = new Theme { Id = Guid.Empty, ModuleId = Guid.Empty, Title = "Theme1", Description = "Description1" };
       Themes = new List<Theme>
       {
         sampleTheme,
-        new Theme { Id = 2, ModuleId = 1, Title = "Theme2", Description = "Description2" }
+        new Theme { Id = Guid.Empty, ModuleId = Guid.Empty, Title = "Theme2", Description = "Description2" }
       };
 
       moqMediator = new Mock<IMediator>();
@@ -81,7 +82,7 @@ namespace Web.WebAPI.Controllers
     [Test]
     public async Task Create_ReturnsCreatedAtRoute()
     {
-      var createCommand = new CreateTheme { PathId = 1, ModuleId = 1, Order = 0, Title = "Create title", Description = "Create Description" };
+      var createCommand = new CreateTheme { PathId = Guid.Empty, ModuleId = Guid.Empty, Order = 0, Title = "Create title", Description = "Create Description" };
       var controller = new ThemesController(moqMediator.Object);
       
       var result = await controller.Create(1, 1, createCommand);
@@ -96,7 +97,7 @@ namespace Web.WebAPI.Controllers
     [Test]
     public async Task Create_ReturnsBadRequest_WhenRequestedPathIdDoesNotMatchCommandId()
     {
-      var createCommand = new CreateTheme { PathId = 1, ModuleId = 1, Order = 0, Title = "Create title", Description = "Create Description" };
+      var createCommand = new CreateTheme { PathId = Guid.Empty, ModuleId = Guid.Empty, Order = 0, Title = "Create title", Description = "Create Description" };
       var controller = new ThemesController(moqMediator.Object);
       
       var result = await controller.Create(2, 1, createCommand);
@@ -107,7 +108,7 @@ namespace Web.WebAPI.Controllers
     [Test]
     public async Task Create_ReturnsBadRequest_WhenRequestedModuleIdDoesNotMatchCommandModuleId()
     {
-      var createCommand = new CreateTheme { PathId = 1, ModuleId = 1, Order = 0, Title = "Create title", Description = "Create Description" };
+      var createCommand = new CreateTheme { PathId = Guid.Empty, ModuleId = Guid.Empty, Order = 0, Title = "Create title", Description = "Create Description" };
       var controller = new ThemesController(moqMediator.Object);
       
       var result = await controller.Create(1, 2, createCommand);
@@ -118,10 +119,10 @@ namespace Web.WebAPI.Controllers
     [Test]
     public async Task Update_ReturnsUpdatedTheme_WhenRequestedIdMatchesCommandId()
     {
-      var updateCommand = new UpdateTheme { Id = 1, PathId = 1, ModuleId = 1, Order = 0, Title = "Update title", Description = "Update Description" };
+      var updateCommand = new UpdateTheme { Id = Guid.Empty, PathId = Guid.Empty, ModuleId = Guid.Empty, Order = 0, Title = "Update title", Description = "Update Description" };
       var controller = new ThemesController(moqMediator.Object);
       
-      var result = await controller.Update(1, 1, 1, updateCommand);
+      var result = await controller.Update(Guid.Empty, Guid.Empty, Guid.Empty, updateCommand);
       var content = GetObjectResultContent<Theme>(result.Result);
 
       Assert.IsInstanceOf(typeof(OkObjectResult), result.Result);

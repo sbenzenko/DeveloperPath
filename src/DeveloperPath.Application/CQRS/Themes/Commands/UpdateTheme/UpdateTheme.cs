@@ -10,7 +10,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using DeveloperPath.Shared.ClientModels;
 using DeveloperPath.Shared.Enums;
-
+using System;
 
 namespace DeveloperPath.Application.CQRS.Themes.Commands.UpdateTheme
 {
@@ -23,17 +23,17 @@ namespace DeveloperPath.Application.CQRS.Themes.Commands.UpdateTheme
     /// Theme id
     /// </summary>
     [Required]
-    public int Id { get; init; }
+    public Guid Id { get; init; }
     /// <summary>
     /// Path id
     /// </summary>
     [Required]
-    public int PathId { get; init; }
+    public Guid PathId { get; init; }
     /// <summary>
     /// Module Id
     /// </summary>
     [Required]
-    public int ModuleId { get; init; }
+    public Guid ModuleId { get; init; }
     /// <summary>
     /// Theme title
     /// </summary>
@@ -49,7 +49,7 @@ namespace DeveloperPath.Application.CQRS.Themes.Commands.UpdateTheme
     /// <summary>
     /// Theme section id (can be null)
     /// </summary>
-    public int SectionId { get; init; }
+    public Guid? SectionId { get; init; }
     /// <summary>
     /// Complexity level (Beginner | Intermediate | Advanced)
     /// </summary>
@@ -93,7 +93,7 @@ namespace DeveloperPath.Application.CQRS.Themes.Commands.UpdateTheme
         throw new NotFoundException(nameof(Theme), request.Id, NotFoundHelper.THEME_NOT_FOUND);
 
       Domain.Entities.Section section = null;
-      if (request.SectionId > 0)
+      if (request.SectionId is not null)
       {
         section = await _context.Sections
           .Where(s => s.Id == request.SectionId)

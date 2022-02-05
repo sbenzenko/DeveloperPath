@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -21,22 +22,22 @@ namespace DeveloperPath.Application.CQRS.Sources.Queries.GetSources
     /// Source Id
     /// </summary>
     [Required]
-    public int Id { get; init; }
+    public Guid Id { get; init; }
     /// <summary>
     /// Path Id
     /// </summary>
     [Required]
-    public int PathId { get; init; }
+    public Guid PathId { get; init; }
     /// <summary>
     /// Module Id
     /// </summary>
     [Required]
-    public int ModuleId { get; init; }
+    public Guid ModuleId { get; init; }
     /// <summary>
     /// Theme Id
     /// </summary>
     [Required]
-    public int ThemeId { get; init; }
+    public Guid ThemeId { get; init; }
   }
 
   internal class GetSourceQueryHandler : IRequestHandler<GetSourceQuery, Source>

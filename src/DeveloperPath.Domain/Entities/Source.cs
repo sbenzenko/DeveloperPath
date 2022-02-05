@@ -8,7 +8,7 @@ namespace DeveloperPath.Domain.Entities;
 /// <summary>
 /// Source of information (book, article, blog post, course)
 /// </summary>
-public record Source : AuditableEntity
+public class Source : AuditableEntity
 {
   /// <summary>
   /// Source Title

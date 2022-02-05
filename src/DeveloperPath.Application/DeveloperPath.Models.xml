@@ -294,6 +294,29 @@
             Sender name
             </summary>
         </member>
+        <member name="T:DeveloperPath.Application.Common.Interfaces.Validation.IUniqueNamingValidation">
+            <summary>
+            Validation for unique URI key and Title
+            </summary>
+        </member>
+        <member name="M:DeveloperPath.Application.Common.Interfaces.Validation.IUniqueNamingValidation.BeUniqueKey(System.Nullable{System.Guid},System.String,System.Threading.CancellationToken)">
+            <summary>
+            Request to context to check for unique URI key
+            </summary>
+            <param name="id">Path Id</param>
+            <param name="key"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:DeveloperPath.Application.Common.Interfaces.Validation.IUniqueNamingValidation.BeUniqueTitle(System.Nullable{System.Guid},System.String,System.Threading.CancellationToken)">
+            <summary>
+            Request to context to check for unique title
+            </summary>
+            <param name="id">Path Id</param>
+            <param name="title"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
         <member name="T:DeveloperPath.Application.Common.Mappings.Interfaces.IMapFrom`1">
             <summary>
             Common mapping interface
@@ -444,6 +467,35 @@
             Result failure
             </summary>
             <param name="errors"></param>
+            <returns></returns>
+        </member>
+        <member name="T:DeveloperPath.Application.Common.Validation.UniqueNamingValidation">
+            <summary>
+            Base validation logic for path related to data base checking
+            </summary>
+        </member>
+        <member name="M:DeveloperPath.Application.Common.Validation.UniqueNamingValidation.#ctor(DeveloperPath.Application.Common.Interfaces.IApplicationDbContext)">
+            <summary>
+            
+            </summary>
+            <param name="context"></param>
+        </member>
+        <member name="M:DeveloperPath.Application.Common.Validation.UniqueNamingValidation.BeUniqueKey(System.Nullable{System.Guid},System.String,System.Threading.CancellationToken)">
+            <summary>
+            Request to context to check for unique URI key
+            </summary>
+            <param name="id">Path Id</param>
+            <param name="key"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:DeveloperPath.Application.Common.Validation.UniqueNamingValidation.BeUniqueTitle(System.Nullable{System.Guid},System.String,System.Threading.CancellationToken)">
+            <summary>
+            Request to context to check for unique title
+            </summary>
+            <param name="id">Path Id</param>
+            <param name="title"></param>
+            <param name="cancellationToken"></param>
             <returns></returns>
         </member>
         <member name="T:DeveloperPath.Application.CQRS.Modules.Commands.CreateModule.CreateModule">
@@ -630,58 +682,6 @@
             Path URI key
             </summary>
         </member>
-        <member name="T:DeveloperPath.Application.CQRS.Paths.Commands.IBasePathValidation">
-            <summary>
-             Base validation logic interface for path related to data base checking
-            </summary>
-        </member>
-        <member name="M:DeveloperPath.Application.CQRS.Paths.Commands.IBasePathValidation.BeUniqueKey(System.Nullable{System.Int32},System.String,System.Threading.CancellationToken)">
-            <summary>
-            Request to context to check for unique URI key
-            </summary>
-            <param name="id">Path Id</param>
-            <param name="key"></param>
-            <param name="cancellationToken"></param>
-            <returns></returns>
-        </member>
-        <member name="M:DeveloperPath.Application.CQRS.Paths.Commands.IBasePathValidation.BeUniqueTitle(System.Nullable{System.Int32},System.String,System.Threading.CancellationToken)">
-            <summary>
-            Request to context to check for unique title
-            </summary>
-            <param name="id">Path Id</param>
-            <param name="title"></param>
-            <param name="cancellationToken"></param>
-            <returns></returns>
-        </member>
-        <member name="T:DeveloperPath.Application.CQRS.Paths.Commands.BasePathValidation">
-            <summary>
-            Base validation logic for path related to data base checking
-            </summary>
-        </member>
-        <member name="M:DeveloperPath.Application.CQRS.Paths.Commands.BasePathValidation.#ctor(DeveloperPath.Application.Common.Interfaces.IApplicationDbContext)">
-            <summary>
-            
-            </summary>
-            <param name="context"></param>
-        </member>
-        <member name="M:DeveloperPath.Application.CQRS.Paths.Commands.BasePathValidation.BeUniqueKey(System.Nullable{System.Int32},System.String,System.Threading.CancellationToken)">
-            <summary>
-            Request to context to check for unique URI key
-            </summary>
-            <param name="id">Path Id</param>
-            <param name="key"></param>
-            <param name="cancellationToken"></param>
-            <returns></returns>
-        </member>
-        <member name="M:DeveloperPath.Application.CQRS.Paths.Commands.BasePathValidation.BeUniqueTitle(System.Nullable{System.Int32},System.String,System.Threading.CancellationToken)">
-            <summary>
-            Request to context to check for unique title
-            </summary>
-            <param name="id">Path Id</param>
-            <param name="title"></param>
-            <param name="cancellationToken"></param>
-            <returns></returns>
-        </member>
         <member name="T:DeveloperPath.Application.CQRS.Paths.Commands.CreatePath.CreatePath">
             <summary>
             Path to create
@@ -712,10 +712,10 @@
             Validation rules for creating path
             </summary>
         </member>
-        <member name="M:DeveloperPath.Application.CQRS.Paths.Commands.CreatePath.CreatePathCommandValidator.#ctor(DeveloperPath.Application.CQRS.Paths.Commands.IBasePathValidation)">
+        <member name="M:DeveloperPath.Application.CQRS.Paths.Commands.CreatePath.CreatePathCommandValidator.#ctor(DeveloperPath.Application.Common.Interfaces.Validation.IUniqueNamingValidation)">
             <summary>
             </summary>
-            <param name="pathValidation"></param>
+            <param name="namingValidation"></param>
         </member>
         <member name="T:DeveloperPath.Application.CQRS.Paths.Commands.DeletePath.DeletePath">
             <summary>
@@ -732,7 +732,7 @@
             Patch command for updating the Path
             </summary>
         </member>
-        <member name="M:DeveloperPath.Application.CQRS.Paths.Commands.PatchPath.PatchPathCommand.#ctor(System.Int32,Microsoft.AspNetCore.JsonPatch.JsonPatchDocument,System.Boolean)">
+        <member name="M:DeveloperPath.Application.CQRS.Paths.Commands.PatchPath.PatchPathCommand.#ctor(System.Guid,Microsoft.AspNetCore.JsonPatch.JsonPatchDocument,System.Boolean)">
             <summary>
             Creates the command
             </summary>
@@ -808,11 +808,11 @@
             Validation rules for updating path
             </summary>
         </member>
-        <member name="M:DeveloperPath.Application.CQRS.Paths.Commands.UpdatePath.UpdatePathCommandValidator.#ctor(DeveloperPath.Application.CQRS.Paths.Commands.IBasePathValidation)">
+        <member name="M:DeveloperPath.Application.CQRS.Paths.Commands.UpdatePath.UpdatePathCommandValidator.#ctor(DeveloperPath.Application.Common.Interfaces.Validation.IUniqueNamingValidation)">
             <summary>
             
             </summary>
-            <param name="pathValidation"></param>
+            <param name="namingValidation"></param>
         </member>
         <member name="T:DeveloperPath.Application.CQRS.Paths.Queries.GetPaths.GetDeletedPathListQuery">
             <summary>

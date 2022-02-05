@@ -7,7 +7,7 @@ namespace DeveloperPath.Domain.Entities;
 /// <summary>
 /// Represents developer path entity
 /// </summary>
-public record Path : AuditableEntity, IAllowSoftDeletion
+public class Path : AuditableEntity //, IAllowSoftDeletion
 {
   public string Key { get; set; }
   /// <summary>
@@ -21,9 +21,9 @@ public record Path : AuditableEntity, IAllowSoftDeletion
   public string Description { get; set; }
 
   /// <summary>
-  /// If flag is false the Pass will be visible only in admin zone
+  /// Whether path is visible for users
   /// </summary>
-  public bool IsVisible { get; set; }
+  public bool Visible { get; set; }
 
   /// <summary>
   /// Modules that path consists of

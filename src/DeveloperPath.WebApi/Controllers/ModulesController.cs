@@ -10,7 +10,7 @@ using DeveloperPath.WebApi.Models;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
- 
+using System;
 
 namespace DeveloperPath.WebApi.Controllers
 {
@@ -46,7 +46,7 @@ namespace DeveloperPath.WebApi.Controllers
         /// <response code="404">No modules found</response>
         [HttpGet("{pathId}", Name = "GetPathModules")]
         [HttpHead("{pathId}")]
-        public async Task<ActionResult<IEnumerable<Module>>> Get(int pathId, CancellationToken ct = default)
+        public async Task<ActionResult<IEnumerable<Module>>> Get(Guid pathId, CancellationToken ct = default)
         {
             IEnumerable<Module> model = await Mediator.Send(new GetModuleListQuery { PathId = pathId }, ct);
             return Ok(model);
@@ -63,7 +63,7 @@ namespace DeveloperPath.WebApi.Controllers
         /// <response code="404">Module not found</response>
         [HttpGet("{pathKey}/{moduleId}", Name = "GetModuleById")]
         [HttpHead("{pathKey}/{moduleId}")]
-        public async Task<ActionResult<Module>> Get(string pathKey, int moduleId, CancellationToken ct = default)
+        public async Task<ActionResult<Module>> Get(string pathKey, Guid moduleId, CancellationToken ct = default)
         {
             Module model = await Mediator.Send(new GetModuleQuery { Id = moduleId, PathKey = pathKey }, ct);
 
@@ -97,13 +97,14 @@ namespace DeveloperPath.WebApi.Controllers
         /// <param name="command">Updated module object</param>
         /// <returns>Updated module</returns>
         /// <response code="200">Module updated successfully</response>
+        /// <response code="400">Module Id doesn't match</response>
         /// <response code="406">Not acceptable entity provided</response>
         /// <response code="415">Unsupported media type provided</response>
         /// <response code="422">Unprocessible entity provided</response>
         [Authorize]
         [HttpPut("{moduleId}")]
         [Consumes("application/json")]
-        public async Task<ActionResult<Module>> Update(int moduleId,
+        public async Task<ActionResult<Module>> Update(Guid moduleId,
           [FromBody] UpdateModule command)
         {
             if (moduleId != command.Id)
@@ -123,7 +124,7 @@ namespace DeveloperPath.WebApi.Controllers
         /// <response code="204">Module deleted successfully</response>
         [Authorize]
         [HttpDelete("{moduleId}")]
-        public async Task<ActionResult> Delete(int pathId, int moduleId)
+        public async Task<ActionResult> Delete(Guid pathId, Guid moduleId)
         {
             await Mediator.Send(new DeleteModule { PathId = pathId, Id = moduleId });
 

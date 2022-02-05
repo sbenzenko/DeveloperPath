@@ -153,7 +153,7 @@ namespace DeveloperPath.Infrastructure.Persistence
           Title = "ASP.NET Developer",
           Key = "asp-net-developer",
           Description = "Learn how to design modern web applications using ASP.NET",
-          IsVisible = true,
+          Visible = true,
           Tags =
                 new List<string>() {
                   "Web", "Development", "Programming"
@@ -169,7 +169,7 @@ namespace DeveloperPath.Infrastructure.Persistence
               "This skill path will help you take your game idea and really flesh out the world and mechanics and then document them in your game design document. " +
               "Once you have everything documented you will prototype levels and mechanics to make sure you find maximum fun. " +
               "When this is done you will be ready to plan, document, and deliver your ideas to a team of developers that will bring your vision to life.",
-          IsVisible = true,
+          Visible = true,
           Tags =
                 new List<string>() {
                   "Games", "Development", "Programming"

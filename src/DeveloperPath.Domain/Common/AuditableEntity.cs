@@ -5,7 +5,7 @@ namespace DeveloperPath.Domain.Common
   /// <summary>
   /// Abstract class to add tracking to entities
   /// </summary>
-  public abstract record AuditableEntity
+  public abstract class AuditableEntity
   {
     /// <summary>
     /// ID

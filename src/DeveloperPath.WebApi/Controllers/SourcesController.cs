@@ -9,6 +9,7 @@ using DeveloperPath.Application.CQRS.Sources.Commands.DeleteSource;
 using DeveloperPath.Application.CQRS.Sources.Commands.UpdateSource;
 using DeveloperPath.Application.CQRS.Sources.Queries.GetSources;
 using DeveloperPath.Shared.ClientModels;
+using System;
 
 namespace DeveloperPath.WebApi.Controllers
 {
@@ -32,7 +33,7 @@ namespace DeveloperPath.WebApi.Controllers
     /// <response code="404">Theme not found</response>
     [HttpGet]
     [HttpHead]
-    public async Task<ActionResult<IEnumerable<Source>>> Get(int pathId, int moduleId, int themeId, CancellationToken ct = default)
+    public async Task<ActionResult<IEnumerable<Source>>> Get(Guid pathId, Guid moduleId, Guid themeId, CancellationToken ct = default)
     {
       IEnumerable<Source> sources = await Mediator.Send(
          new GetSourceListQuery { PathId = pathId, ModuleId = moduleId, ThemeId = themeId }, ct);
@@ -52,7 +53,7 @@ namespace DeveloperPath.WebApi.Controllers
     /// <response code="200">Returns requested source</response>
     [HttpGet("{sourceId}", Name = "GetSource")]
     [HttpHead("{sourceId}")]
-    public async Task<ActionResult<Source>> Get(int pathId, int moduleId, int themeId, int sourceId, CancellationToken ct = default)
+    public async Task<ActionResult<Source>> Get(Guid pathId, Guid moduleId, Guid themeId, Guid sourceId, CancellationToken ct = default)
     {
       Source model = await Mediator.Send(
         new GetSourceQuery { PathId = pathId, ModuleId = moduleId, ThemeId = themeId, Id = sourceId }, ct);
@@ -96,7 +97,7 @@ namespace DeveloperPath.WebApi.Controllers
     [Authorize]
     [HttpPost]
     [Consumes("application/json")]
-    public async Task<ActionResult<Source>> Create(int pathId, int moduleId, int themeId,
+    public async Task<ActionResult<Source>> Create(Guid pathId, Guid moduleId, Guid themeId,
       [FromBody] CreateSource command)
     {
       if (pathId != command.PathId || moduleId != command.ModuleId || themeId != command.ThemeId)
@@ -124,7 +125,7 @@ namespace DeveloperPath.WebApi.Controllers
     [Authorize]
     [HttpPut("{sourceId}")]
     [Consumes("application/json")]
-    public async Task<ActionResult<Source>> Update(int pathId, int moduleId, int themeId, int sourceId, 
+    public async Task<ActionResult<Source>> Update(Guid pathId, Guid moduleId, Guid themeId, Guid sourceId, 
       [FromBody] UpdateSource command)
     {
       if (pathId != command.PathId || moduleId != command.ModuleId || 
@@ -147,7 +148,7 @@ namespace DeveloperPath.WebApi.Controllers
     /// <response code="204">Source deleted successfully</response>
     [Authorize]
     [HttpDelete("{sourceId}")]
-    public async Task<ActionResult> Delete(int pathId, int moduleId, int themeId, int sourceId)
+    public async Task<ActionResult> Delete(Guid pathId, Guid moduleId, Guid themeId, Guid sourceId)
     {
       await Mediator.Send(new DeleteSource { PathId = pathId, ModuleId = moduleId, ThemeId = themeId, Id = sourceId });
 

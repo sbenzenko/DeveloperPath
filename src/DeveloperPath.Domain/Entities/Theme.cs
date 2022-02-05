@@ -8,7 +8,7 @@ namespace DeveloperPath.Domain.Entities;
 /// <summary>
 /// Particular theme of the module
 /// </summary>
-public record Theme : AuditableEntity
+public class Theme : AuditableEntity
 {
   /// <summary>
   /// Theme Title

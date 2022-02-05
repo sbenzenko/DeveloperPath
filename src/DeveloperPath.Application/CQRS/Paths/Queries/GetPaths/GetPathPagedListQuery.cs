@@ -47,7 +47,7 @@ namespace DeveloperPath.Application.CQRS.Paths.Queries.GetPaths
 
             if (request.OnlyVisible)
             {
-                query = query.Where(x => x.IsVisible);
+                query = query.Where(x => x.Visible);
             }
 
             var mappedQuery = query.ProjectTo<Path>(_mapper.ConfigurationProvider);

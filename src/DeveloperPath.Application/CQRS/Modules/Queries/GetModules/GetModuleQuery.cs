@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using DeveloperPath.Application.Common.Exceptions;
 using DeveloperPath.Application.Common.Interfaces;
 using DeveloperPath.Shared.ClientModels;
+using System;
 
 namespace DeveloperPath.Application.CQRS.Modules.Queries.GetModules
 {
@@ -20,7 +21,7 @@ namespace DeveloperPath.Application.CQRS.Modules.Queries.GetModules
         /// Module Id
         /// </summary>
         [Required]
-        public int Id { get; init; }
+        public Guid Id { get; init; }
         /// <summary>
         /// Path URI key
         /// </summary>
