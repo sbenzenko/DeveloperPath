@@ -7,11 +7,10 @@ namespace DeveloperPath.Domain.Common
   /// </summary>
   public abstract record AuditableEntity
   {
-    // TODO: change to GUID
     /// <summary>
     /// ID
     /// </summary>
-    public int Id { get; init; }
+    public Guid Id { get; init; }
 
     // TODO: change to identity User
     /// <summary>

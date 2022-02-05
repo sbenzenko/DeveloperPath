@@ -2,6 +2,7 @@
 using DeveloperPath.Application.Common.Interfaces;
 using DeveloperPath.Domain.Entities;
 using MediatR;
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.Threading;
 using System.Threading.Tasks;
@@ -17,7 +18,7 @@ namespace DeveloperPath.Application.CQRS.Paths.Commands.DeletePath
     /// Path ID
     /// </summary>
     [Required]
-    public int Id { get; init; }
+    public Guid Id { get; init; }
   }
 
   internal class DeletePathCommandHandler : IRequestHandler<DeletePath>

@@ -5,6 +5,7 @@
         None,
         Loading,
         ContentReady,
+        NotFound,
         Error
     }
 }

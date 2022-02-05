@@ -7,6 +7,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Threading;
 using System.Threading.Tasks;
 using DeveloperPath.Shared.ClientModels;
+using System;
 
 namespace DeveloperPath.Application.CQRS.Paths.Commands.UpdatePath
 {
@@ -19,7 +20,7 @@ namespace DeveloperPath.Application.CQRS.Paths.Commands.UpdatePath
         /// Id of the path to update
         /// </summary>
         [Required]
-        public int Id { get; init; }
+        public Guid Id { get; init; }
         /// <summary>
         /// Path title
         /// </summary>

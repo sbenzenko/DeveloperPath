@@ -130,6 +130,12 @@ namespace DeveloperPath.WebUI.Services
             throw new Exception("Server returned error");
         }
 
+        public async Task<T> GetAnonymousAsync<T>(string resourceUri)
+        {            
+            var response = await AnonymousHttpClient.GetAsync(resourceUri);
+            return await JsonSerializer.DeserializeAsync<T>(await response.Content.ReadAsStreamAsync(), _jsonDeserOpt);
+        }
+
         public async Task<ListWithMetadata<T>> GetListAnonymousAsync<T>(string resourceUri)
         {
             

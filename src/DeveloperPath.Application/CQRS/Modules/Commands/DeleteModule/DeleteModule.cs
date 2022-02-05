@@ -3,6 +3,7 @@ using DeveloperPath.Application.Common.Interfaces;
 using DeveloperPath.Domain.Entities;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading;
@@ -19,12 +20,12 @@ namespace DeveloperPath.Application.CQRS.Modules.Commands.DeleteModule
     /// Module Id
     /// </summary>
     [Required]
-    public int Id { get; init; }
+    public Guid Id { get; init; }
     /// <summary>
     /// Path id
     /// </summary>
     [Required]
-    public int PathId { get; init; }
+    public Guid PathId { get; init; }
   }
 
   internal class DeleteModuleCommandHandler : IRequestHandler<DeleteModule>

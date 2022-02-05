@@ -14,8 +14,19 @@
         </member>
         <member name="M:DeveloperPath.WebApi.Controllers.ModulesController.Get(System.Int32,System.Threading.CancellationToken)">
             <summary>
+            Get list of modules for given path key
+            </summary>
+            <param name="pathId">Path ID</param>
+            <param name="ct"></param>
+            <returns>A collection of modules</returns>
+            <response code="200">Returns a list of modules</response>
+            <response code="404">No modules found</response>
+        </member>
+        <member name="M:DeveloperPath.WebApi.Controllers.ModulesController.Get(System.String,System.Int32,System.Threading.CancellationToken)">
+            <summary>
             Get module information by its Id
             </summary>
+            <param name="pathKey">Path key</param>
             <param name="moduleId">An id of the module</param>
             <param name="ct"></param>
             <returns>Information about the module</returns>

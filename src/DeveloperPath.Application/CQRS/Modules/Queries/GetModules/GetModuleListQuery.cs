@@ -19,10 +19,10 @@ namespace DeveloperPath.Application.CQRS.Modules.Queries.GetModules
     public class GetModuleListQuery : IRequest<IEnumerable<Module>>
     {
         /// <summary>
-        /// URI key
+        /// PathId
         /// </summary>
         [Required]
-        public string PathKey { get; init; }
+        public int PathId { get; init; }
     }
 
     internal class GetModulesQueryHandler : IRequestHandler<GetModuleListQuery, IEnumerable<Module>>
@@ -39,14 +39,14 @@ namespace DeveloperPath.Application.CQRS.Modules.Queries.GetModules
         public async Task<IEnumerable<Module>> Handle(GetModuleListQuery request, CancellationToken cancellationToken)
         {
             //TODO: check if requested module is in requested path (???)
-            var path = await _context.Paths.FirstOrDefaultAsync(x => x.Key == request.PathKey, cancellationToken: cancellationToken);
+            var path = await _context.Paths.FirstOrDefaultAsync(x => x.Id == request.PathId, cancellationToken: cancellationToken);
             if (path == null)
-                throw new NotFoundException(nameof(Path), request.PathKey, NotFoundHelper.PATH_NOT_FOUND);
+                throw new NotFoundException(nameof(Path), request.PathId, NotFoundHelper.PATH_NOT_FOUND);
 
             // TODO: Order modules (from PathModules.Order)
             return await _context.Paths
                          .AsNoTracking()
-                         .Where(p => p.Key == request.PathKey)
+                         .Where(p => p.Id == request.PathId)
                          .SelectMany(p => p.Modules)
                          .Include(m => m.Paths)
                          .Include(m => m.Prerequisites)

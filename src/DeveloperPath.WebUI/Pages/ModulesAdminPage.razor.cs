@@ -31,7 +31,8 @@ namespace DeveloperPath.WebUI.Pages
             _state = State.Loading;
             try
             {
-                Modules = await ModuleService.GetListAsync();
+                var result = await ModuleService.GetListAsync();
+                Modules = result.Data;
                 _state = State.ContentReady;
             }
             catch (Exception e)

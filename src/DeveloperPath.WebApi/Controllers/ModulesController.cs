@@ -37,18 +37,35 @@ namespace DeveloperPath.WebApi.Controllers
         }
 
         /// <summary>
+        /// Get list of modules for given path key
+        /// </summary>
+        /// <param name="pathId">Path ID</param>
+        /// <param name="ct"></param>
+        /// <returns>A collection of modules</returns>
+        /// <response code="200">Returns a list of modules</response>
+        /// <response code="404">No modules found</response>
+        [HttpGet("{pathId}", Name = "GetPathModules")]
+        [HttpHead("{pathId}")]
+        public async Task<ActionResult<IEnumerable<Module>>> Get(int pathId, CancellationToken ct = default)
+        {
+            IEnumerable<Module> model = await Mediator.Send(new GetModuleListQuery { PathId = pathId }, ct);
+            return Ok(model);
+        }
+
+        /// <summary>
         /// Get module information by its Id
         /// </summary>
+        /// <param name="pathKey">Path key</param>
         /// <param name="moduleId">An id of the module</param>
         /// <param name="ct"></param>
         /// <returns>Information about the module</returns>
         /// <response code="200">Returns requested module</response>
         /// <response code="404">Module not found</response>
-        [HttpGet("{moduleId}", Name = "GetModuleById")]
-        [HttpHead("{moduleId}")]
-        public async Task<ActionResult<Module>> Get(int moduleId, CancellationToken ct = default)
+        [HttpGet("{pathKey}/{moduleId}", Name = "GetModuleById")]
+        [HttpHead("{pathKey}/{moduleId}")]
+        public async Task<ActionResult<Module>> Get(string pathKey, int moduleId, CancellationToken ct = default)
         {
-            Module model = await Mediator.Send(new GetModuleQuery { Id = moduleId }, ct);
+            Module model = await Mediator.Send(new GetModuleQuery { Id = moduleId, PathKey = pathKey }, ct);
 
             return Ok(model);
         }
@@ -111,12 +128,6 @@ namespace DeveloperPath.WebApi.Controllers
             await Mediator.Send(new DeleteModule { PathId = pathId, Id = moduleId });
 
             return NoContent();
-        }
-
-        private async Task<ActionResult<IEnumerable<Module>>> GetAll(string pathKey, CancellationToken ct = default)
-        {
-            IEnumerable<Module> model = await Mediator.Send(new GetModuleListQuery { PathKey = pathKey }, ct);
-            return Ok(model);
         }
 
         private async Task<ActionResult<IEnumerable<Module>>> GetPage(string pathKey, RequestParams filter, CancellationToken ct = default)

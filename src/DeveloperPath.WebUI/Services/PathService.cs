@@ -47,6 +47,10 @@ namespace DeveloperPath.WebUI.Services
             return await _httpService.DeleteAsync($"{BaseResourceString}/{path.Id}");
         }
 
+        public async Task<Path> GetAnonymousAsync(string pathKey)
+        {
+            return await _httpService.GetAnonymousAsync<Path>($"{BaseResourceString}/1"); //{pathKey}");
+        }
         public async Task<ListWithMetadata<Path>> GetListAnonymousAsync(bool onlyVisible = true, int pageNum = 1, int pageSize = 5)
         {
             return await _httpService.GetListAnonymousAsync<Path>($"{BaseResourceString}{GetQueryString(onlyVisible, pageNum, pageSize)}");

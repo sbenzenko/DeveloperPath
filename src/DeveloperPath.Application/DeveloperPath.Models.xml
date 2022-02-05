@@ -590,9 +590,9 @@
             Get module parameters
             </summary>
         </member>
-        <member name="P:DeveloperPath.Application.CQRS.Modules.Queries.GetModules.GetModuleListQuery.PathKey">
+        <member name="P:DeveloperPath.Application.CQRS.Modules.Queries.GetModules.GetModuleListQuery.PathId">
             <summary>
-            URI key
+            PathId
             </summary>
         </member>
         <member name="T:DeveloperPath.Application.CQRS.Modules.Queries.GetModules.GetModuleListQueryPaging">

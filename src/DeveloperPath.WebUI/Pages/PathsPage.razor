@@ -1,0 +1,61 @@
+﻿@page "/paths"
+@using DeveloperPath.WebUI.Resources
+@inject IStringLocalizer<LanguageResources> _localizer
+
+<Condition Evaluation="_state == UIHelper.State.Loading">
+    <Match>
+        <MudProgressLinear Indeterminate="true" Color="Color.Primary"></MudProgressLinear>
+    </Match>
+</Condition>
+<Condition Evaluation="_state == UIHelper.State.ContentReady">
+    <Match>
+        <MudText Typo="Typo.h1" Class="py-3">@_localizer["Paths"]</MudText>
+        <MudGrid>
+			    <Iterations Items="Paths" Context="pathItem">
+				    <MudItem xs="12" md="6" lg="4" Class="d-flex align-stretch" Style="height:350px;">
+					    <MudCard Elevation="6" Class="pa-2 mx-2" Style="width:100%">
+						    <MudCardHeader Class="pa-2 mx-2">
+							    <CardHeaderContent>
+								    <a href="/paths/@pathItem.Key">
+                    <MudText Typo="Typo.h6">@pathItem.Title</MudText>
+                    </a>
+							    </CardHeaderContent>
+						    </MudCardHeader>
+						    <MudCardContent Class="py-1">
+							    <MudItem>
+								    <Iterations Items="pathItem.Tags" Context="tagItem">
+									    <MudChip Size="Size.Small">@tagItem</MudChip>
+								    </Iterations>
+							    </MudItem>
+							    <MudItem Class="py-1" Style="height:200px;overflow:auto;">
+								    <MudText Typo="Typo.body2">
+									    @pathItem.Description
+								    </MudText>
+							    </MudItem>
+						    </MudCardContent>
+					    </MudCard>
+				    </MudItem>
+			    </Iterations>
+		    </MudGrid>
+        <MudContainer Class="d-flex justify-center py-2 px-1 mt-6">
+            <MudPagination Rectangular=true
+                            BoundaryCount="2"
+                            Color="Color.Primary"
+                            Count="@PaginationMetadata.TotalPages"
+                            Selected="@PaginationMetadata.CurrentPage"
+                            SelectedChanged="ChangePageAsync" />
+        </MudContainer>
+    </Match>
+</Condition>
+<Condition Evaluation="_state == UIHelper.State.Error">
+    <Match>
+        <MudContainer Class="d-flex justify-center py-2 px-1 mt-6">
+            <MudButton StartIcon="@Icons.Filled.Refresh"
+                       Color="Color.Primary"
+                       Size="Size.Large"
+                       OnClick="Reload">
+                @_localizer["FetchError"]
+            </MudButton>
+        </MudContainer>
+    </Match>
+</Condition>
