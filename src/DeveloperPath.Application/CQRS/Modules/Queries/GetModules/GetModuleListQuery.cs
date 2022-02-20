@@ -26,12 +26,12 @@ namespace DeveloperPath.Application.CQRS.Modules.Queries.GetModules
         public Guid PathId { get; init; }
     }
 
-    internal class GetModulesQueryHandler : IRequestHandler<GetModuleListQuery, IEnumerable<Module>>
+    internal class GetModuleListQueryHandler : IRequestHandler<GetModuleListQuery, IEnumerable<Module>>
     {
         private readonly IApplicationDbContext _context;
         private readonly IMapper _mapper;
 
-        public GetModulesQueryHandler(IApplicationDbContext context, IMapper mapper)
+        public GetModuleListQueryHandler(IApplicationDbContext context, IMapper mapper)
         {
             _context = context;
             _mapper = mapper;

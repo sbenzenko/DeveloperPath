@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using DeveloperPath.Domain.Common;
 using DeveloperPath.Shared.Enums;
 
@@ -8,7 +7,7 @@ namespace DeveloperPath.Domain.Entities;
 /// <summary>
 /// Represents module (skill) of the path, e.g. Programming language, Databases, CI/CD. etc.
 /// </summary>
-public class Module : AuditableEntity //, IAllowSoftDeletion
+public class Module : AuditableEntity
 {
   /// <summary>
   /// Module URI key
@@ -54,9 +53,4 @@ public class Module : AuditableEntity //, IAllowSoftDeletion
   /// List of tags related to module
   /// </summary>
   public ICollection<string> Tags { get; set; }
-
-  /// <summary>
-  /// Date deleted
-  /// </summary>
-  public DateTime? Deleted { get; set; }
 }

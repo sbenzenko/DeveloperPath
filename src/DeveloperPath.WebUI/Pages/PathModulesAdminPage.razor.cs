@@ -12,8 +12,8 @@ using MudBlazor;
 
 namespace DeveloperPath.WebUI.Pages
 {
-    public partial class PathModulesAdminPage
-    {
+    public partial class PathModulesAdminPage : ComponentBase
+  {
         [Parameter] public string Key { get; set; }
         [Inject] public IStringLocalizer<LanguageResources> localizer { get; set; }
         [Inject] public SnackbarHelper SnakbarHelper { get; set; }

@@ -8,7 +8,7 @@ using MudBlazor;
 namespace DeveloperPath.WebUI.Shared.Modules
 {
     public partial class AddEditModuleModal
-    {
+  {
         [Parameter] public Module Module { get; set; }
         [Parameter] public bool IsNew { get; set; }
         [CascadingParameter] MudDialogInstance MudDialog { get; set; }

@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace DeveloperPath.Infrastructure.Migrations
 {
-    public partial class InitVer11 : Migration
+    public partial class Initver11 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -19,12 +19,12 @@ namespace DeveloperPath.Infrastructure.Migrations
                     Description = table.Column<string>(type: "nvarchar(3000)", maxLength: 3000, nullable: false),
                     Necessity = table.Column<int>(type: "int", nullable: false),
                     Tags = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Deleted = table.Column<DateTime>(type: "datetime2", nullable: true),
                     ModuleId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Created = table.Column<DateTime>(type: "datetime2", nullable: false),
                     LastModifiedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    LastModified = table.Column<DateTime>(type: "datetime2", nullable: true)
+                    LastModified = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Deleted = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -46,11 +46,11 @@ namespace DeveloperPath.Infrastructure.Migrations
                     Description = table.Column<string>(type: "nvarchar(3000)", maxLength: 3000, nullable: false),
                     Visible = table.Column<bool>(type: "bit", nullable: false),
                     Tags = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Deleted = table.Column<DateTime>(type: "datetime2", nullable: true),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Created = table.Column<DateTime>(type: "datetime2", nullable: false),
                     LastModifiedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    LastModified = table.Column<DateTime>(type: "datetime2", nullable: true)
+                    LastModified = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Deleted = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -83,7 +83,8 @@ namespace DeveloperPath.Infrastructure.Migrations
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Created = table.Column<DateTime>(type: "datetime2", nullable: false),
                     LastModifiedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    LastModified = table.Column<DateTime>(type: "datetime2", nullable: true)
+                    LastModified = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Deleted = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -137,7 +138,8 @@ namespace DeveloperPath.Infrastructure.Migrations
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Created = table.Column<DateTime>(type: "datetime2", nullable: false),
                     LastModifiedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    LastModified = table.Column<DateTime>(type: "datetime2", nullable: true)
+                    LastModified = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Deleted = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -172,7 +174,8 @@ namespace DeveloperPath.Infrastructure.Migrations
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Created = table.Column<DateTime>(type: "datetime2", nullable: false),
                     LastModifiedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    LastModified = table.Column<DateTime>(type: "datetime2", nullable: true)
+                    LastModified = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Deleted = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {

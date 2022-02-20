@@ -10,8 +10,8 @@ using Microsoft.AspNetCore.Components;
 
 namespace DeveloperPath.WebUI.Pages
 {
-    public partial class PathsPage
-    {
+    public partial class PathsPage : ComponentBase
+  {
         private const int PAGE_SIZE = 10;
 
         [Inject] public PathService PathService { get; set; }

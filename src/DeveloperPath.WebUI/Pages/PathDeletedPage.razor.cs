@@ -13,8 +13,8 @@ using MudBlazor;
 
 namespace DeveloperPath.WebUI.Pages
 {
-    public partial class PathDeletedPage
-    {
+    public partial class PathDeletedPage : ComponentBase
+  {
         private List<DeletedPath> _paths;
         private string _searchString;
 

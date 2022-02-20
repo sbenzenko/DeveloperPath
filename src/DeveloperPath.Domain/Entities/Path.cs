@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using DeveloperPath.Domain.Common;
 
 namespace DeveloperPath.Domain.Entities;
@@ -7,7 +6,7 @@ namespace DeveloperPath.Domain.Entities;
 /// <summary>
 /// Represents developer path entity
 /// </summary>
-public class Path : AuditableEntity //, IAllowSoftDeletion
+public class Path : AuditableEntity
 {
   public string Key { get; set; }
   /// <summary>
@@ -28,7 +27,7 @@ public class Path : AuditableEntity //, IAllowSoftDeletion
   /// <summary>
   /// Modules that path consists of
   /// </summary>
-  public IList<Module> Modules { get; init; }
+  public ICollection<Module> Modules { get; init; }
 
   /// <summary>
   /// List of tags related to path.
@@ -37,9 +36,4 @@ public class Path : AuditableEntity //, IAllowSoftDeletion
   ///  - Path Unity - Tags: #Development #Games
   /// </summary>
   public ICollection<string> Tags { get; set; }
-
-  /// <summary>
-  /// Date deleted
-  /// </summary>
-  public DateTime? Deleted { get; set; }
 }

@@ -682,6 +682,16 @@
             Path URI key
             </summary>
         </member>
+        <member name="T:DeveloperPath.Application.CQRS.Modules.Queries.GetModules.GetModulesQuery">
+            <summary>
+            Get module parameters
+            </summary>
+        </member>
+        <member name="P:DeveloperPath.Application.CQRS.Modules.Queries.GetModules.GetModulesQuery.PathKey">
+            <summary>
+            PathKey
+            </summary>
+        </member>
         <member name="T:DeveloperPath.Application.CQRS.Paths.Commands.CreatePath.CreatePath">
             <summary>
             Path to create

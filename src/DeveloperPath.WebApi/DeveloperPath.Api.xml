@@ -22,6 +22,16 @@
             <response code="200">Returns a list of modules</response>
             <response code="404">No modules found</response>
         </member>
+        <member name="M:DeveloperPath.WebApi.Controllers.ModulesController.Get(System.String,System.Threading.CancellationToken)">
+            <summary>
+            Get list of modules for given path key
+            </summary>
+            <param name="pathKey"></param>
+            <param name="ct"></param>
+            <returns>A collection of modules</returns>
+            <response code="200">Returns a list of modules</response>
+            <response code="404">No modules found</response>
+        </member>
         <member name="M:DeveloperPath.WebApi.Controllers.ModulesController.Get(System.String,System.Guid,System.Threading.CancellationToken)">
             <summary>
             Get module information by its Id
@@ -43,7 +53,7 @@
             <response code="404">Path not found</response>
             <response code="406">Not acceptable entity provided</response>
             <response code="415">Unsupported media type provided</response>
-            <response code="422">Unprocessible entity provided</response>
+            <response code="422">Unprocessable entity provided</response>
         </member>
         <member name="M:DeveloperPath.WebApi.Controllers.ModulesController.Update(System.Guid,DeveloperPath.Application.CQRS.Modules.Commands.UpdateModule.UpdateModule)">
             <summary>
@@ -56,7 +66,7 @@
             <response code="400">Module Id doesn't match</response>
             <response code="406">Not acceptable entity provided</response>
             <response code="415">Unsupported media type provided</response>
-            <response code="422">Unprocessible entity provided</response>
+            <response code="422">Unprocessable entity provided</response>
         </member>
         <member name="M:DeveloperPath.WebApi.Controllers.ModulesController.Delete(System.Guid,System.Guid)">
             <summary>
@@ -99,7 +109,7 @@
             <response code="201">Path created successfully</response>
             <response code="406">Not acceptable entity provided</response>
             <response code="415">Unsupported media type provided</response>
-            <response code="422">Unprocessible entity provided</response>
+            <response code="422">Unprocessable entity provided</response>
         </member>
         <member name="M:DeveloperPath.WebApi.Controllers.PathsController.Update(System.Guid,DeveloperPath.Application.CQRS.Paths.Commands.UpdatePath.UpdatePath)">
             <summary>
@@ -111,7 +121,7 @@
             <response code="200">Path updated successfully</response>
             <response code="406">Not acceptable entity provided</response>
             <response code="415">Unsupported media type provided</response>
-            <response code="422">Unprocessible entity provided</response>
+            <response code="422">Unprocessable entity provided</response>
         </member>
         <member name="M:DeveloperPath.WebApi.Controllers.PathsController.Patch(Microsoft.AspNetCore.JsonPatch.JsonPatchDocument,System.Guid)">
             <summary>
@@ -123,7 +133,7 @@
             <response code="200">Path updated successfully</response>
             <response code="406">Not acceptable entity provided</response>
             <response code="415">Unsupported media type provided</response>
-            <response code="422">Unprocessible entity provided</response>
+            <response code="422">Unprocessable entity provided</response>
         </member>
         <member name="M:DeveloperPath.WebApi.Controllers.PathsController.PatchDeleted(Microsoft.AspNetCore.JsonPatch.JsonPatchDocument,System.Guid)">
             <summary>
@@ -135,7 +145,7 @@
             <response code="200">Path updated successfully</response>
             <response code="406">Not acceptable entity provided</response>
             <response code="415">Unsupported media type provided</response>
-            <response code="422">Unprocessible entity provided</response>
+            <response code="422">Unprocessable entity provided</response>
         </member>
         <member name="M:DeveloperPath.WebApi.Controllers.PathsController.Delete(System.Guid)">
             <summary>
@@ -182,7 +192,7 @@
             <response code="404">Theme not found</response>
             <response code="406">Not acceptable entity provided</response>
             <response code="415">Unsupported media type provided</response>
-            <response code="422">Unprocessible entity provided</response>
+            <response code="422">Unprocessable entity provided</response>
         </member>
         <member name="M:DeveloperPath.WebApi.Controllers.SourcesController.Update(System.Guid,System.Guid,System.Guid,System.Guid,DeveloperPath.Application.CQRS.Sources.Commands.UpdateSource.UpdateSource)">
             <summary>
@@ -197,7 +207,7 @@
             <response code="200">Source updated successfully</response>
             <response code="406">Not acceptable entity provided</response>
             <response code="415">Unsupported media type provided</response>
-            <response code="422">Unprocessible entity provided</response>
+            <response code="422">Unprocessable entity provided</response>
         </member>
         <member name="M:DeveloperPath.WebApi.Controllers.SourcesController.Delete(System.Guid,System.Guid,System.Guid,System.Guid)">
             <summary>
@@ -244,7 +254,7 @@
             <response code="404">Module not found</response>
             <response code="406">Not acceptable entity provided</response>
             <response code="415">Unsupported media type provided</response>
-            <response code="422">Unprocessible entity provided</response>
+            <response code="422">Unprocessable entity provided</response>
         </member>
         <member name="M:DeveloperPath.WebApi.Controllers.ThemesController.Update(System.Guid,System.Guid,System.Guid,DeveloperPath.Application.CQRS.Themes.Commands.UpdateTheme.UpdateTheme)">
             <summary>
@@ -254,11 +264,12 @@
             <param name="moduleId">An id of the module</param>
             <param name="themeId">An id of the theme</param>
             <param name="command">Updated theme object</param>
-            <returns>Upated theme</returns>
+            <returns>Updated theme</returns>
             <response code="200">Theme updated successfully</response>
+            <response code="400">Bad request</response>
             <response code="406">Not acceptable entity provided</response>
             <response code="415">Unsupported media type provided</response>
-            <response code="422">Unprocessible entity provided</response>
+            <response code="422">Unprocessable entity provided</response>
         </member>
         <member name="M:DeveloperPath.WebApi.Controllers.ThemesController.Delete(System.Guid,System.Guid,System.Guid)">
             <summary>

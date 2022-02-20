@@ -11,16 +11,17 @@ using DeveloperPath.Application.CQRS.Sources.Queries.GetSources;
 using DeveloperPath.Shared.ClientModels;
 using System;
 
-namespace DeveloperPath.WebApi.Controllers
+namespace DeveloperPath.WebApi.Controllers;
+
+//[Authorize]
+[Route("api/paths/{pathId:guid}/modules/{moduleId:guid}/themes/{themeId:guid}/sources")]
+public class SourcesController : ApiController
 {
-    //[Authorize]
-    [Route("api/paths/{pathId}/modules/{moduleId}/themes/{themeId}/sources")]
-  public class SourcesController : ApiController
-  {
     public SourcesController(IMediator mediator)
     {
-      _mediator = mediator;
+        _mediator = mediator;
     }
+
     /// <summary>
     /// Get all available sources
     /// </summary>
@@ -33,12 +34,13 @@ namespace DeveloperPath.WebApi.Controllers
     /// <response code="404">Theme not found</response>
     [HttpGet]
     [HttpHead]
-    public async Task<ActionResult<IEnumerable<Source>>> Get(Guid pathId, Guid moduleId, Guid themeId, CancellationToken ct = default)
+    public async Task<ActionResult<IEnumerable<Source>>> Get(Guid pathId, Guid moduleId, Guid themeId,
+        CancellationToken ct = default)
     {
-      IEnumerable<Source> sources = await Mediator.Send(
-         new GetSourceListQuery { PathId = pathId, ModuleId = moduleId, ThemeId = themeId }, ct);
+        IEnumerable<Source> sources = await Mediator.Send(
+            new GetSourceListQuery {PathId = pathId, ModuleId = moduleId, ThemeId = themeId}, ct);
 
-      return Ok(sources);
+        return Ok(sources);
     }
 
     /// <summary>
@@ -52,13 +54,14 @@ namespace DeveloperPath.WebApi.Controllers
     /// <returns>Detailed information of the source with sources included</returns>
     /// <response code="200">Returns requested source</response>
     [HttpGet("{sourceId}", Name = "GetSource")]
-    [HttpHead("{sourceId}")]
-    public async Task<ActionResult<Source>> Get(Guid pathId, Guid moduleId, Guid themeId, Guid sourceId, CancellationToken ct = default)
+    [HttpHead("{sourceId:guid}")]
+    public async Task<ActionResult<Source>> Get(Guid pathId, Guid moduleId, Guid themeId, Guid sourceId,
+        CancellationToken ct = default)
     {
-      Source model = await Mediator.Send(
-        new GetSourceQuery { PathId = pathId, ModuleId = moduleId, ThemeId = themeId, Id = sourceId }, ct);
+        Source model = await Mediator.Send(
+            new GetSourceQuery {PathId = pathId, ModuleId = moduleId, ThemeId = themeId, Id = sourceId}, ct);
 
-      return Ok(model);
+        return Ok(model);
     }
 
     ///// <summary>
@@ -70,7 +73,7 @@ namespace DeveloperPath.WebApi.Controllers
     ///// <param name="sourceId">An id of the source</param>
     ///// <returns>Detailed information of the source with sources included</returns>
     //// TODO: Feature enhancement: this item will also have ratings and user comments
-    //[Route("api/paths/{pathId}/modules/{moduleId}/themes/{themeId}/sourcedetails")]
+    //[Route("api/paths/{pathId}/modules/{moduleId}/themes/{themeId}/sourceDetails")]
     //[HttpGet("{sourceId}", Name = "GetSourceDetails")]
     //[HttpHead("{sourceId}")]
     //public async Task<ActionResult<SourceViewModel>> GetDetails(int pathId, int moduleId, int themeId, int sourceId)
@@ -93,20 +96,23 @@ namespace DeveloperPath.WebApi.Controllers
     /// <response code="404">Theme not found</response>
     /// <response code="406">Not acceptable entity provided</response>
     /// <response code="415">Unsupported media type provided</response>
-    /// <response code="422">Unprocessible entity provided</response>
+    /// <response code="422">Unprocessable entity provided</response>
     [Authorize]
     [HttpPost]
     [Consumes("application/json")]
     public async Task<ActionResult<Source>> Create(Guid pathId, Guid moduleId, Guid themeId,
-      [FromBody] CreateSource command)
+        [FromBody] CreateSource command)
     {
-      if (pathId != command.PathId || moduleId != command.ModuleId || themeId != command.ThemeId)
-        return BadRequest();
+        if (pathId != command.PathId || moduleId != command.ModuleId || themeId != command.ThemeId)
+            return BadRequest();
 
-      Source model = await Mediator.Send(command);
+        Source model = await Mediator.Send(command);
 
-      return CreatedAtRoute("GetSource", 
-        new { pathId = command.PathId, moduleId = command.ModuleId, themeId = model.ThemeId, sourceId = model.Id }, model);
+        return CreatedAtRoute("GetSource",
+            new
+            {
+                pathId = command.PathId, moduleId = command.ModuleId, themeId = model.ThemeId, sourceId = model.Id
+            }, model);
     }
 
     /// <summary>
@@ -121,18 +127,18 @@ namespace DeveloperPath.WebApi.Controllers
     /// <response code="200">Source updated successfully</response>
     /// <response code="406">Not acceptable entity provided</response>
     /// <response code="415">Unsupported media type provided</response>
-    /// <response code="422">Unprocessible entity provided</response>
+    /// <response code="422">Unprocessable entity provided</response>
     [Authorize]
-    [HttpPut("{sourceId}")]
+    [HttpPut("{sourceId:guid}")]
     [Consumes("application/json")]
-    public async Task<ActionResult<Source>> Update(Guid pathId, Guid moduleId, Guid themeId, Guid sourceId, 
-      [FromBody] UpdateSource command)
+    public async Task<ActionResult<Source>> Update(Guid pathId, Guid moduleId, Guid themeId, Guid sourceId,
+        [FromBody] UpdateSource command)
     {
-      if (pathId != command.PathId || moduleId != command.ModuleId || 
-          themeId != command.ThemeId || sourceId != command.Id)
-        return BadRequest();
+        if (pathId != command.PathId || moduleId != command.ModuleId ||
+            themeId != command.ThemeId || sourceId != command.Id)
+            return BadRequest();
 
-      return Ok(await Mediator.Send(command));
+        return Ok(await Mediator.Send(command));
     }
 
     // TODO: add PATCH
@@ -147,12 +153,12 @@ namespace DeveloperPath.WebApi.Controllers
     /// <returns></returns>
     /// <response code="204">Source deleted successfully</response>
     [Authorize]
-    [HttpDelete("{sourceId}")]
+    [HttpDelete("{sourceId:guid}")]
     public async Task<ActionResult> Delete(Guid pathId, Guid moduleId, Guid themeId, Guid sourceId)
     {
-      await Mediator.Send(new DeleteSource { PathId = pathId, ModuleId = moduleId, ThemeId = themeId, Id = sourceId });
+        await Mediator.Send(new DeleteSource
+            {PathId = pathId, ModuleId = moduleId, ThemeId = themeId, Id = sourceId});
 
-      return NoContent();
+        return NoContent();
     }
-  }
 }

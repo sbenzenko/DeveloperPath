@@ -9,8 +9,8 @@ using System.Threading.Tasks;
 
 namespace DeveloperPath.WebUI.Pages
 {
-    public partial class PathPage
-    {
+    public partial class PathPage : ComponentBase
+  {
         [Inject] public PathService PathService { get; set; }
         [Inject] public ModuleService ModuleService { get; set; }
         [Inject] public SnackbarHelper SnackbarHelper { get; set; }

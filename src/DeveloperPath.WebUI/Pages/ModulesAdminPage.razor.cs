@@ -15,8 +15,8 @@ using MudBlazor;
 
 namespace DeveloperPath.WebUI.Pages
 {
-    public partial class ModulesAdminPage
-    {
+    public partial class ModulesAdminPage : ComponentBase
+  {
         [Inject] private ModuleService ModuleService { get; set; }
         [Inject] public IDialogService DialogService { get; set; }
         [Inject] public SnackbarHelper SnackbarHelper { get; set; }

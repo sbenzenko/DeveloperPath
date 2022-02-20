@@ -33,5 +33,10 @@ namespace DeveloperPath.Domain.Common
     /// Datetime entity last changed
     /// </summary>
     public DateTime? LastModified { get; set; }
+    
+    /// <summary>
+    /// Marks entity as deleted without physical deletion
+    /// </summary>
+    public DateTime? Deleted { get; set; }
   }
 }
