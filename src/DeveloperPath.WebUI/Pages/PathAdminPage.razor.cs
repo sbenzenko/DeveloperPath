@@ -146,7 +146,7 @@ namespace DeveloperPath.WebUI.Pages
                 var result = await PathService.ChangeVisibility(pathItem);
                 var changed = Paths.FirstOrDefault(x => x.Id == pathItem.Id);
                 if (changed != null)
-                    changed.IsVisible = result.IsVisible;
+                    changed.Visible = result.Visible;
 
                 StateHasChanged();
             }

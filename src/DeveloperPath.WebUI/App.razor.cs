@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace DeveloperPath.WebUI
 {
-    public partial class App
-    {
+    public partial class App : ComponentBase
+  {
         [Inject] public IStringLocalizer<LanguageResources> localizer { get; set; }
         [Inject] public AppState appState { get; set; }
 

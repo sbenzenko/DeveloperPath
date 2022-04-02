@@ -15,8 +15,8 @@ using MudBlazor;
 
 namespace DeveloperPath.WebUI.Pages
 {
-    public partial class ModulesAdminPage
-    {
+    public partial class ModulesAdminPage : ComponentBase
+  {
         [Inject] private ModuleService ModuleService { get; set; }
         [Inject] public IDialogService DialogService { get; set; }
         [Inject] public SnackbarHelper SnackbarHelper { get; set; }
@@ -31,10 +31,11 @@ namespace DeveloperPath.WebUI.Pages
             _state = State.Loading;
             try
             {
-                Modules = await ModuleService.GetListAsync();
+                var result = await ModuleService.GetListAsync();
+                Modules = result.Data;
                 _state = State.ContentReady;
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 _state = State.Error;
             }

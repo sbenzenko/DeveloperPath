@@ -30,7 +30,7 @@ namespace DeveloperPath.Application.UnitTests.Common.Mappings
         [Test]
         public void ShouldHaveValidConfiguration()
         {
-            _configuration.AssertConfigurationIsValid<MappingProfile>();
+            _configuration.AssertConfigurationIsValid();
         }
         
         [Test]

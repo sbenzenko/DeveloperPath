@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -20,12 +21,12 @@ namespace DeveloperPath.Application.CQRS.Modules.Queries.GetModules
         /// Module Id
         /// </summary>
         [Required]
-        public int Id { get; init; }
+        public Guid Id { get; init; }
         /// <summary>
         /// Path Id
         /// </summary>
         [Required]
-        public int PathId { get; init; }
+        public Guid PathId { get; init; }
     }
 
     internal class GetModuleDetailsHandler : IRequestHandler<GetModuleDetailsQuery, ModuleDetails>

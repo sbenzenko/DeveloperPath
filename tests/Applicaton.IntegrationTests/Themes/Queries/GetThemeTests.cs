@@ -9,6 +9,7 @@ using DeveloperPath.Application.CQRS.Themes.Queries.GetThemes;
 using DeveloperPath.Domain.Entities;
 using System.Threading;
 using DeveloperPath.Shared.Enums;
+using System;
 
 namespace DeveloperPath.Application.IntegrationTests.Themes.Queries
 {
@@ -264,7 +265,7 @@ namespace DeveloperPath.Application.IntegrationTests.Themes.Queries
         [Test]
         public void DetailsShouldReturnNotFound_WhenModuleIdNotFound()
         {
-            var query = new GetThemeDetailsQuery() { PathId = 1, ModuleId = 99999, Id = 1 };
+            var query = new GetThemeDetailsQuery() { PathId = 1, ModuleId = 99999, Id = new Guid() };
 
             FluentActions.Invoking(() =>
                 SendAsync(query)).Should().ThrowAsync<NotFoundException>();
@@ -273,7 +274,7 @@ namespace DeveloperPath.Application.IntegrationTests.Themes.Queries
         [Test]
         public void DetailsShouldReturnNotFound_WhenPathIdNotFound()
         {
-            var query = new GetThemeDetailsQuery() { PathId = 99999, ModuleId = 1, Id = 1 };
+            var query = new GetThemeDetailsQuery() { PathId = new Guid(), ModuleId = new Guid(), Id = new Guid() };
 
             FluentActions.Invoking(() =>
                 SendAsync(query)).Should().ThrowAsync<NotFoundException>();

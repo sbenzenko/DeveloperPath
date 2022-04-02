@@ -1,4 +1,4 @@
-﻿@page "/paths"
+﻿@page "/paths/{pathkey}"
 @using DeveloperPath.WebUI.Resources
 @inject IStringLocalizer<LanguageResources> _localizer
 
@@ -9,33 +9,43 @@
 </Condition>
 <Condition Evaluation="_state == UIHelper.State.ContentReady">
     <Match>
-        <MudText Typo="Typo.h1" Class="py-3">@_localizer["Paths"]</MudText>
+        <MudText Typo="Typo.h1" Class="py-3">@Path.Title</MudText>
+        <MudItem>
+				    <Iterations Items="Path.Tags" Context="tagItem">
+						    <MudChip Size="Size.Small">@tagItem</MudChip>
+				    </Iterations>
+				</MudItem>
+				<MudItem Class="py-1">
+				    <MudText Typo="Typo.body2">
+						    @Path.Description
+				    </MudText>
+				</MudItem>
+
         <MudTreeView T="string">
-            <Iterations Items="Paths" Context="pathItem">
-                <MudTreeViewItem Value="@pathItem.Title" ExpandedIcon="@Icons.Filled.DoubleArrow" ExpandedIconColor="Color.Inherit">
+            <Iterations Items="Modules" Context="moduleItem">
+                <MudTreeViewItem Value="@moduleItem.Title" ExpandedIcon="@Icons.Filled.DoubleArrow" ExpandedIconColor="Color.Inherit">
                     <MudCardContent Class="py-1 px-5">
                         <MudItem>
-                            <Iterations Items="pathItem.Tags" Context="tagItem">
+                            <Iterations Items="moduleItem.Tags" Context="tagItem">
                                 <MudChip Size="Size.Small" Color="Color.Dark">@tagItem</MudChip>
                             </Iterations>
                         </MudItem>
                         <MudItem Class="py-1">
                             <MudText Typo="Typo.body1">
-                                @pathItem.Description
+                                @moduleItem.Description
                             </MudText>
                         </MudItem>
                     </MudCardContent>
                 </MudTreeViewItem>
             </Iterations>
         </MudTreeView>
-        <MudContainer Class="d-flex justify-center py-2 px-1 mt-6">
-            <MudPagination Rectangular=true
-                            BoundaryCount="2"
-                            Color="Color.Primary"
-                            Count="@PaginationMetadata.TotalPages"
-                            Selected="@PaginationMetadata.CurrentPage"
-                            SelectedChanged="ChangePageAsync" />
-        </MudContainer>
+    </Match>
+</Condition>
+<Condition Evaluation="_state == UIHelper.State.NotFound">
+    <Match>
+        <MudText Typo="Typo.body1">
+            @_localizer["NotFound"]
+        </MudText>
     </Match>
 </Condition>
 <Condition Evaluation="_state == UIHelper.State.Error">
@@ -50,3 +60,7 @@
         </MudContainer>
     </Match>
 </Condition>
+
+@code {
+
+}

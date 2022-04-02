@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -13,163 +14,162 @@ using Microsoft.AspNetCore.Mvc;
 using Moq;
 using NUnit.Framework;
 
-namespace Web.WebAPI.Controllers
+namespace Web.WebAPI.Controllers;
+
+public class ThemesControllerTests : TestBase
 {
-    public class ThemesControllerTests : TestBase
+  private readonly Mock<IMediator> moqMediator;
+  private readonly Theme sampleTheme;
+  private readonly IEnumerable<Theme> Themes;
+
+  public ThemesControllerTests()
   {
-    private readonly Mock<IMediator> moqMediator;
-    private readonly Theme sampleTheme;
-    private readonly IEnumerable<Theme> Themes;
-
-    public ThemesControllerTests()
+    sampleTheme = new Theme { Id = Guid.NewGuid(), ModuleId = Guid.NewGuid(), Title = "Theme1", Description = "Description1" };
+    Themes = new List<Theme>
     {
-      sampleTheme = new Theme { Id = 1, ModuleId = 1, Title = "Theme1", Description = "Description1" };
-      Themes = new List<Theme>
-      {
-        sampleTheme,
-        new Theme { Id = 2, ModuleId = 1, Title = "Theme2", Description = "Description2" }
-      };
+      sampleTheme,
+      new Theme { Id = Guid.NewGuid(), ModuleId = Guid.NewGuid(), Title = "Theme2", Description = "Description2" }
+    };
 
-      moqMediator = new Mock<IMediator>();
-      // Get all
-      moqMediator
-        .Setup(m => m.Send(It.IsAny<GetThemeListQuery>(), It.IsAny<CancellationToken>()))
-          .ReturnsAsync(Themes);
-      // Get one
-      moqMediator
-        .Setup(m => m.Send(It.IsAny<GetThemeQuery>(), It.IsAny<CancellationToken>()))
-          .ReturnsAsync(sampleTheme);
-      // Create
-      moqMediator
-        .Setup(m => m.Send(It.IsAny<CreateTheme>(), It.IsAny<CancellationToken>()))
-          .ReturnsAsync(sampleTheme);
-      // Update
-      moqMediator
-        .Setup(m => m.Send(It.IsAny<UpdateTheme>(), It.IsAny<CancellationToken>()))
-          .ReturnsAsync(sampleTheme);
-      // Delete
-      moqMediator
-        .Setup(m => m.Send(It.IsAny<DeleteTheme>(), It.IsAny<CancellationToken>()));
-    }
+    moqMediator = new Mock<IMediator>();
+    // Get all
+    moqMediator
+      .Setup(m => m.Send(It.IsAny<GetThemeListQuery>(), It.IsAny<CancellationToken>()))
+        .ReturnsAsync(Themes);
+    // Get one
+    moqMediator
+      .Setup(m => m.Send(It.IsAny<GetThemeQuery>(), It.IsAny<CancellationToken>()))
+        .ReturnsAsync(sampleTheme);
+    // Create
+    moqMediator
+      .Setup(m => m.Send(It.IsAny<CreateTheme>(), It.IsAny<CancellationToken>()))
+        .ReturnsAsync(sampleTheme);
+    // Update
+    moqMediator
+      .Setup(m => m.Send(It.IsAny<UpdateTheme>(), It.IsAny<CancellationToken>()))
+        .ReturnsAsync(sampleTheme);
+    // Delete
+    moqMediator
+      .Setup(m => m.Send(It.IsAny<DeleteTheme>(), It.IsAny<CancellationToken>()));
+  }
 
-    [Test]
-    public async Task Get_ReturnsAllThemes()
-    {
-      var controller = new ThemesController(moqMediator.Object);
-      
-      var result = await controller.Get(1, 1);
-      var content = GetObjectResultContent<IEnumerable<Theme>>(result.Result);
+  [Test]
+  public async Task Get_ReturnsAllThemes()
+  {
+    var controller = new ThemesController(moqMediator.Object);
 
-      Assert.IsInstanceOf(typeof(OkObjectResult), result.Result);
-      Assert.IsNotNull(content);
-      Assert.AreEqual(2, content.Count());
-    }
+    var result = await controller.Get(sampleTheme.ModuleId);
+    var content = GetObjectResultContent<IEnumerable<Theme>>(result.Result);
 
-    [Test]
-    public async Task Get_ReturnsTheme()
-    {
-      var controller = new ThemesController(moqMediator.Object);
-      
-      var result = await controller.Get(1, 1, 1);
-      var content = GetObjectResultContent<Theme>(result.Result);
+    Assert.IsInstanceOf(typeof(OkObjectResult), result.Result);
+    Assert.IsNotNull(content);
+    Assert.AreEqual(2, content.Count());
+  }
 
-      Assert.IsInstanceOf(typeof(OkObjectResult), result.Result);
-      Assert.IsNotNull(content);
-      Assert.AreEqual(1, content.Id);
-    }
+  [Test]
+  public async Task Get_ReturnsTheme()
+  {
+    var controller = new ThemesController(moqMediator.Object);
 
-    [Test]
-    public async Task Create_ReturnsCreatedAtRoute()
-    {
-      var createCommand = new CreateTheme { PathId = 1, ModuleId = 1, Order = 0, Title = "Create title", Description = "Create Description" };
-      var controller = new ThemesController(moqMediator.Object);
-      
-      var result = await controller.Create(1, 1, createCommand);
-      var content = GetObjectResultContent<Theme>(result.Result);
+    var result = await controller.Get(sampleTheme.ModuleId, sampleTheme.Id);
+    var content = GetObjectResultContent<Theme>(result.Result);
 
-      Assert.IsInstanceOf(typeof(CreatedAtRouteResult), result.Result);
-      Assert.AreEqual("GetTheme", ((CreatedAtRouteResult)result.Result).RouteName);
-      Assert.IsNotNull(content);
-      Assert.AreEqual(1, content.Id);
-    }
+    Assert.IsInstanceOf(typeof(OkObjectResult), result.Result);
+    Assert.IsNotNull(content);
+    Assert.AreEqual(sampleTheme.Id, content.Id);
+  }
 
-    [Test]
-    public async Task Create_ReturnsBadRequest_WhenRequestedPathIdDoesNotMatchCommandId()
-    {
-      var createCommand = new CreateTheme { PathId = 1, ModuleId = 1, Order = 0, Title = "Create title", Description = "Create Description" };
-      var controller = new ThemesController(moqMediator.Object);
-      
-      var result = await controller.Create(2, 1, createCommand);
+  [Test]
+  public async Task Create_ReturnsCreatedAtRoute()
+  {
+    var createCommand = new CreateTheme { ModuleId = sampleTheme.ModuleId, Order = 0, Title = "Create title", Description = "Create Description" };
+    var controller = new ThemesController(moqMediator.Object);
 
-      Assert.IsInstanceOf(typeof(BadRequestResult), result.Result);
-    }
+    var result = await controller.Create(sampleTheme.ModuleId, createCommand);
+    var content = GetObjectResultContent<Theme>(result.Result);
 
-    [Test]
-    public async Task Create_ReturnsBadRequest_WhenRequestedModuleIdDoesNotMatchCommandModuleId()
-    {
-      var createCommand = new CreateTheme { PathId = 1, ModuleId = 1, Order = 0, Title = "Create title", Description = "Create Description" };
-      var controller = new ThemesController(moqMediator.Object);
-      
-      var result = await controller.Create(1, 2, createCommand);
+    Assert.IsInstanceOf(typeof(CreatedAtRouteResult), result.Result);
+    Assert.AreEqual("GetTheme", ((CreatedAtRouteResult)result.Result).RouteName);
+    Assert.IsNotNull(content);
+    Assert.AreEqual(sampleTheme.Id, content.Id);
+  }
 
-      Assert.IsInstanceOf(typeof(BadRequestResult), result.Result);
-    }
+  //[Test]
+  //public async Task Create_ReturnsBadRequest_WhenRequestedPathIdDoesNotMatchCommandId()
+  //{
+  //  var createCommand = new CreateTheme { PathId = Guid.Empty, ModuleId = Guid.Empty, Order = 0, Title = "Create title", Description = "Create Description" };
+  //  var controller = new ThemesController(moqMediator.Object);
 
-    [Test]
-    public async Task Update_ReturnsUpdatedTheme_WhenRequestedIdMatchesCommandId()
-    {
-      var updateCommand = new UpdateTheme { Id = 1, PathId = 1, ModuleId = 1, Order = 0, Title = "Update title", Description = "Update Description" };
-      var controller = new ThemesController(moqMediator.Object);
-      
-      var result = await controller.Update(1, 1, 1, updateCommand);
-      var content = GetObjectResultContent<Theme>(result.Result);
+  //  var result = await controller.Create(2, 1, createCommand);
 
-      Assert.IsInstanceOf(typeof(OkObjectResult), result.Result);
-      Assert.IsNotNull(content);
-      Assert.AreEqual(1, content.Id);
-    }
+  //  Assert.IsInstanceOf(typeof(BadRequestResult), result.Result);
+  //}
 
-    [Test]
-    public async Task Update_ReturnsBadRequest_WhenRequestedPathIdDoesNotMatchCommandId()
-    {
-      var updateCommand = new UpdateTheme { Id = 1, PathId = 1, ModuleId = 1, Order = 0, Title = "Update title", Description = "Update Description" };
-      var controller = new ThemesController(moqMediator.Object);
-      
-      var result = await controller.Update(2, 1, 1, updateCommand);
+  [Test]
+  public async Task Create_ReturnsBadRequest_WhenRequestedModuleIdDoesNotMatchCommandModuleId()
+  {
+    var createCommand = new CreateTheme { ModuleId = sampleTheme.ModuleId, Order = 0, Title = "Create title", Description = "Create Description" };
+    var controller = new ThemesController(moqMediator.Object);
 
-      Assert.IsInstanceOf(typeof(BadRequestResult), result.Result);
-    }
+    var result = await controller.Create(Guid.NewGuid(), createCommand);
 
-    [Test]
-    public async Task Update_ReturnsBadRequest_WhenRequestedModuleIdDoesNotMatchCommandId()
-    {
-      var updateCommand = new UpdateTheme { Id = 1, PathId = 1, ModuleId = 1, Order = 0, Title = "Update title", Description = "Update Description" };
-      var controller = new ThemesController(moqMediator.Object);
-      
-      var result = await controller.Update(1, 2, 1, updateCommand);
+    Assert.IsInstanceOf(typeof(BadRequestResult), result.Result);
+  }
 
-      Assert.IsInstanceOf(typeof(BadRequestResult), result.Result);
-    }
+  [Test]
+  public async Task Update_ReturnsUpdatedTheme_WhenRequestedIdMatchesCommandId()
+  {
+    var updateCommand = new UpdateTheme { Id = sampleTheme.Id, ModuleId = sampleTheme.ModuleId, Order = 0, Title = "Update title", Description = "Update Description" };
+    var controller = new ThemesController(moqMediator.Object);
 
-    [Test]
-    public async Task Update_ReturnsBadRequest_WhenRequestedIdDoesNotMatchCommandId()
-    {
-      var updateCommand = new UpdateTheme { Id = 1, PathId = 1, ModuleId = 1, Order = 0, Title = "Update title", Description = "Update Description" };
-      var controller = new ThemesController(moqMediator.Object);
-      
-      var result = await controller.Update(1, 1, 2, updateCommand);
+    var result = await controller.Update(sampleTheme.ModuleId, sampleTheme.Id, updateCommand);
+    var content = GetObjectResultContent<Theme>(result.Result);
 
-      Assert.IsInstanceOf(typeof(BadRequestResult), result.Result);
-    }
+    Assert.IsInstanceOf(typeof(OkObjectResult), result.Result);
+    Assert.IsNotNull(content);
+    Assert.AreEqual(sampleTheme.Id, content.Id);
+  }
 
-    [Test]
-    public async Task Delete_ReturnsNoContent()
-    {
-      var controller = new ThemesController(moqMediator.Object);
-      
-      var result = await controller.Delete(1, 1, 1);
+  //[Test]
+  //public async Task Update_ReturnsBadRequest_WhenRequestedPathIdDoesNotMatchCommandId()
+  //{
+  //  var updateCommand = new UpdateTheme { Id = 1, PathId = 1, ModuleId = 1, Order = 0, Title = "Update title", Description = "Update Description" };
+  //  var controller = new ThemesController(moqMediator.Object);
 
-      Assert.IsInstanceOf(typeof(NoContentResult), result);
-    }
+  //  var result = await controller.Update(2, 1, 1, updateCommand);
+
+  //  Assert.IsInstanceOf(typeof(BadRequestResult), result.Result);
+  //}
+
+  [Test]
+  public async Task Update_ReturnsBadRequest_WhenRequestedModuleIdDoesNotMatchCommandId()
+  {
+    var updateCommand = new UpdateTheme { Id = sampleTheme.Id, ModuleId = sampleTheme.ModuleId, Order = 0, Title = "Update title", Description = "Update Description" };
+    var controller = new ThemesController(moqMediator.Object);
+
+    var result = await controller.Update(Guid.NewGuid(), sampleTheme.Id, updateCommand);
+
+    Assert.IsInstanceOf(typeof(BadRequestResult), result.Result);
+  }
+
+  [Test]
+  public async Task Update_ReturnsBadRequest_WhenRequestedIdDoesNotMatchCommandId()
+  {
+    var updateCommand = new UpdateTheme { Id = sampleTheme.Id, ModuleId = sampleTheme.ModuleId, Order = 0, Title = "Update title", Description = "Update Description" };
+    var controller = new ThemesController(moqMediator.Object);
+
+    var result = await controller.Update(sampleTheme.ModuleId, Guid.NewGuid(), updateCommand);
+
+    Assert.IsInstanceOf(typeof(BadRequestResult), result.Result);
+  }
+
+  [Test]
+  public async Task Delete_ReturnsNoContent()
+  {
+    var controller = new ThemesController(moqMediator.Object);
+
+    var result = await controller.Delete(sampleTheme.ModuleId, sampleTheme.Id);
+
+    Assert.IsInstanceOf(typeof(NoContentResult), result);
   }
 }

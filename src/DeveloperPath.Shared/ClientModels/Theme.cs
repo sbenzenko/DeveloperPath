@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using DeveloperPath.Shared.Enums;
 
 namespace DeveloperPath.Shared.ClientModels
@@ -11,7 +12,7 @@ namespace DeveloperPath.Shared.ClientModels
         /// <summary>
         /// Theme ID
         /// </summary>
-        public int Id { get; init; }
+        public Guid Id { get; init; }
 
         /// <summary>
         /// Theme title
@@ -26,7 +27,7 @@ namespace DeveloperPath.Shared.ClientModels
         /// <summary>
         /// Id of module that theme is in
         /// </summary>
-        public int ModuleId { get; set; }
+        public Guid ModuleId { get; set; }
 
         /// <summary>
         /// Section that theme is in (can be null)

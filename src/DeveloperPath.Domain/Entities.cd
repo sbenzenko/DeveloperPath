@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="DeveloperPath.Domain.Entities.Path">
+    <Position X="0.5" Y="1.75" Width="1.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAgAEQAAAAAEAAQAAAAAEAIAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\Path.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="Modules" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="DeveloperPath.Domain.Entities.Module">
+    <Position X="2.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAgAEUQACAAEAAAAAAAAEAAAEBAAAAAAAA=</HashCode>
+      <FileName>Entities\Module.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="Themes" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="DeveloperPath.Domain.Entities.PathModules">
+    <Position X="1" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAQAAAAAAAAAIAAAAAAAQAAAAAAAAAAAAACAAAAAA=</HashCode>
+      <FileName>Entities\PathModules.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DeveloperPath.Domain.Common.AuditableEntity" Collapsed="true">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAQAAAAAAAAAAAAAAAACAAAAAAQAAAAAAAAAAAE=</HashCode>
+      <FileName>Common\AuditableEntity.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DeveloperPath.Domain.Entities.Source">
+    <Position X="7.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAAAAAAhAEAQAAABAAAAAAAAAEAACQAAACAAAAA=</HashCode>
+      <FileName>Entities\Source.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DeveloperPath.Domain.Entities.Theme">
+    <Position X="5.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAAAAAAgAEAAACAAAAQAAAAQAEAAAABACIAEAEA=</HashCode>
+      <FileName>Entities\Theme.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="Sources" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

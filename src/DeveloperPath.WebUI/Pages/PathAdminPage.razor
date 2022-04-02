@@ -41,7 +41,7 @@
                                         <MudIconButton Icon="@Icons.Material.Filled.Delete" Color="Color.Warning" OnClick="(() => DeletePath(pathItem))" />
                                     </MudTooltip>
                                     <MudTooltip Text="@localizer["Visible"]">
-                                        <MudToggleIconButton Toggled="@pathItem.IsVisible"
+                                        <MudToggleIconButton Toggled="@pathItem.Visible"
                                                              ToggledChanged="@(() => ChangePathVisibilityAsync(pathItem))"
                                                              Icon="@Icons.Material.Filled.VisibilityOff"
                                                              ToggledIcon="@Icons.Material.Filled.Visibility"

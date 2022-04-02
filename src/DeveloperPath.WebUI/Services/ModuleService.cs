@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using DeveloperPath.Shared.ClientModels;
+using DeveloperPath.WebUI.Commons;
 
 namespace DeveloperPath.WebUI.Services
 {
@@ -15,16 +17,17 @@ namespace DeveloperPath.WebUI.Services
             _httpService = httpService;
         }
 
-        //public async Task<List<Module>> GetListAsync(string pathKey)
-        //{
-        //    return await _httpService.GetListAsync<Module>(BaseResourceString(pathKey));
-        //}
-
-        public async Task<List<Module>> GetListAsync()
+        public async Task<ListWithMetadata<Module>> GetListAsync(Guid Id)
         {
-            //return await _httpService.GetListAsync<Module>(BaseResourceString);
-            return null;
+            return await _httpService.GetListAnonymousAsync<Module>($"{BaseResourceString}/{Id}");
         }
+
+        // TODO: Add pagination
+        public async Task<ListWithMetadata<Module>> GetListAsync()
+        {
+            return await _httpService.GetListAsync<Module>(BaseResourceString);
+        }
+
         public async Task<Module> EditModuleAsync(Module module)
         {
             return await _httpService.PutAsync($"{BaseResourceString}/{module.Id}", module);

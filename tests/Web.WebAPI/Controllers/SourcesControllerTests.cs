@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -13,190 +14,200 @@ using Microsoft.AspNetCore.Mvc;
 using Moq;
 using NUnit.Framework;
 
-namespace Web.WebAPI.Controllers
+namespace Web.WebAPI.Controllers;
+
+public class SourcesControllerTests : TestBase
 {
-    public class SourcesControllerTests : TestBase
+  private readonly Mock<IMediator> moqMediator;
+  private readonly Theme sampleTheme;
+  private readonly Source sampleSource;
+  private readonly IEnumerable<Source> Sources;
+  private readonly CreateSource createCommand;
+  private readonly UpdateSource updateCommand;
+
+  public SourcesControllerTests()
   {
-    private readonly Mock<IMediator> moqMediator;
-    private readonly Source sampleSource;
-    private readonly IEnumerable<Source> Sources;
-    private readonly UpdateSource updateCommand;
-
-    public SourcesControllerTests()
+    sampleTheme = new Theme { Id = Guid.NewGuid(), ModuleId = Guid.NewGuid(), Title = "Theme1", Description = "Description1" };
+    sampleSource = new Source { Id = Guid.NewGuid(), ThemeId = sampleTheme.Id, Title = "Source1", Description = "Description1", Url = "https://www.test1.com" };
+    Sources = new List<Source>
     {
-      sampleSource = new Source { Id = 1, ThemeId = 1, Title = "Source1", Description = "Description1", Url = "https://www.test1.com" };
-      Sources = new List<Source>
-      {
-        sampleSource,
-        new Source { Id = 2, ThemeId = 1, Title = "Source2", Description = "Description2", Url = "https://www.test1.com" }
-      };
-
-      updateCommand = new UpdateSource { Id = 1, PathId = 1, ModuleId = 1, ThemeId = 1, 
-        Order = 0, Title = "Create title", Description = "Create Description", Url = "http://www.ww.ww" };
-
-      moqMediator = new Mock<IMediator>();
-      // Get all
-      moqMediator
-        .Setup(m => m.Send(It.IsAny<GetSourceListQuery>(), It.IsAny<CancellationToken>()))
-          .ReturnsAsync(Sources);
-      // Get one
-      moqMediator
-        .Setup(m => m.Send(It.IsAny<GetSourceQuery>(), It.IsAny<CancellationToken>()))
-          .ReturnsAsync(sampleSource);
-      // Create
-      moqMediator
-        .Setup(m => m.Send(It.IsAny<CreateSource>(), It.IsAny<CancellationToken>()))
-          .ReturnsAsync(sampleSource);
-      // Update
-      moqMediator
-          .Setup(m => m.Send(It.IsAny<UpdateSource>(), It.IsAny<CancellationToken>()))
-          .ReturnsAsync(sampleSource);
-      // Delete
-      moqMediator
-        .Setup(m => m.Send(It.IsAny<DeleteSource>(), It.IsAny<CancellationToken>()));
-    }
-
-    [Test]
-    public async Task Get_ReturnsAllSources()
+      sampleSource,
+      new Source { Id = Guid.NewGuid(), ThemeId = sampleTheme.Id, Title = "Source2", Description = "Description2", Url = "https://www.test1.com" }
+    };
+    
+    createCommand = new CreateSource
     {
-      var controller = new SourcesController(moqMediator.Object);
-      
-      var result = await controller.Get(1, 1, 1);
-      var content = GetObjectResultContent<IEnumerable<Source>>(result.Result);
+      ModuleId = sampleTheme.ModuleId,
+      ThemeId = sampleTheme.Id,
+      Order = 0,
+      Title = "Create title",
+      Description = "Create Description",
+      Url = "http://www.ww.ww"
+    };
 
-      Assert.IsInstanceOf(typeof(OkObjectResult), result.Result);
-      Assert.IsNotNull(content);
-      Assert.AreEqual(2, content.Count());
-    }
-
-    [Test]
-    public async Task Get_ReturnsSource()
+    updateCommand = new UpdateSource
     {
-      var controller = new SourcesController(moqMediator.Object);
-      
-      var result = await controller.Get(1, 1, 1, 1);
-      var content = GetObjectResultContent<Source>(result.Result);
+      Id = sampleSource.Id,
+      ModuleId = sampleTheme.ModuleId,
+      ThemeId = sampleSource.ThemeId,
+      Order = 0,
+      Title = "Create title",
+      Description = "Create Description",
+      Url = "http://www.ww.ww"
+    };
 
-      Assert.IsInstanceOf(typeof(OkObjectResult), result.Result);
-      Assert.IsNotNull(content);
-      Assert.AreEqual(1, content.Id);
-    }
+    moqMediator = new Mock<IMediator>();
+    // Get all
+    moqMediator
+      .Setup(m => m.Send(It.IsAny<GetSourceListQuery>(), It.IsAny<CancellationToken>()))
+        .ReturnsAsync(Sources);
+    // Get one
+    moqMediator
+      .Setup(m => m.Send(It.IsAny<GetSourceQuery>(), It.IsAny<CancellationToken>()))
+        .ReturnsAsync(sampleSource);
+    // Create
+    moqMediator
+      .Setup(m => m.Send(It.IsAny<CreateSource>(), It.IsAny<CancellationToken>()))
+        .ReturnsAsync(sampleSource);
+    // Update
+    moqMediator
+        .Setup(m => m.Send(It.IsAny<UpdateSource>(), It.IsAny<CancellationToken>()))
+        .ReturnsAsync(sampleSource);
+    // Delete
+    moqMediator
+      .Setup(m => m.Send(It.IsAny<DeleteSource>(), It.IsAny<CancellationToken>()));
+  }
 
-    [Test]
-    public async Task Create_ReturnsCreatedAtRoute()
-    {
-      var createCommand = new CreateSource { PathId = 1, ModuleId = 1, ThemeId = 1, 
-        Order = 0, Title = "Create title", Description = "Create Description", Url = "http://www.ww.ww" };
-      var controller = new SourcesController(moqMediator.Object);
-      
-      var result = await controller.Create(1, 1, 1, createCommand);
-      var content = GetObjectResultContent<Source>(result.Result);
+  [Test]
+  public async Task Get_ReturnsAllSources()
+  {
+    var controller = new SourcesController(moqMediator.Object);
 
-      Assert.IsInstanceOf(typeof(CreatedAtRouteResult), result.Result);
-      Assert.AreEqual("GetSource", ((CreatedAtRouteResult)result.Result).RouteName);
-      Assert.IsNotNull(content);
-      Assert.AreEqual(1, content.Id);
-    }
+    var result = await controller.Get(sampleTheme.ModuleId, sampleTheme.Id);
+    var content = GetObjectResultContent<IEnumerable<Source>>(result.Result);
 
-    [Test]
-    public async Task Create_ReturnsBadRequest_WhenRequestedModuleIdDoesNotMatchCommandModuleId()
-    {
-      var createCommand = new CreateSource { PathId = 1, ModuleId = 1, ThemeId = 1, 
-        Order = 0, Title = "Create title", Description = "Create Description", Url = "http://www.ww.ww" };
-      var controller = new SourcesController(moqMediator.Object);
-      
-      var result = await controller.Create(1, 2, 1, createCommand);
+    Assert.IsInstanceOf(typeof(OkObjectResult), result.Result);
+    Assert.IsNotNull(content);
+    Assert.AreEqual(2, content.Count());
+  }
 
-      Assert.IsInstanceOf(typeof(BadRequestResult), result.Result);
-    }
+  [Test]
+  public async Task Get_ReturnsSource()
+  {
+    var controller = new SourcesController(moqMediator.Object);
 
-    [Test]
-    public async Task Create_ReturnsBadRequest_WhenRequestedThemeIdDoesNotMatchCommandThemeId()
-    {
-      var createCommand = new CreateSource { PathId = 1, ModuleId = 1, ThemeId = 1, 
-        Order = 0, Title = "Create title", Description = "Create Description", Url = "http://www.ww.ww" };
-      var controller = new SourcesController(moqMediator.Object);
-      
-      var result = await controller.Create(1, 1, 2, createCommand);
+    var result = await controller.Get(sampleTheme.ModuleId, sampleSource.ThemeId, sampleSource.Id);
+    var content = GetObjectResultContent<Source>(result.Result);
 
-      Assert.IsInstanceOf(typeof(BadRequestResult), result.Result);
-    }
+    Assert.IsInstanceOf(typeof(OkObjectResult), result.Result);
+    Assert.IsNotNull(content);
+    Assert.AreEqual(sampleSource.Id, content.Id);
+  }
 
-    [Test]
-    public async Task Create_ReturnsBadRequest_WhenRequestedPathIdDoesNotMatchCommandId()
-    {
-      var createCommand = new CreateSource { PathId = 1, ModuleId = 1, ThemeId = 1, 
-        Order = 0, Title = "Create title", Description = "Create Description", Url = "http://www.ww.ww" };
-      var controller = new SourcesController(moqMediator.Object);
-      
-      var result = await controller.Create(2, 1, 1, createCommand);
+  [Test]
+  public async Task Create_ReturnsCreatedAtRoute()
+  {
+    var controller = new SourcesController(moqMediator.Object);
 
-      Assert.IsInstanceOf(typeof(BadRequestResult), result.Result);
-    }
+    var result = await controller.Create(sampleTheme.ModuleId, sampleTheme.Id, createCommand);
+    var content = GetObjectResultContent<Source>(result.Result);
 
-    [Test]
-    public async Task Update_ReturnsUpdatedSource_WhenRequestedIdMatchesCommandId()
-    {
-      var updateCommand = new UpdateSource { Id = 1, PathId = 1, ModuleId = 1, ThemeId = 1, 
-        Order = 0, Title = "Create title", Description = "Create Description", Url = "http://www.ww.ww" };
-      var controller = new SourcesController(moqMediator.Object);
-      
-      var result = await controller.Update(1, 1, 1, 1, updateCommand);
-      var content = GetObjectResultContent<Source>(result.Result);
+    Assert.IsInstanceOf(typeof(CreatedAtRouteResult), result.Result);
+    Assert.AreEqual("GetSource", ((CreatedAtRouteResult)result.Result).RouteName);
+    Assert.IsNotNull(content);
+    Assert.AreEqual(sampleSource.Id, content.Id);
+  }
 
-      Assert.IsInstanceOf(typeof(OkObjectResult), result.Result);
-      Assert.IsNotNull(content);
-      Assert.AreEqual(1, content.Id);
-    }
+  [Test]
+  public async Task Create_ReturnsBadRequest_WhenRequestedModuleIdDoesNotMatchCommandModuleId()
+  {
+    var controller = new SourcesController(moqMediator.Object);
 
-    [Test]
-    public async Task Update_ReturnsBadRequest_WhenRequestedPathIdDoesNotMatchCommandId()
-    {
-      var controller = new SourcesController(moqMediator.Object);
-      
-      var result = await controller.Update(2, 1, 1, 1, updateCommand);
+    var result = await controller.Create(Guid.NewGuid(), sampleTheme.Id, createCommand);
 
-      Assert.IsInstanceOf(typeof(BadRequestResult), result.Result);
-    }
+    Assert.IsInstanceOf(typeof(BadRequestResult), result.Result);
+  }
 
-    [Test]
-    public async Task Update_ReturnsBadRequest_WhenRequestedModuleIdDoesNotMatchCommandId()
-    {
-      var controller = new SourcesController(moqMediator.Object);
-      
-      var result = await controller.Update(1, 2, 1, 1, updateCommand);
+  [Test]
+  public async Task Create_ReturnsBadRequest_WhenRequestedThemeIdDoesNotMatchCommandThemeId()
+  {
+    var controller = new SourcesController(moqMediator.Object);
 
-      Assert.IsInstanceOf(typeof(BadRequestResult), result.Result);
-    }
+    var result = await controller.Create(sampleTheme.ModuleId, Guid.NewGuid(), createCommand);
 
-    [Test]
-    public async Task Update_ReturnsBadRequest_WhenRequestedThemeIdDoesNotMatchCommandId()
-    {
-      var controller = new SourcesController(moqMediator.Object);
-      
-      var result = await controller.Update(1, 1, 2, 1, updateCommand);
+    Assert.IsInstanceOf(typeof(BadRequestResult), result.Result);
+  }
 
-      Assert.IsInstanceOf(typeof(BadRequestResult), result.Result);
-    }
+  //[Test]
+  //public async Task Create_ReturnsBadRequest_WhenRequestedPathIdDoesNotMatchCommandId()
+  //{
+  //  var createCommand = new CreateSource
+  //  {
+  //    PathId = Guid.Empty,
+  //    ModuleId = Guid.Empty,
+  //    ThemeId = Guid.Empty,
+  //    Order = 0,
+  //    Title = "Create title",
+  //    Description = "Create Description",
+  //    Url = "http://www.ww.ww"
+  //  };
+  //  var controller = new SourcesController(moqMediator.Object);
 
-    [Test]
-    public async Task Update_ReturnsBadRequest_WhenRequestedIdDoesNotMatchCommandId()
-    {
-      var controller = new SourcesController(moqMediator.Object);
-      
-      var result = await controller.Update(1, 1, 1, 2, updateCommand);
+  //  var result = await controller.Create(Guid.Empty, Guid.Empty, Guid.Empty, createCommand);
 
-      Assert.IsInstanceOf(typeof(BadRequestResult), result.Result);
-    }
+  //  Assert.IsInstanceOf(typeof(BadRequestResult), result.Result);
+  //}
 
-    [Test]
-    public async Task Delete_ReturnsNoContent()
-    {
-      var controller = new SourcesController(moqMediator.Object);
-      
-      var result = await controller.Delete(1, 1, 1, 1);
+  [Test]
+  public async Task Update_ReturnsUpdatedSource_WhenRequestedIdMatchesCommandId()
+  {
+    var controller = new SourcesController(moqMediator.Object);
 
-      Assert.IsInstanceOf(typeof(NoContentResult), result);
-    }
+    var result = await controller.Update(sampleTheme.ModuleId, sampleSource.ThemeId, sampleSource.Id, updateCommand);
+    var content = GetObjectResultContent<Source>(result.Result);
+
+    Assert.IsInstanceOf(typeof(OkObjectResult), result.Result);
+    Assert.IsNotNull(content);
+    Assert.AreEqual(sampleSource.Id, content.Id);
+  }
+
+  [Test]
+  public async Task Update_ReturnsBadRequest_WhenRequestedModuleIdDoesNotMatchCommandId()
+  {
+    var controller = new SourcesController(moqMediator.Object);
+
+    var result = await controller.Update(Guid.NewGuid(), sampleSource.ThemeId, sampleSource.Id, updateCommand);
+
+    Assert.IsInstanceOf(typeof(BadRequestResult), result.Result);
+  }
+
+  [Test]
+  public async Task Update_ReturnsBadRequest_WhenRequestedThemeIdDoesNotMatchCommandId()
+  {
+    var controller = new SourcesController(moqMediator.Object);
+    
+    var result = await controller.Update(sampleTheme.ModuleId, Guid.NewGuid(), sampleSource.Id, updateCommand);
+
+    Assert.IsInstanceOf(typeof(BadRequestResult), result.Result);
+  }
+
+  [Test]
+  public async Task Update_ReturnsBadRequest_WhenRequestedIdDoesNotMatchCommandId()
+  {
+    var controller = new SourcesController(moqMediator.Object);
+
+    var result = await controller.Update(sampleTheme.ModuleId, sampleSource.ThemeId, Guid.NewGuid(), updateCommand);
+
+    Assert.IsInstanceOf(typeof(BadRequestResult), result.Result);
+  }
+
+  [Test]
+  public async Task Delete_ReturnsNoContent()
+  {
+    var controller = new SourcesController(moqMediator.Object);
+
+    var result = await controller.Delete(sampleTheme.ModuleId, sampleSource.ThemeId, sampleSource.Id);
+
+    Assert.IsInstanceOf(typeof(NoContentResult), result);
   }
 }

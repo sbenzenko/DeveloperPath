@@ -1,41 +1,43 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using DeveloperPath.Shared;
-using DeveloperPath.Shared.ClientModels;
+﻿using DeveloperPath.Shared.ClientModels;
 using DeveloperPath.WebUI.Services;
 using DeveloperPath.WebUI.UIHelper;
 using DeveloperPath.WebUI.UIHelpers;
 using Microsoft.AspNetCore.Components;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace DeveloperPath.WebUI.Pages
 {
-    public partial class PathPage
-    {
-        private const int PAGE_SIZE = 10;
-
+    public partial class PathPage : ComponentBase
+  {
         [Inject] public PathService PathService { get; set; }
+        [Inject] public ModuleService ModuleService { get; set; }
         [Inject] public SnackbarHelper SnackbarHelper { get; set; }
+        [Parameter] public string PathKey { get; set; }
 
-        private int _lastPageRequest;
         private State _state;
-        public List<Path> Paths { get; set; }
-        public PaginationMetadata PaginationMetadata { get; private set; }
+        public Path Path { get; set; }
+        public List<Module> Modules { get; set; }
         protected override async Task OnInitializedAsync()
         {
-            await LoadDataAsync(1);
+            await LoadDataAsync(PathKey);
         }
 
-        private async Task LoadDataAsync(int pageNum)
+        private async Task LoadDataAsync(string pathKey)
         {
             try
             {
-                _lastPageRequest = pageNum;
-
                 _state = State.Loading;
-                var result = await PathService.GetListAnonymousAsync(false, pageNum, PAGE_SIZE);
-                Paths = result.Data;
-                PaginationMetadata = result.Metadata;
+                Path = await PathService.GetAnonymousAsync(pathKey);
+                if (Path is null)
+                {
+                    _state = State.NotFound;
+                    return;
+                }
+
+                var result = await ModuleService.GetListAsync(Path.Id);
+                Modules = result.Data;
                 _state = State.ContentReady;
             }
             catch (Exception ex)
@@ -47,11 +49,8 @@ namespace DeveloperPath.WebUI.Pages
 
         private async Task Reload()
         {
-            await LoadDataAsync(_lastPageRequest);
+            await LoadDataAsync(PathKey);
         }
-        private async Task ChangePageAsync(int pageNum)
-        {
-            await LoadDataAsync(pageNum);
-        }
+
     }
 }

@@ -5,13 +5,12 @@ namespace DeveloperPath.Domain.Common
   /// <summary>
   /// Abstract class to add tracking to entities
   /// </summary>
-  public abstract record AuditableEntity
+  public abstract class AuditableEntity
   {
-    // TODO: change to GUID
     /// <summary>
     /// ID
     /// </summary>
-    public int Id { get; init; }
+    public Guid Id { get; init; }
 
     // TODO: change to identity User
     /// <summary>
@@ -34,5 +33,10 @@ namespace DeveloperPath.Domain.Common
     /// Datetime entity last changed
     /// </summary>
     public DateTime? LastModified { get; set; }
+    
+    /// <summary>
+    /// Marks entity as deleted without physical deletion
+    /// </summary>
+    public DateTime? Deleted { get; set; }
   }
 }

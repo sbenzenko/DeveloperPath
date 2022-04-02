@@ -12,6 +12,7 @@ namespace DeveloperPath.Application.Common.Behaviours
   /// <typeparam name="TRequest"></typeparam>
   /// <typeparam name="TResponse"></typeparam>
   public class HandleExceptionBehaviour<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
+     where TRequest : IRequest<TResponse>
   {
     private readonly ILogger<TRequest> _logger;
 

@@ -1,4 +1,5 @@
 ﻿using DeveloperPath.Shared.Enums;
+using System;
 
 namespace DeveloperPath.Shared.ClientModels
 {
@@ -10,7 +11,7 @@ namespace DeveloperPath.Shared.ClientModels
         /// <summary>
         /// Section ID
         /// </summary>
-        public int Id { get; init; }
+        public Guid Id { get; init; }
 
         /// <summary>
         /// Section Title

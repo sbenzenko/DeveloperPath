@@ -294,6 +294,29 @@
             Sender name
             </summary>
         </member>
+        <member name="T:DeveloperPath.Application.Common.Interfaces.Validation.IUniqueNamingValidation">
+            <summary>
+            Validation for unique URI key and Title
+            </summary>
+        </member>
+        <member name="M:DeveloperPath.Application.Common.Interfaces.Validation.IUniqueNamingValidation.BeUniqueKey(System.Nullable{System.Guid},System.String,System.Threading.CancellationToken)">
+            <summary>
+            Request to context to check for unique URI key
+            </summary>
+            <param name="id">Path Id</param>
+            <param name="key"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:DeveloperPath.Application.Common.Interfaces.Validation.IUniqueNamingValidation.BeUniqueTitle(System.Nullable{System.Guid},System.String,System.Threading.CancellationToken)">
+            <summary>
+            Request to context to check for unique title
+            </summary>
+            <param name="id">Path Id</param>
+            <param name="title"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
         <member name="T:DeveloperPath.Application.Common.Mappings.Interfaces.IMapFrom`1">
             <summary>
             Common mapping interface
@@ -446,6 +469,35 @@
             <param name="errors"></param>
             <returns></returns>
         </member>
+        <member name="T:DeveloperPath.Application.Common.Validation.UniqueNamingValidation">
+            <summary>
+            Base validation logic for path related to data base checking
+            </summary>
+        </member>
+        <member name="M:DeveloperPath.Application.Common.Validation.UniqueNamingValidation.#ctor(DeveloperPath.Application.Common.Interfaces.IApplicationDbContext)">
+            <summary>
+            
+            </summary>
+            <param name="context"></param>
+        </member>
+        <member name="M:DeveloperPath.Application.Common.Validation.UniqueNamingValidation.BeUniqueKey(System.Nullable{System.Guid},System.String,System.Threading.CancellationToken)">
+            <summary>
+            Request to context to check for unique URI key
+            </summary>
+            <param name="id">Path Id</param>
+            <param name="key"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:DeveloperPath.Application.Common.Validation.UniqueNamingValidation.BeUniqueTitle(System.Nullable{System.Guid},System.String,System.Threading.CancellationToken)">
+            <summary>
+            Request to context to check for unique title
+            </summary>
+            <param name="id">Path Id</param>
+            <param name="title"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
         <member name="T:DeveloperPath.Application.CQRS.Modules.Commands.CreateModule.CreateModule">
             <summary>
             A module to create
@@ -590,9 +642,9 @@
             Get module parameters
             </summary>
         </member>
-        <member name="P:DeveloperPath.Application.CQRS.Modules.Queries.GetModules.GetModuleListQuery.PathKey">
+        <member name="P:DeveloperPath.Application.CQRS.Modules.Queries.GetModules.GetModuleListQuery.PathId">
             <summary>
-            URI key
+            PathId
             </summary>
         </member>
         <member name="T:DeveloperPath.Application.CQRS.Modules.Queries.GetModules.GetModuleListQueryPaging">
@@ -630,57 +682,15 @@
             Path URI key
             </summary>
         </member>
-        <member name="T:DeveloperPath.Application.CQRS.Paths.Commands.IBasePathValidation">
+        <member name="T:DeveloperPath.Application.CQRS.Modules.Queries.GetModules.GetModulesQuery">
             <summary>
-             Base validation logic interface for path related to data base checking
+            Get module parameters
             </summary>
         </member>
-        <member name="M:DeveloperPath.Application.CQRS.Paths.Commands.IBasePathValidation.BeUniqueKey(System.Nullable{System.Int32},System.String,System.Threading.CancellationToken)">
+        <member name="P:DeveloperPath.Application.CQRS.Modules.Queries.GetModules.GetModulesQuery.PathKey">
             <summary>
-            Request to context to check for unique URI key
+            PathKey
             </summary>
-            <param name="id">Path Id</param>
-            <param name="key"></param>
-            <param name="cancellationToken"></param>
-            <returns></returns>
-        </member>
-        <member name="M:DeveloperPath.Application.CQRS.Paths.Commands.IBasePathValidation.BeUniqueTitle(System.Nullable{System.Int32},System.String,System.Threading.CancellationToken)">
-            <summary>
-            Request to context to check for unique title
-            </summary>
-            <param name="id">Path Id</param>
-            <param name="title"></param>
-            <param name="cancellationToken"></param>
-            <returns></returns>
-        </member>
-        <member name="T:DeveloperPath.Application.CQRS.Paths.Commands.BasePathValidation">
-            <summary>
-            Base validation logic for path related to data base checking
-            </summary>
-        </member>
-        <member name="M:DeveloperPath.Application.CQRS.Paths.Commands.BasePathValidation.#ctor(DeveloperPath.Application.Common.Interfaces.IApplicationDbContext)">
-            <summary>
-            
-            </summary>
-            <param name="context"></param>
-        </member>
-        <member name="M:DeveloperPath.Application.CQRS.Paths.Commands.BasePathValidation.BeUniqueKey(System.Nullable{System.Int32},System.String,System.Threading.CancellationToken)">
-            <summary>
-            Request to context to check for unique URI key
-            </summary>
-            <param name="id">Path Id</param>
-            <param name="key"></param>
-            <param name="cancellationToken"></param>
-            <returns></returns>
-        </member>
-        <member name="M:DeveloperPath.Application.CQRS.Paths.Commands.BasePathValidation.BeUniqueTitle(System.Nullable{System.Int32},System.String,System.Threading.CancellationToken)">
-            <summary>
-            Request to context to check for unique title
-            </summary>
-            <param name="id">Path Id</param>
-            <param name="title"></param>
-            <param name="cancellationToken"></param>
-            <returns></returns>
         </member>
         <member name="T:DeveloperPath.Application.CQRS.Paths.Commands.CreatePath.CreatePath">
             <summary>
@@ -707,15 +717,20 @@
             List of tags related to path
             </summary>
         </member>
+        <member name="P:DeveloperPath.Application.CQRS.Paths.Commands.CreatePath.CreatePath.Visible">
+            <summary>
+            Make path visible for users
+            </summary>
+        </member>
         <member name="T:DeveloperPath.Application.CQRS.Paths.Commands.CreatePath.CreatePathCommandValidator">
             <summary>
             Validation rules for creating path
             </summary>
         </member>
-        <member name="M:DeveloperPath.Application.CQRS.Paths.Commands.CreatePath.CreatePathCommandValidator.#ctor(DeveloperPath.Application.CQRS.Paths.Commands.IBasePathValidation)">
+        <member name="M:DeveloperPath.Application.CQRS.Paths.Commands.CreatePath.CreatePathCommandValidator.#ctor(DeveloperPath.Application.Common.Interfaces.Validation.IUniqueNamingValidation)">
             <summary>
             </summary>
-            <param name="pathValidation"></param>
+            <param name="namingValidation"></param>
         </member>
         <member name="T:DeveloperPath.Application.CQRS.Paths.Commands.DeletePath.DeletePath">
             <summary>
@@ -732,7 +747,7 @@
             Patch command for updating the Path
             </summary>
         </member>
-        <member name="M:DeveloperPath.Application.CQRS.Paths.Commands.PatchPath.PatchPathCommand.#ctor(System.Int32,Microsoft.AspNetCore.JsonPatch.JsonPatchDocument,System.Boolean)">
+        <member name="M:DeveloperPath.Application.CQRS.Paths.Commands.PatchPath.PatchPathCommand.#ctor(System.Guid,Microsoft.AspNetCore.JsonPatch.JsonPatchDocument,System.Boolean)">
             <summary>
             Creates the command
             </summary>
@@ -803,16 +818,21 @@
             List of tags related to path
             </summary>
         </member>
+        <member name="P:DeveloperPath.Application.CQRS.Paths.Commands.UpdatePath.UpdatePath.Visible">
+            <summary>
+            Make path visible for users
+            </summary>
+        </member>
         <member name="T:DeveloperPath.Application.CQRS.Paths.Commands.UpdatePath.UpdatePathCommandValidator">
             <summary>
             Validation rules for updating path
             </summary>
         </member>
-        <member name="M:DeveloperPath.Application.CQRS.Paths.Commands.UpdatePath.UpdatePathCommandValidator.#ctor(DeveloperPath.Application.CQRS.Paths.Commands.IBasePathValidation)">
+        <member name="M:DeveloperPath.Application.CQRS.Paths.Commands.UpdatePath.UpdatePathCommandValidator.#ctor(DeveloperPath.Application.Common.Interfaces.Validation.IUniqueNamingValidation)">
             <summary>
             
             </summary>
-            <param name="pathValidation"></param>
+            <param name="namingValidation"></param>
         </member>
         <member name="T:DeveloperPath.Application.CQRS.Paths.Queries.GetPaths.GetDeletedPathListQuery">
             <summary>
@@ -877,11 +897,6 @@
         <member name="T:DeveloperPath.Application.CQRS.Sources.Commands.CreateSource.CreateSource">
             <summary>
             Source to create
-            </summary>
-        </member>
-        <member name="P:DeveloperPath.Application.CQRS.Sources.Commands.CreateSource.CreateSource.PathId">
-            <summary>
-            Path Id
             </summary>
         </member>
         <member name="P:DeveloperPath.Application.CQRS.Sources.Commands.CreateSource.CreateSource.ModuleId">
@@ -953,11 +968,6 @@
             Source Id
             </summary>
         </member>
-        <member name="P:DeveloperPath.Application.CQRS.Sources.Commands.DeleteSource.DeleteSource.PathId">
-            <summary>
-            Path Id
-            </summary>
-        </member>
         <member name="P:DeveloperPath.Application.CQRS.Sources.Commands.DeleteSource.DeleteSource.ModuleId">
             <summary>
             Module Id
@@ -976,11 +986,6 @@
         <member name="P:DeveloperPath.Application.CQRS.Sources.Commands.UpdateSource.UpdateSource.Id">
             <summary>
             Source Id
-            </summary>
-        </member>
-        <member name="P:DeveloperPath.Application.CQRS.Sources.Commands.UpdateSource.UpdateSource.PathId">
-            <summary>
-            Path Id
             </summary>
         </member>
         <member name="P:DeveloperPath.Application.CQRS.Sources.Commands.UpdateSource.UpdateSource.ModuleId">
@@ -1072,11 +1077,6 @@
             Get sources list parameters
             </summary>
         </member>
-        <member name="P:DeveloperPath.Application.CQRS.Sources.Queries.GetSources.GetSourceListQuery.PathId">
-            <summary>
-            Path id
-            </summary>
-        </member>
         <member name="P:DeveloperPath.Application.CQRS.Sources.Queries.GetSources.GetSourceListQuery.ModuleId">
             <summary>
             Module Id
@@ -1097,11 +1097,6 @@
             Source Id
             </summary>
         </member>
-        <member name="P:DeveloperPath.Application.CQRS.Sources.Queries.GetSources.GetSourceQuery.PathId">
-            <summary>
-            Path Id
-            </summary>
-        </member>
         <member name="P:DeveloperPath.Application.CQRS.Sources.Queries.GetSources.GetSourceQuery.ModuleId">
             <summary>
             Module Id
@@ -1115,11 +1110,6 @@
         <member name="T:DeveloperPath.Application.CQRS.Themes.Commands.CreateTheme.CreateTheme">
             <summary>
             Theme to create
-            </summary>
-        </member>
-        <member name="P:DeveloperPath.Application.CQRS.Themes.Commands.CreateTheme.CreateTheme.PathId">
-            <summary>
-            Path id
             </summary>
         </member>
         <member name="P:DeveloperPath.Application.CQRS.Themes.Commands.CreateTheme.CreateTheme.ModuleId">
@@ -1191,11 +1181,6 @@
             Theme id
             </summary>
         </member>
-        <member name="P:DeveloperPath.Application.CQRS.Themes.Commands.DeleteTheme.DeleteTheme.PathId">
-            <summary>
-            Path id
-            </summary>
-        </member>
         <member name="P:DeveloperPath.Application.CQRS.Themes.Commands.DeleteTheme.DeleteTheme.ModuleId">
             <summary>
             Module id
@@ -1209,11 +1194,6 @@
         <member name="P:DeveloperPath.Application.CQRS.Themes.Commands.UpdateTheme.UpdateTheme.Id">
             <summary>
             Theme id
-            </summary>
-        </member>
-        <member name="P:DeveloperPath.Application.CQRS.Themes.Commands.UpdateTheme.UpdateTheme.PathId">
-            <summary>
-            Path id
             </summary>
         </member>
         <member name="P:DeveloperPath.Application.CQRS.Themes.Commands.UpdateTheme.UpdateTheme.ModuleId">
@@ -1300,11 +1280,6 @@
             Get themes list parameters
             </summary>
         </member>
-        <member name="P:DeveloperPath.Application.CQRS.Themes.Queries.GetThemes.GetThemeListQuery.PathId">
-            <summary>
-            Path Id
-            </summary>
-        </member>
         <member name="P:DeveloperPath.Application.CQRS.Themes.Queries.GetThemes.GetThemeListQuery.ModuleId">
             <summary>
             Module Id
@@ -1318,11 +1293,6 @@
         <member name="P:DeveloperPath.Application.CQRS.Themes.Queries.GetThemes.GetThemeQuery.Id">
             <summary>
             Theme Id
-            </summary>
-        </member>
-        <member name="P:DeveloperPath.Application.CQRS.Themes.Queries.GetThemes.GetThemeQuery.PathId">
-            <summary>
-            Path Id
             </summary>
         </member>
         <member name="P:DeveloperPath.Application.CQRS.Themes.Queries.GetThemes.GetThemeQuery.ModuleId">

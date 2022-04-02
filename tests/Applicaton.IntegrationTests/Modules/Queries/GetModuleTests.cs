@@ -125,7 +125,7 @@ namespace DeveloperPath.Application.IntegrationTests.Modules.Queries
             var cts = new CancellationTokenSource();
             cts.Cancel();
 
-            var query = new GetModuleListQuery() { PathKey = "" };
+            var query = new GetModuleListQuery() { PathId = default };
 
             FluentActions.Invoking(() =>
                 SendAsync(query, cts.Token)).Should().ThrowAsync<TaskCanceledException>();
@@ -137,7 +137,7 @@ namespace DeveloperPath.Application.IntegrationTests.Modules.Queries
             var cts = new CancellationTokenSource();
             cts.Cancel();
 
-            var query = new GetModuleListQueryPaging { PathKey = "some-key", PageNumber = 1, PageSize = 1 };
+            var query = new GetModuleListQueryPaging { PathKey = default, PageNumber = 1, PageSize = 1 };
 
             FluentActions.Invoking(() =>
                 SendAsync(query, cts.Token)).Should().ThrowAsync<TaskCanceledException>();
@@ -236,7 +236,7 @@ namespace DeveloperPath.Application.IntegrationTests.Modules.Queries
         [Test]
         public void ListShouldReturnNotFound_WhenPathIdNotFound()
         {
-            var query = new GetModuleListQuery() { PathKey = "99999" };
+            var query = new GetModuleListQuery() { PathId = 99999 };
 
             FluentActions.Invoking(() =>
                 SendAsync(query)).Should().ThrowAsync<NotFoundException>();

@@ -3,6 +3,7 @@ using DeveloperPath.Application.Common.Interfaces;
 using DeveloperPath.Domain.Entities;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading;
@@ -19,22 +20,22 @@ namespace DeveloperPath.Application.CQRS.Sources.Commands.DeleteSource
     /// Source Id
     /// </summary>
     [Required]
-    public int Id { get; init; }
-    /// <summary>
-    /// Path Id
-    /// </summary>
-    [Required]
-    public int PathId { get; init; }
+    public Guid Id { get; init; }
+    ///// <summary>
+    ///// Path Id
+    ///// </summary>
+    //[Required]
+    //public Guid PathId { get; init; }
     /// <summary>
     /// Module Id
     /// </summary>
     [Required]
-    public int ModuleId { get; init; }
+    public Guid ModuleId { get; init; }
     /// <summary>
     /// Theme Id
     /// </summary>
     [Required]
-    public int ThemeId { get; init; }
+    public Guid ThemeId { get; init; }
   }
 
   internal class DeleteSourceCommandHandler : IRequestHandler<DeleteSource>
@@ -49,9 +50,9 @@ namespace DeveloperPath.Application.CQRS.Sources.Commands.DeleteSource
     public async Task<Unit> Handle(DeleteSource request, CancellationToken cancellationToken)
     {
       //TODO: check if requested module is in requested path (???)
-      var path = await _context.Paths.FindAsync(new object[] { request.PathId }, cancellationToken);
-      if (path == null)
-        throw new NotFoundException(nameof(Path), request.PathId, NotFoundHelper.PATH_NOT_FOUND);
+      //var path = await _context.Paths.FindAsync(new object[] { request.PathId }, cancellationToken);
+      //if (path == null)
+      //  throw new NotFoundException(nameof(Path), request.PathId, NotFoundHelper.PATH_NOT_FOUND);
 
       var theme = await _context.Themes
         .Where(t => t.Id == request.ThemeId && t.ModuleId == request.ModuleId)

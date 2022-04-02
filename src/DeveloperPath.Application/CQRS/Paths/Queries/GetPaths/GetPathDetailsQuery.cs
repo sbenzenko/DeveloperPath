@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -21,7 +22,7 @@ namespace DeveloperPath.Application.CQRS.Paths.Queries.GetPaths
     /// Path id
     /// </summary>
     [Required]
-    public int Id { get; init; }
+    public Guid Id { get; init; }
   }
 
   internal class GetPathDetailsQueryHandler : IRequestHandler<GetPathDetailsQuery, PathDetails>

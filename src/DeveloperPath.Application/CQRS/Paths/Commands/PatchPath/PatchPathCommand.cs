@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
 using DeveloperPath.Application.Common.Exceptions;
@@ -15,7 +16,7 @@ namespace DeveloperPath.Application.CQRS.Paths.Commands.PatchPath
     /// </summary>
     public class PatchPathCommand : IRequest<Path>
     {
-        private readonly int _pathId;
+        private readonly Guid _pathId;
         private readonly JsonPatchDocument _patchDocument;
         private readonly bool _shouldIgnoreDeletedItems;
 
@@ -26,7 +27,7 @@ namespace DeveloperPath.Application.CQRS.Paths.Commands.PatchPath
         /// <param name="patchDocument">Json Patch document</param>
         /// <param name="shouldIgnoreDeletedItems">The flag allows to get deleted items while ignoring the query filters</param>
 
-        public PatchPathCommand(int pathId, JsonPatchDocument patchDocument, bool shouldIgnoreDeletedItems = true)
+        public PatchPathCommand(Guid pathId, JsonPatchDocument patchDocument, bool shouldIgnoreDeletedItems = true)
         {
             _pathId = pathId;
             _patchDocument = patchDocument;
@@ -36,7 +37,7 @@ namespace DeveloperPath.Application.CQRS.Paths.Commands.PatchPath
         /// <summary>
         /// Id of Path
         /// </summary>
-        public int PathId => _pathId;
+        public Guid PathId => _pathId;
         /// <summary>
         /// Special Json Document for Patch feature
         /// </summary>
@@ -81,6 +82,7 @@ namespace DeveloperPath.Application.CQRS.Paths.Commands.PatchPath
                 throw new NotFoundException(nameof(Path), request.PathId, NotFoundHelper.PATH_NOT_FOUND);
 
             request.PatchDocument.ApplyTo(path);
+            // TODO: call validation???
             await _context.SaveChangesAsync(cancellationToken);
             return _mapper.Map<Path>(path);
         }

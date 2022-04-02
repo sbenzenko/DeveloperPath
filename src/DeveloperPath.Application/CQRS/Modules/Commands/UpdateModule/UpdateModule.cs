@@ -8,6 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using DeveloperPath.Shared.ClientModels;
 using DeveloperPath.Shared.Enums;
+using System;
 
 namespace DeveloperPath.Application.CQRS.Modules.Commands.UpdateModule
 {
@@ -21,7 +22,7 @@ namespace DeveloperPath.Application.CQRS.Modules.Commands.UpdateModule
         /// Module Id
         /// </summary>
         [Required]
-        public int Id { get; init; }
+        public Guid Id { get; init; }
         /// <summary>
         /// Module title
         /// </summary>
