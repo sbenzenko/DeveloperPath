@@ -2,15 +2,14 @@
 using DeveloperPath.Application.Common.Interfaces;
 using Microsoft.AspNetCore.Http;
 
-namespace DeveloperPath.WebApi.Services
-{
-    public class CurrentUserService : ICurrentUserService
-    {
-        public CurrentUserService(IHttpContextAccessor httpContextAccessor)
-        {
-            UserId = httpContextAccessor.HttpContext?.User?.FindFirstValue(ClaimTypes.NameIdentifier);
-        }
+namespace DeveloperPath.WebApi.Services;
 
-        public string UserId { get; }
-    }
+public class CurrentUserService : ICurrentUserService
+{
+  public CurrentUserService(IHttpContextAccessor httpContextAccessor)
+  {
+    UserId = httpContextAccessor.HttpContext?.User?.FindFirstValue(ClaimTypes.NameIdentifier);
+  }
+
+  public string UserId { get; }
 }

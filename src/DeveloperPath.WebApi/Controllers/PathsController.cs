@@ -117,7 +117,6 @@ public class PathsController : ApiController
     public async Task<ActionResult<Path>> Create([FromBody] CreatePath command)
     {
         Path model = await Mediator.Send(command);
-
         return CreatedAtRoute("GetPath", new { pathId = model.Id }, model);
     }
 
