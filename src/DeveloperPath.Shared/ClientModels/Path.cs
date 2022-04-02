@@ -30,7 +30,7 @@ namespace DeveloperPath.Shared.ClientModels
         /// <summary>
         /// Make path visible for users
         /// </summary>
-        public bool IsVisible { get; set; }
+        public bool Visible { get; set; }
 
         /// <summary>
         /// List of tags related to path

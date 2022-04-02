@@ -12,4 +12,8 @@
 	  <ProjectReference Include="..\DeveloperPath.Shared\DeveloperPath.Shared.csproj" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Folder Include="Exceptions\" />
+	</ItemGroup>
+
 </Project>

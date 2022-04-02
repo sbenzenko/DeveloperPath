@@ -33,7 +33,7 @@ namespace DeveloperPath.WebUI.Services
         public async Task<Path> ChangeVisibility(Path pathItem)
         {
             JsonPatchDocument patchDocument = new JsonPatchDocument();
-            patchDocument.Replace(nameof(pathItem.IsVisible), !pathItem.IsVisible);
+            patchDocument.Replace(nameof(pathItem.Visible), !pathItem.Visible);
             return await _httpService.PatchAsync<Path>($"{BaseResourceString}/{pathItem.Id}", patchDocument);
         }
 
