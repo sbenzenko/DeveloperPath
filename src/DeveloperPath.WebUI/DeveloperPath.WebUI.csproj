@@ -7,26 +7,17 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Remove="C:\Users\seche\.nuget\packages\prettyblazor\1.1.0\contentFiles\any\net5.0\License.txt" />
-    <Content Remove="C:\Users\Serhii_Trofimov\.nuget\packages\prettyblazor\1.2.0\contentFiles\any\net5.0\License.txt" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" PrivateAssets="all" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Authentication" />
+    <PackageReference Include="Microsoft.AspNetCore.JsonPatch" />
+    <PackageReference Include="Microsoft.Extensions.Http" />
+    <PackageReference Include="Microsoft.Extensions.Localization" />
+    <PackageReference Include="Microsoft.OpenApi" />
+    <PackageReference Include="MudBlazor" />
+    <PackageReference Include="PrettyBlazor" />
+    <PackageReference Include="System.Net.Http.Json" />
   </ItemGroup>
-
- 
-
-  <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="6.0.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="6.0.0" PrivateAssets="all" />
-    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Authentication" Version="6.0.0" />
-    <PackageReference Include="Microsoft.AspNetCore.JsonPatch" Version="6.0.0" />
-    <PackageReference Include="Microsoft.Extensions.Http" Version="6.0.0" />
-    <PackageReference Include="Microsoft.Extensions.Localization" Version="6.0.0" />
-    <PackageReference Include="Microsoft.OpenApi" Version="1.2.3" />
-    <PackageReference Include="MudBlazor" Version="6.0.2" />
-    <PackageReference Include="PrettyBlazor" Version="1.2.0" />
-    <PackageReference Include="System.Net.Http.Json" Version="6.0.0" />
-  </ItemGroup>
-
- 
 
   <ItemGroup>
     <ProjectReference Include="..\DeveloperPath.Shared\DeveloperPath.Shared.csproj" />
