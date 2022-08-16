@@ -32,7 +32,7 @@
 		<PackageVersion Include="Microsoft.AspNetCore.Mvc.Versioning.ApiExplorer" Version="5.0.0" />
 		<PackageVersion Include="Microsoft.Azure.WebJobs" Version="3.0.33" />
 		<PackageVersion Include="Microsoft.Azure.WebJobs.Extensions.SendGrid" Version="3.0.2" />
-		<PackageVersion Include="Microsoft.Azure.WebJobs.Extensions.ServiceBus" Version="5.5.0" />
+		<PackageVersion Include="Microsoft.Azure.WebJobs.Extensions.ServiceBus" Version="5.7.0" />
 		<PackageVersion Include="Microsoft.EntityFrameworkCore" Version="6.0.8" />
 		<PackageVersion Include="Microsoft.EntityFrameworkCore.InMemory" Version="6.0.8" />
 		<PackageVersion Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.8" />
