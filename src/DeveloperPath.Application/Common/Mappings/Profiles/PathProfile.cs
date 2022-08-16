@@ -16,13 +16,26 @@ namespace DeveloperPath.Application.Common.Mappings.Profiles
         public PathProfile()
         {
             CreateMap<Domain.Entities.Path, Path>();
-            CreateMap<Domain.Entities.Path, Path>();
             CreateMap<Domain.Entities.Path, DeletedPath>();
             CreateMap<Domain.Entities.Path, PathDetails>();
             CreateMap<Domain.Entities.Path, PathTitle>();
-            CreateMap<CreatePath, Domain.Entities.Path>();
+            CreateMap<CreatePath, Domain.Entities.Path>()
+              .ForMember(x => x.Id, expression => expression.Ignore())
+              .ForMember(x => x.IsVisible, expression => expression.Ignore())
+              .ForMember(x => x.Modules, expression => expression.Ignore())
+              .ForMember(x => x.Deleted, expression => expression.Ignore())
+              .ForMember(x => x.Created, expression => expression.Ignore())
+              .ForMember(x => x.CreatedBy, expression => expression.Ignore())
+              .ForMember(x => x.LastModified, expression => expression.Ignore())
+              .ForMember(x => x.LastModifiedBy, expression => expression.Ignore());
             CreateMap<UpdatePath, Domain.Entities.Path>()
-                .ForMember(x => x.Id, expression => expression.Ignore());
+              .ForMember(x => x.Id, expression => expression.Ignore())
+              .ForMember(x => x.Modules, expression => expression.Ignore())
+              .ForMember(x => x.Deleted, expression => expression.Ignore())
+              .ForMember(x => x.Created, expression => expression.Ignore())
+              .ForMember(x => x.CreatedBy, expression => expression.Ignore())
+              .ForMember(x => x.LastModified, expression => expression.Ignore())
+              .ForMember(x => x.LastModifiedBy, expression => expression.Ignore());
         }
     }
 }

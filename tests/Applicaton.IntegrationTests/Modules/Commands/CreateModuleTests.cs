@@ -136,7 +136,7 @@ namespace DeveloperPath.Application.IntegrationTests.Modules.Commands
             module.Description.Should().Be(command.Description);
             module.Necessity.Should().Be(command.Necessity);
             module.CreatedBy.Should().Be(userId);
-            module.Created.Should().BeCloseTo(DateTime.Now, TimeSpan.FromMilliseconds(1000));
+            module.Created.Should().BeCloseTo(DateTime.Now, TimeSpan.FromMilliseconds(3000));
         }
     }
 }
