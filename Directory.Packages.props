@@ -44,7 +44,7 @@
 		<PackageVersion Include="Microsoft.Extensions.Configuration.AzureAppConfiguration" Version="5.1.0" />
 		<PackageVersion Include="Microsoft.Extensions.Diagnostics.HealthChecks.EntityFrameworkCore" Version="6.0.8" />
 		<PackageVersion Include="Microsoft.Extensions.Http" Version="6.0.0" />
-		<PackageVersion Include="Microsoft.Extensions.Localization" Version="6.0.5" />
+		<PackageVersion Include="Microsoft.Extensions.Localization" Version="6.0.10" />
 		<PackageVersion Include="Microsoft.NET.Sdk.Functions" Version="4.1.0" />
 		<PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.3.0" />
 		<PackageVersion Include="Microsoft.OpenApi" Version="1.3.2" />
