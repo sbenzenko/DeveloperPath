@@ -1,7 +1,7 @@
 ﻿# Application setup
 
 ## 1. System requirements
-  - .NET 5
+  - .NET 9
   - MSSQL or similar DBMS
 
 ## 2. DataBase

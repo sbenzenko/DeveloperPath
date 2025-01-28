@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using DeveloperPath.Application.Common.Models;
+
 using DeveloperPath.Application.CQRS.Paths.Commands.CreatePath;
 using DeveloperPath.Application.CQRS.Paths.Commands.DeletePath;
 using DeveloperPath.Application.CQRS.Paths.Commands.UpdatePath;
@@ -10,14 +10,18 @@ using DeveloperPath.Application.CQRS.Paths.Queries.GetPaths;
 using DeveloperPath.Shared.ClientModels;
 using DeveloperPath.WebApi.Controllers;
 using DeveloperPath.WebApi.Models;
+
 using MediatR;
+
 using Microsoft.AspNetCore.Mvc;
+
 using Moq;
+
 using NUnit.Framework;
 
 namespace Web.WebAPI.Controllers
 {
-    public class PathsControllerTests : TestBase
+  public class PathsControllerTests : TestBase
   {
     private readonly Mock<IMediator> moqMediator;
     private readonly Path samplePath;
@@ -82,9 +86,9 @@ namespace Web.WebAPI.Controllers
       var result = await controller.Get(1);
       var content = GetObjectResultContent<Path>(result.Result);
 
-      Assert.IsInstanceOf(typeof(OkObjectResult), result.Result);
-      Assert.IsNotNull(content);
-      Assert.AreEqual(1, content.Id);
+      Assert.That(result.Result, Is.InstanceOf<OkObjectResult>());
+      Assert.That(content, Is.Not.Null);
+      Assert.Equals(1, content.Id);
     }
 
     //[Test]
@@ -149,7 +153,7 @@ namespace Web.WebAPI.Controllers
 
     //  var contentResult = (OkObjectResult)result.Result;
     //  var value = contentResult.Value as IEnumerable<Path>;
-  
+
     //  Assert.IsInstanceOf(typeof(OkObjectResult), result.Result);
     //  Assert.IsNotNull(contentResult);
     //  Assert.AreEqual(1, value.Count());
@@ -162,9 +166,9 @@ namespace Web.WebAPI.Controllers
       var contentResult = (BadRequestObjectResult)result.Result;
       var value = contentResult.Value as IEnumerable<Path>;
 
-      Assert.IsInstanceOf<BadRequestObjectResult>(result.Result);
-      Assert.IsNotNull(contentResult);
-      Assert.AreEqual(2, value.Count());
+      Assert.That(result.Result, Is.InstanceOf<BadRequestObjectResult>());
+      Assert.That(contentResult, Is.Not.Null);
+      Assert.Equals(2, value.Count());
     }
 
     [Test]
@@ -176,10 +180,10 @@ namespace Web.WebAPI.Controllers
       var result = await controller.Create(createCommand);
       var content = GetObjectResultContent<Path>(result.Result);
 
-      Assert.IsInstanceOf(typeof(CreatedAtRouteResult), result.Result);
-      Assert.AreEqual("GetPath", ((CreatedAtRouteResult)result.Result).RouteName);
-      Assert.IsNotNull(content);
-      Assert.AreEqual(1, content.Id);
+      Assert.That(result.Result, Is.InstanceOf<CreatedAtRouteResult>());
+      Assert.Equals("GetPath", ((CreatedAtRouteResult)result.Result).RouteName);
+      Assert.That(content, Is.Not.Null);
+      Assert.Equals(1, content.Id);
     }
 
     [Test]
@@ -191,9 +195,9 @@ namespace Web.WebAPI.Controllers
       var result = await controller.Update(1, updateCommand);
       var content = GetObjectResultContent<Path>(result.Result);
 
-      Assert.IsInstanceOf(typeof(OkObjectResult), result.Result);
-      Assert.IsNotNull(content);
-      Assert.AreEqual(1, content.Id);
+      Assert.That(result.Result, Is.InstanceOf<OkObjectResult>());
+      Assert.That(content, Is.Not.Null);
+      Assert.Equals(1, content.Id);
     }
 
     [Test]
@@ -204,7 +208,7 @@ namespace Web.WebAPI.Controllers
 
       var result = await controller.Update(1, updateCommand);
 
-      Assert.IsInstanceOf(typeof(BadRequestResult), result.Result);
+      Assert.That(result.Result, Is.InstanceOf<BadRequestResult>());
     }
 
     [Test]
@@ -214,7 +218,7 @@ namespace Web.WebAPI.Controllers
 
       var result = await controller.Delete(1);
 
-      Assert.IsInstanceOf(typeof(NoContentResult), result);
+      Assert.That(result, Is.InstanceOf<NoContentResult>());
     }
   }
 }

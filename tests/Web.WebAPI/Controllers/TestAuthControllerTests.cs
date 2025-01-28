@@ -1,6 +1,8 @@
 ﻿using DeveloperPath.WebApi.Controllers;
+
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+
 using NUnit.Framework;
 
 namespace Web.WebAPI.Controllers
@@ -19,9 +21,9 @@ namespace Web.WebAPI.Controllers
       var result = controller.Get();
       var okResult = result as OkObjectResult;
 
-      Assert.IsNotNull(okResult);
-      Assert.AreEqual(StatusCodes.Status200OK, okResult.StatusCode);
-      Assert.AreEqual("access allowed", okResult.Value);
+      Assert.That(okResult, Is.Not.Null);
+      Assert.Equals(StatusCodes.Status200OK, okResult.StatusCode);
+      Assert.Equals("access allowed", okResult.Value);
     }
   }
 }
