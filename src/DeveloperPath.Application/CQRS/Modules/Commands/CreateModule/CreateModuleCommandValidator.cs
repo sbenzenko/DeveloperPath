@@ -11,9 +11,9 @@ namespace DeveloperPath.Application.CQRS.Modules.Commands.CreateModule
         /// CreateModuleCommand validator
         /// </summary>
         public CreateModuleCommandValidator()
-        {
+        { 
             RuleFor(v => v.Key)
-                .NotEmpty().WithMessage("Path Id is required.");
+                .NotEmpty().WithMessage("Path Id is required."); 
 
             RuleFor(v => v.Title)
                 .NotEmpty().WithMessage("Title is required.")
