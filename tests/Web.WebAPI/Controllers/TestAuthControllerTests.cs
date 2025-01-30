@@ -5,25 +5,24 @@ using Microsoft.AspNetCore.Mvc;
 
 using NUnit.Framework;
 
-namespace Web.WebAPI.Controllers
+namespace Web.WebAPI.Controllers;
+
+public class TestAuthControllerTests : TestBase
 {
-  public class TestAuthControllerTests : TestBase
+  public TestAuthControllerTests()
   {
-    public TestAuthControllerTests()
-    {
-    }
+  }
 
-    [Test]
-    public void Get_ReturnsOk()
-    {
-      var controller = new TestAuthController();
+  [Test]
+  public void Get_ReturnsOk()
+  {
+    var controller = new TestAuthController();
 
-      var result = controller.Get();
-      var okResult = result as OkObjectResult;
+    var result = controller.Get();
+    var okResult = result as OkObjectResult;
 
-      Assert.That(okResult, Is.Not.Null);
-      Assert.Equals(StatusCodes.Status200OK, okResult.StatusCode);
-      Assert.Equals("access allowed", okResult.Value);
-    }
+    Assert.That(okResult, Is.Not.Null);
+    Assert.That(okResult.StatusCode, Is.EqualTo(StatusCodes.Status200OK));
+    Assert.That(okResult.Value, Is.EqualTo("access allowed"));
   }
 }

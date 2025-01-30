@@ -1,144 +1,149 @@
-﻿using DeveloperPath.Application.Common.Interfaces;
-using DeveloperPath.Infrastructure.Identity;
-using DeveloperPath.Infrastructure.Persistence;
-using DeveloperPath.WebApi;
-using MediatR;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Moq;
-using NUnit.Framework;
-using Respawn;
-using System.IO;
+﻿using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace DeveloperPath.Application.IntegrationTests
+using DeveloperPath.Application.Common.Interfaces;
+using DeveloperPath.Infrastructure.Identity;
+using DeveloperPath.Infrastructure.Persistence;
+using DeveloperPath.WebApi;
+
+using MediatR;
+
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+
+using Moq;
+
+using NUnit.Framework;
+
+using Respawn;
+
+namespace DeveloperPath.Application.IntegrationTests;
+
+[SetUpFixture]
+public class Testing
 {
-    [SetUpFixture]
-    public class Testing
+  private static IConfigurationRoot _configuration;
+  private static IServiceScopeFactory _scopeFactory;
+  private static Checkpoint _checkpoint;
+  private static string _currentUserId;
+
+  [OneTimeSetUp]
+  public void RunBeforeAnyTests()
+  {
+    var builder = new ConfigurationBuilder()
+        .SetBasePath(Directory.GetCurrentDirectory())
+        .AddJsonFile("appsettings.json", true, true)
+        .AddEnvironmentVariables();
+
+    _configuration = builder.Build();
+
+    var startup = new Startup(_configuration);
+
+    var services = new ServiceCollection();
+
+    services.AddSingleton(Mock.Of<IWebHostEnvironment>(w =>
+        w.EnvironmentName == "Development" &&
+        w.ApplicationName == "DeveloperPath.WebApi"));
+
+    services.AddLogging();
+
+    startup.ConfigureServices(services);
+
+    // Replace service registration for ICurrentUserService
+    // Remove existing registration
+    var currentUserServiceDescriptor = services.FirstOrDefault(d =>
+        d.ServiceType == typeof(ICurrentUserService));
+
+    services.Remove(currentUserServiceDescriptor);
+
+    services.AddMemoryCache();
+    // Register testing version
+    services.AddTransient(provider =>
+        Mock.Of<ICurrentUserService>(s => s.UserId == _currentUserId));
+
+    _scopeFactory = services.BuildServiceProvider().GetService<IServiceScopeFactory>();
+
+    _checkpoint = new Checkpoint
     {
-        private static IConfigurationRoot _configuration;
-        private static IServiceScopeFactory _scopeFactory;
-        private static Checkpoint _checkpoint;
-        private static string _currentUserId;
+      TablesToIgnore = [new Respawn.Graph.Table("__EFMigrationsHistory")]
+    };
 
-        [OneTimeSetUp]
-        public void RunBeforeAnyTests()
-        {
-            var builder = new ConfigurationBuilder()
-                .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("appsettings.json", true, true)
-                .AddEnvironmentVariables();
+    EnsureDatabase();
+  }
 
-            _configuration = builder.Build();
+  private static void EnsureDatabase()
+  {
+    using var scope = _scopeFactory.CreateScope();
 
-            var startup = new Startup(_configuration);
+    var context = scope.ServiceProvider.GetService<ApplicationDbContext>();
 
-            var services = new ServiceCollection();
+    context.Database.Migrate();
+  }
 
-            services.AddSingleton(Mock.Of<IWebHostEnvironment>(w =>
-                w.EnvironmentName == "Development" &&
-                w.ApplicationName == "DeveloperPath.WebApi"));
+  public static async Task<TResponse> SendAsync<TResponse>(IRequest<TResponse> request, CancellationToken token = default)
+  {
+    using var scope = _scopeFactory.CreateScope();
 
-            services.AddLogging();
+    var mediator = scope.ServiceProvider.GetService<IMediator>();
 
-            startup.ConfigureServices(services);
+    return await mediator.Send(request, token);
+  }
 
-            // Replace service registration for ICurrentUserService
-            // Remove existing registration
-            var currentUserServiceDescriptor = services.FirstOrDefault(d =>
-                d.ServiceType == typeof(ICurrentUserService));
+  public static async Task<string> RunAsDefaultUserAsync()
+  {
+    return await RunAsUserAsync("test@local", "Testing1234!");
+  }
 
-            services.Remove(currentUserServiceDescriptor);
-            
-            services.AddMemoryCache();
-            // Register testing version
-            services.AddTransient(provider =>
-                Mock.Of<ICurrentUserService>(s => s.UserId == _currentUserId));
+  public static Task<string> RunAsUserAsync(string userName, string password)
+  {
+    //using var scope = _scopeFactory.CreateScope();
 
-            _scopeFactory = services.BuildServiceProvider().GetService<IServiceScopeFactory>();
+    //var userManager = scope.ServiceProvider.GetService<UserManager<ApplicationUser>>();
 
-            _checkpoint = new Checkpoint
-            {
-                TablesToIgnore = new[] { "__EFMigrationsHistory" }
-            };
+    var user = new ApplicationUser { UserName = userName, Email = userName };
 
-            EnsureDatabase();
-        }
+    //var result = await userManager?.CreateAsync(user, password);
 
-        private static void EnsureDatabase()
-        {
-            using var scope = _scopeFactory.CreateScope();
+    _currentUserId = user.Id;
 
-            var context = scope.ServiceProvider.GetService<ApplicationDbContext>();
+    return Task.FromResult(_currentUserId);
+  }
 
-            context.Database.Migrate();
-        }
+  public static async Task ResetState()
+  {
+    await _checkpoint.Reset(_configuration["DeveloperPathSqlConnectionString"]);
+    _currentUserId = null;
+  }
 
-        public static async Task<TResponse> SendAsync<TResponse>(IRequest<TResponse> request, CancellationToken token = default)
-        {
-            using var scope = _scopeFactory.CreateScope();
+  public static async Task<TEntity> FindAsync<TEntity>(int id)
+      where TEntity : class
+  {
+    using var scope = _scopeFactory.CreateScope();
 
-            var mediator = scope.ServiceProvider.GetService<IMediator>();
+    var context = scope.ServiceProvider.GetService<ApplicationDbContext>();
 
-            return await mediator.Send(request, token);
-        }
+    return await context.FindAsync<TEntity>(id);
+  }
 
-        public static async Task<string> RunAsDefaultUserAsync()
-        {
-            return await RunAsUserAsync("test@local", "Testing1234!");
-        }
+  public static async Task<TEntity> AddAsync<TEntity>(TEntity entity)
+      where TEntity : class
+  {
+    using var scope = _scopeFactory.CreateScope();
 
-        public static Task<string> RunAsUserAsync(string userName, string password)
-        {
-            //using var scope = _scopeFactory.CreateScope();
+    var context = scope.ServiceProvider.GetService<ApplicationDbContext>();
 
-            //var userManager = scope.ServiceProvider.GetService<UserManager<ApplicationUser>>();
+    context.Add(entity);
 
-            var user = new ApplicationUser { UserName = userName, Email = userName };
+    await context.SaveChangesAsync();
+    return entity;
+  }
 
-            //var result = await userManager?.CreateAsync(user, password);
-
-            _currentUserId = user.Id;
-
-            return Task.FromResult(_currentUserId);
-        }
-
-        public static async Task ResetState()
-        {
-            await _checkpoint.Reset(_configuration["DeveloperPathSqlConnectionString"]);
-            _currentUserId = null;
-        }
-
-        public static async Task<TEntity> FindAsync<TEntity>(int id)
-            where TEntity : class
-        {
-            using var scope = _scopeFactory.CreateScope();
-
-            var context = scope.ServiceProvider.GetService<ApplicationDbContext>();
-
-            return await context.FindAsync<TEntity>(id);
-        }
-
-        public static async Task<TEntity> AddAsync<TEntity>(TEntity entity)
-            where TEntity : class
-        {
-            using var scope = _scopeFactory.CreateScope();
-
-            var context = scope.ServiceProvider.GetService<ApplicationDbContext>();
-
-            context.Add(entity);
-
-            await context.SaveChangesAsync();
-            return entity;
-        }
-
-        [OneTimeTearDown]
-        public void RunAfterAnyTests()
-        {
-        }
-    }
+  [OneTimeTearDown]
+  public void RunAfterAnyTests()
+  {
+  }
 }

@@ -4,20 +4,20 @@
         <name>DeveloperPath.Application</name>
     </assembly>
     <members>
-        <member name="T:DeveloperPath.Application.Common.Behaviours.HandleExceptionBehaviour`2">
+        <member name="T:DeveloperPath.Application.Common.Behaviors.HandleExceptionBehavior`2">
             <summary>
-            Mediator pipilene behaviour for handling exceptions
+            Mediator pipeline behavior for handling exceptions
             </summary>
             <typeparam name="TRequest"></typeparam>
             <typeparam name="TResponse"></typeparam>
         </member>
-        <member name="M:DeveloperPath.Application.Common.Behaviours.HandleExceptionBehaviour`2.#ctor(Microsoft.Extensions.Logging.ILogger{`0})">
+        <member name="M:DeveloperPath.Application.Common.Behaviors.HandleExceptionBehavior`2.#ctor(Microsoft.Extensions.Logging.ILogger{`0})">
             <summary>
             Ctor for injecting dependencies
             </summary>
             <param name="logger"></param>
         </member>
-        <member name="M:DeveloperPath.Application.Common.Behaviours.HandleExceptionBehaviour`2.Handle(`0,System.Threading.CancellationToken,MediatR.RequestHandlerDelegate{`1})">
+        <member name="M:DeveloperPath.Application.Common.Behaviors.HandleExceptionBehavior`2.Handle(`0,MediatR.RequestHandlerDelegate{`1},System.Threading.CancellationToken)">
             <summary>
             Pipeline handler. Perform any additional behavior and await the next delegate as necessary
             </summary>
@@ -26,20 +26,20 @@
             <param name="next"></param>
             <returns></returns>
         </member>
-        <member name="T:DeveloperPath.Application.Common.Behaviours.LoggingBehaviour`1">
+        <member name="T:DeveloperPath.Application.Common.Behaviors.LoggingBehaviour`1">
             <summary>
             Mediator pipilene behaviour for logging
             </summary>
             <typeparam name="TRequest"></typeparam>
         </member>
-        <member name="M:DeveloperPath.Application.Common.Behaviours.LoggingBehaviour`1.#ctor(Microsoft.Extensions.Logging.ILogger{`0},DeveloperPath.Application.Common.Interfaces.ICurrentUserService)">
+        <member name="M:DeveloperPath.Application.Common.Behaviors.LoggingBehaviour`1.#ctor(Microsoft.Extensions.Logging.ILogger{`0},DeveloperPath.Application.Common.Interfaces.ICurrentUserService)">
             <summary>
             Ctor for injecting dependencies
             </summary>
             <param name="logger"></param>
             <param name="currentUserService"></param>
         </member>
-        <member name="M:DeveloperPath.Application.Common.Behaviours.LoggingBehaviour`1.Process(`0,System.Threading.CancellationToken)">
+        <member name="M:DeveloperPath.Application.Common.Behaviors.LoggingBehaviour`1.Process(`0,System.Threading.CancellationToken)">
             <summary>
             Process method executes before calling the Handle method on handler
             </summary>
@@ -47,21 +47,21 @@
             <param name="cancellationToken"></param>
             <returns></returns>
         </member>
-        <member name="T:DeveloperPath.Application.Common.Behaviours.PerformanceBehaviour`2">
+        <member name="T:DeveloperPath.Application.Common.Behaviors.PerformanceBehavior`2">
             <summary>
-            Mediator pipilene behaviour for measuring performance
+            Mediator pipeline behavior for measuring performance
             </summary>
             <typeparam name="TRequest"></typeparam>
             <typeparam name="TResponse"></typeparam>
         </member>
-        <member name="M:DeveloperPath.Application.Common.Behaviours.PerformanceBehaviour`2.#ctor(Microsoft.Extensions.Logging.ILogger{`0},DeveloperPath.Application.Common.Interfaces.ICurrentUserService)">
+        <member name="M:DeveloperPath.Application.Common.Behaviors.PerformanceBehavior`2.#ctor(Microsoft.Extensions.Logging.ILogger{`0},DeveloperPath.Application.Common.Interfaces.ICurrentUserService)">
             <summary>
             Ctor for injecting dependencies
             </summary>
             <param name="logger"></param>
             <param name="currentUserService"></param>
         </member>
-        <member name="M:DeveloperPath.Application.Common.Behaviours.PerformanceBehaviour`2.Handle(`0,System.Threading.CancellationToken,MediatR.RequestHandlerDelegate{`1})">
+        <member name="M:DeveloperPath.Application.Common.Behaviors.PerformanceBehavior`2.Handle(`0,MediatR.RequestHandlerDelegate{`1},System.Threading.CancellationToken)">
             <summary>
             Pipeline handler. Perform any additional behavior and await the next delegate as necessary
             </summary>
@@ -70,26 +70,26 @@
             <param name="next"></param>
             <returns></returns>
         </member>
-        <member name="T:DeveloperPath.Application.Common.Behaviours.ValidationBehavior`2">
+        <member name="T:DeveloperPath.Application.Common.Behaviors.ValidationBehavior`2">
             <summary>
-            Mediator pipilene behaviour for validation
+            Mediator pipeline behavior for validation
             </summary>
             <typeparam name="TRequest"></typeparam>
             <typeparam name="TResponse"></typeparam>
         </member>
-        <member name="M:DeveloperPath.Application.Common.Behaviours.ValidationBehavior`2.#ctor(System.Collections.Generic.IEnumerable{FluentValidation.IValidator{`0}})">
+        <member name="M:DeveloperPath.Application.Common.Behaviors.ValidationBehavior`2.#ctor(System.Collections.Generic.IEnumerable{FluentValidation.IValidator{`0}})">
             <summary>
             Ctor for injecting dependencies
             </summary>
             <param name="validators"></param>
         </member>
-        <member name="M:DeveloperPath.Application.Common.Behaviours.ValidationBehavior`2.Handle(`0,System.Threading.CancellationToken,MediatR.RequestHandlerDelegate{`1})">
+        <member name="M:DeveloperPath.Application.Common.Behaviors.ValidationBehavior`2.Handle(`0,MediatR.RequestHandlerDelegate{`1},System.Threading.CancellationToken)">
             <summary>
             Pipeline handler. Perform any additional behavior and await the next delegate as necessary
             </summary>
             <param name="request"></param>
-            <param name="cancellationToken"></param>
             <param name="next"></param>
+            <param name="cancellationToken"></param>
             <returns></returns>
         </member>
         <member name="T:DeveloperPath.Application.Common.Exceptions.ConflictException">
@@ -328,7 +328,7 @@
         </member>
         <member name="T:DeveloperPath.Application.Common.Mappings.Profiles.PathProfile">
             <summary>
-            AutoMapper prorfile class
+            AutoMapper profile class
             </summary>
         </member>
         <member name="M:DeveloperPath.Application.Common.Mappings.Profiles.PathProfile.#ctor">

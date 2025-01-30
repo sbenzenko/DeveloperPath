@@ -3,7 +3,7 @@ using Moq;
 using NUnit.Framework;
 using System.Threading;
 using System.Threading.Tasks;
-using DeveloperPath.Application.Common.Behaviours;
+using DeveloperPath.Application.Common.Behaviors;
 using DeveloperPath.Application.Common.Interfaces;
 using DeveloperPath.Application.CQRS.Paths.Commands.CreatePath;
 

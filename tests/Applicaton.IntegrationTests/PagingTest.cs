@@ -28,7 +28,7 @@ namespace DeveloperPath.Application.IntegrationTests
         PageSize = request
       };
 
-      Assert.Equals(response, rq.PageSize);
+      Assert.That(rq.PageSize, Is.EqualTo(response));
     }
   }
 }

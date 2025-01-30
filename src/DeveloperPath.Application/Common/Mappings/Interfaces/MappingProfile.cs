@@ -1,39 +1,39 @@
-﻿using AutoMapper;
-using System;
+﻿using System;
 using System.Linq;
 using System.Reflection;
 
-namespace DeveloperPath.Application.Common.Mappings.Interfaces
+using AutoMapper;
+
+namespace DeveloperPath.Application.Common.Mappings.Interfaces;
+
+/// <summary>
+/// Automapper mapping profile
+/// </summary>
+public class MappingProfile : Profile
 {
-    /// <summary>
-    /// Automapper mapping profile
-    /// </summary>
-    public class MappingProfile : Profile
+  /// <summary>
+  /// Applies mapping profiles from the executing assembly
+  /// </summary>
+  public MappingProfile()
+  {
+    ApplyMappingsFromAssembly(Assembly.GetExecutingAssembly());
+  }
+
+  private void ApplyMappingsFromAssembly(Assembly assembly)
+  {
+    var types = assembly.GetExportedTypes()
+        .Where(t => t.GetInterfaces().Any(i =>
+            i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IMapFrom<>)))
+        .ToList();
+
+    foreach (var type in types)
     {
-        /// <summary>
-        /// Applies mapping profiles from the executing assembly
-        /// </summary>
-        public MappingProfile()
-        {
-            ApplyMappingsFromAssembly(Assembly.GetExecutingAssembly());
-        }
+      var instance = Activator.CreateInstance(type);
 
-        private void ApplyMappingsFromAssembly(Assembly assembly)
-        {
-            var types = assembly.GetExportedTypes()
-                .Where(t => t.GetInterfaces().Any(i =>
-                    i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IMapFrom<>)))
-                .ToList();
+      var methodInfo = type.GetMethod("Mapping")
+          ?? type.GetInterface("IMapFrom`1").GetMethod("Mapping");
 
-            foreach (var type in types)
-            {
-                var instance = Activator.CreateInstance(type);
-
-                var methodInfo = type.GetMethod("Mapping")
-                    ?? type.GetInterface("IMapFrom`1").GetMethod("Mapping");
-
-                methodInfo?.Invoke(instance, new object[] { this });
-            }
-        }
+      methodInfo?.Invoke(instance, new object[] { this });
     }
+  }
 }

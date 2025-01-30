@@ -1,44 +1,45 @@
-﻿using DeveloperPath.Application.Common.Exceptions;
-using DeveloperPath.Application.Common.Interfaces;
-using DeveloperPath.Domain.Entities;
-using MediatR;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace DeveloperPath.Application.CQRS.Paths.Commands.DeletePath
+using DeveloperPath.Application.Common.Exceptions;
+using DeveloperPath.Application.Common.Interfaces;
+using DeveloperPath.Domain.Entities;
+
+using MediatR;
+
+namespace DeveloperPath.Application.CQRS.Paths.Commands.DeletePath;
+
+/// <summary>
+/// Delete path parameters
+/// </summary>
+public record DeletePath : IRequest<Path>
 {
   /// <summary>
-  /// Delete path parameters
+  /// Path ID
   /// </summary>
-  public record DeletePath : IRequest
+  [Required]
+  public int Id { get; init; }
+}
+
+internal class DeletePathCommandHandler : IRequestHandler<DeletePath, Path>
+{
+  private readonly IApplicationDbContext _context;
+
+  public DeletePathCommandHandler(IApplicationDbContext context)
   {
-    /// <summary>
-    /// Path ID
-    /// </summary>
-    [Required]
-    public int Id { get; init; }
+    _context = context;
   }
 
-  internal class DeletePathCommandHandler : IRequestHandler<DeletePath>
+  public async Task<Path> Handle(DeletePath request, CancellationToken cancellationToken)
   {
-    private readonly IApplicationDbContext _context;
+    var entity = await _context.Paths.FindAsync(new object[] { request.Id }, cancellationToken);
+    if (entity == null)
+      throw new NotFoundException(nameof(Path), request.Id, NotFoundHelper.PATH_NOT_FOUND);
 
-    public DeletePathCommandHandler(IApplicationDbContext context)
-    {
-      _context = context;
-    }
+    _context.Paths.Remove(entity);
 
-    public async Task<Unit> Handle(DeletePath request, CancellationToken cancellationToken)
-    {
-      var entity = await _context.Paths.FindAsync(new object[] { request.Id }, cancellationToken);
-      if (entity == null)
-        throw new NotFoundException(nameof(Path), request.Id, NotFoundHelper.PATH_NOT_FOUND);
-
-      _context.Paths.Remove(entity);
-
-      await _context.SaveChangesAsync(cancellationToken);
-      return Unit.Value;
-    }
+    await _context.SaveChangesAsync(cancellationToken);
+    return entity;
   }
 }

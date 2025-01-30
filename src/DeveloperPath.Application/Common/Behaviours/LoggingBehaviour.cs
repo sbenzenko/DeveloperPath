@@ -4,7 +4,7 @@ using Microsoft.Extensions.Logging;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace DeveloperPath.Application.Common.Behaviours
+namespace DeveloperPath.Application.Common.Behaviors
 {
   /// <summary>
   /// Mediator pipilene behaviour for logging
