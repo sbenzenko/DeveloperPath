@@ -1,13 +1,12 @@
 @using DeveloperPath.WebUI.Resources
 @using DeveloperPath.WebUI.Shared
 
-
-<MudThemeProvider Theme="@appState.CurrentTheme" />
+<MudThemeProvider Theme="@AppState.CurrentTheme" />
 <MudDialogProvider />
 <MudSnackbarProvider />
 
 <CascadingAuthenticationState>
-    <Router AppAssembly="@typeof(Program).Assembly" PreferExactMatches="@true">
+    <Router AppAssembly="@typeof(Program).Assembly">
         <Found Context="routeData">
             <AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)">
                 <NotAuthorized>
@@ -17,17 +16,15 @@
                     }
                     else
                     {
-                        <p>@localizer["NotAuthorized"]</p>
+                        <p>@Localizer["NotAuthorized"]</p>
                     }
                 </NotAuthorized>
             </AuthorizeRouteView>
         </Found>
         <NotFound>
             <LayoutView Layout="@typeof(MainLayout)">
-                <p>@localizer["NotFound"]</p>
+                <p>@Localizer["NotFound"]</p>
             </LayoutView>
         </NotFound>
     </Router>
 </CascadingAuthenticationState>
-
- 

@@ -8,25 +8,37 @@
 In `appsettings.json` parameter `"UseInMemoryDatabase"` defines whether application is using in-memory database (`true`) or actual DBMS (`false`).
 
 ### Migrations
-#### Main database
-Connection string for local use is in `\src\WebApi\appsettings.Development.json` parameter `DeveloperPathSqlConnectionString`.
+#### Main database (empty DB must be created in MS SQL)
+Set connection string for local use is in `\src\DeveloperPath.WebApi\appsettings.Development.json` property `DeveloperPathSqlConnectionString`.
 
-Using CLI from `\src\Infrastructure` run:
+Alternatively, in user-secrets:
+- Using CLI from `DeveloperPath.WebApi` folder, run   
+`dotnet user-secrets init`  
+- Then   
+`dotnet user-secrets set "DeveloperPathSqlConnectionString" "Data Source=..."`.
+
+Using CLI from `\src\DeveloperPath.Infrastructure`, run:
+- update ef tools  
+`dotnet tool update --global dotnet-ef`
 - database update  
-`dotnet ef --startup-project ..\WebApi\ database update`
+`dotnet ef --startup-project ..\DeveloperPath.WebApi\ database update`
 - revert to migration   
-`dotnet ef --startup-project ..\WebApi\ database update <NAME>`
+`dotnet ef --startup-project ..\DeveloperPath.WebApi\ database update <NAME>`
 - add migration  
-`dotnet ef --startup-project ..\WebApi\ migrations add <NAME>`
+`dotnet ef --startup-project ..\DeveloperPath.WebApi\ migrations add <NAME>`
 - remove migration  
-`dotnet ef --startup-project ..\WebApi\ migrations remove`
+`dotnet ef --startup-project ..\DeveloperPath.WebApi\ migrations remove`
 
 Database is filled with test data automatically when application starts, if it doesn't find data in Paths.
 
-#### Identity data
-Connection string for local use is in `\src\IdentityProvider\appsettings.Development.json` `"SqlConnection"`.
+#### Identity data (a separate empty DB must be created in MS SQL)
+Set in `\src\IdentityProvider\appsettings.Development.json`
+- connection string for local use, `SqlConnection` property,
+- password for accessing SwaggerApi, `PathApiSwaggerSecret` property.
 
-Using CLI from `\src\IdentityProvider` run:
+Alternatively, set the same in user-secrets (see example above).
+
+Using CLI from `\src\DeveloperPath.IdentityProvider` run:
 - database update  
 `dotnet ef database update`
 - seed test data  

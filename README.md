@@ -37,12 +37,12 @@ https://github.com/MoienTajik/AspNetCore-Developer-Roadmap/blob/master/ReadMe.md
 - [устар.] - устаревшая информация (например, по .NET Framework).
 
 ## Стек Технологий Разработки
-- .NET 5 (C# 9)
+- .NET 9 (C# 13)
 - ASP.NET Web Api + Blazor
 - Clean Architecture + CQRS + MediatR
 - Identity
 - Entity Framework
-- MS SQL (?)
+- MS SQL (Express)
 - Хостинг Azure
 - Git
 
@@ -50,8 +50,8 @@ https://github.com/MoienTajik/AspNetCore-Developer-Roadmap/blob/master/ReadMe.md
 1. Добавление отзывов пользователей в виде оценок качества материалов и комментариев к материалам. Возможность предлагать свои источники.
 
 2. На страницах тем добавить:
-    - секцию Q&A (Вопросы и Ответы), где желающие могли бы задавать вопросы по теме,
-    - топ вопросов по теме со Stackoverflow (см. API https://api.stackexchange.com/docs/questions).  ( https://github.com/LightVolk/QuestionServiceWebApi ) - готова альфа-версия.
+- секцию Q&A (Вопросы и Ответы), где желающие могли бы задавать вопросы по теме,
+- топ вопросов по теме со Stackoverflow (см. API https://api.stackexchange.com/docs/questions).  ( https://github.com/LightVolk/QuestionServiceWebApi ) - готова альфа-версия.
 
 3. На первом этапе планируется реализовать только путь разработчика ASP.NET. В дальнейшем планируется добавить пути по другим технологиям как в экосистеме .NET, так и в других.
 

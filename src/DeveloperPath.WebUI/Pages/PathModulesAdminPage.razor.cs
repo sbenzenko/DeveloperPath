@@ -13,54 +13,53 @@ using Microsoft.Extensions.Localization;
 
 using MudBlazor;
 
-namespace DeveloperPath.WebUI.Pages
+namespace DeveloperPath.WebUI.Pages;
+
+public partial class PathModulesAdminPage
 {
-  public partial class PathModulesAdminPage
+  [Parameter] public string Key { get; set; }
+  [Inject] public IStringLocalizer<LanguageResources> Localizer { get; set; }
+  [Inject] public SnackbarHelper SnackbarHelper { get; set; }
+  [Inject] public ModuleService ModuleService { get; set; }
+  [Inject] public ISnackbar Snackbar { get; set; }
+
+  private List<BreadcrumbItem> _breadCrumbs;
+  private readonly List<Module> _pathsModules;
+
+
+  protected override async Task OnInitializedAsync()
   {
-    [Parameter] public string Key { get; set; }
-    [Inject] public IStringLocalizer<LanguageResources> localizer { get; set; }
-    [Inject] public SnackbarHelper SnakbarHelper { get; set; }
-    [Inject] public ModuleService ModuleService { get; set; }
-    [Inject] public ISnackbar Snackbar { get; set; }
-
-    private List<BreadcrumbItem> _breadCrumbs;
-    private List<Module> _pathsModules;
-
-
-    protected override async Task OnInitializedAsync()
+    try
     {
-      try
+      _breadCrumbs =
+        [
+          new($"{Localizer["Paths"].Value.ToUpper()}", href: "/administration/paths"),
+          new($"{Localizer["PathModules"].Value.ToUpper()}", href: $"/administration/paths/{Key}/modules")
+        ];
+    }
+    catch (ApiError e)
+    {
+      switch (e.ProblemDetails.Status)
       {
-        _breadCrumbs = new List<BreadcrumbItem>
-                {
-                    new($"{localizer["Paths"].Value.ToUpper()}", href: "/administration/paths"),
-                    new($"{localizer["PathModules"].Value.ToUpper()}", href: $"/administration/paths/{Key}/modules")
-                };
-      }
-      catch (ApiError e)
-      {
-        switch (e.ProblemDetails.Status)
-        {
-          case 422:
-            SnakbarHelper.PrintErrorDetails((e.ProblemDetails as UnprocessableEntityProblemDetails).Errors);
+        case 422:
+          SnackbarHelper.PrintErrorDetails((e.ProblemDetails as UnprocessableEntityProblemDetails).Errors);
+          break;
+        case 404:
+          {
+            var notFound = e.ProblemDetails as NotFoundProblemDetails;
+            SnackbarHelper.PrintNotFoundDetails(notFound.ErrorKey, notFound.Error);
             break;
-          case 404:
-            {
-              var notFound = e.ProblemDetails as NotFoundProblemDetails;
-              SnakbarHelper.PrintNotFoundDetails(notFound.ErrorKey, notFound.Error);
-              break;
-            }
-        }
-      }
-      catch (Exception e)
-      {
-        Console.WriteLine(e.GetType().Name);
+          }
       }
     }
-
-    private Task ShowModalAddModule()
+    catch (Exception e)
     {
-      throw new NotImplementedException();
+      Console.WriteLine(e.GetType().Name);
     }
+  }
+
+  private Task ShowModalAddModule()
+  {
+    throw new NotImplementedException();
   }
 }

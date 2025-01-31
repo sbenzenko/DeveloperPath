@@ -7,7 +7,7 @@
         <Condition Evaluation="_pathsModules != null">
             <Match>
                 <MudButton Style="margin-bottom: 20px" StartIcon="@Icons.Outlined.Add" 
-                           OnClick="ShowModalAddModule">@localizer["AddModule"]</MudButton>
+                           OnClick="ShowModalAddModule">@Localizer["AddModule"]</MudButton>
              
             </Match>
             <NotMatch>
@@ -16,6 +16,6 @@
         </Condition>
     </Authorized>
     <NotAuthorized>
-        @localizer["NotAuthorized"]
+        @Localizer["NotAuthorized"]
     </NotAuthorized>
 </AuthorizeView>

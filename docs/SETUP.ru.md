@@ -8,25 +8,37 @@
 В файле `appsettings.json` параметр `UseInMemoryDatabase` задаёт использование БД в памяти (`true`) или реальной СУБД (`false`).
 
 ### Миграции
-#### Основная база
-Строка подключения для локального использования - см. `\src\WebApi\appsettings.Development.json` параметр `DeveloperPathSqlConnectionString`.
+#### Основная база (пустая база должна быть создана в MS SQL)
+Задать в `\src\DeveloperPath.WebApi\appsettings.Development.json` строку подключения для локального использования, свойство `DeveloperPathSqlConnectionString`.
 
-Используя CLI из папки `\src\Infrastructure`:
+Либо в user-secrets:
+- В CLI в папке `DeveloperPath.WebApi` выполнить   
+`dotnet user-secrets init`  
+- Затем   
+`dotnet user-secrets set "DeveloperPathSqlConnectionString" "Data Source=..."`.
+
+Используя CLI из папки `\src\DeveloperPath.Infrastructure`:
+- обновить инструменты ef  
+`dotnet tool update --global dotnet-ef`
 - обновление базы  
-`dotnet ef --startup-project ..\WebApi\ database update`
+`dotnet ef --startup-project ..\DeveloperPath.WebApi\ database update`
 - откат к миграции   
-`dotnet ef --startup-project ..\WebApi\ database update <NAME>`
+`dotnet ef --startup-project ..\DeveloperPath.WebApi\ database update <NAME>`
 - добавление миграции  
-`dotnet ef --startup-project ..\WebApi\ migrations add <NAME>`
+`dotnet ef --startup-project ..\DeveloperPath.WebApi\ migrations add <NAME>`
 - удаление миграции  
-`dotnet ef --startup-project ..\WebApi\ migrations remove`
+`dotnet ef --startup-project ..\DeveloperPath.WebApi\ migrations remove`
 
 База заполнится тестовыми данными автоматически при старте приложения, если нет данных в Paths.
 
-#### Identity
-Строка подключения для локального использования - см. `\src\IdentityProvider\appsettings.Development.json` параметр `SqlConnection`.
+#### Identity (должна быть создана отдельная пустая база в MS SQL)
+Задать в `\src\IdentityProvider\appsettings.Development.json`
+- строку подключения для локального использования, свойство `SqlConnection`,
+- пароль для доступа в SwaggerApi, свойство `PathApiSwaggerSecret`.
 
-Используя CLI из папки `\src\IdentityProvider`:
+Либо то же в user-secrets (см. пример выше).
+
+Используя CLI из папки `\src\DeveloperPath.IdentityProvider`:
 - обновление базы  
 `dotnet ef database update`
 - заполнение тестовыми данными  
