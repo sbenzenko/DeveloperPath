@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
 using DeveloperPath.Shared.ClientModels;
 using DeveloperPath.WebUI.Commons;
@@ -48,10 +47,9 @@ public class PathService(HttpService httpService)
     return await _httpService.GetListAnonymousAsync<Path>($"{BaseResourceString}{GetQueryString(onlyVisible, pageNum, pageSize)}");
   }
 
-  public async Task<List<DeletedPath>> GetDeletedListAsync()
+  public async Task<ListWithMetadata<DeletedPath>> GetDeletedListAsync()
   {
-    //return await _httpService.GetListAsync<DeletedPath>($"{BaseResourceString}/deleted");
-    return null;
+    return await _httpService.GetListAsync<DeletedPath>($"{BaseResourceString}/deleted");
   }
 
   public async Task<Path> RestoreDeletedPathAsync(DeletedPath deletedPath)

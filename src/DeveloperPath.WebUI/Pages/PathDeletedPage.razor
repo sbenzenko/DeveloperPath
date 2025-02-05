@@ -11,7 +11,7 @@
             <MudTable Items="@_paths"
                       Filter="Filter">
                 <ToolBarContent>
-                    <MudText Typo="Typo.h6">@localizer["DeletedPaths"]</MudText>
+                    <MudText Typo="Typo.h6">@Localizer["DeletedPaths"]</MudText>
                     <MudSpacer />
                     <MudTextField @bind-Value="_searchString"
                                   Placeholder="Search"
@@ -23,19 +23,19 @@
 
                 <HeaderContent>
                     <MudTh>Id</MudTh>
-                    <MudTh>@localizer["PathTitle"]</MudTh>
-                    <MudTh>@localizer["UriKey"]</MudTh>
-                    <MudTh>@localizer["Deleted"]</MudTh>
-                    <MudTh>@localizer["Actions"]</MudTh>
+                    <MudTh>@Localizer["PathTitle"]</MudTh>
+                    <MudTh>@Localizer["UriKey"]</MudTh>
+                    <MudTh>@Localizer["Deleted"]</MudTh>
+                    <MudTh>@Localizer["Actions"]</MudTh>
                 </HeaderContent>
 
                 <RowTemplate>
                     <MudTd DataLabel="Id">@context.Id</MudTd>
-                    <MudTd DataLabel="@localizer["PathTitle"]">@context.Title</MudTd>
-                    <MudTd DataLabel="@localizer["UriKey"]">@context.Key</MudTd>
-                    <MudTd DataLabel="@localizer["Deleted"]">@context.Deleted</MudTd>
-                    <MudTd DataLabel="@localizer["Actions"]">
-                        <MudTooltip Text="@localizer["Restore"]">
+                    <MudTd DataLabel="@Localizer["PathTitle"]">@context.Title</MudTd>
+                    <MudTd DataLabel="@Localizer["UriKey"]">@context.Key</MudTd>
+                    <MudTd DataLabel="@Localizer["Deleted"]">@context.Deleted</MudTd>
+                    <MudTd DataLabel="@Localizer["Actions"]">
+                        <MudTooltip Text="@Localizer["Restore"]">
                             <MudIconButton Icon="@Icons.Outlined.RestoreFromTrash"
                                            OnClick="() => RestoreDeletedPath(context)"></MudIconButton>
                         </MudTooltip>

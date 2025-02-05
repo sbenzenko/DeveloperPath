@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 
 using DeveloperPath.Application.Common.Exceptions;
@@ -7,7 +6,6 @@ using DeveloperPath.Application.CQRS.Modules.Commands.DeleteModule;
 using DeveloperPath.Application.CQRS.Modules.Queries.GetModules;
 using DeveloperPath.Domain.Entities;
 
-using FluentAssertions;
 
 using NUnit.Framework;
 
@@ -22,8 +20,7 @@ public class DeleteModuleTests : TestBase
   {
     var command = new DeleteModule { PathId = 999999, Id = 1 };
 
-    FluentActions.Invoking(() =>
-        SendAsync(command)).Should().ThrowAsync<NotFoundException>();
+    Assert.ThrowsAsync<NotFoundException>(() => SendAsync(command));
   }
 
   [Test]
@@ -31,8 +28,7 @@ public class DeleteModuleTests : TestBase
   {
     var command = new DeleteModule { PathId = 1, Id = 999999 };
 
-    FluentActions.Invoking(() =>
-        SendAsync(command)).Should().ThrowAsync<NotFoundException>();
+    Assert.ThrowsAsync<NotFoundException>(() => SendAsync(command));
   }
 
   [Test]
@@ -72,10 +68,10 @@ public class DeleteModuleTests : TestBase
     query = new GetModuleQuery() { PathKey = "some-path1", Id = module.Id };
     var moduleRemovedFromPath1 = await SendAsync(query);
 
-    moduleAdded.Should().NotBeNull();
-    moduleAdded.Paths.Should().HaveCount(2);
-    moduleRemovedFromPath1.Should().NotBeNull();
-    moduleRemovedFromPath1.Paths.Should().HaveCount(1);
+    Assert.That(moduleAdded, Is.Not.Null);
+    Assert.That(moduleAdded.Paths, Has.Count.EqualTo(2));
+    Assert.That(moduleRemovedFromPath1, Is.Not.Null);
+    Assert.That(moduleRemovedFromPath1.Paths, Has.Count.EqualTo(1));
   }
 
   [Test]
@@ -86,13 +82,13 @@ public class DeleteModuleTests : TestBase
       Title = "New Module",
       Key = "module-key",
       Description = "New Module Description",
-      Tags = new List<string> { "Tag1", "Tag2", "Tag3" },
-      Paths = new List<Path> { new Path
+      Tags = ["Tag1", "Tag2", "Tag3"],
+      Paths = [ new Path
               {
                 Title = "Some Path1",
                 Key = "some-path1",
                 Description = "Some Path Description"
-              }}
+              }]
     });
 
     var moduleAdded = await FindAsync<Module>(module.Id);
@@ -105,7 +101,7 @@ public class DeleteModuleTests : TestBase
 
     var moduleDeleted = await FindAsync<Module>(module.Id);
 
-    moduleAdded.Should().NotBeNull();
-    moduleDeleted.Should().BeNull();
+    Assert.That(moduleAdded, Is.Not.Null);
+    Assert.That(moduleDeleted, Is.Null);
   }
 }

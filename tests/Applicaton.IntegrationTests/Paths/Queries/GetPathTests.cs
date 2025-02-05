@@ -1,13 +1,10 @@
-﻿using System.Collections.Generic;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
 
 using DeveloperPath.Application.Common.Exceptions;
 using DeveloperPath.Application.CQRS.Paths.Queries.GetPaths;
 using DeveloperPath.Domain.Entities;
 using DeveloperPath.Shared.Enums;
-
-using FluentAssertions;
 
 using NUnit.Framework;
 
@@ -29,7 +26,7 @@ public class GetPathTests : TestBase
 
     var result = await SendAsync(query);
 
-    result.Should().HaveCount(4);
+    Assert.That(result, Has.Count.EqualTo(4));
   }
 
   //[Test]
@@ -70,8 +67,7 @@ public class GetPathTests : TestBase
 
     var query = new GetPathListQuery();
 
-    FluentActions.Invoking(() =>
-        SendAsync(query, cts.Token)).Should().ThrowAsync<TaskCanceledException>();
+    Assert.ThrowsAsync<TaskCanceledException>(() => SendAsync(query, cts.Token));
   }
 
   [Test]
@@ -82,8 +78,7 @@ public class GetPathTests : TestBase
 
     var query = new GetPathPagedListQuery { PageNumber = 1, PageSize = 1 };
 
-    FluentActions.Invoking(() =>
-        SendAsync(query, cts.Token)).Should().ThrowAsync<TaskCanceledException>();
+    Assert.ThrowsAsync<TaskCanceledException>(() => SendAsync(query, cts.Token));
   }
 
   [Test]
@@ -94,15 +89,15 @@ public class GetPathTests : TestBase
       Title = "Some Path",
       Key = "some-path",
       Description = "Some Path Description",
-      Tags = new List<string> { "Tag1", "Tag2", "Tag3" }
+      Tags = ["Tag1", "Tag2", "Tag3"]
     });
 
     var query = new GetPathQuery() { Id = path.Id };
 
     var result = await SendAsync(query);
 
-    result.Title.Should().NotBeEmpty();
-    result.Tags.Should().HaveCount(3);
+    Assert.That(result.Title, Is.Not.Empty);
+    Assert.That(result.Tags, Has.Count.EqualTo(3));
   }
 
   [Test]
@@ -113,8 +108,7 @@ public class GetPathTests : TestBase
 
     var query = new GetPathQuery() { Id = 1 };
 
-    FluentActions.Invoking(() =>
-        SendAsync(query, cts.Token)).Should().ThrowAsync<TaskCanceledException>();
+    Assert.ThrowsAsync<TaskCanceledException>(() => SendAsync(query, cts.Token));
   }
 
   [Test]
@@ -122,8 +116,7 @@ public class GetPathTests : TestBase
   {
     var query = new GetPathQuery() { Id = 99999 };
 
-    FluentActions.Invoking(() =>
-        SendAsync(query)).Should().ThrowAsync<NotFoundException>();
+    Assert.ThrowsAsync<NotFoundException>(() => SendAsync(query));
   }
 
   [Test]
@@ -149,9 +142,9 @@ public class GetPathTests : TestBase
 
     var result = await SendAsync(query);
 
-    result.Title.Should().NotBeEmpty();
-    result.Modules.Should().HaveCount(5);
-    result.Tags.Should().HaveCount(3);
+    Assert.That(result.Title, Is.Not.Empty);
+    Assert.That(result.Modules, Has.Count.EqualTo(5));
+    Assert.That(result.Tags, Has.Count.EqualTo(3));
   }
 
   [Test]
@@ -159,7 +152,6 @@ public class GetPathTests : TestBase
   {
     var query = new GetPathDetailsQuery() { Id = 99999 };
 
-    FluentActions.Invoking(() =>
-        SendAsync(query)).Should().ThrowAsync<NotFoundException>();
+    Assert.ThrowsAsync<NotFoundException>(() => SendAsync(query));
   }
 }

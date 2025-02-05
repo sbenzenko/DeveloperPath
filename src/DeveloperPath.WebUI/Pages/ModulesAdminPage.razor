@@ -12,7 +12,7 @@
 </Condition>
 <Condition Evaluation="_state == State.ContentReady">
     <Match>
-        <MudButton Style="margin-bottom: 20px" StartIcon="@Icons.Outlined.Add" OnClick="ShowModalNewModule">@localizer["AddModule"]</MudButton>
+        <MudButton Style="margin-bottom: 20px" StartIcon="@Icons.Outlined.Add" OnClick="ShowModalNewModule">@Localizer["AddModule"]</MudButton>
         <ModulesTable Data="Modules" IsAdminMode="true" OnEditClick="ShowModalEditingPath"></ModulesTable>
     </Match>
 </Condition>

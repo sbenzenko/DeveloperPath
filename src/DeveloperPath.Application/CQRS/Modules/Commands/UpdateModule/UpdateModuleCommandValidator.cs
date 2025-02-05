@@ -1,8 +1,11 @@
 ﻿using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+
 using DeveloperPath.Application.Common.Interfaces;
+
 using FluentValidation;
+
 using Microsoft.EntityFrameworkCore;
 
 namespace DeveloperPath.Application.CQRS.Modules.Commands.UpdateModule
@@ -24,7 +27,7 @@ namespace DeveloperPath.Application.CQRS.Modules.Commands.UpdateModule
       RuleFor(v => v.Title)
         .NotEmpty().WithMessage("Title is required.")
         .MaximumLength(100).WithMessage("Title must not exceed 100 characters.")
-        .MustAsync(BeUniqueTitle).WithMessage("Module with this title already exists in one of associated paths.");
+        .MustAsync(BeUniqueTitle).WithMessage("A module with this title already exists in one of associated paths.");
 
       RuleFor(v => v.Description)
         .NotEmpty().WithMessage("Description is required.")

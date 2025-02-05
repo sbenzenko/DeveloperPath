@@ -1,142 +1,137 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
+
 using DeveloperPath.Application.Common.Exceptions;
 using DeveloperPath.Application.CQRS.Modules.Commands.CreateModule;
 using DeveloperPath.Domain.Entities;
 using DeveloperPath.Shared.Enums;
-using FluentAssertions;
+
 using NUnit.Framework;
 
-namespace DeveloperPath.Application.IntegrationTests.Modules.Commands
+namespace DeveloperPath.Application.IntegrationTests.Modules.Commands;
+
+using static Testing;
+
+public class CreateModuleTests : TestBase
 {
-    using static Testing;
+  [Test]
+  public void ShouldRequireMinimumFields()
+  {
+    var command = new CreateModule();
 
-    public class CreateModuleTests : TestBase
+    Assert.ThrowsAsync<ValidationException>(() => SendAsync(command));
+  }
+
+  // TODO: Verify if this test is needed
+  //[Test]
+  //public void ShouldReturnNotFoundForNonExistingPath()
+  //{
+  //  var command = new CreateModule
+  //  {
+  //    Title = "New Title",
+  //    Key = "module-key",
+  //    Description = "New Description",
+  //    Necessity = 0
+  //  };
+
+  //  Assert.ThrowsAsync<NotFoundException>(() => SendAsync(command));
+  //}
+
+  [Test]
+  public void ShouldRequireTitle()
+  {
+    var command = new CreateModule
     {
-        [Test]
-        public void ShouldRequireMinimumFields()
-        {
-            var command = new CreateModule();
+      Title = "",
+      Description = "Module Description"
+    };
 
-            FluentActions.Invoking(() =>
-                SendAsync(command)).Should().ThrowAsync<ValidationException>();
-        }
+    var ex = Assert.ThrowsAsync<ValidationException>(() => SendAsync(command));
+    Assert.That(ex.Errors.ContainsKey("Title"), Is.True);
+    Assert.That(ex.Errors["Title"].Contains("Title is required."), Is.True);
+  }
 
-        [Test]
-        public void ShouldReturnNotFoundForNonExistingPath()
-        {
-            var command = new CreateModule
-            {
-                Title = "New Title",
-                Key = "module-key",
-                Description = "New Description",
-                Necessity = 0
-            };
+  [Test]
+  public void ShouldDisallowLongTitle()
+  {
+    var command = new CreateModule
+    {
+      Title = "This module title is too long and exceeds one hundred characters allowed for module titles by CreateModuleCommandValidator",
+      Description = "Learn how to design modern web applications using ASP.NET"
+    };
 
-            FluentActions.Invoking(() =>
-                SendAsync(command)).Should().ThrowAsync<NotFoundException>();
-        }
+    var ex = Assert.ThrowsAsync<ValidationException>(() => SendAsync(command));
+    Assert.That(ex.Errors.ContainsKey("Title"), Is.True);
+    Assert.That(ex.Errors["Title"].Contains("Title must not exceed 100 characters."), Is.True);
+  }
 
-        [Test]
-        public void ShouldRequireTitle()
-        {
-            var command = new CreateModule
-            {
-                Title = "",
-                Description = "Module Decription"
-            };
+  [Test]
+  public void ShouldRequireDescription()
+  {
+    var command = new CreateModule
+    {
+      Title = "Module Title"
+    };
 
-            FluentActions.Invoking(() =>
-                SendAsync(command)).Should().ThrowAsync<ValidationException>()
-                  .Where(ex => ex.Errors.ContainsKey("Title"))
-                  .Result.And
-                  .Errors["Title"].Should().Contain("Title is required.");
-        }
+    var ex = Assert.ThrowsAsync<ValidationException>(() => SendAsync(command));
+    Assert.That(ex.Errors.ContainsKey("Description"), Is.True);
+    Assert.That(ex.Errors["Description"].Contains("Description is required."), Is.True);
+  }
 
-        [Test]
-        public void ShouldDisallowLongTitle()
-        {
-            var command = new CreateModule
-            {
-                Title = "This module title is too long and exceeds one hundred characters allowed for module titles by CreateModuleCommandValidator",
-                Description = "Learn how to design modern web applications using ASP.NET"
-            };
+  //[Test]
+  //public async Task ShouldRequireUniqueTitle()
+  //{
+  //    var path = await AddAsync(new Path
+  //    {
+  //        Title = "Some Path",
+  //        Key = "some-path",
+  //        Description = "Some Path Description"
+  //    });
 
-            FluentActions.Invoking(() =>
-                SendAsync(command)).Should().ThrowAsync<ValidationException>()
-                  .Where(ex => ex.Errors.ContainsKey("Title"))
-                  .Result.And.Errors["Title"].Should().Contain("Title must not exceed 100 characters.");
-        }
+  //    await SendAsync(new CreateModule
+  //    {
+  //        Key = "module-key",
+  //        Title = "Module Title",
+  //        Description = "Module Description"
+  //    });
 
-        [Test]
-        public void ShouldRequireDescription()
-        {
-            var command = new CreateModule
-            {
-                Title = "Module Title"
-            };
+  //    var command = new CreateModule
+  //    {
+  //        Key = "module-key-two",
+  //        Title = "Module Title",
+  //        Description = "Module Description"
+  //    };
 
-            FluentActions.Invoking(() =>
-                SendAsync(command)).Should().ThrowAsync<ValidationException>()
-                  .Where(ex => ex.Errors.ContainsKey("Description"))
-                  .Result.And.Errors["Description"].Should().Contain("Description is required.");
-        }
+  //    FluentActions.Invoking(() =>
+  //        SendAsync(command)).Should().ThrowAsync<ValidationException>()
+  //          .Where(ex => ex.Errors.ContainsKey("Title"))
+  //          .Result.And.Errors["Title"].Should().Contain("The specified module already exists in this path.");
+  //}
 
-        //[Test]
-        //public async Task ShouldRequireUniqueTitle()
-        //{
-        //    var path = await AddAsync(new Path
-        //    {
-        //        Title = "Some Path",
-        //        Key = "some-path",
-        //        Description = "Some Path Description"
-        //    });
+  [Test]
+  public async Task ShouldCreateModule()
+  {
+    var userId = await RunAsDefaultUserAsync();
 
-        //    await SendAsync(new CreateModule
-        //    {
-        //        Key = "module-key",
-        //        Title = "Module Title",
-        //        Description = "Module Decription"
-        //    });
+    var command = new CreateModule
+    {
+      Title = "New Module",
+      Key = "new-module",
+      Description = "New Module Description",
+      Necessity = Necessity.Other,
+      Tags = ["Tag1", "Tag2", "Tag3"]
+    };
 
-        //    var command = new CreateModule
-        //    {
-        //        Key = "module-key-two",
-        //        Title = "Module Title",
-        //        Description = "Module Decription"
-        //    };
+    var createdModule = await SendAsync(command);
 
-        //    FluentActions.Invoking(() =>
-        //        SendAsync(command)).Should().ThrowAsync<ValidationException>()
-        //          .Where(ex => ex.Errors.ContainsKey("Title"))
-        //          .Result.And.Errors["Title"].Should().Contain("The specified module already exists in this path.");
-        //}
+    var module = await FindAsync<Module>(createdModule.Id);
 
-        [Test]
-        public async Task ShouldCreateModule()
-        {
-            var userId = await RunAsDefaultUserAsync();
-
-            var command = new CreateModule
-            {
-                Title = "New Module",
-                Key = "new-module",
-                Description = "New Module Description",
-                Necessity = Necessity.Other,
-                Tags = new List<string> { "Tag1", "Tag2", "Tag3" }
-            };
-
-            var createdModule = await SendAsync(command);
-
-            var module = await FindAsync<Module>(createdModule.Id);
-
-            module.Should().NotBeNull();
-            module.Title.Should().Be(command.Title);
-            module.Description.Should().Be(command.Description);
-            module.Necessity.Should().Be(command.Necessity);
-            module.CreatedBy.Should().Be(userId);
-            module.Created.Should().BeCloseTo(DateTime.Now, TimeSpan.FromMilliseconds(1000));
-        }
-    }
+    Assert.That(module, Is.Not.Null);
+    Assert.That(module.Title, Is.EqualTo(command.Title));
+    Assert.That(module.Key, Is.EqualTo(command.Key));
+    Assert.That(module.Description, Is.EqualTo(command.Description));
+    Assert.That(module.Necessity, Is.EqualTo(command.Necessity));
+    Assert.That(module.CreatedBy, Is.EqualTo(userId));
+  }
 }

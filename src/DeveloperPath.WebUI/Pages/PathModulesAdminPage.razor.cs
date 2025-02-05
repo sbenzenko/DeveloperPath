@@ -26,8 +26,7 @@ public partial class PathModulesAdminPage
   private List<BreadcrumbItem> _breadCrumbs;
   private readonly List<Module> _pathsModules;
 
-
-  protected override async Task OnInitializedAsync()
+  protected override void OnInitialized()
   {
     try
     {

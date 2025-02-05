@@ -1,26 +1,26 @@
 ﻿using System;
+
 using DeveloperPath.Domain.Exceptions;
-using FluentAssertions;
+
 using NUnit.Framework;
 
-namespace DeveloperPath.Domain.UnitTests.Exceptions
+namespace DeveloperPath.Domain.UnitTests.Exceptions;
+
+public class AdAccountInvalidExceptionTests
 {
-  public class AdAccountInvalidExceptionTests
+  [Test]
+  public void ShouldHaveCorrectMessageByDefault()
   {
-    [Test]
-    public void ShouldHaveCorrectMessageByDefault()
-    {
-      var ex = new AdAccountInvalidException("Test",new Exception());
+    var ex = new AdAccountInvalidException("Test", new Exception());
 
-      ex.Message.Should().Be($"AD Account \"Test\" is invalid.");
-    }
+    Assert.That(ex.Message, Is.EqualTo($"AD Account \"Test\" is invalid."));
+  }
 
-    [Test]
-    public void InnerExceptionShouldBeTheSameAsPassedToConstructor()
-    {
-      var ex = new AdAccountInvalidException("Test",new StackOverflowException());
+  [Test]
+  public void InnerExceptionShouldBeTheSameAsPassedToConstructor()
+  {
+    var ex = new AdAccountInvalidException("Test", new StackOverflowException());
 
-      ex.InnerException.Should().BeEquivalentTo(new StackOverflowException());
-    }
+    Assert.That(ex.InnerException, Is.TypeOf<StackOverflowException>());
   }
 }

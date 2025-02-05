@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 using DeveloperPath.Application.Common.Exceptions;
@@ -6,8 +7,6 @@ using DeveloperPath.Application.CQRS.Modules.Commands.CreateModule;
 using DeveloperPath.Application.CQRS.Themes.Commands.CreateTheme;
 using DeveloperPath.Domain.Entities;
 using DeveloperPath.Shared.Enums;
-
-using FluentAssertions;
 
 using NUnit.Framework;
 
@@ -22,8 +21,7 @@ public class CreateThemeTests : TestBase
   {
     var command = new CreateTheme();
 
-    FluentActions.Invoking(() =>
-        SendAsync(command)).Should().ThrowAsync<ValidationException>();
+    Assert.ThrowsAsync<ValidationException>(() => SendAsync(command));
   }
 
   [Test]
@@ -36,10 +34,9 @@ public class CreateThemeTests : TestBase
       Description = "Theme Description"
     };
 
-    FluentActions.Invoking(() =>
-        SendAsync(command)).Should().ThrowAsync<ValidationException>()
-          .Where(ex => ex.Errors.ContainsKey("ModuleId"))
-          .Result.And.Errors["ModuleId"].Should().Contain("Module Id is required.");
+    var ex = Assert.ThrowsAsync<ValidationException>(() => SendAsync(command));
+    Assert.That(ex.Errors.ContainsKey("ModuleId"), Is.True);
+    Assert.That(ex.Errors["ModuleId"].Contains("Module Id is required."), Is.True);
   }
 
   [Test]
@@ -52,8 +49,7 @@ public class CreateThemeTests : TestBase
       Description = "Theme Description"
     };
 
-    FluentActions.Invoking(() =>
-        SendAsync(command)).Should().ThrowAsync<NotFoundException>();
+    Assert.ThrowsAsync<NotFoundException>(() => SendAsync(command));
   }
 
   [Test]
@@ -66,10 +62,9 @@ public class CreateThemeTests : TestBase
       Description = "Theme Description"
     };
 
-    FluentActions.Invoking(() =>
-        SendAsync(command)).Should().ThrowAsync<ValidationException>()
-          .Where(ex => ex.Errors.ContainsKey("Title"))
-          .Result.And.Errors["Title"].Should().Contain("Title is required.");
+    var ex = Assert.ThrowsAsync<ValidationException>(() => SendAsync(command));
+    Assert.That(ex.Errors.ContainsKey("Title"), Is.True);
+    Assert.That(ex.Errors["Title"].Contains("Title is required."), Is.True);
   }
 
   [Test]
@@ -82,10 +77,9 @@ public class CreateThemeTests : TestBase
       Description = "Theme Description"
     };
 
-    FluentActions.Invoking(() =>
-        SendAsync(command)).Should().ThrowAsync<ValidationException>()
-          .Where(ex => ex.Errors.ContainsKey("Title"))
-          .Result.And.Errors["Title"].Should().Contain("Title must not exceed 200 characters.");
+    var ex = Assert.ThrowsAsync<ValidationException>(() => SendAsync(command));
+    Assert.That(ex.Errors.ContainsKey("Title"), Is.True);
+    Assert.That(ex.Errors["Title"].Contains("Title must not exceed 200 characters."), Is.True);
   }
 
   [Test]
@@ -97,10 +91,9 @@ public class CreateThemeTests : TestBase
       Title = "Theme Title"
     };
 
-    FluentActions.Invoking(() =>
-        SendAsync(command)).Should().ThrowAsync<ValidationException>()
-          .Where(ex => ex.Errors.ContainsKey("Description"))
-          .Result.And.Errors["Description"].Should().Contain("Description is required.");
+    var ex = Assert.ThrowsAsync<ValidationException>(() => SendAsync(command));
+    Assert.That(ex.Errors.ContainsKey("Description"), Is.True);
+    Assert.That(ex.Errors["Description"].Contains("Description is required."), Is.True);
   }
 
   [Test]
@@ -135,10 +128,9 @@ public class CreateThemeTests : TestBase
       Description = "Theme Description"
     };
 
-    FluentActions.Invoking(() =>
-        SendAsync(command)).Should().ThrowAsync<ValidationException>()
-          .Where(ex => ex.Errors.ContainsKey("Title"))
-          .Result.And.Errors["Title"].Should().Contain("The specified theme already exists in this module.");
+    var ex = Assert.ThrowsAsync<ValidationException>(() => SendAsync(command));
+    Assert.That(ex.Errors.ContainsKey("Title"), Is.True);
+    Assert.That(ex.Errors["Title"].Contains("The specified theme already exists in this module."), Is.True);
   }
 
   [Test]
@@ -175,12 +167,14 @@ public class CreateThemeTests : TestBase
 
     var theme = await FindAsync<Theme>(createdTheme.Id);
 
-    theme.Should().NotBeNull();
-    theme.Title.Should().Be(command.Title);
-    theme.Description.Should().Be(command.Description);
-    theme.Necessity.Should().Be(command.Necessity);
-    theme.CreatedBy.Should().Be(userId);
-    theme.Created.Should().BeCloseTo(DateTime.Now, TimeSpan.FromMilliseconds(1000));
+    Assert.That(theme, Is.Not.Null);
+    Assert.That(theme.Title, Is.EqualTo(command.Title));
+    Assert.That(theme.Description, Is.EqualTo(command.Description));
+    Assert.That(theme.ModuleId, Is.EqualTo(module.Id));
+    Assert.That(theme.Necessity, Is.EqualTo(command.Necessity));
+    Assert.That(theme.CreatedBy, Is.EqualTo(userId));
+    Assert.That(theme.Created, Is.Not.Null);
+    Assert.That(theme.Created, Is.EqualTo(DateTime.Now).Within(1000).Milliseconds);
   }
 
   [Test]
@@ -224,13 +218,14 @@ public class CreateThemeTests : TestBase
 
     var theme = await FindAsync<Theme>(createdTheme.Id);
 
-    theme.Should().NotBeNull();
-    theme.Title.Should().Be(command.Title);
-    theme.Description.Should().Be(command.Description);
-    theme.ModuleId.Should().Be(module.Id);
-    theme.Necessity.Should().Be(command.Necessity);
-    //theme.CreatedBy.Should().Be(userId);
-    theme.Created.Should().BeCloseTo(DateTime.Now, TimeSpan.FromMilliseconds(1000));
+    Assert.That(theme, Is.Not.Null);
+    Assert.That(theme.Title, Is.EqualTo(command.Title));
+    Assert.That(theme.Description, Is.EqualTo(command.Description));
+    Assert.That(theme.ModuleId, Is.EqualTo(module.Id));
+    Assert.That(theme.Necessity, Is.EqualTo(command.Necessity));
+    //Assert.That(theme.CreatedBy, Is.EqualTo(userId));
+    Assert.That(theme.Created, Is.Not.Null);
+    Assert.That(theme.Created, Is.EqualTo(DateTime.Now).Within(1000).Milliseconds);
   }
 
   [Test]
@@ -263,7 +258,6 @@ public class CreateThemeTests : TestBase
       SectionId = 999
     };
 
-    await FluentActions.Invoking(() =>
-       SendAsync(command)).Should().ThrowAsync<NotFoundException>();
+    Assert.ThrowsAsync<NotFoundException>(() => SendAsync(command));
   }
 }

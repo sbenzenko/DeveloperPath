@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
 using DeveloperPath.Shared.ClientModels;
+using DeveloperPath.WebUI.Commons;
 
 namespace DeveloperPath.WebUI.Services;
 
@@ -15,10 +15,9 @@ public class ModuleService(HttpService httpService)
   //    return await _httpService.GetListAsync<Module>(BaseResourceString(pathKey));
   //}
 
-  public async Task<List<Module>> GetListAsync()
+  public async Task<ListWithMetadata<Module>> GetListAsync()
   {
-    //return await _httpService.GetListAsync<Module>(BaseResourceString);
-    return null;
+    return await _httpService.GetListAsync<Module>(BaseResourceString);
   }
   public async Task<Module> EditModuleAsync(Module module)
   {

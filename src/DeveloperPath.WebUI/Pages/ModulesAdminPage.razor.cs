@@ -16,106 +16,106 @@ using Microsoft.Extensions.Localization;
 
 using MudBlazor;
 
-namespace DeveloperPath.WebUI.Pages
+namespace DeveloperPath.WebUI.Pages;
+
+public partial class ModulesAdminPage
 {
-  public partial class ModulesAdminPage
+  [Inject] private ModuleService ModuleService { get; set; }
+  [Inject] public IDialogService DialogService { get; set; }
+  [Inject] public SnackbarHelper SnackbarHelper { get; set; }
+  public List<Module> Modules { get; set; }
+
+  private State _state;
+
+  [Inject] public IStringLocalizer<LanguageResources> Localizer { get; set; }
+
+  protected override async Task OnInitializedAsync()
   {
-    [Inject] private ModuleService ModuleService { get; set; }
-    [Inject] public IDialogService DialogService { get; set; }
-    [Inject] public SnackbarHelper SnackbarHelper { get; set; }
-    public List<Module> Modules { get; set; }
-
-    private State _state;
-
-    [Inject] public IStringLocalizer<LanguageResources> localizer { get; set; }
-
-    protected override async Task OnInitializedAsync()
+    _state = State.Loading;
+    try
     {
-      _state = State.Loading;
-      try
+      var result = await ModuleService.GetListAsync();
+      Modules = result.Data;
+      _state = State.ContentReady;
+    }
+    catch (Exception)
+    {
+      _state = State.Error;
+    }
+  }
+
+  private async Task ShowModalNewModule()
+  {
+    var parameters = new DialogParameters { ["IsNew"] = true };
+    var dialog = DialogService.Show<AddEditModuleModal>(Localizer["NewModule"], parameters);
+    var result = await dialog.Result;
+    if (!result.Cancelled)
+    {
+      await AddNewModuleAsync(result.Data as Module);
+    }
+  }
+
+  private async Task ShowModalEditingPath(Module module)
+  {
+    var parameters = new DialogParameters { ["IsNew"] = false, ["Module"] = module };
+    var dialog = DialogService.Show<AddEditModuleModal>(Localizer["EditModule"], parameters);
+    var result = await dialog.Result;
+
+    if (!result.Cancelled)
+    {
+      await EditModuleAsync(result.Data as Module);
+    }
+  }
+
+
+
+  private async Task EditModuleAsync(Module module)
+  {
+    try
+    {
+      var result = await ModuleService.EditModuleAsync(module);
+      var item = Modules.FirstOrDefault(x => x.Id == result.Id);
+      if (item != null)
       {
-        Modules = await ModuleService.GetListAsync();
-        _state = State.ContentReady;
+        item = result;
       }
-      catch (Exception)
+      SnackbarHelper.PrintSuccess(Localizer["ModuleUpdated"]);
+    }
+    catch (ApiError e)
+    {
+      if (e.ProblemDetails.Status == 422)
       {
-        _state = State.Error;
+        SnackbarHelper.PrintErrorDetails((e.ProblemDetails as UnprocessableEntityProblemDetails).Errors);
       }
     }
-
-    private async Task ShowModalNewModule()
+    catch (Exception e)
     {
-      var parameters = new DialogParameters { ["IsNew"] = true };
-      var dialog = DialogService.Show<AddEditModuleModal>(localizer["NewModule"], parameters);
-      var result = await dialog.Result;
-      if (!result.Cancelled)
-      {
-        await AddNewModuleAsync(result.Data as Module);
-      }
+      SnackbarHelper.PrintError(e.Message);
     }
+    StateHasChanged();
+  }
 
-    private async Task ShowModalEditingPath(Module module)
-    {
-      var parameters = new DialogParameters { ["IsNew"] = false, ["Module"] = module };
-      var dialog = DialogService.Show<AddEditModuleModal>(localizer["EditModule"], parameters);
-      var result = await dialog.Result;
-
-      if (!result.Cancelled)
-      {
-        await EditModuleAsync(result.Data as Module);
-      }
-    }
-
-
-
-    private async Task EditModuleAsync(Module module)
-    {
-      try
-      {
-        var result = await ModuleService.EditModuleAsync(module);
-        var item = Modules.FirstOrDefault(x => x.Id == result.Id);
-        if (item != null)
-        {
-          item = result;
-        }
-        SnackbarHelper.PrintSuccess(localizer["ModuleUpdated"]);
-      }
-      catch (ApiError e)
-      {
-        if (e.ProblemDetails.Status == 422)
-        {
-          SnackbarHelper.PrintErrorDetails((e.ProblemDetails as UnprocessableEntityProblemDetails).Errors);
-        }
-      }
-      catch (Exception e)
-      {
-        SnackbarHelper.PrintError(e.Message);
-      }
-      StateHasChanged();
-    }
-
-    //private async Task AddNewModuleAsync(Module resultData)
-    private Task AddNewModuleAsync(Module resultData)
-    {
-      //try
-      //{
-      //    var result = await PathService.AddNewPathAsync(resultData);
-      //    Paths.Add(result);
-      //    SnackbarHelper.PrintSuccess(localizer["PathCreated"]);
-      //}
-      //catch (ApiError e)
-      //{
-      //    if (e.ProblemDetails.Status == 422)
-      //    {
-      //        SnackbarHelper.PrintErrorDetails((e.ProblemDetails as UnprocessableEntityProblemDetails).Errors);
-      //    }
-      //}
-      //catch (Exception e)
-      //{
-      //    SnackbarHelper.PrintError(e.Message);
-      //}
-      //StateHasChanged();
-      return Task.CompletedTask;
-    }
+  //private async Task AddNewModuleAsync(Module resultData)
+  private Task AddNewModuleAsync(Module resultData)
+  {
+    //try
+    //{
+    //    var result = await PathService.AddNewPathAsync(resultData);
+    //    Paths.Add(result);
+    //    SnackbarHelper.PrintSuccess(localizer["PathCreated"]);
+    //}
+    //catch (ApiError e)
+    //{
+    //    if (e.ProblemDetails.Status == 422)
+    //    {
+    //        SnackbarHelper.PrintErrorDetails((e.ProblemDetails as UnprocessableEntityProblemDetails).Errors);
+    //    }
+    //}
+    //catch (Exception e)
+    //{
+    //    SnackbarHelper.PrintError(e.Message);
+    //}
+    //StateHasChanged();
+    return Task.CompletedTask;
   }
 }

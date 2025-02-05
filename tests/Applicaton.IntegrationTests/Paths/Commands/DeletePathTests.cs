@@ -1,47 +1,46 @@
 ﻿using System.Threading.Tasks;
+
 using DeveloperPath.Application.Common.Exceptions;
 using DeveloperPath.Application.CQRS.Paths.Commands.CreatePath;
 using DeveloperPath.Application.CQRS.Paths.Commands.DeletePath;
 using DeveloperPath.Domain.Entities;
-using FluentAssertions;
+
 using NUnit.Framework;
 
-namespace DeveloperPath.Application.IntegrationTests.Paths.Commands
+namespace DeveloperPath.Application.IntegrationTests.Paths.Commands;
+
+using static Testing;
+
+public class DeletePathTests : TestBase
 {
-    using static Testing;
+  [Test]
+  public void ShouldRequireValidPathId()
+  {
+    var command = new DeletePath { Id = 99 };
 
-    public class DeletePathTests : TestBase
+    Assert.ThrowsAsync<NotFoundException>(() => SendAsync(command));
+  }
+
+  [Test]
+  public async Task ShouldDeletePath()
+  {
+    var path = await SendAsync(new CreatePath
     {
-        [Test]
-        public void ShouldRequireValidPathId()
-        {
-            var command = new DeletePath { Id = 99 };
+      Title = "New Path",
+      Key = "some-path",
+      Description = "New Path Description"
+    });
 
-            FluentActions.Invoking(() =>
-                SendAsync(command)).Should().ThrowAsync<NotFoundException>();
-        }
+    var pathAdded = await FindAsync<Path>(path.Id);
 
-        [Test]
-        public async Task ShouldDeletePath()
-        {
-            var path = await SendAsync(new CreatePath
-            {
-                Title = "New Path",
-                Key = "some-path",
-                Description = "New Path Description"
-            });
+    await SendAsync(new DeletePath
+    {
+      Id = path.Id
+    });
 
-            var pathAdded = await FindAsync<Path>(path.Id);
+    var pathDeleted = await FindAsync<Path>(path.Id);
 
-            await SendAsync(new DeletePath
-            {
-                Id = path.Id
-            });
-
-            var pathDeleted = await FindAsync<Path>(path.Id);
-
-            pathAdded.Should().NotBeNull();
-            pathDeleted.Should().BeNull();
-        }
-    }
+    Assert.That(pathAdded, Is.Not.Null);
+    Assert.That(pathDeleted, Is.Null);
+  }
 }

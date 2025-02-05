@@ -1,8 +1,11 @@
 ﻿using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+
 using DeveloperPath.Application.Common.Interfaces;
+
 using FluentValidation;
+
 using Microsoft.EntityFrameworkCore;
 
 namespace DeveloperPath.Application.CQRS.Themes.Commands.UpdateTheme
@@ -30,7 +33,7 @@ namespace DeveloperPath.Application.CQRS.Themes.Commands.UpdateTheme
       RuleFor(v => v.Title)
         .NotEmpty().WithMessage("Title is required.")
         .MaximumLength(200).WithMessage("Title must not exceed 200 characters.")
-        .MustAsync(BeUniqueTitle).WithMessage("Theme with this title already exists in this module.");
+        .MustAsync(BeUniqueTitle).WithMessage("A theme with this title already exists in this module.");
 
       RuleFor(v => v.Description)
         .NotEmpty().WithMessage("Description is required.")

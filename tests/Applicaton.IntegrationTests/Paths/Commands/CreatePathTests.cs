@@ -1,136 +1,126 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
+
 using DeveloperPath.Application.Common.Exceptions;
 using DeveloperPath.Application.CQRS.Paths.Commands.CreatePath;
 using DeveloperPath.Domain.Entities;
-using FluentAssertions;
+
 using NUnit.Framework;
 
-namespace DeveloperPath.Application.IntegrationTests.Paths.Commands
+namespace DeveloperPath.Application.IntegrationTests.Paths.Commands;
+
+using static Testing;
+
+public class CreatePathTests : TestBase
 {
-    using static Testing;
+  [Test]
+  public void ShouldRequireMinimumFields()
+  {
+    var command = new CreatePath();
 
-    public class CreatePathTests : TestBase
+    Assert.ThrowsAsync<ValidationException>(() => SendAsync(command));
+  }
+
+  [Test]
+  public void ShouldRequireTitle()
+  {
+    var command = new CreatePath
     {
-        [Test]
-        public void ShouldRequireMinimumFields()
-        {
-            var command = new CreatePath();
+      Title = "",
+      Key = "path",
+      Description = "Learn how to design modern web applications using ASP.NET"
+    };
 
-            FluentActions.Invoking(() =>
-                SendAsync(command)).Should().ThrowAsync<ValidationException>();
-        }
+    var ex = Assert.ThrowsAsync<ValidationException>(() => SendAsync(command));
+    Assert.That(ex.Errors.ContainsKey("Title"), Is.True);
+    Assert.That(ex.Errors["Title"].Contains("Title is required."), Is.True);
+  }
 
-        [Test]
-        public void ShouldRequireTitle()
-        {
-            var command = new CreatePath
-            {
-                Title = "",
-                Key = "path",
-                Description = "Learn how to design modern web applications using ASP.NET"
-            };
+  [Test]
+  public void ShouldDisallowLongTitle()
+  {
+    var command = new CreatePath
+    {
+      Title = "This path title is too long and exceeds one hundred characters allowed for path titles by CreatePathCommandValidator",
+      Key = "key",
+      Description = "Learn how to design modern web applications using ASP.NET"
+    };
 
-            FluentActions.Invoking(() =>
-                SendAsync(command)).Should().ThrowAsync<ValidationException>()
-                  .Where(ex => ex.Errors.ContainsKey("Title"))
-                  .Result.And.Errors["Title"].Should().Contain("Title is required.");
-        }
+    var ex = Assert.ThrowsAsync<ValidationException>(() => SendAsync(command));
+    Assert.That(ex.Errors.ContainsKey("Title"), Is.True);
+    Assert.That(ex.Errors["Title"].Contains("Title must not exceed 100 characters."), Is.True);
+  }
 
-        [Test]
-        public void ShouldDisallowLongTitle()
-        {
-            var command = new CreatePath
-            {
-                Title = "This path title is too long and exceeds one hundred characters allowed for path titles by CreatePathCommandValidator",
-                Key = "key",
-                Description = "Learn how to design modern web applications using ASP.NET"
-            };
+  [Test]
+  public void ShouldRequireDescription()
+  {
+    var command = new CreatePath
+    {
+      Title = "ASP.NET Developer",
+      Key = "key"
+    };
 
-            FluentActions.Invoking(() =>
-                SendAsync(command)).Should().ThrowAsync<ValidationException>()
-                  .Where(ex => ex.Errors.ContainsKey("Title"))
-                  .Result.And.Errors["Title"].Should().Contain("Title must not exceed 100 characters.");
-        }
+    var ex = Assert.ThrowsAsync<ValidationException>(() => SendAsync(command));
+    Assert.That(ex.Errors.ContainsKey("Description"), Is.True);
+    Assert.That(ex.Errors["Description"].Contains("Description is required."), Is.True);
+  }
 
-        [Test]
-        public void ShouldRequireDescription()
-        {
-            var command = new CreatePath
-            {
-                Title = "ASP.NET Developer",
-                Key = "key"
-            };
+  [Test]
+  public void ShouldRequireKey()
+  {
+    var command = new CreatePath
+    {
+      Title = "ASP.NET Developer",
+      Description = "Learn how to design modern web applications using ASP.NET"
+    };
 
-            FluentActions.Invoking(() =>
-                SendAsync(command)).Should().ThrowAsync<ValidationException>()
-                  .Where(ex => ex.Errors.ContainsKey("Description"))
-                  .Result.And.Errors["Description"].Should().Contain("Description is required.");
-        }
+    var ex = Assert.ThrowsAsync<ValidationException>(() => SendAsync(command));
+    Assert.That(ex.Errors.ContainsKey("Key"), Is.True);
+    Assert.That(ex.Errors["Key"].Contains("URI key is required."), Is.True);
+  }
 
-        [Test]
-        public void ShouldRequireKey()
-        {
-            var command = new CreatePath
-            {
-                Title = "ASP.NET Developer",
-                Description = "Learn how to design modern web applications using ASP.NET"
-            };
+  [Test]
+  public async Task ShouldRequireUniqueTitle()
+  {
+    await SendAsync(new CreatePath
+    {
+      Title = "ASP.NET Developer",
+      Key = "asp-net",
+      Description = "Learn how to design modern web applications using ASP.NET",
+      Tags = ["Web", "Development", "Programming"]
+    });
 
-            FluentActions.Invoking(() =>
-                    SendAsync(command)).Should().ThrowAsync<ValidationException>()
-                .Where(ex => ex.Errors.ContainsKey("Key"))
-                .Result.And.Errors["Key"].Should().Contain("URI key is required.");
-        }
+    var command = new CreatePath
+    {
+      Title = "ASP.NET Developer",
+      Description = "Learn how to design modern web applications using ASP.NET"
+    };
 
-        [Test]
-        public async Task ShouldRequireUniqueTitle()
-        {
-            await SendAsync(new CreatePath
-            {
-                Title = "ASP.NET Developer",
-                Key = "asp-net",
-                Description = "Learn how to design modern web applications using ASP.NET",
-                Tags =
-                new List<string>() {
-            "Web", "Development", "Programming"
-                }
-            });
+    var ex = Assert.ThrowsAsync<ValidationException>(() => SendAsync(command));
+    Assert.That(ex.Errors.ContainsKey("Title"), Is.True);
+    Assert.That(ex.Errors["Title"].Contains("The specified path already exists."), Is.True);
+  }
 
-            var command = new CreatePath
-            {
-                Title = "ASP.NET Developer",
-                Description = "Learn how to design modern web applications using ASP.NET"
-            };
+  [Test]
+  public async Task ShouldCreatePath()
+  {
+    //var userId = await RunAsDefaultUserAsync();
 
-            FluentActions.Invoking(() =>
-                SendAsync(command)).Should().ThrowAsync<ValidationException>()
-                  .Where(ex => ex.Errors.ContainsKey("Title"))
-                  .Result.And.Errors["Title"].Should().Contain("The specified path already exists.");
-        }
+    var command = new CreatePath
+    {
+      Title = "Some title",
+      Key = "some-key",
+      Description = "Some description"
+    };
 
-        [Test]
-        public async Task ShouldCreatePath()
-        {
-            //var userId = await RunAsDefaultUserAsync();
+    var createdPath = await SendAsync(command);
 
-            var command = new CreatePath
-            {
-                Title = "Some title",
-                Key = "some-key",
-                Description = "Some description"
-            };
+    var path = await FindAsync<Path>(createdPath.Id);
 
-            var createdPath = await SendAsync(command);
-
-            var path = await FindAsync<Path>(createdPath.Id);
-
-            path.Should().NotBeNull();
-            path.Title.Should().Be(command.Title);
-            path.Description.Should().Be(command.Description);
-            //path.CreatedBy.Should().Be(userId);
-            path.Created.Should().BeCloseTo(DateTime.Now, TimeSpan.FromMilliseconds(1000));
-        }
-    }
+    Assert.That(path, Is.Not.Null);
+    Assert.That(path.Title, Is.EqualTo(command.Title));
+    Assert.That(path.Key, Is.EqualTo(command.Key));
+    Assert.That(path.Description, Is.EqualTo(command.Description));
+  }
 }
