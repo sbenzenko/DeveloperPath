@@ -7,8 +7,16 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Remove="C:\Users\seche\.nuget\packages\prettyblazor\1.1.0\contentFiles\any\net5.0\License.txt" />
-    <Content Remove="C:\Users\Serhii_Trofimov\.nuget\packages\prettyblazor\1.2.0\contentFiles\any\net5.0\License.txt" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" PrivateAssets="all" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Authentication" />
+    <PackageReference Include="Microsoft.AspNetCore.JsonPatch" />
+    <PackageReference Include="Microsoft.Extensions.Http" />
+    <PackageReference Include="Microsoft.Extensions.Localization" />
+    <PackageReference Include="Microsoft.OpenApi" />
+    <PackageReference Include="MudBlazor" />
+    <PackageReference Include="PrettyBlazor" />
+    <PackageReference Include="System.Net.Http.Json" />
   </ItemGroup>
 
  
