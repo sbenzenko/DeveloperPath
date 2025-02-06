@@ -44,6 +44,12 @@ Using CLI from `\src\DeveloperPath.IdentityProvider` run:
 - seed test data  
 `dotnet run /seed`
 
+### Start
+In Configure Startup Projects... set Start for these projects:
+- DeveloperPath.IdentityProvider  
+- DeveloperPath.WebApi  
+- DeveloperPath.WebUI 
+
 ### Testing
 In integration tests Application.IntegrationTests real testing database is used. It's impossible to use in-memory database for testing. Testing database DeveloperPathTestDb is re-created based on real database structure when tests are executed.
 

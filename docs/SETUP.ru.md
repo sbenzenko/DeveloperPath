@@ -44,6 +44,12 @@
 - заполнение тестовыми данными  
 `dotnet run /seed`
 
+### Запуск
+В Configure Startup Projects... стартовать проекты:
+- DeveloperPath.IdentityProvider  
+- DeveloperPath.WebApi  
+- DeveloperPath.WebUI  
+
 ### Тестирование
 В интеграционных тестах Application.IntegrationTests используется реальная тестовая СУБД DeveloperPathTestDb, которая воссоздаётся из реальной при запуске тестов. Пока нет возможности использовать in-memory базу.
 
