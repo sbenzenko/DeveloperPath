@@ -1,13 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace Web.WebAPI
+namespace Web.WebAPI;
+
+public class TestBase
 {
-    public class TestBase
-    {
-        protected T GetObjectResultContent<T>(ActionResult<T> result)
-        {
-            return (T)((ObjectResult)result.Result).Value;
-        }
-        
-    }
+  protected T GetObjectResultContent<T>(ActionResult<T> result)
+  {
+    return (T)((ObjectResult)result.Result).Value;
+  }
 }

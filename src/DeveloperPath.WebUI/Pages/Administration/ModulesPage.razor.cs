@@ -7,6 +7,7 @@ using DeveloperPath.Shared.ClientModels;
 using DeveloperPath.Shared.ProblemDetails;
 using DeveloperPath.WebUI.Resources;
 using DeveloperPath.WebUI.Services;
+using DeveloperPath.WebUI.Services.Administration;
 using DeveloperPath.WebUI.Shared.Modules;
 using DeveloperPath.WebUI.UIHelper;
 using DeveloperPath.WebUI.UIHelpers;
@@ -16,9 +17,9 @@ using Microsoft.Extensions.Localization;
 
 using MudBlazor;
 
-namespace DeveloperPath.WebUI.Pages;
+namespace DeveloperPath.WebUI.Pages.Administration;
 
-public partial class ModulesAdminPage
+public partial class ModulesPage
 {
   [Inject] private ModuleService ModuleService { get; set; }
   [Inject] public IDialogService DialogService { get; set; }

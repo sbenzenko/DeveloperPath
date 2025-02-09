@@ -1,41 +1,38 @@
-﻿@page "/paths"
+﻿@page "/paths/{id:int}"
 @using DeveloperPath.WebUI.Resources
+@using DeveloperPath.WebUI.Components
 @inject IStringLocalizer<LanguageResources> _localizer
 
 <Condition Evaluation="_state == UIHelper.State.Loading">
-    <Match>
-        <MudProgressLinear Indeterminate="true" Color="Color.Primary"></MudProgressLinear>
-    </Match>
+  <Match>
+    <MudProgressLinear Indeterminate="true" Color="Color.Primary"></MudProgressLinear>
+  </Match>
 </Condition>
 <Condition Evaluation="_state == UIHelper.State.ContentReady">
-    <Match>
-        <MudText Typo="Typo.h1" Class="py-3">@_localizer["Paths"]</MudText>
-        <MudTreeView T="string">
-            <Iterations Items="Paths" Context="pathItem">
-                <MudTreeViewItem Value="@pathItem.Title" ExpandedIcon="@Icons.Filled.DoubleArrow" ExpandedIconColor="Color.Inherit">
-                    <MudCardContent Class="py-1 px-5">
-                        <MudItem>
-                            <Iterations Items="pathItem.Tags" Context="tagItem">
-                                <MudChip Size="Size.Small" Color="Color.Dark">@tagItem</MudChip>
-                            </Iterations>
-                        </MudItem>
-                        <MudItem Class="py-1">
-                            <MudText Typo="Typo.body1">
-                                @pathItem.Description
-                            </MudText>
-                        </MudItem>
-                    </MudCardContent>
-                </MudTreeViewItem>
-            </Iterations>
-        </MudTreeView>
-        <MudContainer Class="d-flex justify-center py-2 px-1 mt-6">
-            <MudPagination Rectangular=true
-                            BoundaryCount="2"
-                            Color="Color.Primary"
-                            Count="@PaginationMetadata.TotalPages"
-                            Selected="@PaginationMetadata.CurrentPage"
-                            SelectedChanged="ChangePageAsync" />
-        </MudContainer>
+  <Match>
+    <h1 class="py-3">@Model.Title</h1>
+    <div class="">
+      <p>@Model.Description</p>
+
+      <div class="tags">
+        @foreach (var tag in Model.Tags)
+        {
+          <span class="tag">@tag</span>
+        }
+      </div>
+
+      @foreach (var module in Model.Modules)
+      {
+        <h2>@module.Title</h2>
+        <p>@module.Description</p>
+        <div class="tags">
+          @foreach (var tag in module.Tags)
+          {
+            <span class="tag">@tag</span>
+          }
+        </div>
+      }
+    </div>
     </Match>
 </Condition>
 <Condition Evaluation="_state == UIHelper.State.Error">

@@ -5,7 +5,7 @@ using DeveloperPath.WebUI.Commons;
 
 using Microsoft.AspNetCore.JsonPatch;
 
-namespace DeveloperPath.WebUI.Services;
+namespace DeveloperPath.WebUI.Services.Administration;
 
 public class PathService(HttpService httpService)
 {
@@ -40,11 +40,6 @@ public class PathService(HttpService httpService)
   public async Task<bool> DeletePath(Path path)
   {
     return await _httpService.DeleteAsync($"{BaseResourceString}/{path.Id}");
-  }
-
-  public async Task<ListWithMetadata<Path>> GetListAnonymousAsync(bool onlyVisible = true, int pageNum = 1, int pageSize = 5)
-  {
-    return await _httpService.GetListAnonymousAsync<Path>($"{BaseResourceString}{GetQueryString(onlyVisible, pageNum, pageSize)}");
   }
 
   public async Task<ListWithMetadata<DeletedPath>> GetDeletedListAsync()

@@ -3,7 +3,7 @@
 using DeveloperPath.Shared.ClientModels;
 using DeveloperPath.WebUI.Commons;
 
-namespace DeveloperPath.WebUI.Services;
+namespace DeveloperPath.WebUI.Services.Administration;
 
 public class ModuleService(HttpService httpService)
 {

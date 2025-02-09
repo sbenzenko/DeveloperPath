@@ -1,0 +1,36 @@
+﻿.path {
+  float: left;
+  width: 31%;
+  margin: 0.5%;
+  min-width: 200px;
+  background-color: #efefef10;
+  border: 1px solid #6f6f6f;
+  border-radius: 5px;
+  padding: 5px;
+  min-height: 200px;
+}
+  .path:hover {
+    background-color: #efefef05;
+  }
+  .path a:hover {
+    color: var(--mud-palette-text-primary);
+    text-decoration: none;
+  }
+.tag {
+  align-items: center;
+  display: inline-block;
+  height: 100%;
+  max-width: 100%;
+  user-select: none;
+  background-color: #efefef10;
+  border-radius: 12px;
+  font-size: 12px;
+  height: 24px;
+  line-height: 24px;
+  min-width: 100px;
+  text-align: center;
+  margin-right: 5px;
+}
+  .tag:hover {
+    background-color: #e0e0e005;
+  }

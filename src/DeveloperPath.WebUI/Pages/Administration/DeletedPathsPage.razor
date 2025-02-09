@@ -1,11 +1,11 @@
-﻿@page "/administration/paths/deleted"
+﻿@* @page "/administration/paths/deleted"
 @using DeveloperPath.WebUI.Constants
+@using DeveloperPath.WebUI.Shared
 @using Microsoft.AspNetCore.Components
 
-
-<AuthorizeView Roles="@RolesConstants.ADMINISTRATOR"
-               Context="AuthContext">
-    <Breadcrumbs Items="@_breadCrumbs"/>
+<Breadcrumbs Items="@_breadCrumbs"/>
+<AuthorizeView Roles="@RolesConstants.ADMINISTRATOR" Context="AuthContext">
+  <Authorized>
     <Condition Evaluation="_paths != null">
         <Match>
             <MudTable Items="@_paths"
@@ -48,4 +48,8 @@
             <MudProgressLinear Indeterminate="true" Color="Color.Primary"></MudProgressLinear>
         </NotMatch>
     </Condition>
-</AuthorizeView>
+  </Authorized>
+  <NotAuthorized>
+    @Localizer["NotAuthorized"]
+  </NotAuthorized>
+</AuthorizeView> *@

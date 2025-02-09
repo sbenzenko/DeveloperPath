@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
+using DeveloperPath.Shared;
 using DeveloperPath.Shared.ClientModels;
 using DeveloperPath.WebUI.Services.Common;
 using DeveloperPath.WebUI.UIHelper;
@@ -10,26 +12,32 @@ using Microsoft.AspNetCore.Components;
 
 namespace DeveloperPath.WebUI.Pages;
 
-public partial class PathPage
+public partial class PathsPage
 {
-  private State _state;
+  private const int PAGE_SIZE = 10;
 
   [Inject] public PathService PathService { get; set; }
   [Inject] public SnackbarHelper SnackbarHelper { get; set; }
-  [Parameter] public int Id { get; set; }
-  public PathDetails Model { get; set; }
 
+  private int _lastPageRequest;
+  private State _state;
+  public List<Path> Paths { get; set; }
+  public PaginationMetadata PaginationMetadata { get; private set; }
   protected override async Task OnInitializedAsync()
   {
-    await LoadDataAsync();
+    await LoadDataAsync(1);
   }
 
-  private async Task LoadDataAsync()
+  private async Task LoadDataAsync(int pageNum)
   {
     try
     {
+      _lastPageRequest = pageNum;
+
       _state = State.Loading;
-      Model = await PathService.GetPathAsync(Id);
+      var result = await PathService.GetListAsync(false, pageNum, PAGE_SIZE);
+      Paths = result.Data;
+      PaginationMetadata = result.Metadata;
       _state = State.ContentReady;
     }
     catch (Exception ex)
@@ -41,6 +49,10 @@ public partial class PathPage
 
   private async Task Reload()
   {
-    await LoadDataAsync();
+    await LoadDataAsync(_lastPageRequest);
+  }
+  private async Task ChangePageAsync(int pageNum)
+  {
+    await LoadDataAsync(pageNum);
   }
 }

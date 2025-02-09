@@ -1,0 +1,14 @@
+﻿@inject IStringLocalizer<LanguageResources> _localizer
+
+<div class="path">
+  <h3><a href="/paths/@Model.Id">@Model.Title</a></h3>
+
+  <p>@Model.Description</p>
+
+  <div class="tags">
+    @foreach(var tag in Model.Tags)
+    {
+      <span class="tag">@tag</span>
+    }
+  </div>
+</div>

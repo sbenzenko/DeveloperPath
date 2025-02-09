@@ -6,6 +6,7 @@ using DeveloperPath.Shared.ClientModels;
 using DeveloperPath.Shared.ProblemDetails;
 using DeveloperPath.WebUI.Resources;
 using DeveloperPath.WebUI.Services;
+using DeveloperPath.WebUI.Services.Administration;
 using DeveloperPath.WebUI.UIHelpers;
 
 using Microsoft.AspNetCore.Components;
@@ -13,9 +14,9 @@ using Microsoft.Extensions.Localization;
 
 using MudBlazor;
 
-namespace DeveloperPath.WebUI.Pages;
+namespace DeveloperPath.WebUI.Pages.Administration;
 
-public partial class PathModulesAdminPage
+public partial class PathModulesPage
 {
   [Parameter] public string Key { get; set; }
   [Inject] public IStringLocalizer<LanguageResources> Localizer { get; set; }

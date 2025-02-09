@@ -25,11 +25,13 @@ public class PathsControllerTests : TestBase
 {
   private readonly Mock<IMediator> moqMediator;
   private readonly Path samplePath;
+  private readonly PathDetails sampleDetailsPath;
   private readonly IEnumerable<Path> paths;
 
   public PathsControllerTests()
   {
     samplePath = new Path { Id = 1, Title = "Path1", Description = "Description1" };
+    sampleDetailsPath = new PathDetails { Id = 1, Title = "Path1", Description = "Description1" };
     paths =
     [
       samplePath,
@@ -52,6 +54,10 @@ public class PathsControllerTests : TestBase
     moqMediator
       .Setup(m => m.Send(It.IsAny<GetPathQuery>(), It.IsAny<CancellationToken>()))
         .ReturnsAsync(samplePath);
+    // Get details
+    moqMediator
+      .Setup(m => m.Send(It.IsAny<GetPathDetailsQuery>(), It.IsAny<CancellationToken>()))
+        .ReturnsAsync(sampleDetailsPath);
     // Create
     moqMediator
       .Setup(m => m.Send(It.IsAny<CreatePath>(), It.IsAny<CancellationToken>()))
@@ -84,7 +90,7 @@ public class PathsControllerTests : TestBase
     var controller = new PathsController(moqMediator.Object);
 
     var result = await controller.Get(1);
-    var content = GetObjectResultContent<Path>(result.Result);
+    var content = GetObjectResultContent<PathDetails>(result.Result);
 
     Assert.That(result.Result, Is.InstanceOf<OkObjectResult>());
     Assert.That(content, Is.Not.Null);
