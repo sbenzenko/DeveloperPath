@@ -1,8 +1,9 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
+
 using DeveloperPath.Domain.Entities;
 using DeveloperPath.Shared.Enums;
+
 using Microsoft.EntityFrameworkCore;
 
 namespace DeveloperPath.Infrastructure.Persistence
@@ -64,7 +65,7 @@ namespace DeveloperPath.Infrastructure.Persistence
           Complexity = Complexity.Beginner,
           Necessity = Necessity.MustKnow,
           Section = basics,
-          Sources = new List<Source> { primitivesSrc },
+          Sources = [primitivesSrc],
           Order = 0
         };
         var classes = new Theme
@@ -83,7 +84,7 @@ namespace DeveloperPath.Infrastructure.Persistence
           Complexity = Complexity.Beginner,
           Necessity = Necessity.MustKnow,
           Section = basics,
-          Prerequisites = new List<Theme> { classes },
+          Prerequisites = [classes],
           Order = 2
         };
         var asyncronous = new Theme
@@ -110,8 +111,8 @@ namespace DeveloperPath.Infrastructure.Persistence
           Description = "Tag Helpers enable server-side code to participate in creating and rendering HTML elements in Razor files.",
           Complexity = Complexity.Intermediate,
           Necessity = Necessity.GoodToKnow,
-          Prerequisites = new List<Theme> { razor },
-          Sources = new List<Source> { tagSrc1, tagSrc2 },
+          Prerequisites = [razor],
+          Sources = [tagSrc1, tagSrc2],
           Order = 2
         };
 
@@ -123,12 +124,9 @@ namespace DeveloperPath.Infrastructure.Persistence
           Description = "C# is the most commonly used language for leveraging the .NET Framework. " +
           "As such, learning C# is a springboard to creating enterprise systems, desktop applications, websites and mobile applications.",
           Necessity = Necessity.MustKnow,
-          Themes = new List<Theme> { primitiveTypes, classes, interfaces, asyncronous },
-          Sections = new List<Section> { basics, advanced },
-          Tags =
-              new List<string>() {
-                "Development", "Programming", "Languages"
-              }
+          Themes = [primitiveTypes, classes, interfaces, asyncronous],
+          Sections = [basics, advanced],
+          Tags = ["Development", "Programming", "Languages"]
         };
 
         var aspNet = new Module
@@ -138,12 +136,9 @@ namespace DeveloperPath.Infrastructure.Persistence
           Description = "ASP.NET Core is Microsoft's modern, cross-platform framework for building web applications and web APIs. " +
                 "In this path, you will learn everything you need to know about building ASP.NET Core applications, " +
                 "from building web applications with Razor to creating APIs.",
-          Themes = new List<Theme> { razor, tagHelpers },
-          Tags =
-              new List<string>() {
-                "Web", "Development", "Programming"
-              },
-          Prerequisites = new List<Module>() { cSharp },
+          Themes = [razor, tagHelpers],
+          Tags = ["Web", "Development", "Programming"],
+          Prerequisites = [cSharp],
           Necessity = Necessity.MustKnow
         };
 
@@ -154,11 +149,8 @@ namespace DeveloperPath.Infrastructure.Persistence
           Key = "asp-net-developer",
           Description = "Learn how to design modern web applications using ASP.NET",
           IsVisible = true,
-          Tags =
-                new List<string>() {
-                  "Web", "Development", "Programming"
-                },
-          Modules = new List<Module>() { cSharp, aspNet }
+          Tags = ["Web", "Development", "Programming"],
+          PathModules = [new() { Module = cSharp, Order = 0 }, new() { Module = aspNet, Order = 1 }]
         });
 
         context.Paths.Add(new Path
@@ -170,11 +162,8 @@ namespace DeveloperPath.Infrastructure.Persistence
               "Once you have everything documented you will prototype levels and mechanics to make sure you find maximum fun. " +
               "When this is done you will be ready to plan, document, and deliver your ideas to a team of developers that will bring your vision to life.",
           IsVisible = true,
-          Tags =
-                new List<string>() {
-                  "Games", "Development", "Programming"
-                },
-          Modules = new List<Module>() { cSharp }
+          Tags = ["Games", "Development", "Programming"],
+          PathModules = [new() { Module = cSharp, Order = 0 }]
         });
 
         await context.SaveChangesAsync();

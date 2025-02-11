@@ -35,6 +35,7 @@ namespace DeveloperPath.Domain.Entities
     /// Paths module attached to
     /// </summary>
     public ICollection<Path> Paths { get; init; }
+    public ICollection<PathModule> PathModules { get; set; }
 
     /// <summary>
     /// Necessity level

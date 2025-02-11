@@ -3,21 +3,25 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
-using MediatR;
-using Microsoft.EntityFrameworkCore;
+
 using DeveloperPath.Application.Common.Exceptions;
 using DeveloperPath.Application.Common.Interfaces;
 using DeveloperPath.Application.Common.Models;
 using DeveloperPath.Shared.ClientModels;
 
+using MediatR;
+
+using Microsoft.EntityFrameworkCore;
+
 namespace DeveloperPath.Application.CQRS.Modules.Queries.GetModules
 {
-    /// <summary>
-    /// Get modules paged
-    /// </summary>
-    public class GetModuleListQueryPaging : IRequest<(PaginationData, IEnumerable<Module>)>
+  /// <summary>
+  /// Get modules paged
+  /// </summary>
+  public class GetModuleListQueryPaging : IRequest<(PaginationData, IEnumerable<Module>)>
   {
     /// <summary>
     /// Path id
@@ -35,16 +39,10 @@ namespace DeveloperPath.Application.CQRS.Modules.Queries.GetModules
   }
 
 
-  internal class GetModulesQueryPagingHandler : IRequestHandler<GetModuleListQueryPaging, (PaginationData, IEnumerable<Module>)>
+  internal class GetModulesQueryPagingHandler(IApplicationDbContext context, IMapper mapper) : IRequestHandler<GetModuleListQueryPaging, (PaginationData, IEnumerable<Module>)>
   {
-    private readonly IApplicationDbContext _context;
-    private readonly IMapper _mapper;
-
-    public GetModulesQueryPagingHandler(IApplicationDbContext context, IMapper mapper)
-    {
-      _context = context;
-      _mapper = mapper;
-    }
+    private readonly IApplicationDbContext _context = context;
+    private readonly IMapper _mapper = mapper;
 
     public async Task<(PaginationData, IEnumerable<Module>)> Handle(GetModuleListQueryPaging request, CancellationToken cancellationToken)
     {
@@ -70,9 +68,8 @@ namespace DeveloperPath.Application.CQRS.Modules.Queries.GetModules
       // TODO: Order modules (from PathModules.Order)
       modules = await _context.Paths
           .Where(p => p.Key == request.PathKey)
-          .SelectMany(p => p.Modules)
-          .Include(m => m.Paths)
-          .Include(m => m.Prerequisites)
+          .Include(p => p.PathModules.OrderBy(pm => pm.Order))
+            .ThenInclude(pm => pm.Module)
           .ProjectTo<Module>(_mapper.ConfigurationProvider)
           .ToListAsync(cancellationToken);
       return (new PaginationData(request.PageNumber, request.PageSize), modules);

@@ -1,19 +1,22 @@
 ﻿using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Authorization;
-using MediatR;
+
 using DeveloperPath.Application.CQRS.Sources.Commands.CreateSource;
 using DeveloperPath.Application.CQRS.Sources.Commands.DeleteSource;
 using DeveloperPath.Application.CQRS.Sources.Commands.UpdateSource;
 using DeveloperPath.Application.CQRS.Sources.Queries.GetSources;
 using DeveloperPath.Shared.ClientModels;
 
+using MediatR;
+
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+
 namespace DeveloperPath.WebApi.Controllers
 {
-    //[Authorize]
-    [Route("api/paths/{pathId}/modules/{moduleId}/themes/{themeId}/sources")]
+  //[Authorize]
+  [Route("api/paths/{pathId}/modules/{moduleId}/themes/{themeId}/sources")]
   public class SourcesController : ApiController
   {
     public SourcesController(IMediator mediator)
@@ -26,7 +29,7 @@ namespace DeveloperPath.WebApi.Controllers
     /// <param name="pathId">An id of the path</param>
     /// <param name="moduleId">An id of the module</param>
     /// <param name="themeId">An id of the theme</param>
-    /// <param name="ct"></param>
+    /// <param name="ct">Cancellation token</param>
     /// <returns>A collection of sources with summary information</returns>
     /// <response code="200">Returns a list of sources in the theme</response>
     /// <response code="404">Theme not found</response>
@@ -34,7 +37,7 @@ namespace DeveloperPath.WebApi.Controllers
     [HttpHead]
     public async Task<ActionResult<IEnumerable<Source>>> Get(int pathId, int moduleId, int themeId, CancellationToken ct = default)
     {
-      IEnumerable<Source> sources = await Mediator.Send(
+      IEnumerable<Source> sources = await _mediator.Send(
          new GetSourceListQuery { PathId = pathId, ModuleId = moduleId, ThemeId = themeId }, ct);
 
       return Ok(sources);
@@ -47,14 +50,14 @@ namespace DeveloperPath.WebApi.Controllers
     /// <param name="moduleId">An id of the theme</param>
     /// <param name="themeId">An id of the theme</param>
     /// <param name="sourceId">An id of the source</param>
-    /// <param name="ct"></param>
+    /// <param name="ct">Cancellation token</param>
     /// <returns>Detailed information of the source with sources included</returns>
     /// <response code="200">Returns requested source</response>
     [HttpGet("{sourceId}", Name = "GetSource")]
     [HttpHead("{sourceId}")]
     public async Task<ActionResult<Source>> Get(int pathId, int moduleId, int themeId, int sourceId, CancellationToken ct = default)
     {
-      Source model = await Mediator.Send(
+      Source model = await _mediator.Send(
         new GetSourceQuery { PathId = pathId, ModuleId = moduleId, ThemeId = themeId, Id = sourceId }, ct);
 
       return Ok(model);
@@ -87,6 +90,7 @@ namespace DeveloperPath.WebApi.Controllers
     /// <param name="moduleId">An id of the module</param>
     /// <param name="themeId">An id of the theme</param>
     /// <param name="command">Command object</param>
+    /// <param name="ct">Cancellation token</param>
     /// <returns>Created source</returns>
     /// <response code="201">Source created successfully</response>
     /// <response code="404">Theme not found</response>
@@ -97,14 +101,14 @@ namespace DeveloperPath.WebApi.Controllers
     [HttpPost]
     [Consumes("application/json")]
     public async Task<ActionResult<Source>> Create(int pathId, int moduleId, int themeId,
-      [FromBody] CreateSource command)
+      [FromBody] CreateSource command, CancellationToken ct = default)
     {
       if (pathId != command.PathId || moduleId != command.ModuleId || themeId != command.ThemeId)
         return BadRequest();
 
-      Source model = await Mediator.Send(command);
+      Source model = await _mediator.Send(command, ct);
 
-      return CreatedAtRoute("GetSource", 
+      return CreatedAtRoute("GetSource",
         new { pathId = command.PathId, moduleId = command.ModuleId, themeId = model.ThemeId, sourceId = model.Id }, model);
     }
 
@@ -116,6 +120,7 @@ namespace DeveloperPath.WebApi.Controllers
     /// <param name="themeId">An id of the theme</param>
     /// <param name="sourceId">An id of the source</param>
     /// <param name="command">Updated source object</param>
+    /// <param name="ct">Cancellation token</param>
     /// <returns>Updated source</returns>
     /// <response code="200">Source updated successfully</response>
     /// <response code="406">Not acceptable entity provided</response>
@@ -124,14 +129,14 @@ namespace DeveloperPath.WebApi.Controllers
     [Authorize]
     [HttpPut("{sourceId}")]
     [Consumes("application/json")]
-    public async Task<ActionResult<Source>> Update(int pathId, int moduleId, int themeId, int sourceId, 
-      [FromBody] UpdateSource command)
+    public async Task<ActionResult<Source>> Update(int pathId, int moduleId, int themeId, int sourceId,
+      [FromBody] UpdateSource command, CancellationToken ct = default)
     {
-      if (pathId != command.PathId || moduleId != command.ModuleId || 
+      if (pathId != command.PathId || moduleId != command.ModuleId ||
           themeId != command.ThemeId || sourceId != command.Id)
         return BadRequest();
 
-      return Ok(await Mediator.Send(command));
+      return Ok(await _mediator.Send(command, ct));
     }
 
     // TODO: add PATCH
@@ -143,13 +148,14 @@ namespace DeveloperPath.WebApi.Controllers
     /// <param name="moduleId">And id of the module</param>
     /// <param name="themeId">And id of the theme</param>
     /// <param name="sourceId">An id of the source</param>
+    /// <param name="ct">Cancellation token</param>
     /// <returns></returns>
     /// <response code="204">Source deleted successfully</response>
     [Authorize]
     [HttpDelete("{sourceId}")]
-    public async Task<ActionResult> Delete(int pathId, int moduleId, int themeId, int sourceId)
+    public async Task<ActionResult> Delete(int pathId, int moduleId, int themeId, int sourceId, CancellationToken ct = default)
     {
-      await Mediator.Send(new DeleteSource { PathId = pathId, ModuleId = moduleId, ThemeId = themeId, Id = sourceId });
+      await _mediator.Send(new DeleteSource { PathId = pathId, ModuleId = moduleId, ThemeId = themeId, Id = sourceId }, ct);
 
       return NoContent();
     }

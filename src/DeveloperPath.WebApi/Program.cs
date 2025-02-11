@@ -112,23 +112,14 @@ public class Program
               if (hostingContext.HostingEnvironment.IsProduction())
               {
                 var settings = config.Build();
-
-                if (hostingContext.HostingEnvironment.IsDevelopment())
-                {
-
-                }
-
-                if (hostingContext.HostingEnvironment.IsProduction())
-                {
-                  config.AddAzureAppConfiguration(options =>
-                      {
-                        options.Connect(settings["ConnectionStrings:AppConfig"])
-                                .ConfigureKeyVault(kv =>
-                                {
-                                  kv.SetCredential(new DefaultAzureCredential());
-                                });
-                      });
-                }
+                config.AddAzureAppConfiguration(options =>
+                  {
+                    options.Connect(settings["ConnectionStrings:AppConfig"])
+                            .ConfigureKeyVault(kv =>
+                            {
+                              kv.SetCredential(new DefaultAzureCredential());
+                            });
+                  });
               }
             }).UseStartup<Startup>());
 }

@@ -1,18 +1,21 @@
 ﻿using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using MediatR;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Authorization;
+
 using DeveloperPath.Application.CQRS.Themes.Commands.CreateTheme;
 using DeveloperPath.Application.CQRS.Themes.Commands.DeleteTheme;
 using DeveloperPath.Application.CQRS.Themes.Commands.UpdateTheme;
 using DeveloperPath.Application.CQRS.Themes.Queries.GetThemes;
 using DeveloperPath.Shared.ClientModels;
 
+using MediatR;
+
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+
 namespace DeveloperPath.WebApi.Controllers
 {
-    [Route("api/paths/{pathId}/modules/{moduleId}/themes")]
+  [Route("api/paths/{pathId}/modules/{moduleId}/themes")]
   public class ThemesController : ApiController
   {
     public ThemesController(IMediator mediator)
@@ -25,7 +28,7 @@ namespace DeveloperPath.WebApi.Controllers
     /// </summary>
     /// <param name="pathId">An id of the path</param>
     /// <param name="moduleId">An id of the module</param>
-    /// <param name="ct"></param>
+    /// <param name="ct">Cancellation token</param>
     /// <returns>A collection of themes with summary information</returns>
     /// <response code="200">Returns a list of themes in the module</response>
     /// <response code="404">Module not found</response>
@@ -33,7 +36,7 @@ namespace DeveloperPath.WebApi.Controllers
     [HttpHead]
     public async Task<ActionResult<IEnumerable<Theme>>> Get(int pathId, int moduleId, CancellationToken ct = default)
     {
-      IEnumerable<Theme> themes = await Mediator.Send(
+      IEnumerable<Theme> themes = await _mediator.Send(
          new GetThemeListQuery { PathId = pathId, ModuleId = moduleId }, ct);
 
       return Ok(themes);
@@ -45,14 +48,14 @@ namespace DeveloperPath.WebApi.Controllers
     /// <param name="pathId">An id of the path</param>
     /// <param name="moduleId">An id of the module</param>
     /// <param name="themeId">An id of the theme</param>
-    /// <param name="ct"></param>
+    /// <param name="ct">Cancellation token</param>
     /// <returns>Information about the theme</returns>
     /// <response code="200">Returns requested theme</response>
     [HttpGet("{themeId}", Name = "GetTheme")]
     [HttpHead("{themeId}")]
     public async Task<ActionResult<Theme>> Get(int pathId, int moduleId, int themeId, CancellationToken ct = default)
     {
-      Theme model = await Mediator.Send(
+      Theme model = await _mediator.Send(
         new GetThemeQuery { PathId = pathId, ModuleId = moduleId, Id = themeId }, ct);
 
       return Ok(model);
@@ -82,6 +85,7 @@ namespace DeveloperPath.WebApi.Controllers
     /// <param name="pathId">An id of the path</param>
     /// <param name="moduleId">An id of the module</param>
     /// <param name="command">Theme object</param>
+    /// <param name="ct">Cancellation token</param>
     /// <returns>Created theme</returns>
     /// <response code="201">Theme created successfully</response>
     /// <response code="404">Module not found</response>
@@ -92,14 +96,14 @@ namespace DeveloperPath.WebApi.Controllers
     [HttpPost]
     [Consumes("application/json")]
     public async Task<ActionResult<Theme>> Create(int pathId, int moduleId,
-      [FromBody] CreateTheme command)
+      [FromBody] CreateTheme command, CancellationToken ct = default)
     {
       if (pathId != command.PathId || moduleId != command.ModuleId)
         return BadRequest();
 
-      Theme model = await Mediator.Send(command);
+      Theme model = await _mediator.Send(command, ct);
 
-      return CreatedAtRoute("GetTheme", 
+      return CreatedAtRoute("GetTheme",
         new { pathId = command.PathId, moduleId = model.ModuleId, themeId = model.Id }, model);
     }
 
@@ -110,7 +114,8 @@ namespace DeveloperPath.WebApi.Controllers
     /// <param name="moduleId">An id of the module</param>
     /// <param name="themeId">An id of the theme</param>
     /// <param name="command">Updated theme object</param>
-    /// <returns>Upated theme</returns>
+    /// <param name="ct">Cancellation token</param>
+    /// <returns>Updated theme</returns>
     /// <response code="200">Theme updated successfully</response>
     /// <response code="406">Not acceptable entity provided</response>
     /// <response code="415">Unsupported media type provided</response>
@@ -119,12 +124,12 @@ namespace DeveloperPath.WebApi.Controllers
     [HttpPut("{themeId}")]
     [Consumes("application/json")]
     public async Task<ActionResult<Theme>> Update(int pathId, int moduleId, int themeId,
-      [FromBody] UpdateTheme command)
+      [FromBody] UpdateTheme command, CancellationToken ct = default)
     {
       if (pathId != command.PathId || moduleId != command.ModuleId || themeId != command.Id)
         return BadRequest();
 
-      return Ok(await Mediator.Send(command));
+      return Ok(await _mediator.Send(command, ct));
     }
 
     // TODO: add PATCH
@@ -135,13 +140,14 @@ namespace DeveloperPath.WebApi.Controllers
     /// <param name="pathId">An id of the path</param>
     /// <param name="moduleId">And id of the module the theme is in</param>
     /// <param name="themeId">An id of the theme</param>
+    /// <param name="ct">Cancellation token</param>
     /// <returns></returns>
     /// <response code="204">Theme deleted successfully</response>
     [Authorize]
     [HttpDelete("{themeId}")]
-    public async Task<ActionResult> Delete(int pathId, int moduleId, int themeId)
+    public async Task<ActionResult> Delete(int pathId, int moduleId, int themeId, CancellationToken ct = default)
     {
-      await Mediator.Send(new DeleteTheme { PathId = pathId, ModuleId = moduleId, Id = themeId });
+      await _mediator.Send(new DeleteTheme { PathId = pathId, ModuleId = moduleId, Id = themeId }, ct);
 
       return NoContent();
     }

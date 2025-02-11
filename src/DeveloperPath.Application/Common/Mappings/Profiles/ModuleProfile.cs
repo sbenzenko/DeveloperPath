@@ -22,6 +22,7 @@ public class ModuleProfile : Profile
     CreateMap<UpdateModule, Domain.Entities.Module>()
       .ForMember(x => x.Deleted, expression => expression.Ignore())
       .ForMember(x => x.Paths, expression => expression.Ignore())
+      .ForMember(x => x.PathModules, expression => expression.Ignore())
       .ForMember(x => x.Sections, expression => expression.Ignore())
       .ForMember(x => x.Themes, expression => expression.Ignore())
       .ForMember(x => x.Prerequisites, expression => expression.Ignore())

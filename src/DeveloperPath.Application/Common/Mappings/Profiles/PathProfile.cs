@@ -23,6 +23,7 @@ public class PathProfile : Profile
     CreateMap<CreatePath, Domain.Entities.Path>()
       .ForMember(x => x.IsVisible, expression => expression.Ignore())
       .ForMember(x => x.Modules, expression => expression.Ignore())
+      .ForMember(x => x.PathModules, expression => expression.Ignore())
       .ForMember(x => x.Deleted, expression => expression.Ignore())
       .ForMember(x => x.Id, expression => expression.Ignore())
       .ForMember(x => x.CreatedBy, expression => expression.Ignore())
@@ -32,6 +33,7 @@ public class PathProfile : Profile
 
     CreateMap<UpdatePath, Domain.Entities.Path>()
       .ForMember(x => x.Modules, expression => expression.Ignore())
+      .ForMember(x => x.PathModules, expression => expression.Ignore())
       .ForMember(x => x.Deleted, expression => expression.Ignore())
       .ForMember(x => x.CreatedBy, expression => expression.Ignore())
       .ForMember(x => x.Created, expression => expression.Ignore())

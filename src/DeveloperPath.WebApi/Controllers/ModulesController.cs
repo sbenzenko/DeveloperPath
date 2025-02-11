@@ -29,7 +29,7 @@ public class ModulesController : ApiController
   /// <summary>
   /// Get all available modules
   /// </summary>
-  /// <param name="ct"></param>
+  /// <param name="ct">Cancellation token</param>
   /// <returns>A collection of modules</returns>
   /// <response code="200">Returns a list of modules</response>
   [HttpGet]
@@ -44,7 +44,7 @@ public class ModulesController : ApiController
   /// Get module information by its Id
   /// </summary>
   /// <param name="moduleId">An id of the module</param>
-  /// <param name="ct"></param>
+  /// <param name="ct">Cancellation token</param>
   /// <returns>Information about the module</returns>
   /// <response code="200">Returns requested module</response>
   /// <response code="404">Module not found</response>
@@ -52,7 +52,7 @@ public class ModulesController : ApiController
   [HttpHead("{moduleId}")]
   public async Task<ActionResult<Module>> Get(int moduleId, CancellationToken ct = default)
   {
-    Module model = await Mediator.Send(new GetModuleQuery { Id = moduleId }, ct);
+    Module model = await _mediator.Send(new GetModuleQuery { Id = moduleId }, ct);
 
     return Ok(model);
   }
@@ -61,6 +61,7 @@ public class ModulesController : ApiController
   /// Create a module
   /// </summary>
   /// <param name="command">Module object</param>
+  /// <param name="ct">Cancellation token</param>
   /// <returns>Created module</returns>
   /// <response code="201">Module created successfully</response>
   /// <response code="404">Path not found</response>
@@ -70,9 +71,9 @@ public class ModulesController : ApiController
   [Authorize]
   [HttpPost]
   [Consumes("application/json")]
-  public async Task<ActionResult<Module>> Create([FromBody] CreateModule command)
+  public async Task<ActionResult<Module>> Create([FromBody] CreateModule command, CancellationToken ct = default)
   {
-    Module model = await Mediator.Send(command);
+    Module model = await _mediator.Send(command, ct);
 
     return CreatedAtRoute("GetModule", new { moduleId = model.Id }, model);
   }
@@ -82,6 +83,7 @@ public class ModulesController : ApiController
   /// </summary>
   /// <param name="moduleId">An id of the module</param>
   /// <param name="command">Updated module object</param>
+  /// <param name="ct">Cancellation token</param>
   /// <returns>Updated module</returns>
   /// <response code="200">Module updated successfully</response>
   /// <response code="406">Not acceptable entity provided</response>
@@ -91,12 +93,12 @@ public class ModulesController : ApiController
   [HttpPut("{moduleId}")]
   [Consumes("application/json")]
   public async Task<ActionResult<Module>> Update(int moduleId,
-    [FromBody] UpdateModule command)
+    [FromBody] UpdateModule command, CancellationToken ct = default)
   {
     if (moduleId != command.Id)
       return BadRequest();
 
-    return Ok(await Mediator.Send(command));
+    return Ok(await _mediator.Send(command, ct));
   }
 
   // TODO: add PATCH
@@ -112,20 +114,20 @@ public class ModulesController : ApiController
   [HttpDelete("{moduleId}")]
   public async Task<ActionResult> Delete(int pathId, int moduleId)
   {
-    await Mediator.Send(new DeleteModule { PathId = pathId, Id = moduleId });
+    await _mediator.Send(new DeleteModule { PathId = pathId, Id = moduleId });
 
     return NoContent();
   }
 
   private async Task<ActionResult<IEnumerable<Module>>> GetAll(string pathKey, CancellationToken ct = default)
   {
-    IEnumerable<Module> model = await Mediator.Send(new GetModuleListQuery { PathKey = pathKey }, ct);
+    IEnumerable<Module> model = await _mediator.Send(new GetModuleListQuery { PathKey = pathKey }, ct);
     return Ok(model);
   }
 
   private async Task<ActionResult<IEnumerable<Module>>> GetPage(string pathKey, RequestParams filter, CancellationToken ct = default)
   {
-    var (paginationData, result) = await Mediator.Send(
+    var (paginationData, result) = await _mediator.Send(
         new GetModuleListQueryPaging()
         {
           PathKey = pathKey,

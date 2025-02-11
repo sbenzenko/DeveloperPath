@@ -1,16 +1,13 @@
 ﻿using MediatR;
+
 using Microsoft.AspNetCore.Mvc;
 
-namespace DeveloperPath.WebApi.Controllers
-{
-    [ApiController]
-    [Route("api/[controller]")]
-    [Consumes("application/json")]
-    public abstract class ApiController : ControllerBase
-    {
-        protected IMediator _mediator;
+namespace DeveloperPath.WebApi.Controllers;
 
-        // Had to change it to constructor injection for unit tests
-        protected IMediator Mediator => _mediator; // ??= HttpContext.RequestServices.GetService<IMediator>();
-    }
+[ApiController]
+[Route("api/[controller]")]
+[Consumes("application/json")]
+public abstract class ApiController : ControllerBase
+{
+  protected IMediator _mediator;
 }

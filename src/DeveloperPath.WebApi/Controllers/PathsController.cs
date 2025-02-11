@@ -31,6 +31,8 @@ public class PathsController : ApiController
   /// <summary>
   /// Get all available paths
   /// </summary>
+  /// <param name="requestParams">Page size, page number</param>
+  /// <param name="ct">Cancellation token</param>
   /// <returns>A collection of paths with summary information</returns>
   /// <response code="200">Returns a list of paths</response>
   [HttpGet(Name = "GetPaths")]
@@ -54,18 +56,20 @@ public class PathsController : ApiController
   /// <summary>
   /// Get all deleted paths
   /// </summary>
+  /// <param name="requestParams">Page size, page number</param>
+  /// <param name="ct">Cancellation token</param>
   /// <returns>A collection of paths with summary information</returns>
   /// <response code="200">Returns a list of paths</response>
   [HttpGet("deleted")]
   [HttpHead("deleted")]
   [Authorize(Roles = "Administrator")]
-  public async Task<ActionResult<IEnumerable<DeletedPath>>> GetDeleted([FromQuery] RequestParams requestParams = null)
+  public async Task<ActionResult<IEnumerable<DeletedPath>>> GetDeleted([FromQuery] RequestParams requestParams = null, CancellationToken ct = default)
   {
     var result = await _mediator.Send(new GetDeletedPathListQuery()
     {
       PageSize = requestParams.PageSize,
       PageNumber = requestParams.PageNumber,
-    });
+    }, ct);
 
     return Ok(result);
   }
@@ -90,6 +94,7 @@ public class PathsController : ApiController
   /// Get detailed path information by its Id
   /// </summary>
   /// <param name="pathId">An id of the path</param>
+  /// <param name="ct">Cancellation token</param>
   /// <returns>Detailed information of the path with modules included</returns>
   /// <response code="200">Returns requested path</response>
   [HttpGet("{pathId}", Name = "GetPath")]
@@ -97,7 +102,7 @@ public class PathsController : ApiController
   [AllowAnonymous]
   public async Task<ActionResult<PathDetails>> Get(int pathId, CancellationToken ct = default)
   {
-    var model = await Mediator.Send(new GetPathDetailsQuery { Id = pathId }, ct);
+    var model = await _mediator.Send(new GetPathDetailsQuery { Id = pathId }, ct);
 
     return Ok(model);
   }
@@ -106,6 +111,7 @@ public class PathsController : ApiController
   /// Create a path
   /// </summary>
   /// <param name="command">Path object</param>
+  /// <param name="ct">Cancellation token</param>
   /// <returns>Created path</returns>
   /// <response code="201">Path created successfully</response>
   /// <response code="406">Not acceptable entity provided</response>
@@ -115,9 +121,9 @@ public class PathsController : ApiController
   [HttpPost]
   //TODO: adding "application/xml" causes "An error occurred while deserializing input data." error for some reason
   [Consumes("application/json")]
-  public async Task<ActionResult<Path>> Create([FromBody] CreatePath command)
+  public async Task<ActionResult<Path>> Create([FromBody] CreatePath command, CancellationToken ct = default)
   {
-    Path model = await Mediator.Send(command);
+    Path model = await _mediator.Send(command, ct);
 
     return CreatedAtRoute("GetPath", new { pathId = model.Id }, model);
   }
@@ -127,6 +133,7 @@ public class PathsController : ApiController
   /// </summary>
   /// <param name="pathId">An id of the path</param>
   /// <param name="command">Updated path</param>
+  /// <param name="ct">Cancellation token</param>
   /// <returns>Updated path</returns>
   /// <response code="200">Path updated successfully</response>
   /// <response code="406">Not acceptable entity provided</response>
@@ -136,12 +143,12 @@ public class PathsController : ApiController
   [HttpPut("{pathId}")]
   [Consumes("application/json")]
   public async Task<ActionResult<Path>> Update(int pathId,
-    [FromBody] UpdatePath command)
+    [FromBody] UpdatePath command, CancellationToken ct = default)
   {
     if (pathId != command.Id)
       return BadRequest();
 
-    return Ok(await Mediator.Send(command));
+    return Ok(await _mediator.Send(command, ct));
   }
 
   /// <summary>
@@ -149,6 +156,7 @@ public class PathsController : ApiController
   /// </summary>
   /// <param name="patchDocument"></param>
   /// <param name="pathId">An id of the path</param>
+  /// <param name="ct">Cancellation token</param>
   /// <returns>Updated path</returns>
   /// <response code="200">Path updated successfully</response>
   /// <response code="406">Not acceptable entity provided</response>
@@ -157,10 +165,10 @@ public class PathsController : ApiController
 
   [HttpPatch("{pathId}")]
   [Authorize(Roles = "Administrator")]
-  public async Task<ActionResult<Path>> Patch([FromBody] JsonPatchDocument patchDocument, [FromRoute] int pathId)
+  public async Task<ActionResult<Path>> Patch([FromBody] JsonPatchDocument patchDocument, [FromRoute] int pathId, CancellationToken ct = default)
   {
     var pathPatchCommand = new PatchPathCommand(pathId, patchDocument);
-    return Ok(await Mediator.Send(pathPatchCommand));
+    return Ok(await _mediator.Send(pathPatchCommand, ct));
   }
 
   /// <summary>
@@ -168,6 +176,7 @@ public class PathsController : ApiController
   /// </summary>
   /// <param name="patchDocument"></param>
   /// <param name="pathId">An id of the path</param>
+  /// <param name="ct">Cancellation token</param>
   /// <returns>Updated path</returns>
   /// <response code="200">Path updated successfully</response>
   /// <response code="406">Not acceptable entity provided</response>
@@ -177,23 +186,24 @@ public class PathsController : ApiController
   [HttpPatch("deleted/{pathId}")]
   [Authorize(Roles = "Administrator")]
   [Consumes("application/json")]
-  public async Task<ActionResult<Path>> PatchDeleted([FromBody] JsonPatchDocument patchDocument, [FromRoute] int pathId)
+  public async Task<ActionResult<Path>> PatchDeleted([FromBody] JsonPatchDocument patchDocument, [FromRoute] int pathId, CancellationToken ct = default)
   {
     var pathPatchCommand = new PatchPathCommand(pathId, patchDocument, false);
-    return Ok(await Mediator.Send(pathPatchCommand));
+    return Ok(await _mediator.Send(pathPatchCommand, ct));
   }
 
   /// <summary>
   /// Delete the path with given Id
   /// </summary>
   /// <param name="pathId">An id of the path</param>
+  /// <param name="ct">Cancellation token</param>
   /// <returns></returns>
   /// <response code="204">Path deleted successfully</response>
   [Authorize(Roles = "Administrator")]
   [HttpDelete("{pathId}")]
-  public async Task<IActionResult> Delete(int pathId)
+  public async Task<IActionResult> Delete(int pathId, CancellationToken ct = default)
   {
-    await Mediator.Send(new DeletePath { Id = pathId });
+    await _mediator.Send(new DeletePath { Id = pathId }, ct);
 
     return NoContent();
   }

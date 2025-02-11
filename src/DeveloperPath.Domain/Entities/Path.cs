@@ -36,6 +36,8 @@ public record Path : AuditableEntity, IAllowSoftDeletion
   /// </summary>
   public IList<Module> Modules { get; init; }
 
+  public IList<PathModule> PathModules { get; set; }
+
   /// <summary>
   /// List of tags related to path.
   /// Use generalized tags, e.g.:

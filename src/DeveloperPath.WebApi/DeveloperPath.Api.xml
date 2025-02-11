@@ -8,7 +8,7 @@
             <summary>
             Get all available modules
             </summary>
-            <param name="ct"></param>
+            <param name="ct">Cancellation token</param>
             <returns>A collection of modules</returns>
             <response code="200">Returns a list of modules</response>
         </member>
@@ -17,16 +17,17 @@
             Get module information by its Id
             </summary>
             <param name="moduleId">An id of the module</param>
-            <param name="ct"></param>
+            <param name="ct">Cancellation token</param>
             <returns>Information about the module</returns>
             <response code="200">Returns requested module</response>
             <response code="404">Module not found</response>
         </member>
-        <member name="M:DeveloperPath.WebApi.Controllers.ModulesController.Create(DeveloperPath.Application.CQRS.Modules.Commands.CreateModule.CreateModule)">
+        <member name="M:DeveloperPath.WebApi.Controllers.ModulesController.Create(DeveloperPath.Application.CQRS.Modules.Commands.CreateModule.CreateModule,System.Threading.CancellationToken)">
             <summary>
             Create a module
             </summary>
             <param name="command">Module object</param>
+            <param name="ct">Cancellation token</param>
             <returns>Created module</returns>
             <response code="201">Module created successfully</response>
             <response code="404">Path not found</response>
@@ -34,12 +35,13 @@
             <response code="415">Unsupported media type provided</response>
             <response code="422">Unprocessible entity provided</response>
         </member>
-        <member name="M:DeveloperPath.WebApi.Controllers.ModulesController.Update(System.Int32,DeveloperPath.Application.CQRS.Modules.Commands.UpdateModule.UpdateModule)">
+        <member name="M:DeveloperPath.WebApi.Controllers.ModulesController.Update(System.Int32,DeveloperPath.Application.CQRS.Modules.Commands.UpdateModule.UpdateModule,System.Threading.CancellationToken)">
             <summary>
             Update the module with given Id
             </summary>
             <param name="moduleId">An id of the module</param>
             <param name="command">Updated module object</param>
+            <param name="ct">Cancellation token</param>
             <returns>Updated module</returns>
             <response code="200">Module updated successfully</response>
             <response code="406">Not acceptable entity provided</response>
@@ -59,13 +61,17 @@
             <summary>
             Get all available paths
             </summary>
+            <param name="requestParams">Page size, page number</param>
+            <param name="ct">Cancellation token</param>
             <returns>A collection of paths with summary information</returns>
             <response code="200">Returns a list of paths</response>
         </member>
-        <member name="M:DeveloperPath.WebApi.Controllers.PathsController.GetDeleted(DeveloperPath.WebApi.Models.RequestParams)">
+        <member name="M:DeveloperPath.WebApi.Controllers.PathsController.GetDeleted(DeveloperPath.WebApi.Models.RequestParams,System.Threading.CancellationToken)">
             <summary>
             Get all deleted paths
             </summary>
+            <param name="requestParams">Page size, page number</param>
+            <param name="ct">Cancellation token</param>
             <returns>A collection of paths with summary information</returns>
             <response code="200">Returns a list of paths</response>
         </member>
@@ -74,61 +80,67 @@
             Get detailed path information by its Id
             </summary>
             <param name="pathId">An id of the path</param>
+            <param name="ct">Cancellation token</param>
             <returns>Detailed information of the path with modules included</returns>
             <response code="200">Returns requested path</response>
         </member>
-        <member name="M:DeveloperPath.WebApi.Controllers.PathsController.Create(DeveloperPath.Application.CQRS.Paths.Commands.CreatePath.CreatePath)">
+        <member name="M:DeveloperPath.WebApi.Controllers.PathsController.Create(DeveloperPath.Application.CQRS.Paths.Commands.CreatePath.CreatePath,System.Threading.CancellationToken)">
             <summary>
             Create a path
             </summary>
             <param name="command">Path object</param>
+            <param name="ct">Cancellation token</param>
             <returns>Created path</returns>
             <response code="201">Path created successfully</response>
             <response code="406">Not acceptable entity provided</response>
             <response code="415">Unsupported media type provided</response>
             <response code="422">Unprocessible entity provided</response>
         </member>
-        <member name="M:DeveloperPath.WebApi.Controllers.PathsController.Update(System.Int32,DeveloperPath.Application.CQRS.Paths.Commands.UpdatePath.UpdatePath)">
+        <member name="M:DeveloperPath.WebApi.Controllers.PathsController.Update(System.Int32,DeveloperPath.Application.CQRS.Paths.Commands.UpdatePath.UpdatePath,System.Threading.CancellationToken)">
             <summary>
             Update the path with given Id
             </summary>
             <param name="pathId">An id of the path</param>
             <param name="command">Updated path</param>
+            <param name="ct">Cancellation token</param>
             <returns>Updated path</returns>
             <response code="200">Path updated successfully</response>
             <response code="406">Not acceptable entity provided</response>
             <response code="415">Unsupported media type provided</response>
             <response code="422">Unprocessible entity provided</response>
         </member>
-        <member name="M:DeveloperPath.WebApi.Controllers.PathsController.Patch(Microsoft.AspNetCore.JsonPatch.JsonPatchDocument,System.Int32)">
+        <member name="M:DeveloperPath.WebApi.Controllers.PathsController.Patch(Microsoft.AspNetCore.JsonPatch.JsonPatchDocument,System.Int32,System.Threading.CancellationToken)">
             <summary>
             Update the part of path with given Id
             </summary>
             <param name="patchDocument"></param>
             <param name="pathId">An id of the path</param>
+            <param name="ct">Cancellation token</param>
             <returns>Updated path</returns>
             <response code="200">Path updated successfully</response>
             <response code="406">Not acceptable entity provided</response>
             <response code="415">Unsupported media type provided</response>
             <response code="422">Unprocessible entity provided</response>
         </member>
-        <member name="M:DeveloperPath.WebApi.Controllers.PathsController.PatchDeleted(Microsoft.AspNetCore.JsonPatch.JsonPatchDocument,System.Int32)">
+        <member name="M:DeveloperPath.WebApi.Controllers.PathsController.PatchDeleted(Microsoft.AspNetCore.JsonPatch.JsonPatchDocument,System.Int32,System.Threading.CancellationToken)">
             <summary>
             Update the part of deleted path with given Id. Common case is restoring deleted Path
             </summary>
             <param name="patchDocument"></param>
             <param name="pathId">An id of the path</param>
+            <param name="ct">Cancellation token</param>
             <returns>Updated path</returns>
             <response code="200">Path updated successfully</response>
             <response code="406">Not acceptable entity provided</response>
             <response code="415">Unsupported media type provided</response>
             <response code="422">Unprocessible entity provided</response>
         </member>
-        <member name="M:DeveloperPath.WebApi.Controllers.PathsController.Delete(System.Int32)">
+        <member name="M:DeveloperPath.WebApi.Controllers.PathsController.Delete(System.Int32,System.Threading.CancellationToken)">
             <summary>
             Delete the path with given Id
             </summary>
             <param name="pathId">An id of the path</param>
+            <param name="ct">Cancellation token</param>
             <returns></returns>
             <response code="204">Path deleted successfully</response>
         </member>
@@ -139,7 +151,7 @@
             <param name="pathId">An id of the path</param>
             <param name="moduleId">An id of the module</param>
             <param name="themeId">An id of the theme</param>
-            <param name="ct"></param>
+            <param name="ct">Cancellation token</param>
             <returns>A collection of sources with summary information</returns>
             <response code="200">Returns a list of sources in the theme</response>
             <response code="404">Theme not found</response>
@@ -152,11 +164,11 @@
             <param name="moduleId">An id of the theme</param>
             <param name="themeId">An id of the theme</param>
             <param name="sourceId">An id of the source</param>
-            <param name="ct"></param>
+            <param name="ct">Cancellation token</param>
             <returns>Detailed information of the source with sources included</returns>
             <response code="200">Returns requested source</response>
         </member>
-        <member name="M:DeveloperPath.WebApi.Controllers.SourcesController.Create(System.Int32,System.Int32,System.Int32,DeveloperPath.Application.CQRS.Sources.Commands.CreateSource.CreateSource)">
+        <member name="M:DeveloperPath.WebApi.Controllers.SourcesController.Create(System.Int32,System.Int32,System.Int32,DeveloperPath.Application.CQRS.Sources.Commands.CreateSource.CreateSource,System.Threading.CancellationToken)">
             <summary>
             Create a source
             </summary>
@@ -164,6 +176,7 @@
             <param name="moduleId">An id of the module</param>
             <param name="themeId">An id of the theme</param>
             <param name="command">Command object</param>
+            <param name="ct">Cancellation token</param>
             <returns>Created source</returns>
             <response code="201">Source created successfully</response>
             <response code="404">Theme not found</response>
@@ -171,7 +184,7 @@
             <response code="415">Unsupported media type provided</response>
             <response code="422">Unprocessible entity provided</response>
         </member>
-        <member name="M:DeveloperPath.WebApi.Controllers.SourcesController.Update(System.Int32,System.Int32,System.Int32,System.Int32,DeveloperPath.Application.CQRS.Sources.Commands.UpdateSource.UpdateSource)">
+        <member name="M:DeveloperPath.WebApi.Controllers.SourcesController.Update(System.Int32,System.Int32,System.Int32,System.Int32,DeveloperPath.Application.CQRS.Sources.Commands.UpdateSource.UpdateSource,System.Threading.CancellationToken)">
             <summary>
             Update the source with given Id
             </summary>
@@ -180,13 +193,14 @@
             <param name="themeId">An id of the theme</param>
             <param name="sourceId">An id of the source</param>
             <param name="command">Updated source object</param>
+            <param name="ct">Cancellation token</param>
             <returns>Updated source</returns>
             <response code="200">Source updated successfully</response>
             <response code="406">Not acceptable entity provided</response>
             <response code="415">Unsupported media type provided</response>
             <response code="422">Unprocessible entity provided</response>
         </member>
-        <member name="M:DeveloperPath.WebApi.Controllers.SourcesController.Delete(System.Int32,System.Int32,System.Int32,System.Int32)">
+        <member name="M:DeveloperPath.WebApi.Controllers.SourcesController.Delete(System.Int32,System.Int32,System.Int32,System.Int32,System.Threading.CancellationToken)">
             <summary>
             Delete the source with given Id
             </summary>
@@ -194,6 +208,7 @@
             <param name="moduleId">And id of the module</param>
             <param name="themeId">And id of the theme</param>
             <param name="sourceId">An id of the source</param>
+            <param name="ct">Cancellation token</param>
             <returns></returns>
             <response code="204">Source deleted successfully</response>
         </member>
@@ -203,7 +218,7 @@
             </summary>
             <param name="pathId">An id of the path</param>
             <param name="moduleId">An id of the module</param>
-            <param name="ct"></param>
+            <param name="ct">Cancellation token</param>
             <returns>A collection of themes with summary information</returns>
             <response code="200">Returns a list of themes in the module</response>
             <response code="404">Module not found</response>
@@ -215,17 +230,18 @@
             <param name="pathId">An id of the path</param>
             <param name="moduleId">An id of the module</param>
             <param name="themeId">An id of the theme</param>
-            <param name="ct"></param>
+            <param name="ct">Cancellation token</param>
             <returns>Information about the theme</returns>
             <response code="200">Returns requested theme</response>
         </member>
-        <member name="M:DeveloperPath.WebApi.Controllers.ThemesController.Create(System.Int32,System.Int32,DeveloperPath.Application.CQRS.Themes.Commands.CreateTheme.CreateTheme)">
+        <member name="M:DeveloperPath.WebApi.Controllers.ThemesController.Create(System.Int32,System.Int32,DeveloperPath.Application.CQRS.Themes.Commands.CreateTheme.CreateTheme,System.Threading.CancellationToken)">
             <summary>
             Create a theme
             </summary>
             <param name="pathId">An id of the path</param>
             <param name="moduleId">An id of the module</param>
             <param name="command">Theme object</param>
+            <param name="ct">Cancellation token</param>
             <returns>Created theme</returns>
             <response code="201">Theme created successfully</response>
             <response code="404">Module not found</response>
@@ -233,7 +249,7 @@
             <response code="415">Unsupported media type provided</response>
             <response code="422">Unprocessible entity provided</response>
         </member>
-        <member name="M:DeveloperPath.WebApi.Controllers.ThemesController.Update(System.Int32,System.Int32,System.Int32,DeveloperPath.Application.CQRS.Themes.Commands.UpdateTheme.UpdateTheme)">
+        <member name="M:DeveloperPath.WebApi.Controllers.ThemesController.Update(System.Int32,System.Int32,System.Int32,DeveloperPath.Application.CQRS.Themes.Commands.UpdateTheme.UpdateTheme,System.Threading.CancellationToken)">
             <summary>
             Update the theme with given Id
             </summary>
@@ -241,19 +257,21 @@
             <param name="moduleId">An id of the module</param>
             <param name="themeId">An id of the theme</param>
             <param name="command">Updated theme object</param>
-            <returns>Upated theme</returns>
+            <param name="ct">Cancellation token</param>
+            <returns>Updated theme</returns>
             <response code="200">Theme updated successfully</response>
             <response code="406">Not acceptable entity provided</response>
             <response code="415">Unsupported media type provided</response>
             <response code="422">Unprocessible entity provided</response>
         </member>
-        <member name="M:DeveloperPath.WebApi.Controllers.ThemesController.Delete(System.Int32,System.Int32,System.Int32)">
+        <member name="M:DeveloperPath.WebApi.Controllers.ThemesController.Delete(System.Int32,System.Int32,System.Int32,System.Threading.CancellationToken)">
             <summary>
             Delete the theme with given Id
             </summary>
             <param name="pathId">An id of the path</param>
             <param name="moduleId">And id of the module the theme is in</param>
             <param name="themeId">An id of the theme</param>
+            <param name="ct">Cancellation token</param>
             <returns></returns>
             <response code="204">Theme deleted successfully</response>
         </member>
