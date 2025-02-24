@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 
 using DeveloperPath.Application.Common.Interfaces;
 using DeveloperPath.Infrastructure.Persistence;
@@ -37,7 +38,7 @@ internal class DatabaseTests
   }
 
   [Test]
-  public void EnsureMigrationsAreUpToDate()
+  public async Task EnsureMigrationsAreUpToDate()
   {
     var services = new ServiceCollection();
     services.AddLogging();
@@ -51,7 +52,7 @@ internal class DatabaseTests
     using var serviceProvider = services.BuildServiceProvider();
     using var scope = serviceProvider.GetRequiredService<IServiceScopeFactory>().CreateScope();
 
-    var dbContext = scope.ServiceProvider.GetService<ApplicationDbContext>();
+    await using var dbContext = scope.ServiceProvider.GetService<ApplicationDbContext>();
 
     // Get required services from the dbcontext
     var migrationModelDiffer = dbContext.GetService<IMigrationsModelDiffer>();
