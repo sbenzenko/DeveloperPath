@@ -50,7 +50,7 @@ public partial class ModulesPage
     var parameters = new DialogParameters { ["IsNew"] = true };
     var dialog = DialogService.Show<AddEditModuleModal>(Localizer["NewModule"], parameters);
     var result = await dialog.Result;
-    if (!result.Cancelled)
+    if (!result.Canceled)
     {
       await AddNewModuleAsync(result.Data as Module);
     }
@@ -62,7 +62,7 @@ public partial class ModulesPage
     var dialog = DialogService.Show<AddEditModuleModal>(Localizer["EditModule"], parameters);
     var result = await dialog.Result;
 
-    if (!result.Cancelled)
+    if (!result.Canceled)
     {
       await EditModuleAsync(result.Data as Module);
     }

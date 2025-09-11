@@ -74,7 +74,7 @@ public partial class PathPage : ComponentBase
     var parameters = new DialogParameters { ["IsNew"] = true };
     var dialog = DialogService.Show<AddEditPathModal>(localizer["NewPath"], parameters);
     var result = await dialog.Result;
-    if (!result.Cancelled)
+    if (!result.Canceled)
     {
       await AddNewPathAsync(result.Data as Path);
     }
@@ -86,7 +86,7 @@ public partial class PathPage : ComponentBase
     var dialog = DialogService.Show<AddEditPathModal>(localizer["NewPath"], parameters);
     var result = await dialog.Result;
 
-    if (!result.Cancelled)
+    if (!result.Canceled)
     {
       await EditPathAsync(result.Data as Path);
     }

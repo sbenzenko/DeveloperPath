@@ -21,6 +21,8 @@ using NUnit.Framework;
 
 using Respawn;
 
+using SendGrid.Helpers.Mail;
+
 namespace DeveloperPath.Application.IntegrationTests;
 
 [SetUpFixture]
@@ -28,11 +30,11 @@ public class Testing
 {
   private static IConfigurationRoot _configuration;
   private static IServiceScopeFactory _scopeFactory;
-  private static Checkpoint _checkpoint;
+  private static Respawner _respawner;
   private static string _currentUserId;
 
   [OneTimeSetUp]
-  public void RunBeforeAnyTests()
+  public async Task RunBeforeAnyTests()
   {
     var builder = new ConfigurationBuilder()
         .SetBasePath(Directory.GetCurrentDirectory())
@@ -67,21 +69,23 @@ public class Testing
 
     _scopeFactory = services.BuildServiceProvider().GetService<IServiceScopeFactory>();
 
-    _checkpoint = new Checkpoint
-    {
-      TablesToIgnore = [new Respawn.Graph.Table("__EFMigrationsHistory")]
-    };
-
-    EnsureDatabase();
+    await EnsureDatabase();
   }
 
-  private static void EnsureDatabase()
+  private static async Task EnsureDatabase()
   {
     using var scope = _scopeFactory.CreateScope();
 
     var context = scope.ServiceProvider.GetService<ApplicationDbContext>();
-
     context.Database.Migrate();
+
+    var _dbConnection = context.Database.GetDbConnection();
+    await _dbConnection.OpenAsync();
+    _respawner = await Respawner.CreateAsync(_dbConnection,
+      new RespawnerOptions
+      {
+        TablesToIgnore = [new Respawn.Graph.Table("__EFMigrationsHistory")]
+      });
   }
 
   public static async Task<TResponse> SendAsync<TResponse>(IRequest<TResponse> request, CancellationToken token = default)
@@ -115,7 +119,7 @@ public class Testing
 
   public static async Task ResetState()
   {
-    await _checkpoint.Reset(_configuration["DeveloperPathSqlConnectionString"]);
+    await _respawner.ResetAsync(_configuration["DeveloperPathSqlConnectionString"]);
     _currentUserId = null;
   }
 

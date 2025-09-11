@@ -24,8 +24,9 @@ public static class DependencyInjection
   /// <returns></returns>
   public static IServiceCollection AddApplication(this IServiceCollection services)
   {
-    services.AddAutoMapper(typeof(PathProfile).Assembly);
-    services.AddAutoMapper(typeof(MappingProfile).Assembly);
+    services.AddAutoMapper(
+      (_, config) => config.AddProfile(new MappingProfile()),
+      typeof(PathProfile).Assembly);
 
     services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
     services.AddMediatR(cfg =>

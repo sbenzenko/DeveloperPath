@@ -6,6 +6,8 @@ using DeveloperPath.Application.Common.Mappings.Interfaces;
 using DeveloperPath.Application.Common.Mappings.Profiles;
 using DeveloperPath.Shared.ClientModels;
 
+using Microsoft.Extensions.Logging;
+
 using NUnit.Framework;
 
 namespace DeveloperPath.Application.UnitTests.Common.Mappings;
@@ -25,7 +27,8 @@ public class MappingTests
       cfg.AddProfile<SectionProfile>();
       cfg.AddProfile<ThemeProfile>();
       cfg.AddProfile<SourceProfile>();
-    });
+    },
+    new LoggerFactory());
 
     _mapper = _configuration.CreateMapper();
   }

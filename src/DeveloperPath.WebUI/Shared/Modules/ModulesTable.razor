@@ -32,13 +32,13 @@
         <MudTd DataLabel="@Localizer["Necessity"]">@Localizer[context.Necessity.ToString()]</MudTd>
         <MudTd DataLabel="@Localizer["Tags"]">
             <Iterations Items="@context.Tags" Context="tagItem">
-                <MudChip Size="Size.Small">@tagItem</MudChip>
+                <MudChip T="string" Size="Size.Small">@tagItem</MudChip>
             </Iterations>
         </MudTd>
         <Condition Evaluation="IsAdminMode">
             <Match>
                 <MudTd>
-                    <MudIconButton OnClick="() => OnModuleEditClick(context)" Icon="@Icons.Filled.Edit"></MudIconButton>
+                    <MudIconButton OnClick="() => OnModuleEditClick(context)" Icon="@Icons.Material.Filled.Edit"></MudIconButton>
                 </MudTd>
             </Match>
         </Condition>
